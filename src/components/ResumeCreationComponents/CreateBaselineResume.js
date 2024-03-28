@@ -1,0 +1,205 @@
+import React, { useEffect, useState } from 'react'
+import { Button, Card, Form, Alert, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { BsQuestionCircle } from "react-icons/bs";
+import DOMPurify from 'dompurify';
+import AddressForm from '../user/AddressForm';
+import '../../views/main.css';
+import {
+    doc,
+    setDoc,
+} from 'firebase/firestore';
+import { useUser } from '../../context/UserContext';
+
+export default function CreateBaselineResume() {
+    const history = useNavigate();
+    const {
+        user, 
+        setUser,
+        handleResumeChange,
+        sanitizeUserInput,
+        handleAddressChange
+    } = useUser();
+
+    const [includeAddress, setIncludeAddress] = useState(null)
+    const userExperience = "Detail your relevant job history (required):";
+    const userEducation = "List your education and certifications (required):";
+    const userSkills = "Specify your relevant skills (required):";
+    const userAdditional = "Include any additional relevant information (optional):";
+    
+    return (
+        <>
+            <div className='pageWrapper'>
+                <h3>Step 1</h3>
+                <div className='cardInnerDiv' id='scratchCardInnerDiv'>
+                <Card>
+                    <Card.Body>
+                        <div className='ScratchInnerDiv'>
+                            <h3>Create Base Resume</h3>
+                            <p  className="required-note">Fields marked with <span className="required-indicator">*</span> are required.</p>
+                            <Form>
+                                <div>
+                                </div>
+                                <Form.Group>
+                                    <Form.Label>Want to include your address?</Form.Label>
+                                    <br/>
+                                <Form.Check
+                                        inline
+                                        label="Yes"
+                                        type={'checkbox'}
+                                        onChange={() => setIncludeAddress(true)}
+                                        checked={includeAddress}
+                                    />
+                                    <Form.Check
+                                        inline
+                                        label="No"
+                                        type={'checkbox'}
+                                        onChange={() => setIncludeAddress(false)}
+                                        checked={!includeAddress}
+                                    />
+                                    {includeAddress && (
+                                        <div>
+                                            <sub>
+                                                You have the option to include partial address information if you prefer. 
+                                                <br/>
+                                                Feel free to fill out only the fields you wish to provide.
+                                            </sub>
+                                            <AddressForm onChange={handleAddressChange}/>
+                                        </div>
+                                    )}
+                                    <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                        Experience<span className="required-indicator">*</span> {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userExperience}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                        <sub>({user.resume.experience.length} / 1800)</sub>
+                                    </Form.Label>
+                                    <Form.Control 
+                                    as='textarea' 
+                                    rows={5} 
+                                    placeholder='Experience'
+                                    value={user.resume.experience}
+                                    onChange={(e) => handleResumeChange('experience', sanitizeUserInput(e.target.value))}
+                                    maxLength='1800'
+                                    className="mobile-textarea"
+                                    />
+                                    <Form.Text className='text-muted'>
+                                        Work Experience, this should include: Dates of Employment, Employer, Job Title, and a brief description of your role.
+                                    </Form.Text>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                            Education<span className="required-indicator">*</span> {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userEducation}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                        <sub>({user.resume.education.length} / 125)</sub>
+                                    </Form.Label>
+                                    <Form.Control 
+                                    as='textarea' 
+                                    rows={3} 
+                                    placeholder='Education'
+                                    value={user.resume.education}
+                                    onChange={(e) => handleResumeChange('education', sanitizeUserInput(e.target.value))}
+                                    maxLength='125'
+                                    className="mobile-textarea"
+                                    />
+                                    <Form.Text className='text-muted'>
+                                        Education and Certifications
+                                    </Form.Text>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                            Skills<span className="required-indicator">*</span> {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userSkills}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                        <sub>({user.resume.skills.length} / 125)</sub>
+                                    </Form.Label>
+                                    <Form.Control 
+                                    as='textarea' 
+                                    rows={2} 
+                                    placeholder='Skills'
+                                    value={user.resume.skills}
+                                    onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
+                                    maxLength='125'
+                                    className="mobile-textarea"
+                                    />
+                                    <Form.Text className='text-muted'>
+                                        Skills relevant to Employment
+                                    </Form.Text>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                        Anything Additional {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userAdditional}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                        <sub>({user.resume.additional.length} / 250)</sub>
+                                    </Form.Label>
+                                    <Form.Control 
+                                    as='textarea' 
+                                    rows={3} 
+                                    placeholder='Additional Information' 
+                                    value={user.resume.additional}
+                                    onChange={(e) => handleResumeChange('additional', sanitizeUserInput(e.target.value))}
+                                    maxLength='250'
+                                    className="mobile-textarea"
+                                    />
+                                    <Form.Text className='text-muted'>
+                                        Any additional information you think may be beneficial
+                                    </Form.Text>
+                                </Form.Group>
+                                
+                            </Form>
+                        </div>
+                    </Card.Body>
+                </Card>
+                <Button 
+                aria-label='submit button'
+                // onClick={handleSubmit}
+                >
+                    Submit
+                </Button>
+                </div>
+                <br/>
+            </div>
+        </>
+    )
+}
