@@ -81,7 +81,7 @@ export default function UserSetupModal() {
                         <Form.Group>
                           <Form.Label>Phone Number</Form.Label>
                           <Form.Control 
-                              type="text"
+                              type="tel"
                               placeholder="(123) 456 - 7890"
                               value={ user.contactInfo.phone }
                               onChange={(e) => handleContactChange('phone', handlePhoneNumberChange(e))}

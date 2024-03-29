@@ -29,9 +29,13 @@ export default function RecruitInfoTable() {
                 <td>{recruit.jobTitle}</td>
                 <td>{recruit.firstName}{' '}{recruit.lastName}</td>
                 <td>
-                  {recruit.contactInfo.phone}
+                  <a href={`tel:${recruit.contactInfo.phone.replace(/\D/g, '')}`}>
+                    {recruit.contactInfo.phone}
+                  </a>
                   <br/>
-                  {recruit.contactInfo.email}
+                  <a href={`mailto:${recruit.contactInfo.email}`}>
+                    {recruit.contactInfo.email}
+                  </a>
                   <br/>
                   {recruit.contactInfo.socialMedia}
                 </td>

@@ -44,7 +44,7 @@ export default function AddRecruit() {
                 <h5>Contact Information</h5>
                 <Form.Label>Phone</Form.Label>
                 <Form.Control
-                    type="text"
+                    type="tel"
                     placeholder="(123) 456 - 7890"
                     value={recruit.contactInfo.phone}
                 ></Form.Control>
