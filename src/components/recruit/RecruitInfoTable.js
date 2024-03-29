@@ -39,7 +39,6 @@ export default function RecruitInfoTable() {
                   <br/>
                   {recruit.contactInfo.socialMedia}
                 </td>
-                <td>{recruit.timeStamp}</td>
                 <td>
                   {/* optional */}
                   {recruit.address.street && (

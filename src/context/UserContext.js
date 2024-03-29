@@ -160,7 +160,7 @@ export function UserProvider({ children }) {
             timeStamp: null,
         },
         coverLetter: {
-            id: tailoredResume.id,
+            id: null,
             companyName: null,
             data: null,
             timeStamp: null

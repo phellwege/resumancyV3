@@ -5,7 +5,9 @@ import Footer from '../components/footer/Footer'
 import './main.css'
 import { Button, Card } from 'react-bootstrap'
 import RecruitInfoTable from '../components/recruit/RecruitInfoTable'
+import { useNavigate } from 'react-router-dom'
 export default function RecruiterMainPage() {
+    const history = useNavigate()
   return (
     <>
         <Header />
@@ -15,7 +17,7 @@ export default function RecruiterMainPage() {
                     <Card.Body>
                         <div className='cardInnerDiv'>
                             <h4>Recruits</h4>
-                            <Button>Add New Recruit</Button>
+                            <Button onClick={() => {history('/Recruit')}}>Add New Recruit</Button>
                             <h6>Review Recruits</h6>
                             <RecruitInfoTable />
                         </div>
