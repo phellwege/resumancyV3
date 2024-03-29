@@ -19,6 +19,7 @@ export default function RecruitInfoTable() {
               <th>Address</th>
               <th>Base Resume</th>
               <th>More</th>
+              <th>Edit / Remove</th>
             </tr>
           </thead>
           <tbody>
@@ -69,6 +70,10 @@ export default function RecruitInfoTable() {
                   <td>Create</td>
                 )}
                 <td>More</td>
+                <td>
+                  <Button variant="secondary">Edit</Button>
+                  <Button variant="danger">Remove</Button>
+                </td>
               </tr>
             ))}
           </tbody>

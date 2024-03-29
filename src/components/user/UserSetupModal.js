@@ -13,7 +13,6 @@ export default function UserSetupModal() {
     setupUserModal,
     handleCloseSetupUserModal,
     handleUserChange,
-    handleAddressChange,
     handleContactChange,
     handleOpenSelectAvatar
   } = useUser();
