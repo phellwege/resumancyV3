@@ -1,5 +1,5 @@
-import React from 'react';
-import Button from 'react-bootstrap';
+import React, {useState} from 'react';
+import Button from 'react-bootstrap/Button';
 import { Form } from 'react-bootstrap';
 import AddressForm from '../user/AddressForm';
 import { useUser } from '../../context/UserContext';
@@ -7,6 +7,7 @@ import { useUser } from '../../context/UserContext';
 export default function AddRecruit() {
     const {
         recruit,
+        generateUUID,
         handleRecruitChange,
         handleRecruitAddressChange,
         handleRecruitContactChange,
@@ -16,6 +17,57 @@ export default function AddRecruit() {
         addRecruitToRecruiter,
         recruiter
     } = useUser()
+    const [includeAddress, setIncludeAddress] = useState(null)
+    const handleSaveRecruitToRecruiter = () => {
+        handleRecruitChange('id', generateUUID())
+        const completedRecruit = { ...recruit };
+        if (!includeAddress) {
+            completedRecruit.address = null;
+        }
+        addRecruitToRecruiter(completedRecruit);
+        resetRecruitForm();
+    };
+
+    const resetRecruitForm = () => {
+        setRecruit({
+            id: null,
+            timeStamp: null,
+            firstName: '',
+            lastName: '',
+            jobTitle: '',
+            industry: null,
+            contactInfo: {
+                phone: '',
+                email: '',
+                socialMedia: []
+            },
+            address: includeAddress ? { street: null, appt: null, city: null, state: null, zip: null } : null,
+            resume: {
+                experience: null,
+                education: null,
+                skills: null,
+                additional: null,
+                summary: null,
+                timeStamp: null
+            },
+            tailoredResume: {
+                id: null,
+                companyName: null,
+                experience: null,
+                education: null,
+                skills: null,
+                additional: null,
+                summary: null,
+                timeStamp: null,
+            },
+            coverLetter: {
+                id: null,
+                companyName: null,
+                data: null,
+                timeStamp: null
+            },
+        });
+    };
   return (
     <>
         <h3>Add Recruit</h3>
@@ -61,16 +113,43 @@ export default function AddRecruit() {
                 ></Form.Control>
                 <Form.Label>Social Media Accounts</Form.Label>
                 <Form.Control
-                    type="text"
+                    as="textarea"
                     placeholder="Social Media Accounts"
                     value={recruit.contactInfo.socialMedia}
                     onChange={(e) => {handleRecruitContactChange('socialMedia', e.target.value)}}
                 ></Form.Control>
             </Form.Group>
-            <AddressForm onChange={handleRecruitAddressChange}/>
+            
+                {/* <AddressForm onChange={handleRecruitAddressChange}/> */}
+                <Form.Label>Want to include Their address?</Form.Label>
+                <br/>
+                <Form.Check
+                        inline
+                        label="Yes"
+                        type={'checkbox'}
+                        onChange={() => setIncludeAddress(true)}
+                        checked={includeAddress}
+                    />
+                    <Form.Check
+                        inline
+                        label="No"
+                        type={'checkbox'}
+                        onChange={() => setIncludeAddress(false)}
+                        checked={!includeAddress}
+                    />
+                    {includeAddress && (
+                        <div>
+                            <sub>
+                                You have the option to include partial address information if you prefer. 
+                                <br/>
+                                Feel free to fill out only the fields you wish to provide.
+                            </sub>
+                            <AddressForm onChange={handleRecruitAddressChange}/>
+                        </div>
+                    )}
         </Form>
-        
-        <Button>Save</Button>
+        <br/>
+        <Button onClick={()=>{handleSaveRecruitToRecruiter()}}>Save</Button>
     </>
   )
 }

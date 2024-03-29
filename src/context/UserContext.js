@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import DOMPurify from 'dompurify';
+import { v4 as uuidv4 } from 'uuid';
 
 const UserContext = React.createContext()
 
@@ -8,7 +9,7 @@ export function useUser(){
 }
 
 export function UserProvider({ children }) {
-
+    const generateUUID = () => uuidv4();
     const [registerModal, setRegisterModal] = useState(false);
     const [loginModal, setLoginModal] = useState(false);
     const handleCloseLoginModal = () => setLoginModal(false);
@@ -122,7 +123,7 @@ export function UserProvider({ children }) {
         recruits: []
     })
     const [recruit, setRecruit] = useState({
-        id: null,
+        id: uuidv4(),
         timeStamp: null,
         firstName: '',
         lastName: '',
@@ -141,26 +142,27 @@ export function UserProvider({ children }) {
             zip: null
         },
         resume: {
-            experience: '',
-            education: '',
-            skills: '',
+            experience: null,
+            education: null,
+            skills: null,
             additional: null,
             summary: null,
             timeStamp: null
         },
         tailoredResume: {
             id: null,
-            companyName: '',
-            experience: '',
-            education: '',
-            skills: '',
-            additional: '',
-            summary: '',
+            companyName: null,
+            experience: null,
+            education: null,
+            skills: null,
+            additional: null,
+            summary: null,
             timeStamp: null,
         },
         coverLetter: {
-            companyName: '',
-            data: '',
+            id: tailoredResume.id,
+            companyName: null,
+            data: null,
             timeStamp: null
         },
     })
@@ -310,6 +312,7 @@ export function UserProvider({ children }) {
 
 
     const value = {
+        generateUUID,
         user, setUser,
         userAvatars,
         handleSelectAvatar,

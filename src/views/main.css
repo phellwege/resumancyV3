@@ -126,6 +126,13 @@ width: 45%;
 #recruiterScheduleCard{
     width: 30%;
 }
+.addRecruitCard {
+    width: 50%;
+}
+.addRecruitCard form {
+    width: 70%;
+    margin-left: 15%;
+}
 .leftDiv .card-body {
     display: flex;
     flex-direction: column;

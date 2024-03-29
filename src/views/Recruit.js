@@ -3,16 +3,18 @@ import Header from '../components/header/Header'
 import Footer from '../components/footer/Footer'
 import { Card } from 'react-bootstrap'
 import AddRecruit from '../components/recruit/AddRecruit'
-
+import './main.css';
 export default function Recruit() {
   return (
     <>
         <Header />
         <div className='pageWrapper'>
             <div className='secondaryPageWrapper'>
-                <Card>
+                <Card className='addRecruitCard'>
                     <Card.Body>
-                        <AddRecruit />
+                        <div className='cardInnerDiv'>
+                            <AddRecruit />
+                        </div>
                     </Card.Body>
                 </Card>
             </div>
