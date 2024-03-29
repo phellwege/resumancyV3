@@ -292,7 +292,7 @@ export function UserProvider({ children }) {
 
     // editing recruits
     const editRecruit = (recruitId, updatedRecruit) => {
-        setRecruit(prevState => ({
+        setRecruiter(prevState => ({
             ...prevState,
             recruits: prevState.recruits.map(recruit => {
                 if (recruit.id === recruitId) {
@@ -305,8 +305,9 @@ export function UserProvider({ children }) {
             })
         }));
     };
+    
     const editRecruitAddress = (recruitId, updatedAddress) => {
-        setRecruit(prevState => ({
+        setRecruiter(prevState => ({
             ...prevState,
             recruits: prevState.recruits.map(recruit => {
                 if (recruit.id === recruitId) {
@@ -322,8 +323,9 @@ export function UserProvider({ children }) {
             })
         }));
     };
+    
     const editRecruitContactInfo = (recruitId, updatedContactInfo) => {
-        setRecruit(prevState => ({
+        setRecruiter(prevState => ({
             ...prevState,
             recruits: prevState.recruits.map(recruit => {
                 if (recruit.id === recruitId) {
@@ -339,6 +341,7 @@ export function UserProvider({ children }) {
             })
         }));
     };
+    
     
 
     const handleRecruitResumeChange = (key, value) => {
