@@ -6,7 +6,11 @@ import './main.css'
 import { Button, Card } from 'react-bootstrap'
 import RecruitInfoTable from '../components/recruit/RecruitInfoTable'
 import { useNavigate } from 'react-router-dom'
+import { useUser } from '../context/UserContext'
 export default function RecruiterMainPage() {
+    const {
+        setAddingRecruit
+    } = useUser();
     const history = useNavigate()
   return (
     <>
@@ -17,7 +21,14 @@ export default function RecruiterMainPage() {
                     <Card.Body>
                         <div className='cardInnerDiv'>
                             <h4>Recruits</h4>
-                            <Button onClick={() => {history('/Recruit')}}>Add New Recruit</Button>
+                            <Button 
+                            onClick={() => {
+                                setAddingRecruit(); 
+                                history('/Recruit');
+                            }}
+                            >
+                                Add New Recruit
+                            </Button>
                             <h6>Review Recruits</h6>
                             <RecruitInfoTable />
                         </div>

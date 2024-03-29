@@ -2,11 +2,17 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useUser } from '../../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function RecruitInfoTable() {
   const {
-    recruiter
+    recruiter,
+    recruitAction, setRecruitAction,
+    setAddingRecruit,
+    setEditingRecruit,
+    setViewingRecruitDetails,
   } = useUser()
+  const history = useNavigate();
   return (
     <>
         <Table striped bordered hover variant='dark'>
@@ -72,9 +78,26 @@ export default function RecruitInfoTable() {
                 ) : (
                   <td>Create</td>
                 )}
-                <td>More</td>
                 <td>
-                  <Button variant="secondary">Edit</Button>
+                  <a onClick={() => {
+                    setViewingRecruitDetails(recruit.id);
+                    history(`/Recruit/${recruit.id}`)
+                    }}
+                  >
+                    More
+                  </a>
+                </td>
+                <td>
+                  <Button 
+                  variant="secondary" 
+                  onClick={() => {
+                    setEditingRecruit(recruit.id); 
+                    history(`/Recruit/${recruit.id}`)
+                  }}
+                  >
+                    Edit
+                  </Button>
+                  <br/>
                   <Button variant="danger">Remove</Button>
                 </td>
               </tr>

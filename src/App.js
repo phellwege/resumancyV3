@@ -41,6 +41,7 @@ function App() {
             <Route exact path='/UserProfile' element={<UserProfile />} />
             <Route exact path='/RecruiterMainPage' element={<RecruiterMainPage />} />
             <Route exact path='/Recruit' element={ <Recruit/> } />
+            <Route exact path='/Recruit/:recruitId' element={ <Recruit/> } />
             </Routes>
           </React.Fragment>
         

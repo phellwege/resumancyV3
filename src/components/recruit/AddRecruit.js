@@ -33,6 +33,20 @@ export default function AddRecruit() {
         addRecruitToRecruiter(completedRecruit);
         // resetRecruitForm();
     };
+    const handlePhoneNumberChange = (e) => {
+        const inputPhoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+        let formattedPhoneNumber = '';
+        if (inputPhoneNumber.length > 0) {
+            formattedPhoneNumber += `(${inputPhoneNumber.substring(0, 3)})`;
+            if (inputPhoneNumber.length >= 4) {
+                formattedPhoneNumber += ` ${inputPhoneNumber.substring(3, 6)}`;
+            }
+            if (inputPhoneNumber.length >= 7) {
+                formattedPhoneNumber += ` -${inputPhoneNumber.substring(6, 10)}`;
+            }
+        }
+        return formattedPhoneNumber;
+    };
 
     // const resetRecruitForm = () => {
     //     setRecruit({
@@ -108,11 +122,11 @@ export default function AddRecruit() {
                     type="tel"
                     placeholder="(123) 456 - 7890"
                     value={recruit.contactInfo.phone}
-                    onChange={(e) => {handleRecruitContactChange('phone', e.target.value)}}
+                    onChange={(e) => {handleRecruitContactChange('phone', handlePhoneNumberChange(e))}}
                 ></Form.Control>
                 <Form.Label>Email</Form.Label>
                 <Form.Control
-                    type="text"
+                    type="email"
                     placeholder="Enter Email"
                     value={recruit.contactInfo.email}
                     onChange={(e) => {handleRecruitContactChange('email', e.target.value)}}

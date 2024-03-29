@@ -166,6 +166,17 @@ export function UserProvider({ children }) {
             timeStamp: null
         },
     })
+    // sets state for recruiter when routing
+    const [recruitAction, setRecruitAction] = useState(null);
+    const setAddingRecruit = () => {
+        setRecruitAction("adding");
+    };
+    const setEditingRecruit = () => {
+        setRecruitAction("editing");
+    };
+    const setViewingRecruitDetails = () => {
+        setRecruitAction("viewing");
+    };
 
     const [review, setReview] = useState({
         userID : user.id,
@@ -252,7 +263,6 @@ export function UserProvider({ children }) {
     };
 
     // handleChange Recruit
-
     const handleRecruitChange = (key, value) => {
         setRecruit(prevState => ({
             ...prevState,
@@ -279,6 +289,57 @@ export function UserProvider({ children }) {
             }
         }));
     };
+
+    // editing recruits
+    const editRecruit = (recruitId, updatedRecruit) => {
+        setRecruit(prevState => ({
+            ...prevState,
+            recruits: prevState.recruits.map(recruit => {
+                if (recruit.id === recruitId) {
+                    return {
+                        ...recruit,
+                        ...updatedRecruit
+                    };
+                }
+                return recruit; // Return unchanged recruit if ID doesn't match
+            })
+        }));
+    };
+    const editRecruitAddress = (recruitId, updatedAddress) => {
+        setRecruit(prevState => ({
+            ...prevState,
+            recruits: prevState.recruits.map(recruit => {
+                if (recruit.id === recruitId) {
+                    return {
+                        ...recruit,
+                        address: {
+                            ...recruit.address,
+                            ...updatedAddress
+                        }
+                    };
+                }
+                return recruit; // Return unchanged recruit if ID doesn't match
+            })
+        }));
+    };
+    const editRecruitContactInfo = (recruitId, updatedContactInfo) => {
+        setRecruit(prevState => ({
+            ...prevState,
+            recruits: prevState.recruits.map(recruit => {
+                if (recruit.id === recruitId) {
+                    return {
+                        ...recruit,
+                        contactInfo: {
+                            ...recruit.contactInfo,
+                            ...updatedContactInfo
+                        }
+                    };
+                }
+                return recruit; // Return unchanged recruit if ID doesn't match
+            })
+        }));
+    };
+    
 
     const handleRecruitResumeChange = (key, value) => {
         setRecruit(prevState => ({
@@ -330,9 +391,15 @@ export function UserProvider({ children }) {
         handleRecruitChange,
         handleRecruitAddressChange,
         handleRecruitContactChange,
+        editRecruit,editRecruitAddress,editRecruitContactInfo,
         handleRecruitResumeChange,
         handleRecruitTailoredResumeChange,
         handleRecruitCoverLetterChange,
+
+        recruitAction, setRecruitAction,
+        setAddingRecruit,
+        setEditingRecruit,
+        setViewingRecruitDetails,
 
         businessRegistrationModal, setBusinessRegistrationModal,
         handleOpenBusinessRegModal,
