@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AddRecruit() {
     const {
-        recruit,
+        recruit,setRecruit,
         generateUUID,
         handleRecruitChange,
         handleRecruitAddressChange,
@@ -31,7 +31,7 @@ export default function AddRecruit() {
             completedRecruit.address.zip = null;
         }
         addRecruitToRecruiter(completedRecruit);
-        // resetRecruitForm();
+        resetRecruitForm();
     };
     const handlePhoneNumberChange = (e) => {
         const inputPhoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
@@ -48,46 +48,52 @@ export default function AddRecruit() {
         return formattedPhoneNumber;
     };
 
-    // const resetRecruitForm = () => {
-    //     setRecruit({
-    //         id: null,
-    //         timeStamp: null,
-    //         firstName: '',
-    //         lastName: '',
-    //         jobTitle: '',
-    //         industry: null,
-    //         contactInfo: {
-    //             phone: '',
-    //             email: '',
-    //             socialMedia: []
-    //         },
-    //         address: includeAddress ? { street: null, appt: null, city: null, state: null, zip: null } : null,
-    //         resume: {
-    //             experience: null,
-    //             education: null,
-    //             skills: null,
-    //             additional: null,
-    //             summary: null,
-    //             timeStamp: null
-    //         },
-    //         tailoredResume: {
-    //             id: null,
-    //             companyName: null,
-    //             experience: null,
-    //             education: null,
-    //             skills: null,
-    //             additional: null,
-    //             summary: null,
-    //             timeStamp: null,
-    //         },
-    //         coverLetter: {
-    //             id: null,
-    //             companyName: null,
-    //             data: null,
-    //             timeStamp: null
-    //         },
-    //     });
-    // };
+    const resetRecruitForm = () => {
+        setRecruit({
+            id: null,
+            timeStamp: null,
+            firstName: '',
+            lastName: '',
+            jobTitle: '',
+            industry: null,
+            contactInfo: {
+                phone: '',
+                email: '',
+                socialMedia: []
+            },
+            address: { 
+                street: null, 
+                appt: null,
+                city: null, 
+                state: null, 
+                zip: null 
+            },
+            resume: {
+                experience: null,
+                education: null,
+                skills: null,
+                additional: null,
+                summary: null,
+                timeStamp: null
+            },
+            tailoredResume: {
+                id: null,
+                companyName: null,
+                experience: null,
+                education: null,
+                skills: null,
+                additional: null,
+                summary: null,
+                timeStamp: null,
+            },
+            coverLetter: {
+                id: null,
+                companyName: null,
+                data: null,
+                timeStamp: null
+            },
+        });
+    };
   return (
     <>
         <h3>Add Recruit</h3>
