@@ -21,7 +21,7 @@ export default function RecruiterMainPage() {
                     <Card.Body>
                         <div className='cardInnerDiv'>
                             <h4>Recruits</h4>
-                            <h6>Review Recruits</h6>
+                            <h6>Recruits Overview</h6>
                             <RecruitInfoTable />
                             <Button 
                             variant='primary'

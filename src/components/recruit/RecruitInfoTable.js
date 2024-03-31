@@ -26,7 +26,7 @@ export default function RecruitInfoTable() {
               <th>Contact Info</th>
               <th>Address</th>
               <th>Base Resume</th>
-              <th>More</th>
+              <th>Details</th>
               <th>Edit / Remove</th>
             </tr>
           </thead>
@@ -97,7 +97,7 @@ export default function RecruitInfoTable() {
                     history(`/Recruit/${recruit.id}`)
                     }}
                   >
-                    <Link>More</Link>
+                    <Link>View</Link>
                   </a>
                 </td>
                 <td>
