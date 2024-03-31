@@ -19,6 +19,7 @@ import Review from './views/Review';
 import UserProfile from './views/UserProfile';
 import RecruiterMainPage from './views/RecruiterMainPage';
 import Recruit from './views/Recruit';
+import RecruitCreateResume from './views/RecruitCreateResume';
 
 function App() {
   const [theme, setTheme] = useState({mode: 'light'})
@@ -42,6 +43,7 @@ function App() {
             <Route exact path='/RecruiterMainPage' element={<RecruiterMainPage />} />
             <Route exact path='/Recruit' element={ <Recruit/> } />
             <Route exact path='/Recruit/:recruitId' element={ <Recruit/> } />
+            <Route exact path='/RecruitCreateResume/:recruitId' element={<RecruitCreateResume />} />
             </Routes>
           </React.Fragment>
         

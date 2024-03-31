@@ -55,6 +55,7 @@ function Header(props) {
         && window.location.pathname !== '/RecruiterSetupPage'
         && window.location.pathname !== '/Recruit'
         && !window.location.pathname.startsWith('/Recruit/')
+        && !window.location.pathname.startsWith('/RecruitCreateResume/')
         ){
             return (
                 <Link to='/' className='backButton'>

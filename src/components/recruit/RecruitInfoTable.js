@@ -9,6 +9,8 @@ export default function RecruitInfoTable() {
     recruiter,
     recruitAction, setRecruitAction,
     setAddingRecruit,
+    setRecruitCreateBaseResume,
+    setRecruitCreateTailoredResume,
     setEditingRecruit,
     setViewingRecruitDetails,
   } = useUser()
@@ -80,7 +82,14 @@ export default function RecruitInfoTable() {
                 {recruit.resume.timeStamp ? (
                   <td>View</td>
                 ) : (
-                  <td>Create</td>
+                  <td>
+                    <a onClick={() => {
+                      setRecruitCreateBaseResume(recruit.id);
+                      history(`/RecruitCreateResume/${recruit.id}`)
+                    }}>
+                      Create
+                    </a>
+                  </td>
                 )}
                 <td>
                   <a onClick={() => {

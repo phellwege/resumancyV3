@@ -177,6 +177,12 @@ export function UserProvider({ children }) {
     const setViewingRecruitDetails = () => {
         setRecruitAction("viewing");
     };
+    const setRecruitCreateBaseResume = () => {
+        setRecruitAction("RecruitCreatingBaseResume");
+    }
+    const setRecruitCreateTailoredResume = () => {
+        setRecruitAction("RecruitCreatingTailoredResume");
+    }
 
     const [review, setReview] = useState({
         userID : user.id,
@@ -403,6 +409,8 @@ export function UserProvider({ children }) {
         setAddingRecruit,
         setEditingRecruit,
         setViewingRecruitDetails,
+        setRecruitCreateBaseResume,
+        setRecruitCreateTailoredResume,
 
         businessRegistrationModal, setBusinessRegistrationModal,
         handleOpenBusinessRegModal,
