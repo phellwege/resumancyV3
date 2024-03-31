@@ -3,7 +3,7 @@ import { Form, Row, Col } from 'react-bootstrap';
 import usStates from 'states-us';
 
 import '../../views/main.css';
-export default function AddressForm({onChange}) {
+export default function AddressForm({ onChange}) {
   return (
     <div className='addressForm'>
         <sub>Address Info is Optional</sub>
