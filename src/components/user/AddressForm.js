@@ -3,7 +3,10 @@ import { Form, Row, Col } from 'react-bootstrap';
 import usStates from 'states-us';
 
 import '../../views/main.css';
-export default function AddressForm({ onChange}) {
+export default function AddressForm({ address, onChange}) {
+    const handleChange = (key, value) => {
+        onChange(key, value);
+      };
   return (
     <div className='addressForm'>
         <sub>Address Info is Optional</sub>
@@ -16,7 +19,7 @@ export default function AddressForm({ onChange}) {
             <Form.Control 
             type="text" 
             placeholder="Street Address" 
-            onChange={e => onChange({ street: e.target.value })} 
+            onChange={(e) => {handleChange('street', e.target.value)}} 
             maxLength='50'
             />
         </Col>
@@ -27,7 +30,7 @@ export default function AddressForm({ onChange}) {
             <Form.Control 
             type="text" 
             placeholder="City" 
-            onChange={e => onChange({ city: e.target.value })} 
+            onChange={(e) => {handleChange('city', e.target.value)}} 
             maxLength='50'
             />
         </Col>
@@ -35,7 +38,7 @@ export default function AddressForm({ onChange}) {
         <Form.Group as={Row} controlId="addressState">
         <Form.Label column sm="2">State</Form.Label>
             <Col sm="5">
-            <Form.Control as="select" onChange={e => onChange({ state: e.target.value })}>
+            <Form.Control as="select" onChange={(e) => {handleChange('state', e.target.value)}}>
                 {usStates.map(state => (
                     <option key={state.name} value={state.abbr}>{state.name}</option>
                 ))}
@@ -48,7 +51,7 @@ export default function AddressForm({ onChange}) {
             <Form.Control 
             type="text" 
             placeholder="ZIP" 
-            onChange={e => onChange({ zip: e.target.value })} 
+            onChange={(e) => handleChange('zip', e.target.value)} 
             maxLength='50'
             />
         </Col>

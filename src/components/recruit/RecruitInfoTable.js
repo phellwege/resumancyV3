@@ -50,21 +50,25 @@ export default function RecruitInfoTable() {
                   {recruit.address.street && (
                     <>
                     {recruit.address.street}
+                    <br/>
                     </>
                   )}
                   {recruit.address.appt && (
                     <>
                     {recruit.address.appt}
+                    <br/>
                     </>
                   )}
                   {recruit.address.city && (
                     <>
                     {recruit.address.city}
+                    {', '}
                     </>
                   )}
                   {recruit.address.state && (
                     <>
                     {recruit.address.state}
+                    <br/>
                     </>
                   )}
                   {recruit.address.zip && (
