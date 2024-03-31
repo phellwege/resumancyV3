@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useUser } from '../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function RecruitInfoTable() {
   const {
@@ -87,7 +87,7 @@ export default function RecruitInfoTable() {
                       setRecruitCreateBaseResume(recruit.id);
                       history(`/RecruitCreateResume/${recruit.id}`)
                     }}>
-                      Create
+                      <Link>Create</Link>
                     </a>
                   </td>
                 )}
@@ -97,7 +97,7 @@ export default function RecruitInfoTable() {
                     history(`/Recruit/${recruit.id}`)
                     }}
                   >
-                    More
+                    <Link>More</Link>
                   </a>
                 </td>
                 <td>
