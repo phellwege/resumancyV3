@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Form, Alert } from 'react-bootstrap';
@@ -10,6 +10,7 @@ import Logo from '../static/logo_monochrome.png'
 import UserSetupModal from './user/UserSetupModal';
 import { useAuth } from '../context/AuthContext';
 export default function LoginAndRegistration() {
+    const history = useNavigate();
     const {
         registerModal,
         loginModal,
@@ -27,11 +28,14 @@ export default function LoginAndRegistration() {
     const {
         register,
         login,
-        resetPassword
+        resetPassword,
+        setLoading
     } = useAuth();
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
+    const loginEmailRef = useRef();
+    const loginPasswordRef = useRef();
     const [error, setError] = useState('');
     const validatePassword = () => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -47,16 +51,29 @@ export default function LoginAndRegistration() {
             }
             try {
                 setError('')
-                // setLoading(true)
+                setLoading(true)
                 await register(emailRef.current.value, passwordRef.current.value);
                 handleCloseRegisterModal(); 
                 handleOpenSetupUserModal()
-                // history('/')
             } 
             catch(err) {
                 setError('Failed to create account ' + err)
             }
-            // setLoading(false)
+            setLoading(false)
+        }
+    async function handleLoginRequest(e) {
+            // e.preventDefault();
+            try {
+                setError('')
+                setLoading(true)
+                await login(loginEmailRef.current.value, loginPasswordRef.current.value);
+                handleCloseRegisterModal(); 
+                history('/')
+            } 
+            catch(err) {
+                setError('Failed to create account ' + err)
+            }
+            setLoading(false)
         }
   return (
     <>
@@ -82,6 +99,7 @@ export default function LoginAndRegistration() {
                                 type="email"
                                 placeholder="Enter email"
                                 value={user.contactInfo.email}
+                                ref={loginEmailRef}
                             />
                             <Form.Text className="text-muted">
                                 We'll never share your email with anyone else.
@@ -93,7 +111,8 @@ export default function LoginAndRegistration() {
                             <Form.Control 
                             autoComplete='current-password'
                             type="password" 
-                            placeholder="Password" 
+                            placeholder="Password"
+                            ref={loginPasswordRef}
                             />
                         </Form.Group>
                         <Link to=''>Forgot Password</Link>
