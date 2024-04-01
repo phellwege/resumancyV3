@@ -1,36 +1,37 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Form } from 'react-bootstrap';
 import { useUser } from '../../context/UserContext';
-import AddressForm from './AddressForm';
 import SelectAvatarModal from './SelectAvatarModal';
 import '../../views/main.css';
-export default function UserSetupModal() {
-  const {
-    user,
-    setupUserModal,
-    handleCloseSetupUserModal,
-    handleUserChange,
-    handleContactChange,
-    handleOpenSelectAvatar
-  } = useUser();
 
-  const handlePhoneNumberChange = (e) => {
-    const inputPhoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-    let formattedPhoneNumber = '';
-    if (inputPhoneNumber.length > 0) {
-        formattedPhoneNumber += `(${inputPhoneNumber.substring(0, 3)})`;
-        if (inputPhoneNumber.length >= 4) {
-            formattedPhoneNumber += ` ${inputPhoneNumber.substring(3, 6)}`;
+export default function UserSetupModal() {
+    const {
+        user,
+        setupUserModal,
+        handleCloseSetupUserModal,
+        handleUserChange,
+        handleContactChange,
+        handleOpenSelectAvatar
+    } = useUser();
+    
+    const handlePhoneNumberChange = (e) => {
+        const inputPhoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+        let formattedPhoneNumber = '';
+        if (inputPhoneNumber.length > 0) {
+            formattedPhoneNumber += `(${inputPhoneNumber.substring(0, 3)})`;
+            if (inputPhoneNumber.length >= 4) {
+                formattedPhoneNumber += ` ${inputPhoneNumber.substring(3, 6)}`;
+            }
+            if (inputPhoneNumber.length >= 7) {
+                formattedPhoneNumber += ` -${inputPhoneNumber.substring(6, 10)}`;
+            }
         }
-        if (inputPhoneNumber.length >= 7) {
-            formattedPhoneNumber += ` -${inputPhoneNumber.substring(6, 10)}`;
-        }
-    }
-    return formattedPhoneNumber;
-};
+        return formattedPhoneNumber;
+    };
+    
 
 
 
@@ -61,7 +62,7 @@ export default function UserSetupModal() {
                             />
                         </Form.Group>
                         <Form.Group>
-                        <Form.Label>Last Name</Form.Label>
+                            <Form.Label>Last Name</Form.Label>
                             <Form.Control 
                                 type="text"
                                 placeholder="Enter Last Name"
@@ -70,7 +71,7 @@ export default function UserSetupModal() {
                             />
                         </Form.Group>
                         <Form.Group>
-                        <Form.Label>Job Title</Form.Label>
+                            <Form.Label>Job Title</Form.Label>
                             <Form.Control 
                                 type="text"
                                 placeholder="Enter Current Job Title"
@@ -79,23 +80,23 @@ export default function UserSetupModal() {
                             />
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>Phone Number</Form.Label>
-                          <Form.Control 
-                              type="tel"
-                              placeholder="(123) 456 - 7890"
-                              value={ user.contactInfo.phone }
-                              onChange={(e) => handleContactChange('phone', handlePhoneNumberChange(e))}
-                          />
-                      </Form.Group>
-                      <Form.Group>
-                      <Form.Label>Social Media Accounts</Form.Label>
-                          <Form.Control 
-                              as="textarea"
-                              placeholder="Enter Social Media Accounts"
-                              value={user.contactInfo.socialMedia}
-                              onChange={(e) => handleContactChange('socialMedia', e.target.value)}
-                          />
-                    </Form.Group>
+                            <Form.Label>Phone Number</Form.Label>
+                            <Form.Control 
+                                type="tel"
+                                placeholder="(123) 456 - 7890"
+                                value={ user.contactInfo.phone }
+                                onChange={(e) => handleContactChange('phone', handlePhoneNumberChange(e))}
+                            />
+                        </Form.Group>
+                            <Form.Group>
+                            <Form.Label>Social Media Accounts</Form.Label>
+                            <Form.Control 
+                                as="textarea"
+                                placeholder="Enter Social Media Accounts"
+                                value={user.contactInfo.socialMedia}
+                                onChange={(e) => handleContactChange('socialMedia', e.target.value)}
+                            />
+                        </Form.Group>
                     </Form>
                 </div>
                 <div className='loginModalLogo'>

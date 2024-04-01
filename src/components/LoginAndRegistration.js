@@ -1,13 +1,14 @@
-import React from 'react'
+import React, {useState, useRef} from 'react'
 import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { Form } from 'react-bootstrap';
+import { Form, Alert } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 
 import '../views/main.css';
 import Logo from '../static/logo_monochrome.png'
 import UserSetupModal from './user/UserSetupModal';
+import { useAuth } from '../context/AuthContext';
 export default function LoginAndRegistration() {
     const {
         registerModal,
@@ -23,7 +24,40 @@ export default function LoginAndRegistration() {
         handleUserChange,
         user
     } = useUser()
-    
+    const {
+        register,
+        login,
+        resetPassword
+    } = useAuth();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const passwordConfirmRef = useRef();
+    const [error, setError] = useState('');
+    const validatePassword = () => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return passwordRegex.test(passwordRef.current.value);
+    };
+    async function handleRegistrationRequest(e) {
+            // e.preventDefault();
+            if(passwordRef.current.value !== passwordConfirmRef.current.value){
+                return setError('Passwords do not match');
+            }
+            if (!validatePassword()) {
+                return setError('Password must have at least 8 characters, including 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.');
+            }
+            try {
+                setError('')
+                // setLoading(true)
+                await register(emailRef.current.value, passwordRef.current.value);
+                handleCloseRegisterModal(); 
+                handleOpenSetupUserModal()
+                // history('/')
+            } 
+            catch(err) {
+                setError('Failed to create account ' + err)
+            }
+            // setLoading(false)
+        }
   return (
     <>
     <UserSetupModal />
@@ -83,14 +117,33 @@ export default function LoginAndRegistration() {
             </div>
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseLoginModal}>
+            <Button 
+            variant="secondary" 
+            onClick={
+                handleCloseLoginModal
+                }
+            >
                 Close
             </Button>
-            <Button variant="primary" onClick={() => {handleCloseLoginModal()}}>
+            <Button 
+            variant="primary" 
+            onClick={() => {
+                handleCloseLoginModal()
+                }}
+            >
                 Continue
             </Button>
         </Modal.Footer>
     </Modal>
+
+    {error && (
+            <Alert variant='danger' className='alerts' id='registrationError' dismissible>
+                <Alert.Heading>
+                    Error
+                </Alert.Heading>
+                {error}
+            </Alert>
+        )}
 
     <Modal 
     show={registerModal} 
@@ -113,6 +166,7 @@ export default function LoginAndRegistration() {
                                 placeholder="Enter email"
                                 value={user.contactInfo.email}
                                 onChange={(e) => handleContactChange('email', e.target.value)}
+                                ref={emailRef}
                             />
                             <Form.Text className="text-muted">
                                 We'll never share your email with anyone else.
@@ -134,11 +188,13 @@ export default function LoginAndRegistration() {
                             <Form.Control 
                             type="password" 
                             placeholder="Enter Password"
+                            ref={passwordRef}
                             />
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control 
                             type="password" 
                             placeholder="Confirm Password" 
+                            ref={passwordConfirmRef}
                             />
                         </Form.Group>
                     </Form>
@@ -175,10 +231,20 @@ export default function LoginAndRegistration() {
                     </Link>
                 </div>
                 <div className='modalFooterRight'>
-                    <Button variant="secondary" onClick={handleCloseRegisterModal}>
+                    <Button 
+                    variant="secondary" 
+                    onClick={
+                        handleCloseRegisterModal
+                        }
+                    >
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => {handleCloseRegisterModal(); handleOpenSetupUserModal()}}>
+                    <Button 
+                    variant="primary" 
+                    onClick={() => {
+                        handleRegistrationRequest();
+                        }}
+                    >
                         Next
                     </Button>
                 </div>

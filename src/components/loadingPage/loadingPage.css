@@ -1,0 +1,18 @@
+.loadingPageWrapper {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color:rgba(0,0,0,.85);
+    color: whitesmoke;
+    position: fixed;
+    z-index: 9999;
+}
+.loadingImgDiv {
+    width: 10%;
+}
+.loadingImgDiv img{
+    width: 100%;
+}
