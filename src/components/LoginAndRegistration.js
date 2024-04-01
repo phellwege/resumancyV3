@@ -42,7 +42,7 @@ export default function LoginAndRegistration() {
         return passwordRegex.test(passwordRef.current.value);
     };
     async function handleRegistrationRequest(e) {
-            // e.preventDefault();
+            e.preventDefault();
             if(passwordRef.current.value !== passwordConfirmRef.current.value){
                 return setError('Passwords do not match');
             }
@@ -52,17 +52,20 @@ export default function LoginAndRegistration() {
             try {
                 setError('')
                 setLoading(true)
-                await register(emailRef.current.value, passwordRef.current.value);
+                const userCred = await register(emailRef.current.value, passwordRef.current.value);
+                const userId = userCred.user.uid;
+                handleUserChange('id', userId);
                 handleCloseRegisterModal(); 
                 handleOpenSetupUserModal()
             } 
             catch(err) {
                 setError('Failed to create account ' + err)
+            } finally {
+                setLoading(false);
             }
-            setLoading(false)
         }
     async function handleLoginRequest(e) {
-            // e.preventDefault();
+            e.preventDefault();
             try {
                 setError('')
                 setLoading(true)
@@ -72,8 +75,9 @@ export default function LoginAndRegistration() {
             } 
             catch(err) {
                 setError('Failed to create account ' + err)
+            } finally {
+                setLoading(false);
             }
-            setLoading(false)
         }
   return (
     <>
@@ -146,7 +150,7 @@ export default function LoginAndRegistration() {
             </Button>
             <Button 
             variant="primary" 
-            onClick={() => {
+            onClick={(e) => {
                 handleCloseLoginModal()
                 }}
             >
@@ -260,8 +264,8 @@ export default function LoginAndRegistration() {
                     </Button>
                     <Button 
                     variant="primary" 
-                    onClick={() => {
-                        handleRegistrationRequest();
+                    onClick={(e) => {
+                        handleRegistrationRequest(e);
                         }}
                     >
                         Next
