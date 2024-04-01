@@ -1,0 +1,93 @@
+.footWrap {
+    width: 100%;
+    padding: .5%;
+    bottom: 0;
+    color: #E4FDE1;
+}
+.footWrap a {
+    text-decoration: none;
+    color: #F45B69;
+    line-height: normal;
+    font-weight: bold;
+}
+.loginFootWrap {
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 10%;
+    margin-bottom: 5%;
+}
+#loginFooterRightDiv ul {
+    display: flex;
+}
+#loginSecondaryFootWrap {
+    justify-content: space-around;
+    align-items: center;
+}
+#loginSocialIcons {
+    bottom: 0;
+    margin-right: 20%;
+}
+.secondaryFootWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.subscript {
+    color: grey;
+    bottom:0;
+    font-size: small;
+    display: flex;
+    justify-content: space-around;
+}
+.socialImg {
+    margin: 10px 10px 0 0;
+    width: 32px;
+    height: 32px
+}
+.socialImg:hover {
+    box-shadow: 1px 1px 15px #F45B69;
+    border-radius: .25em;
+}
+.footerRightDiv {
+    margin-top: 1%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+.footerRightDiv ul {
+    list-style: none;
+}
+.footerRightDiv a {
+    text-decoration: none;
+    color: #F45B69;
+    line-height: normal;
+}
+.footerLeftDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#loginAndRegFoot {
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 5%;
+}
+@media (max-width: 650px) {
+    #loginSecondaryFootWrap {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .loginFootWrap {
+        margin-bottom: 15%;
+    }
+    #loginSocialIcons {
+        margin: 0;
+    }
+}
