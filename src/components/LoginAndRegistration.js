@@ -242,7 +242,7 @@ export default function LoginAndRegistration() {
         <Modal.Footer>
         <div className='modalFooterWrap'>
                 <div className='modalFooterLeft'>
-                    <sub>Need To Register a Recruiter Account Instead?</sub>
+                    <sub>Need To Register a Business Account Instead?</sub>
                     <Link 
                     to='' 
                     onClick={() =>{
@@ -250,7 +250,7 @@ export default function LoginAndRegistration() {
                         handleOpenBusinessRegModal()
                         }}
                     >
-                        Recruiter Registration
+                        Business Registration
                     </Link>
                 </div>
                 <div className='modalFooterRight'>

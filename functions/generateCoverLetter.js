@@ -7,7 +7,7 @@ const openai = new OpenAI({ apiKey });
 async function generateCoverLetterWithRetry(user, retryCount = 0) {
     try {
         const gptResponse = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4o-mini',
             messages: [
                 {
                     role: 'system',

@@ -1,6 +1,5 @@
 
 import React, {useState} from 'react';
-import './App.css';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import PrivateRoute from '../src/components/privateRoute';

@@ -9,7 +9,7 @@ const openai = new OpenAI({ apiKey });
 async function summarizeResumeWithRetry(user, retryCount = 0) {
     try {
         const gptResponse = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4o-mini',
             messages: [
                 {
                     role: 'system',
@@ -56,7 +56,7 @@ async function summarizeResumeWithRetry(user, retryCount = 0) {
 async function generateExperienceSectionWithRetry(user, retryCount = 0) {
     try {
         const gptResponse = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4o-mini',
             messages: [
                 {
                     role: 'system',
@@ -103,7 +103,7 @@ async function generateExperienceSectionWithRetry(user, retryCount = 0) {
 async function generateSkillsSectionWithRetry(user, retryCount = 0) {
     try {
         const gptResponse = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4o-mini',
             messages: [
                 {
                     role: 'system',
