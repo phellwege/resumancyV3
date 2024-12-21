@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import DOMPurify from 'dompurify';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -109,9 +109,9 @@ export function UserProvider({ children }) {
     // <option value={2}>Moderate Recruiters (11-50 recruits per month)</option>
     // <option value={3}>High-Volume Recruiters (51+ recruits per month)</option>
     // pricing is adjusted as follows
-    // 1 price is 4.99 / mo
-    // 2 price is 19.99 / mo
-    // 3 price is 49.99 / mo
+    // 1 price is 25.00 / mo
+    // 2 price is 50.00 / mo
+    // 3 price is 250.00 / mo
     const [recruiter, setRecruiter] = useState({
         userId: user.id,
         recruitTier: 0,
@@ -381,7 +381,7 @@ export function UserProvider({ children }) {
     };
 
 
-    const value = {
+    const value = useMemo(() =>({
         generateUUID,
         user, setUser,
         userAvatars,
@@ -447,7 +447,7 @@ export function UserProvider({ children }) {
         handleChangeRecruiter,
         handleChangeRecruiterSubscription,
 
-    }
+    }), [user, registerModal, loginModal, recruiter, recruit, recruitAction]);
 
     return (
         <UserContext.Provider value={value}>

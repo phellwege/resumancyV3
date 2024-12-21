@@ -20,7 +20,6 @@ export default function LoginAndRegistration() {
         handleCloseRegisterModal,
         handleOpenRegisterModal,
         handleOpenBusinessRegModal,
-
         handleContactChange,
         handleUserChange,
         user
@@ -31,12 +30,15 @@ export default function LoginAndRegistration() {
         resetPassword,
         setLoading
     } = useAuth();
+
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
     const loginEmailRef = useRef();
     const loginPasswordRef = useRef();
+
     const [error, setError] = useState('');
+
     const validatePassword = () => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         return passwordRegex.test(passwordRef.current.value);
@@ -70,7 +72,8 @@ export default function LoginAndRegistration() {
                 setError('')
                 setLoading(true)
                 await login(loginEmailRef.current.value, loginPasswordRef.current.value);
-                handleCloseRegisterModal(); 
+                
+                handleCloseLoginModal();
                 history('/')
             } 
             catch(err) {
@@ -103,6 +106,7 @@ export default function LoginAndRegistration() {
                                 type="email"
                                 placeholder="Enter email"
                                 value={user.contactInfo.email}
+                                onChange={(e) => handleContactChange('email', e.target.value)}
                                 ref={loginEmailRef}
                             />
                             <Form.Text className="text-muted">
@@ -119,7 +123,7 @@ export default function LoginAndRegistration() {
                             ref={loginPasswordRef}
                             />
                         </Form.Group>
-                        <Link to=''>Forgot Password</Link>
+                        <Link to='' onClick={resetPassword}>Forgot Password</Link>
                     </Form>
                 </div>
                 <div className='loginModalLogo'>
@@ -151,7 +155,7 @@ export default function LoginAndRegistration() {
             <Button 
             variant="primary" 
             onClick={(e) => {
-                handleCloseLoginModal()
+                handleLoginRequest(e); // call login function
                 }}
             >
                 Continue
@@ -185,6 +189,7 @@ export default function LoginAndRegistration() {
                         <Form.Group>
                             <Form.Label>Email</Form.Label>
                             <Form.Control 
+                                autoComplete='email'
                                 type="email"
                                 placeholder="Enter email"
                                 value={user.contactInfo.email}

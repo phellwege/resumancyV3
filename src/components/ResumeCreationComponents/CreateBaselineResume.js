@@ -81,7 +81,7 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.experience.length} / 1800)</sub>
+                                        <sub>({user.resume.experience.length} / 8000)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
@@ -89,7 +89,7 @@ export default function CreateBaselineResume() {
                                     placeholder='Experience'
                                     value={user.resume.experience}
                                     onChange={(e) => handleResumeChange('experience', sanitizeUserInput(e.target.value))}
-                                    maxLength='1800'
+                                    maxLength='8000'
                                     className="mobile-textarea"
                                     />
                                     <Form.Text className='text-muted'>
@@ -111,7 +111,7 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.education.length} / 125)</sub>
+                                        <sub>({user.resume.education.length} / 300)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
@@ -119,7 +119,7 @@ export default function CreateBaselineResume() {
                                     placeholder='Education'
                                     value={user.resume.education}
                                     onChange={(e) => handleResumeChange('education', sanitizeUserInput(e.target.value))}
-                                    maxLength='125'
+                                    maxLength='300'
                                     className="mobile-textarea"
                                     />
                                     <Form.Text className='text-muted'>
@@ -141,7 +141,7 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.skills.length} / 125)</sub>
+                                        <sub>({user.resume.skills.length} / 300)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
@@ -149,7 +149,7 @@ export default function CreateBaselineResume() {
                                     placeholder='Skills'
                                     value={user.resume.skills}
                                     onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
-                                    maxLength='125'
+                                    maxLength='300'
                                     className="mobile-textarea"
                                     />
                                     <Form.Text className='text-muted'>
@@ -171,7 +171,7 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.additional.length} / 250)</sub>
+                                        <sub>({user.resume.additional.length} / 500)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
@@ -179,7 +179,7 @@ export default function CreateBaselineResume() {
                                     placeholder='Additional Information' 
                                     value={user.resume.additional}
                                     onChange={(e) => handleResumeChange('additional', sanitizeUserInput(e.target.value))}
-                                    maxLength='250'
+                                    maxLength='500'
                                     className="mobile-textarea"
                                     />
                                     <Form.Text className='text-muted'>
