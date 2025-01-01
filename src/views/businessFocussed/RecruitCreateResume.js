@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/header/Header';
-import Footer from '../components/footer/Footer';
-import { useUser } from '../context/UserContext';
+import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
+import { useUser } from '../../context/UserContext';
 export default function RecruitCreateResume() {
     const {
         recruiter,

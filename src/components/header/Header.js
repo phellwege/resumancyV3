@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Alert, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import LoginAndRegistration from '../LoginAndRegistration';
-import RegisterRecruiter from '../RegisterRecruiter';
+// import RegisterRecruiter from '../RegisterRecruiter';
 import NavBar from '../NavBar/NavBar';
 
 import { useUser } from '../../context/UserContext';
@@ -51,11 +51,11 @@ function Header(props) {
     }
     const ifNotfrontPage = () => {
         if(window.location.pathname !== '/' 
-        && window.location.pathname !== '/RecruiterMainPage'
-        && window.location.pathname !== '/RecruiterSetupPage'
-        && window.location.pathname !== '/Recruit'
-        && !window.location.pathname.startsWith('/Recruit/')
-        && !window.location.pathname.startsWith('/RecruitCreateResume/')
+        // && window.location.pathname !== '/RecruiterMainPage'
+        // && window.location.pathname !== '/RecruiterSetupPage'
+        // && window.location.pathname !== '/Recruit'
+        // && !window.location.pathname.startsWith('/Recruit/')
+        // && !window.location.pathname.startsWith('/RecruitCreateResume/')
         ){
             return (
                 <Link to='/' className='backButton'>
@@ -68,7 +68,7 @@ return (
     <>
     <NavBar />
     <LoginAndRegistration />
-    <RegisterRecruiter />
+    {/* <RegisterRecruiter /> */}
     <div className="head_wrap">
         <div className='headerLeft'>
             
@@ -99,9 +99,7 @@ return (
                     <Link to='' onClick={handleOpenLoginModal}>
                         <CgProfile size={45} />
                     </Link>
-                    <Link to='' onClick={handleOpenLoginModal}>Login</Link>
-                    Or
-                    <Link to='' onClick={handleOpenRegisterModal}>Register</Link>
+                    <Link to='' onClick={handleOpenLoginModal}>Login / Register</Link>
                 </div>
             )}
         </div>

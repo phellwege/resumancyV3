@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function RecruitInfoTable() {
   const {
-    recruiter,
+    // recruiter,
     recruitAction, setRecruitAction,
     setAddingRecruit,
     setRecruitCreateBaseResume,

@@ -1,127 +1,48 @@
-// handles login, registration, and subscription
-import React, {useContext, useEffect, useState} from 'react';
-import {db, auth, storage} from '../server/firebaseConfig';
+import React, { useContext, useEffect, useState } from 'react';
+import { auth } from '../server/firebaseConfig';
 import LoadingPage from '../components/loadingPage/LoadingPage';
+import { onAuthStateChanged } from 'firebase/auth';
+import * as firebaseui from 'firebaseui';
 
-import { 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    sendPasswordResetEmail
-} from 'firebase/auth';
+const AuthContext = React.createContext();
 
-import {
-    collection,
-    doc,
-    getDocs,
-    getDoc,
-    setDoc,
-    addDoc,
-    query,
-    where,
-    updateDoc,
-    Timestamp,
-    serverTimestamp,
-} from 'firebase/firestore';
+let firebaseUiInstance; // Singleton instance
 
-import { 
-    getStorage, 
-    ref, 
-    uploadBytes,
-    listAll,
-    getDownloadURL
-} from "firebase/storage";
-
-const AuthContext = React.createContext()
-export function useAuth(){
-    return useContext(AuthContext)
+export function useAuth() {
+  return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }) {
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
 
-    function register(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password)
-    };
-    function login(email, password) {
-        return signInWithEmailAndPassword(auth, email, password)
-    };
-    function logout() {
-        return auth.signOut();
+  useEffect(() => {
+    if (!firebaseUiInstance) {
+      firebaseUiInstance = new firebaseui.auth.AuthUI(auth); // Create only if it doesn't exist
     }
-    function resetPassword(email) {
-        return sendPasswordResetEmail(auth, email);
-    }
-    
 
-    // const fetchSubscription = async () => {
-    //     if (currentUser && !loading) {
-    //         try {
-    //             const docRef = doc(db, 'userSubscription', `${currentUser.uid}`);
-    //             const fetchedDoc = await getDoc(docRef);
-    //             const docSnapshot = fetchedDoc.data()
-    //             if (docSnapshot) {
-    //                 const subscriptionData = docSnapshot.defaultSubscription;
-    //                 if (subscriptionData) {
-    //                     setDefaultSubscription(subscriptionData);
-    //                 }
-    //             }
-                
-    //         } catch (err) {
-    //             setError('There was an error fetching the subscription: ' + err);
-    //         }
-    //     }
-    // };
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
 
-    // const handleUserSub = async () => {
-    //     if (currentUser) {
-    //     try { 
-    //         const res = await setDoc(doc(db, 'userSubscription', `${currentUser.uid}`), {
-    //             defaultSubscription: defaultSubscription
-    //     })
-    //     }
-    //     catch(error) {
-    //         setError('there was an error adding getting the default subscription ' + error)
-    //     }}
-    // };
-    // const handleRecruiterSub = async () => {
-    //     if (currentUser) {
-    //     try { 
-    //         const res = await setDoc(doc(db, 'recruiterSubscription', `${currentUser.uid}`), {
-    //             defaultSubscription: defaultSubscription
-    //     })
-    //     }
-    //     catch(error) {
-    //         setError('there was an error adding getting the default subscription ' + error)
-    //     }}
-    // };
+    return unsubscribe;
+  }, []);
 
-    // useEffect(() => {
-    //     if (currentUser && !loading){
-    //         fetchSubscription();
-    //         fetchBaseDataHierarchy();
-    //     }
-    // }, [currentUser, loading]);
+  function logout() {
+    return auth.signOut();
+  }
 
-    // useEffect(() => {
-    //     const unsubscribe = auth.onAuthStateChanged(user => {
-    //         setCurrentUser(user)
-    //         setLoading(false)
-    //     })
-    //     return unsubscribe
-    // }, []);
+  const value = {
+    currentUser,
+    logout,
+    loading,
+    firebaseUiInstance,
+  };
 
-
-    const value = {
-        register,
-        login,
-        logout,
-        resetPassword,
-        loading, setLoading,
-    }
-    
-    return (
-        <AuthContext.Provider value={value}>
-            {loading ? <LoadingPage/> : children}
-        </AuthContext.Provider>
-    )
+  return (
+    <AuthContext.Provider value={value}>
+      {loading ? <LoadingPage /> : children}
+    </AuthContext.Provider>
+  );
 }

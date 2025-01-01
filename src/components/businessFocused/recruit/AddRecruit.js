@@ -16,7 +16,7 @@ export default function AddRecruit() {
         handleRecruitTailoredResumeChange,
         handleRecruitCoverLetterChange,
         addRecruitToRecruiter,
-        recruiter
+        // recruiter
     } = useUser();
     const history = useNavigate()
     const [includeAddress, setIncludeAddress] = useState(null)

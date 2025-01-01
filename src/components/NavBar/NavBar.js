@@ -84,7 +84,7 @@ const NavBar = () => {
                                     Home
                                 </Link>
                             </li>
-                            {!user.recruiter && (
+                            {user && (
                                 <>
                                     <li>
                                         <Link to='/Create' onClick={() => closeMenu()}>
@@ -114,13 +114,13 @@ const NavBar = () => {
                                     </Link>
                                 </li>
                             )}
-                            {user.recruiter === true && (
+                            {/* {user.recruiter === true && (
                                 <li>
                                     <Link to='/RecruiterMainPage' onClick={() => closeMenu()}>
                                         Recruiter Home
                                     </Link>
                                 </li>
-                            )}
+                            )} */}
                             <li>
                                 <div className="Mode" id='menu_toggle' onClick={() => closeMenu()}>
                                     <Toggle toggled={toggled} onClick={handleClick} />

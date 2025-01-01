@@ -1,0 +1,26 @@
+#recruiterDefaultAvatar img {
+    width: 55%;
+}
+#recruiterDefaultAvatar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 25%;
+}
+#recruiterDefaultAvatar :last-child {
+    margin-top: 5%;
+}
+#recruiterRecruitCard {
+    width: 80%;
+}
+#recruiterScheduleCard{
+    width: 30%;
+}
+.addRecruitCard {
+    width: 50%;
+}
+.addRecruitCard form {
+    width: 70%;
+    margin-left: 15%;
+}

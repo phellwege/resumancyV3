@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { Form, Card, Button } from 'react-bootstrap';
-import Header from '../components/header/Header';
-import Footer from '../components/footer/Footer';
-import { useUser } from '../context/UserContext';
+import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
+import { useUser } from '../../context/UserContext';
 
 import './main.css';
-import AddressForm from '../components/user/AddressForm';
+import AddressForm from '../../components/user/AddressForm';
 import SelectRecruiterAvatarModal from '../components/recruit/SelectRecruiterAvatarModal';
 export default function BusinessSetupPage() {
     const {

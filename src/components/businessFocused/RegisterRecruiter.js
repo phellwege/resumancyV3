@@ -7,7 +7,7 @@ import { Form } from 'react-bootstrap';
 
 import '../views/main.css';
 import Logo from '../static/logo_monochrome.png';
-import { useUser } from '../context/UserContext';
+import { useUser } from '../../context/UserContext';
 
 export default function RegisterBusinessAcct() {
     const {

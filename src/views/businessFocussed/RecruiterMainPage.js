@@ -1,12 +1,12 @@
 import React from 'react'
-import Header from '../components/header/Header'
-import Footer from '../components/footer/Footer'
+import Header from '../../components/header/Header'
+import Footer from '../../components/footer/Footer'
 
 import './main.css'
 import { Button, Card } from 'react-bootstrap'
 import RecruitInfoTable from '../components/recruit/RecruitInfoTable'
 import { useNavigate } from 'react-router-dom'
-import { useUser } from '../context/UserContext'
+import { useUser } from '../../context/UserContext'
 export default function RecruiterMainPage() {
     const {
         setAddingRecruit

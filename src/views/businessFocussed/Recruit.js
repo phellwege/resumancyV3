@@ -1,11 +1,11 @@
 import React from 'react'
-import Header from '../components/header/Header'
-import Footer from '../components/footer/Footer'
+import Header from '../../components/header/Header'
+import Footer from '../../components/footer/Footer'
 import { Card } from 'react-bootstrap'
 import AddRecruit from '../components/recruit/AddRecruit'
 import { useParams } from 'react-router-dom'
 import './main.css';
-import { useUser } from '../context/UserContext'
+import { useUser } from '../../context/UserContext'
 import EditRecruit from '../components/recruit/EditRecruit'
 export default function Recruit() {
     const {
