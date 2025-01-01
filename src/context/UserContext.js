@@ -43,7 +43,6 @@ export function UserProvider({ children }) {
     // user object
     const [user, setUser] = useState({
         id: null,
-        recruiter: false,
         firstName: '',
         lastName: '',
         jobTitle: '',
@@ -68,11 +67,10 @@ export function UserProvider({ children }) {
             additional: '',
             summary: null,
             usage: {
-                counter: 0,
                 timeStamp: null
             }
         },
-        tailoredResume: {
+        tailoredResume: [{
             companyName: '',
             description: '',
             experience: '',
@@ -81,21 +79,19 @@ export function UserProvider({ children }) {
             additional: '',
             summary: '',
             usage: {
-                counter: 0,
                 timeStamp: null
             }
-        },
-        coverLetter: {
+        }],
+        coverLetter: [{
             companyName: '',
             data: '',
             timeStamp: null,
-        },
+        }],
         subscription: {
             active: false,
             dateActivated: null,
         }
     })
-    
 
     const [review, setReview] = useState({
         userID : user.id,

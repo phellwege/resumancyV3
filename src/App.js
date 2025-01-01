@@ -6,6 +6,7 @@ import PrivateRoute from '../src/components/privateRoute';
 import {ThemeProvider} from 'styled-components';
 import { UserProvider } from './context/UserContext';
 import { AuthProvider } from './context/AuthContext';
+import { DataProvider } from './context/DataContext';
 import Home from '../src/views/Home'
 // import RecruiterSetupPage from './views/RecruiterSetupPage';
 
@@ -28,6 +29,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <UserProvider >
         <AuthProvider>
+        <DataProvider>
           <React.Fragment>
             <Routes>
             <Route exact path="/" element={<Home />} />
@@ -45,6 +47,7 @@ function App() {
             <Route exact path='/RecruitCreateResume/:recruitId' element={<RecruitCreateResume />} /> */}
             </Routes>
           </React.Fragment>
+        </DataProvider>
         </AuthProvider>
         </UserProvider>
       </ThemeProvider>

@@ -7,6 +7,7 @@ import LoginAndRegistration from '../LoginAndRegistration';
 import NavBar from '../NavBar/NavBar';
 
 import { useUser } from '../../context/UserContext';
+import { useAuth } from '../../context/AuthContext';
 
 import { CgProfile } from "react-icons/cg";
 import { FiAlertCircle } from "react-icons/fi";
@@ -22,6 +23,9 @@ function Header(props) {
         user, 
         handleOpenLoginModal,
     } = useUser()
+    const {
+        logout
+    } = useAuth()
     const handleClickImg = () => {
         history('/UserProfile')
     }
@@ -91,7 +95,10 @@ return (
                             <Link to='/UserProfile'>{user.userName}</Link>
                         </>
                     )}
-                    <Link to='/'>Logout</Link>
+                    <Link to='' onClick={() => {
+                        logout();
+                        history('/');
+                    }}>Logout</Link>
                 </div>
             ) : (
                 <div className='avatarWindow'>
