@@ -21,7 +21,6 @@ function Header(props) {
     const {
         user, 
         handleOpenLoginModal,
-        handleOpenRegisterModal,
     } = useUser()
     const handleClickImg = () => {
         history('/UserProfile')
@@ -85,11 +84,11 @@ return (
         <div className='headerRight'>
             {user.id ? (
                 <div className='avatarWindow'>
-                    {/* {AlertMessage()} */}
+                    {AlertMessage()}
                     <img src={user.avatarImg} alt='userAvatar' id='userAvatar' onClick={handleClickImg}/>
-                    {user.username && (
+                    {user.userName && (
                         <>
-                            <Link to='/UserProfile'>{user.username}</Link>
+                            <Link to='/UserProfile'>{user.userName}</Link>
                         </>
                     )}
                     <Link to='/'>Logout</Link>

@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import DOMPurify from 'dompurify';
 import { v4 as uuidv4 } from 'uuid';
-
 const UserContext = React.createContext()
 
 export function useUser(){
@@ -10,12 +9,9 @@ export function useUser(){
 
 export function UserProvider({ children }) {
     const generateUUID = () => uuidv4();
-    const [registerModal, setRegisterModal] = useState(false);
     const [loginModal, setLoginModal] = useState(false);
     const handleCloseLoginModal = () => setLoginModal(false);
     const handleOpenLoginModal = () => setLoginModal(true);
-    const handleCloseRegisterModal = () => setRegisterModal(false);
-    const handleOpenRegisterModal = () => setRegisterModal(true);
 
 
     // creating profile modal
@@ -168,12 +164,9 @@ export function UserProvider({ children }) {
         userAvatars,
         handleSelectAvatar,
 
-        registerModal, setRegisterModal,
         loginModal, setLoginModal,
         handleCloseLoginModal,
         handleOpenLoginModal,
-        handleCloseRegisterModal,
-        handleOpenRegisterModal,
 
         setupUserModal, setSetupUserModal,
         handleOpenSetupUserModal,
@@ -200,7 +193,7 @@ export function UserProvider({ children }) {
         handleContactChange,
         handleUserChange,
 
-    }), [user, registerModal, loginModal]);
+    }), [user, loginModal]);
 
     return (
         <UserContext.Provider value={value}>

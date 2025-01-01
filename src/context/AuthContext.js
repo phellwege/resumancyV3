@@ -6,43 +6,43 @@ import * as firebaseui from 'firebaseui';
 
 const AuthContext = React.createContext();
 
-let firebaseUiInstance; // Singleton instance
+let firebaseUiInstance;
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }) {
-  const [loading, setLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [currentUser, setCurrentUser] = useState(null);
 
-  useEffect(() => {
-    if (!firebaseUiInstance) {
-      firebaseUiInstance = new firebaseui.auth.AuthUI(auth); // Create only if it doesn't exist
+    useEffect(() => {
+        if (!firebaseUiInstance) {
+        firebaseUiInstance = new firebaseui.auth.AuthUI(auth);
+        }
+
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setCurrentUser(user);
+        setLoading(false);
+        });
+
+        return unsubscribe;
+    }, []);
+
+    function logout() {
+        return auth.signOut();
     }
 
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setLoading(false);
-    });
+    const value = {
+        currentUser,
+        logout,
+        loading,
+        firebaseUiInstance,
+    };
 
-    return unsubscribe;
-  }, []);
-
-  function logout() {
-    return auth.signOut();
-  }
-
-  const value = {
-    currentUser,
-    logout,
-    loading,
-    firebaseUiInstance,
-  };
-
-  return (
-    <AuthContext.Provider value={value}>
-      {loading ? <LoadingPage /> : children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={value}>
+        {loading ? <LoadingPage /> : children}
+        </AuthContext.Provider>
+    );
 }

@@ -1,5 +1,5 @@
 import React, {useRef} from 'react'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Form } from 'react-bootstrap';
@@ -100,22 +100,22 @@ export default function UserSetupModal() {
                     </Form>
                 </div>
                 <div className='loginModalLogo'>
-                  <p>
-                    This is only used to populate Resumes, 
-                    <br/>
-                    We don't sell your information.
-                  </p>
-                  <div className='setupAvatarDiv'>
-                    <img src={user.avatarImg} alt='user avatar image'/>
-                    <Button 
-                    onClick={()=> {
-                      handleCloseSetupUserModal(); 
-                      handleOpenSelectAvatar()
-                      }}
-                    >
-                      Change Avatar
-                    </Button>
-                  </div>
+                    <p>
+                        This is only used to populate Resumes, 
+                        <br/>
+                        We don't sell your information.
+                    </p>
+                    <div className='setupAvatarDiv'>
+                        <img src={user.avatarImg} alt='user avatar image'/>
+                        <Button 
+                        onClick={()=> {
+                        handleCloseSetupUserModal(); 
+                        handleOpenSelectAvatar()
+                        }}
+                        >
+                        Change Avatar
+                        </Button>
+                    </div>
                 </div>
             </div>
         </Modal.Body>
