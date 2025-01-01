@@ -29,7 +29,7 @@ export default function Footer() {
                     </li>
                     <li>
                         <Link to='/TermsOfUse'>
-                            Terms of Use
+                            Terms of Service
                         </Link>
                     </li>
                     <li>

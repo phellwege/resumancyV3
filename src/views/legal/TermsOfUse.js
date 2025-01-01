@@ -8,7 +8,7 @@ export default function TermsOfUse() {
     <>
     <Header />
     <div className='pageWrapper'>
-    <h3>Terms of Use</h3>
+    <h3>Terms of Service</h3>
         <div className='FaqWrapper'>
             <h5>Introduction</h5>
             <p>Last Updated: 03/23/2024</p>

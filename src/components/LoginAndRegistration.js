@@ -28,8 +28,8 @@ export default function LoginAndRegistration() {
     useEffect(() => {
         const uiConfig = {
             signInOptions: ['password', 'google.com'],
-            tosUrl: '/terms-of-service',
-            privacyPolicyUrl: '/privacy-policy',
+            tosUrl: '/TermsOfUse',
+            privacyPolicyUrl: '/PrivacyPolicy',
             signInSuccessUrl: '/',
             callbacks: {
                 signInSuccessWithAuthResult: (authResult) => {
