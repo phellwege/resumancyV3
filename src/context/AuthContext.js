@@ -37,6 +37,7 @@ export function AuthProvider({ children }) {
         currentUser,
         logout,
         loading,
+        setLoading,
         firebaseUiInstance,
     };
 

@@ -1,1 +1,0 @@
-// TODO: write a function to read from word/pdf docs using OCR and appropriately place this information

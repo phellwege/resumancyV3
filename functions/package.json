@@ -1,5 +1,8 @@
 {
   "name": "functions",
+  "engines": {
+    "node": "22"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,13 +12,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/secret-manager": "^5.6.0",
     "@stripe/react-stripe-js": "^2.1.2",
     "@stripe/stripe-js": "^2.1.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "firebase": "^9.23.0",
     "firebase-admin": "^11.10.1",
-    "firebase-functions": "^4.4.1",
+    "firebase-functions": "^6.2.0",
     "firebase-tools": "^12.5.4",
-    "openai": "^4.2.0"
+    "openai": "^4.2.0",
+    "stripe": "^17.5.0"
   }
 }

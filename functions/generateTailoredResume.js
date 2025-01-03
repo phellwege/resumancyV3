@@ -1,12 +1,21 @@
-// Import required modules
+const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
+const client = new SecretManagerServiceClient();
 const functions = require('firebase-functions');
 const cors = require('cors')({ origin: true });
 const OpenAI = require('openai');
-const apiKey = functions.config().gpt_api.key;
-const openai = new OpenAI({ apiKey });
+
+
+async function getSecret(secretName) {
+    const [version] = await client.accessSecretVersion({
+        name: `projects/Resumancy/secrets/${secretName}/versions/latest`,
+    });
+    return version.payload.data.toString('utf8');
+}
 
 // Function to handle summarization API call with retries
 async function summarizeResumeWithRetry(user, retryCount = 0) {
+    const apiKey = await getSecret('GPT_API_KEY');
+    const openai = new OpenAI({ apiKey });
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
@@ -54,6 +63,8 @@ async function summarizeResumeWithRetry(user, retryCount = 0) {
 
 // Function to handle experience section API call with retries
 async function generateExperienceSectionWithRetry(user, retryCount = 0) {
+    const apiKey = await getSecret('GPT_API_KEY');
+    const openai = new OpenAI({ apiKey });
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
@@ -101,6 +112,8 @@ async function generateExperienceSectionWithRetry(user, retryCount = 0) {
 
 // Function to handle skills section API call with retries
 async function generateSkillsSectionWithRetry(user, retryCount = 0) {
+    const apiKey = await getSecret('GPT_API_KEY');
+    const openai = new OpenAI({ apiKey });
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',

@@ -1,10 +1,20 @@
+const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
+const client = new SecretManagerServiceClient();
 const functions = require('firebase-functions');
 const cors = require('cors')({ origin: true });
 const OpenAI = require('openai');
-const apiKey = functions.config().gpt_api.key;
-const openai = new OpenAI({ apiKey });
+
+
+async function getSecret(secretName) {
+    const [version] = await client.accessSecretVersion({
+        name: `projects/Resumancy/secrets/${secretName}/versions/latest`,
+    });
+    return version.payload.data.toString('utf8');
+}
 
 async function generateCoverLetterWithRetry(user, retryCount = 0) {
+    const apiKey = await getSecret('GPT_API_KEY');
+    const openai = new OpenAI({ apiKey });
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',

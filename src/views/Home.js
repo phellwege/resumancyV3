@@ -49,26 +49,31 @@ export default function Home() {
                         <Card.Body>
                             <div className='cardInnerDiv'>
                                 <h4>Get Started</h4>
-                                <p>Getting Started: Create Your Base Resume and Customize for Each Application.</p>
+                                    <p>Create a Baseline Resume and custom tailor it to each application.</p>
                                 <div className='alignLeft'>
-                                    <p>
-                                        <span className='HomeSectionTitle'>Part 1</span>
-                                        <br/>
-                                        <span className='HomeSectionSubScript'>Create a Base Resume.</span>
-                                        <br/>
-                                        <span className='homeNum'>Step 1. </span> Create a Base Resume by clicking <b>Create Resume</b>. 
-                                        <br/>
-                                        <span className='homeNum'>Step 2. </span> Verify everything looks good (make edits if needed).
-                                        <br/>
-                                        <br/>
-                                        <span className='HomeSectionTitle'>Part 2</span>
-                                        <br/>
-                                        <span className='HomeSectionSubScript'>Create Custom Resumes for each application.</span>
-                                        <br/>
-                                        <span className='homeNum'>Step 3. </span> Click on <b>Custom Tailor</b>, then provide prospective job details.
-                                        <br/>
-                                        <span className='homeNum'> Step 4. </span> Enjoy your custom tailored resume(s).
-                                    </p>
+                                    <div>
+                                        <p>
+                                            <span className='HomeSectionTitle'>Part 1</span>
+                                            <br/>
+                                            <span className='HomeSectionSubScript'>Create a Base Resume.</span>
+                                            <br/>
+                                            <span className='homeNum'>Step 1. </span> Create a Base Resume by clicking <b>Create Resume</b>. 
+                                            <br/>
+                                            <span className='homeNum'>Step 2. </span> Verify everything looks good (make edits if needed).
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <span className='HomeSectionTitle'>Part 2</span>
+                                            <br/>
+                                            <span className='HomeSectionSubScript'>Create Custom Resumes for each application.</span>
+                                            <br/>
+                                            <span className='homeNum'>Step 3. </span> Click on <b>Custom Tailor</b>, then provide prospective job details.
+                                            <br/>
+                                            <span className='homeNum'> Step 4. </span> Enjoy your custom tailored resume(s).
+                                        </p>
+                                    </div>
+                                    
                                 </div>
                                 <Link to='/Create'>
                                     <Button

@@ -1,10 +1,12 @@
+TODO: FIX CLOUD FUNCTIONS CORS ERRORS. Likely have to do with permissions or how it is assigned.
 TODO: Fix logout
 TODO: Fix sign in from email (doesnt appear to work, only google sign in works)
 TODO: handle user profile customization.
 
-TODO: write functions for database connection and storage of state managed information from datacontext
+TODO: write functions for database connection and storage of state managed information from dataContext
 
 TODO: resume creation submit button linked to functions correctly.
+ -------- functions deployed WHAT A NIGHTMARE ---------
 TODO: build out OCR to allow upload of resume file (saved only in state so they don't take up space, size limit placed to max of two pages ~ 4000 characters)
 
 TODO: fix stripe so that it returns correct and expected values for users subscription

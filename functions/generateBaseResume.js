@@ -1,47 +1,33 @@
 // Import required modules
-const functions = require('firebase-functions');
-const cors = require('cors')({ origin: true });
+const { onRequest } = require("firebase-functions/v2/https");
 const OpenAI = require('openai');
-const apiKey = functions.config().gpt_api.key;
-const openai = new OpenAI({ apiKey });
 
 // Function to handle summarization API call with retries
-async function summarizeResumeWithRetry(user, retryCount = 0) {
+async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
+    const openai = new OpenAI({ apiKey });
+
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                {
-                    role: 'system',
-                    content: `
-                        Summarize this resume in roughly 3 sentences
-                    `
-                },
-                {
-                    role: 'user',
-                    content: `Experience:
-                ${user.resume.experience}
-                
-                Education and Certifications:
-                ${user.resume.education}
-                
-                Skills:
-                ${user.resume.skills}
-                `
-                }
+                { role: 'system', content: 'Craft a resume summary for this resume in roughly 3 sentences' },
+                { role: 'user', content: `
+                    Experience: ${user.resume.experience}
+                    Education and Certifications: ${user.resume.education}
+                    Skills: ${user.resume.skills}
+                ` },
             ],
-            temperature: .4,
+            temperature: 0.4,
             max_tokens: 3500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            stop: "{}",
         });
+
         return gptResponse.choices[0].message.content;
     } catch (error) {
-        // Retry logic with up to 3 retries
         if (retryCount < 3) {
-            return summarizeResumeWithRetry(user, retryCount + 1);
+            return summarizeResumeWithRetry(user, apiKey, retryCount + 1);
         } else {
             throw new Error('Error summarizing resume after 3 attempts');
         }
@@ -49,117 +35,98 @@ async function summarizeResumeWithRetry(user, retryCount = 0) {
 }
 
 // Function to handle experience section API call with retries
-async function generateExperienceSectionWithRetry(user, retryCount = 0) {
+async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) {
+    const openai = new OpenAI({ apiKey });
+
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                {
-                    role: 'system',
-                    content: `
-                    Craft a compelling experience section for the resume that highlights the candidate's professional achievements and contributions. Focus on showcasing their skills, expertise, and impact in previous roles.
-                    `
-                },
-                {
-                    role: 'user',
-                    content: `Experience:
-                ${user.resume.experience}
-                
-                Education and Certifications:
-                ${user.resume.education}
-                
-                Skills:
-                ${user.resume.skills}
-                `
-                }
+                { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions.' },
+                { role: 'user', content: `
+                    Experience: ${user.resume.experience}
+                    Education and Certifications: ${user.resume.education}
+                    Skills: ${user.resume.skills}
+                ` },
             ],
-            temperature: .4,
+            temperature: 0.4,
             max_tokens: 3500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            stop: "{}",
         });
+
         return gptResponse.choices[0].message.content;
     } catch (error) {
-        // Retry logic with up to 3 retries
         if (retryCount < 3) {
-            return generateExperienceSectionWithRetry(user, retryCount + 1);
+            return generateExperienceSectionWithRetry(user, apiKey, retryCount + 1);
         } else {
-            throw new Error('Error summarizing resume after 3 attempts');
+            throw new Error('Error generating experience section after 3 attempts');
         }
     }
 }
 
 // Function to handle skills section API call with retries
-async function generateSkillsSectionWithRetry(user, retryCount = 0) {
+async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
+    const openai = new OpenAI({ apiKey });
+
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                {
-                    role: 'system',
-                    content: `
-                    Craft a skills section for the resume that highlights a broad range of the candidate's abilities and competencies. Include both technical skills (such as programming languages, software tools) and soft skills (such as communication, teamwork) that are commonly sought after in various professional settings.
-                    `
-                },
-                {
-                    role: 'user',
-                    content: `Experience:
-                ${user.resume.experience}
-                
-                Education and Certifications:
-                ${user.resume.education}
-                
-                Skills:
-                ${user.resume.skills}
-                `
-                }
+                { role: 'system', content: 'Craft a skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies.' },
+                { role: 'user', content: `
+                    Experience: ${user.resume.experience}
+                    Education and Certifications: ${user.resume.education}
+                    Skills: ${user.resume.skills}
+                ` },
             ],
-            temperature: .4,
+            temperature: 0.4,
             max_tokens: 3500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            stop: "{}",
         });
+
         return gptResponse.choices[0].message.content;
     } catch (error) {
-        // Retry logic with up to 3 retries
         if (retryCount < 3) {
-            return generateSkillsSectionWithRetry(user, retryCount + 1);
+            return generateSkillsSectionWithRetry(user, apiKey, retryCount + 1);
         } else {
-            throw new Error('Error summarizing resume after 3 attempts');
+            throw new Error('Error generating skills section after 3 attempts');
         }
     }
 }
 
-// Cloud Function to handle HTTP requests
-exports.generate_base_resume = functions.https.onRequest(async (request, response) => {
-    if (request.method === 'OPTIONS') {
-        response.set('Access-Control-Allow-Origin', '*');
-        response.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
-        response.set('Access-Control-Allow-Headers', 'Content-Type');
-        response.status(204).send('');
-        return;
-    }
-    cors(request, response, async () => {
-        try {
-            const { user } = request.body;
-            const summary = await summarizeResumeWithRetry(user);
-            const experienceSection = await generateExperienceSectionWithRetry(user);
-            const skillsSection = await generateSkillsSectionWithRetry(user);
-
-            response.set('Access-Control-Allow-Origin', '*');
-            response.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
-            response.set('Access-Control-Allow-Headers', 'Content-Type');
-            response.status(200).json({ 
-                summary: { type: "base", data: summary },
-                experienceSection: { type: "base", data: experienceSection },
-                skillsSection: { type: "base", data: skillsSection }
-            });
-        } catch (error) {
-            response.status(500).send('Error building resume: ' + error.message);
+exports.generate_base_resume = onRequest(
+    { cors: true, memory: "512Mi", secrets: ["GPT_API_KEY"] },
+    async (req, res) => {
+        if (req.method === 'OPTIONS') {
+            res.status(204).send('');
+            return;
         }
-    });
-});
+
+        try {
+            const apiKey = process.env.GPT_API_KEY; // Access secret from environment
+            const { user } = req.body;
+
+            try {
+                const [summary, experienceSection, skillsSection] = await Promise.all([
+                    summarizeResumeWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
+                    generateExperienceSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
+                    generateSkillsSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
+                ]);
+
+                res.status(200).json({
+                    summary: { type: "base", data: summary },
+                    experienceSection: { type: "base", data: experienceSection },
+                    skillsSection: { type: "base", data: skillsSection }
+                });
+            } catch (error) {
+                res.status(500).json({ error: 'Error processing resume: ' + error.message });
+            }
+        } catch (error) {
+            res.status(500).json({ error: 'Error generating resume: ' + error.message });
+        }
+    }
+);

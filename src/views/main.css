@@ -231,7 +231,9 @@ width: 45%;
 .cardInnerDiv .alignLeft {
     text-align: left;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    padding-left:10%;
 }
 .tiersSegments {
     border: 1px solid lightgrey;

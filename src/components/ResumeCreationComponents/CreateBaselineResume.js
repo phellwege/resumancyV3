@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import { Button, Card, Form, Alert, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsQuestionCircle } from "react-icons/bs";
@@ -10,6 +11,7 @@ import {
     setDoc,
 } from 'firebase/firestore';
 import { useUser } from '../../context/UserContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function CreateBaselineResume() {
     const history = useNavigate();
@@ -20,6 +22,10 @@ export default function CreateBaselineResume() {
         sanitizeUserInput,
         handleAddressChange
     } = useUser();
+    const {
+        loading, 
+        setLoading
+    } = useAuth();
 
     const [includeAddress, setIncludeAddress] = useState(null)
     const userExperience = "Detail your relevant job history (required):";
@@ -27,6 +33,46 @@ export default function CreateBaselineResume() {
     const userSkills = "Specify your relevant skills (required):";
     const userAdditional = "Include any additional relevant information (optional):";
     
+    const [error, setError] = useState(null);
+
+    const handleSubmit = async () => {
+        const { experience, education, skills } = user.resume;
+        if (!experience.trim() || !education.trim() || !skills.trim()) {
+            setError('Experience, Education, and Skills are required fields.');
+            return;
+        }
+    
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await axios.post(
+                'https://us-central1-resumancy.cloudfunctions.net/generate_base_resume-generate_base_resume',
+                { user },
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+    
+            const { summary, experienceSection, skillsSection } = response.data;
+
+            setUser(prevState => {
+                const newResume = {
+                    ...prevState.resume,
+                    summary: summary.data,
+                    experience: experienceSection.data,
+                    skills: skillsSection.data
+                };
+                return { ...prevState, resume: newResume };
+            });
+    
+            history('/Review');
+        } catch (error) {
+            console.error('Error generating resume:', error);
+            setError('Failed to generate resume. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
             <div className='pageWrapper'>
@@ -85,7 +131,7 @@ export default function CreateBaselineResume() {
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
-                                    rows={5} 
+                                    rows={8} 
                                     placeholder='Experience'
                                     value={user.resume.experience}
                                     onChange={(e) => handleResumeChange('experience', sanitizeUserInput(e.target.value))}
@@ -111,7 +157,7 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.education.length} / 300)</sub>
+                                        <sub>({user.resume.education.length} / 500)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
@@ -119,7 +165,7 @@ export default function CreateBaselineResume() {
                                     placeholder='Education'
                                     value={user.resume.education}
                                     onChange={(e) => handleResumeChange('education', sanitizeUserInput(e.target.value))}
-                                    maxLength='300'
+                                    maxLength='500'
                                     className="mobile-textarea"
                                     />
                                     <Form.Text className='text-muted'>
@@ -141,7 +187,7 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.skills.length} / 300)</sub>
+                                        <sub>({user.resume.skills.length} / 1000)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
@@ -149,7 +195,7 @@ export default function CreateBaselineResume() {
                                     placeholder='Skills'
                                     value={user.resume.skills}
                                     onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
-                                    maxLength='300'
+                                    maxLength='1000'
                                     className="mobile-textarea"
                                     />
                                     <Form.Text className='text-muted'>
@@ -171,7 +217,7 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.additional.length} / 500)</sub>
+                                        <sub>({user.resume.additional.length} / 1000)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
@@ -179,21 +225,20 @@ export default function CreateBaselineResume() {
                                     placeholder='Additional Information' 
                                     value={user.resume.additional}
                                     onChange={(e) => handleResumeChange('additional', sanitizeUserInput(e.target.value))}
-                                    maxLength='500'
+                                    maxLength='1000'
                                     className="mobile-textarea"
                                     />
                                     <Form.Text className='text-muted'>
                                         Any additional information you think may be beneficial
                                     </Form.Text>
                                 </Form.Group>
-                                
                             </Form>
                         </div>
                     </Card.Body>
                 </Card>
                 <Button 
-                aria-label='submit button'
-                // onClick={handleSubmit}
+                    aria-label='submit button'
+                    onClick={handleSubmit}
                 >
                     Submit
                 </Button>
