@@ -27,7 +27,7 @@ export default function LoginAndRegistration() {
 
     useEffect(() => {
         const uiConfig = {
-            signInOptions: ['password', 'google.com', 'apple.com'],
+            signInOptions: ['password', 'google.com'],
             tosUrl: '/TermsOfUse',
             privacyPolicyUrl: '/PrivacyPolicy',
             signInSuccessUrl: '/',

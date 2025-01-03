@@ -1,4 +1,3 @@
-TODO: FIX CLOUD FUNCTIONS CORS ERRORS. Likely have to do with permissions or how it is assigned.
 TODO: Fix logout
 TODO: Fix sign in from email (doesnt appear to work, only google sign in works)
 TODO: handle user profile customization.
