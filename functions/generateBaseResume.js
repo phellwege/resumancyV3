@@ -74,7 +74,7 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. (Don\'t return a Section name or anything like that)' },
+                { role: 'system', content: 'Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. (Don\'t return a Section name or anything like that)' },
                 { role: 'user', content: `
                     Experience: ${user.resume.experience}
                     Education and Certifications: ${user.resume.education}
