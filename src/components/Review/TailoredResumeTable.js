@@ -12,7 +12,7 @@ export default function TailoredResumeTable() {
     <>
     <ReviewTailoredResumeResumeModal />
     <ReviewCoverLetterModal />
-        <h5>Tailored Resume</h5>
+        <h5>Tailored Resume(s)</h5>
         <Table striped bordered hover variant='dark'>
             <thead>
             <tr>

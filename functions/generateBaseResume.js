@@ -10,7 +10,7 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a resume summary for this resume in roughly 3 sentences' },
+                { role: 'system', content: 'Craft a professional resume summary for this resume in roughly 3 sentences.' },
                 { role: 'user', content: `
                     Experience: ${user.resume.experience}
                     Education and Certifications: ${user.resume.education}
@@ -42,7 +42,7 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions.' },
+                { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions. (Don\'t include a section name or anything like that, just the content in a format typically seen in a professional resume experience section).' },
                 { role: 'user', content: `
                     Experience: ${user.resume.experience}
                     Education and Certifications: ${user.resume.education}
@@ -74,7 +74,7 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies.' },
+                { role: 'system', content: 'Craft a skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. (Don\'t return a Section name or anything like that)' },
                 { role: 'user', content: `
                     Experience: ${user.resume.experience}
                     Education and Certifications: ${user.resume.education}

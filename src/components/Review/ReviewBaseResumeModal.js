@@ -1,12 +1,17 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+
+import DefaultResumeStyle from './resumeStyles/defaultResumeStyle';
+import ResumeStyle2 from './resumeStyles/resumeStyle2';
+
 import '../../views/main.css'
 import { useUser } from '../../context/UserContext';
 export default function ReviewBaseResumeModal() {
     const {
         reviewBaseResumeModal,
-        handleCloseReviewBaseResumeModal
+        handleCloseReviewBaseResumeModal,
+        user
     } = useUser();
 
   return (
@@ -22,7 +27,7 @@ export default function ReviewBaseResumeModal() {
             <Modal.Title>Review Base Resume</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            
+            <ResumeStyle2/>
         </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseReviewBaseResumeModal}>

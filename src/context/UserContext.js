@@ -70,7 +70,7 @@ export function UserProvider({ children }) {
                 timeStamp: null
             }
         },
-        tailoredResume: [{
+        tailoredResume: {
             companyName: '',
             description: '',
             experience: '',
@@ -81,12 +81,12 @@ export function UserProvider({ children }) {
             usage: {
                 timeStamp: null
             }
-        }],
-        coverLetter: [{
+        },
+        coverLetter: {
             companyName: '',
             data: '',
             timeStamp: null,
-        }],
+        },
         subscription: {
             active: false,
             dateActivated: null,
@@ -189,7 +189,10 @@ export function UserProvider({ children }) {
         handleContactChange,
         handleUserChange,
 
-    }), [user, loginModal]);
+    }), [
+        user, loginModal, setupUserModal, selectAvatar,
+        reviewBaseResumeModal, reviewTailoredResumeModal, reviewCoverLetterModal
+    ]);
 
     return (
         <UserContext.Provider value={value}>

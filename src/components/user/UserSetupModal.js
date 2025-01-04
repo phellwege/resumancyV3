@@ -18,7 +18,7 @@ export default function UserSetupModal() {
     } = useUser();
     
     const handlePhoneNumberChange = (e) => {
-        const inputPhoneNumber = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+        const inputPhoneNumber = e.target.value.replace(/\D/g, '');
         let formattedPhoneNumber = '';
         if (inputPhoneNumber.length > 0) {
             formattedPhoneNumber += `(${inputPhoneNumber.substring(0, 3)})`;
@@ -109,8 +109,8 @@ export default function UserSetupModal() {
                         <img src={user.avatarImg} alt='user avatar image'/>
                         <Button 
                         onClick={()=> {
-                        handleCloseSetupUserModal(); 
-                        handleOpenSelectAvatar()
+                            handleCloseSetupUserModal(); 
+                            handleOpenSelectAvatar()
                         }}
                         >
                         Change Avatar
