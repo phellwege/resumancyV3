@@ -51,10 +51,21 @@ const renderTextWithNewLines = (text) => {
             <h4>Summary:</h4>
             {renderTextWithNewLines(user.resume.summary)}
           </div>
-          <div className='reviewDefaultResumeSections'>
-            <h4>Experience:</h4>
-            <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.experience)}</span>
-          </div>
+        {user.resume.experience 
+        && Array.isArray(JSON.parse(user.resume.experience))
+            && JSON.parse(user.resume.experience).map((exp, index) => (
+            <div key={index} className="experience-entry">
+                <div className='reviewDefaultResumeSections'>
+                    <h4>Experience:</h4>
+                    <div>
+                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expJobTitle)}</span>
+                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expCompanyName)}</span>
+                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expTime)}</span>
+                    </div>
+                    <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expDesc)}</span>
+                </div>
+            </div>
+          ))}
           <div className='reviewDefaultResumeSections' id='resumeStyle2Education'>
             <h4>Education and Certifications:</h4>
             <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.education)}</span>

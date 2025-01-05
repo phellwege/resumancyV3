@@ -40,12 +40,26 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
 // Function to handle experience section API call with retries
 async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
+    const experienceFormatted = user.resume.experience.map(item => {
+        return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
+    }).join("\n");
 
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions. (Don\'t include a section name or anything like that, just the content in a format typically seen in a professional resume experience section).' },
+                // { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions. (Don\'t include a section name or anything like that, just the content in a format typically seen in a professional resume experience section).' },
+                { role: 'system', content: `'Craft a compelling experience section for the resume, highlighting the candidate\'s professional achievements and contributions based solely on the information provided. Ensure that the language is professional and clear, while also maintaining factual accuracy. Avoid any fabricated statistics or details. The job description should be roughly three bullet points worth of information'
+                    Please return the experience section with the following valid json structure (not in a codeblock) as I need to parse the data:
+                    [
+                        {
+                            "expJobTitle": "Job Title",
+                            "expCompanyName": "Company Name",
+                            "expTime": "Employment Duration",
+                            "expDesc": "Job Description"
+                        }
+                    ]` 
+                },
                 { role: 'user', content: `
                     Experience: ${experienceFormatted}
                     Education and Certifications: ${user.resume.education}
@@ -72,13 +86,15 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
 // Function to handle skills section API call with retries
 async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
+    const experienceFormatted = user.resume.experience.map(item => {
+        return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
+    }).join("\n");
 
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                // { role: 'system', content: 'Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. (Don\'t return a Section name or anything like that)' },
-                { role: 'system', content: 'Craft a compelling experience section for the resume, highlighting the candidate\'s professional achievements and contributions based solely on the information provided. Do not invent or add any data that is not already present in the user\'s experience. Ensure that the language is professional and clear, while also maintaining factual accuracy. Avoid any fabricated statistics or details.' },
+                { role: 'system', content: 'Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. (Don\'t return a Section name or anything like that)' },
                 { role: 'user', content: `
                     Experience: ${experienceFormatted}
                     Education and Certifications: ${user.resume.education}
@@ -110,11 +126,12 @@ async function improveEducationSection(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'I am building a resume and need help improving the Education and Certifications section. The current content is:' },
+                { role: 'system', content: `I am building a resume and need help improving the Education and Certifications section. The current content is: (Don\'t return a Section name or anything like that) Keep this very concise and accurate, as it is for a resume.` },
                 { role: 'user', content: `
                     "${user.resume.education}" 
                     Please help by making this section more structured, highlighting key accomplishments, certifications, degrees, and institutions, if applicable. 
                     Ensure that the language is professional, concise, and appealing to potential employers.
+                    Do not make up false credentials
                 ` },
             ],
             temperature: 0.4,
@@ -148,7 +165,7 @@ exports.generate_base_resume = onRequest(
             const { user } = req.body;
 
             try {
-                const [summary, experienceSection, skillsSection] = await Promise.all([
+                const [summary, experienceSection, skillsSection, educationSection] = await Promise.all([
                     summarizeResumeWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateExperienceSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateSkillsSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
@@ -158,7 +175,8 @@ exports.generate_base_resume = onRequest(
                 res.status(200).json({
                     summary: { type: "base", data: summary },
                     experienceSection: { type: "base", data: experienceSection },
-                    skillsSection: { type: "base", data: skillsSection }
+                    skillsSection: { type: "base", data: skillsSection },
+                    educationSection: { type: "base", data: educationSection }
                 });
             } catch (error) {
                 res.status(500).json({ error: 'Error processing resume: ' + error.message });

@@ -5,7 +5,7 @@ import ReviewResumeModal from './ReviewResumeModal';
 
 export default function BaseResumeTable() {
     const {
-        handleOpenReviewBaseResumeModal,
+        handleOpenReviewResumeModal,
     } = useUser()
   return (
     <>
@@ -20,7 +20,7 @@ export default function BaseResumeTable() {
         </thead>
         <tbody>
             <tr>
-            <td onClick={handleOpenReviewBaseResumeModal}>View</td>
+            <td onClick={handleOpenReviewResumeModal}>View</td>
             <td></td>
             </tr>
         </tbody>

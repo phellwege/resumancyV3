@@ -43,7 +43,7 @@ export default function CreateBaselineResume() {
     const handleSubmit = async () => {
         const timeStamp = new Date().toISOString();
         const { experience, education, skills } = user.resume;
-        if (!experience.trim() || !education.trim() || !skills.trim()) {
+        if (!education.trim() || !skills.trim()) {
             setError('Experience, Education, and Skills are required fields.');
             return;
         }
@@ -58,6 +58,7 @@ export default function CreateBaselineResume() {
                 }
             }
         }));
+        {console.log(user)}
         setLoading(true);
         setError(null);
 
@@ -68,14 +69,15 @@ export default function CreateBaselineResume() {
                 { headers: { 'Content-Type': 'application/json' } }
             );
     
-            const { summary, experienceSection, skillsSection } = response.data;
+            const { summary, experienceSection, skillsSection, educationSection } = response.data;
 
             setUser(prevState => {
                 const newResume = {
                     ...prevState.resume,
                     summary: summary.data,
                     experience: experienceSection.data,
-                    skills: skillsSection.data
+                    skills: skillsSection.data,
+                    education: educationSection.data
                 };
                 return { ...prevState, resume: newResume };
             });
