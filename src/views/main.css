@@ -559,7 +559,29 @@ width: 45%;
     display: flex;
     justify-content: space-between;
 }
-
+.createResumePlusAndMinus {
+    display: flex;
+    /* justify-content: space-evenly; */
+    width:50%;
+    align-items: flex-end;
+    padding-bottom: 5px;
+}
+.creationButton:hover {
+    cursor: pointer;
+}
+#CreateResumePlusButton {
+    color: #0d6efd;
+    margin-right: 10px;
+}
+#CreateResumePlusButton:hover {
+    color: #F09440;
+}
+#CreateResumeMinusButton {
+    color: rgb(206, 23, 23);
+}
+#CreateResumeMinusButton:hover {
+    color: #F09440;
+}
 
 @media (max-width: 850px) {
     #defaultResumeWrap {

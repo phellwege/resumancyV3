@@ -61,26 +61,24 @@ export function UserProvider({ children }) {
             zip: ''
         },
         resume: {
-            experience: '',
-            education: '',
-            skills: '',
-            additional: '',
-            summary: null,
-            usage: {
-                timeStamp: null
-            }
-        },
-        tailoredResume: {
-            companyName: '',
-            description: '',
-            experience: '',
+            experience: [{
+                expJobTitle: '',
+                expCompanyName: '',
+                expTime: '',
+                expDesc: ''
+            }],
             education: '',
             skills: '',
             additional: '',
             summary: '',
             usage: {
-                timeStamp: null
+                timeStamp: null,
+                baseResume: true
             }
+        },
+        tailoredResume: {
+            companyName: '',
+            description: '',
         },
         coverLetter: {
             companyName: '',
@@ -90,7 +88,7 @@ export function UserProvider({ children }) {
         subscription: {
             active: false,
             dateActivated: null,
-        }
+        },
     })
 
     const [review, setReview] = useState({
@@ -134,6 +132,39 @@ export function UserProvider({ children }) {
             resume: {
                 ...prevState.resume,
                 [key]: value
+            }
+        }));
+    };
+    const handleExperienceChange = (index, key, value) => {
+        setUser(prevState => ({
+            ...prevState,
+            resume: {
+                ...prevState.resume,
+                experience: prevState.resume.experience.map((item, i) =>
+                    i === index ? { ...item, [key]: value } : item
+                )
+            }
+        }));
+    };
+    const addExperienceEntry = () => {
+        setUser(prevState => ({
+            ...prevState,
+            resume: {
+                ...prevState.resume,
+                experience: [
+                    ...prevState.resume.experience,
+                    { expJobTitle: '', expCompanyName: '', expTime: '', expDesc: '' }
+                ]
+            }
+        }));
+    };
+    
+    const removeExperienceEntry = (index) => {
+        setUser(prevState => ({
+            ...prevState,
+            resume: {
+                ...prevState.resume,
+                experience: prevState.resume.experience.filter((_, i) => i !== index)
             }
         }));
     };
@@ -184,7 +215,10 @@ export function UserProvider({ children }) {
         sanitizeUserInput,
 
         handleResumeChange,
-        handleTailoredResumeChange,
+        handleExperienceChange,
+        addExperienceEntry,
+        removeExperienceEntry,
+        handleTailoredResumeChange, // will need DB in order to perform this action. (I will need to fetch the base resume from the db and pass it as a state object)
         handleAddressChange,
         handleContactChange,
         handleUserChange,

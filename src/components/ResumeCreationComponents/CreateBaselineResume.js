@@ -3,6 +3,10 @@ import axios from 'axios';
 import { Button, Card, Form, Alert, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsQuestionCircle } from "react-icons/bs";
+
+
+import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
+
 import DOMPurify from 'dompurify';
 import AddressForm from '../user/AddressForm';
 import '../../views/main.css';
@@ -20,7 +24,10 @@ export default function CreateBaselineResume() {
         setUser,
         handleResumeChange,
         sanitizeUserInput,
-        handleAddressChange
+        handleAddressChange,
+        handleExperienceChange,
+        addExperienceEntry,
+        removeExperienceEntry,
     } = useUser();
     const {
         loading, 
@@ -36,12 +43,23 @@ export default function CreateBaselineResume() {
     const [error, setError] = useState(null);
 
     const handleSubmit = async () => {
+        const timeStamp = new Date().toISOString();
         const { experience, education, skills } = user.resume;
         if (!experience.trim() || !education.trim() || !skills.trim()) {
             setError('Experience, Education, and Skills are required fields.');
             return;
         }
-    
+        setUser(prevState => ({
+            ...prevState,
+            resume: {
+                ...prevState.resume,
+                usage: {
+                    ...prevState.resume.usage,
+                    timeStamp: timeStamp,
+                    baseResume: true
+                }
+            }
+        }));
         setLoading(true);
         setError(null);
 
@@ -127,17 +145,51 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.experience.length} / 8000)</sub>
+                                        {/* <sub>({user.resume.experience.length} / 8000)</sub> */}
+                                        {/* this will need modified in order to crap each sections */}
                                     </Form.Label>
-                                    <Form.Control 
-                                    as='textarea' 
-                                    rows={8} 
-                                    placeholder='Experience'
-                                    value={user.resume.experience}
-                                    onChange={(e) => handleResumeChange('experience', sanitizeUserInput(e.target.value))}
-                                    maxLength='8000'
-                                    className="mobile-textarea"
-                                    />
+                                    <div className='createResumePlusAndMinus'>
+                                        <FaPlusSquare onClick={addExperienceEntry}  size={25} className='creationButton' id='CreateResumePlusButton'/>
+                                    </div>
+                                    {user.resume.experience.map((exp, index) => (
+                                        <div key={index} className="experience-entry">
+                                            <Form.Control 
+                                                type='text'
+                                                placeholder='Job Title'
+                                                value={exp.expJobTitle}
+                                                onChange={(e) => handleExperienceChange(index, 'expJobTitle', sanitizeUserInput(e.target.value))}
+                                                className="mb-2"
+                                            />
+                                            <Form.Group className="d-flex gap-3 align-items-center">
+                                            <Form.Control 
+                                                type='text'
+                                                placeholder='Company Name'
+                                                value={exp.expCompanyName}
+                                                onChange={(e) => handleExperienceChange(index, 'expCompanyName', sanitizeUserInput(e.target.value))}
+                                                className="mb-2"
+                                            />
+                                            <Form.Control 
+                                                type='text'
+                                                placeholder='Employment Duration (e.g., Jan 2020 - Dec 2022)'
+                                                value={exp.expTime}
+                                                onChange={(e) => handleExperienceChange(index, 'expTime', sanitizeUserInput(e.target.value))}
+                                                className="mb-2"
+                                                />
+                                            </Form.Group>
+                                            <Form.Control 
+                                                as='textarea'
+                                                rows={3}
+                                                placeholder='Description'
+                                                value={exp.expDesc}
+                                                onChange={(e) => handleExperienceChange(index, 'expDesc', sanitizeUserInput(e.target.value))}
+                                                className="mb-3"
+                                            />
+                                            <div className='createResumePlusAndMinus'>
+                                                <FaPlusSquare onClick={addExperienceEntry}  size={25} className='creationButton' id='CreateResumePlusButton'/>
+                                                <FaMinusSquare onClick={() => removeExperienceEntry(index)} size={25} className='creationButton' id='CreateResumeMinusButton'/>
+                                            </div>
+                                        </div>
+                                    ))}
                                     <Form.Text className='text-muted'>
                                         Work Experience, this should include: Dates of Employment, Employer, Job Title, and a brief description of your role.
                                     </Form.Text>
