@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, Alert, Table, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import { useUser } from '../../context/UserContext';
-import ReviewTailoredResumeResumeModal from './ReviewTailoredResumeModal';
+import ReviewResumeModal from './ReviewResumeModal';
 import ReviewCoverLetterModal from './ReviewCoverLetterModal'
 export default function TailoredResumeTable() {
   const {
@@ -10,7 +10,7 @@ export default function TailoredResumeTable() {
   } = useUser();
   return (
     <>
-    <ReviewTailoredResumeResumeModal />
+    <ReviewResumeModal />
     <ReviewCoverLetterModal />
         <h5>Tailored Resume(s)</h5>
         <Table striped bordered hover variant='dark'>

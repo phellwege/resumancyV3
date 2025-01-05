@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, Alert, Table, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import { useUser } from '../../context/UserContext';
-import ReviewBaseResumeModal from './ReviewBaseResumeModal';
+import ReviewResumeModal from './ReviewResumeModal';
 
 export default function BaseResumeTable() {
     const {
@@ -9,7 +9,7 @@ export default function BaseResumeTable() {
     } = useUser()
   return (
     <>
-        <ReviewBaseResumeModal />
+        <ReviewResumeModal />
         <h5>Base Resume</h5>
         <Table striped bordered hover variant='dark'>
         <thead>

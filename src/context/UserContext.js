@@ -20,12 +20,9 @@ export function UserProvider({ children }) {
     const handleCloseSetupUserModal = () => setSetupUserModal(false);
 
     // reviewing resumes and cover letter modals
-    const [reviewBaseResumeModal, setReviewBaseResumeModal] = useState(false);
-    const handleOpenReviewBaseResumeModal = () => setReviewBaseResumeModal(true);
-    const handleCloseReviewBaseResumeModal = () => setReviewBaseResumeModal(false);
-    const [reviewTailoredResumeModal, setReviewTailoredResumeModal] = useState(false);
-    const handleOpenReviewTailoredResumeModal = () => setReviewTailoredResumeModal(true);
-    const handleCloseReviewTailoredResumeModal = () => setReviewTailoredResumeModal(false);
+    const [reviewResumeModal, setReviewResumeModal] = useState(false);
+    const handleOpenReviewResumeModal = () => setReviewResumeModal(true);
+    const handleCloseReviewResumeModal = () => setReviewResumeModal(false);
     const [reviewCoverLetterModal, setReviewCoverLetterModal] = useState(false);
     const handleOpenReviewCoverLetterModal = () => setReviewCoverLetterModal(true);
     const handleCloseReviewCoverLetterModal = () => setReviewCoverLetterModal(false);
@@ -202,12 +199,9 @@ export function UserProvider({ children }) {
         handleOpenSelectAvatar,
         handleCloseSelectAvatar,
 
-        reviewBaseResumeModal, setReviewBaseResumeModal,
-        handleOpenReviewBaseResumeModal,
-        handleCloseReviewBaseResumeModal,
-        reviewTailoredResumeModal, setReviewTailoredResumeModal,
-        handleOpenReviewTailoredResumeModal,
-        handleCloseReviewTailoredResumeModal,
+        reviewResumeModal, setReviewResumeModal,
+        handleOpenReviewResumeModal,
+        handleCloseReviewResumeModal,
         reviewCoverLetterModal, setReviewCoverLetterModal,
         handleOpenReviewCoverLetterModal,
         handleCloseReviewCoverLetterModal,
@@ -225,7 +219,7 @@ export function UserProvider({ children }) {
 
     }), [
         user, loginModal, setupUserModal, selectAvatar,
-        reviewBaseResumeModal, reviewTailoredResumeModal, reviewCoverLetterModal
+        reviewResumeModal, reviewCoverLetterModal
     ]);
 
     return (

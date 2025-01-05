@@ -11,8 +11,8 @@ import EditResume from './editResume';
 
 export default function ReviewBaseResumeModal() {
     const {
-        reviewBaseResumeModal,
-        handleCloseReviewBaseResumeModal,
+        reviewResumeModal,
+        handleCloseReviewResumeModal,
         user
     } = useUser();
     const [edit, setEdit] = useState(false);
@@ -29,8 +29,8 @@ export default function ReviewBaseResumeModal() {
   return (
     <>
     <Modal 
-    show={reviewBaseResumeModal} 
-    onHide={handleCloseReviewBaseResumeModal}
+    show={reviewResumeModal} 
+    onHide={handleCloseReviewResumeModal}
     size="lg"
     aria-labelledby="contained-modal-title-vcenter"
     centered
@@ -55,7 +55,7 @@ export default function ReviewBaseResumeModal() {
             }
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="primary" onClick={handleCloseReviewBaseResumeModal}>
+            <Button variant="primary" onClick={handleCloseReviewResumeModal}>
                 Continue
             </Button>
             <Button variant="warning" onClick={() => handleEditToggle()}>
@@ -65,7 +65,7 @@ export default function ReviewBaseResumeModal() {
                     <>Edit</>
                 )}
             </Button>
-            <Button variant="secondary" onClick={handleCloseReviewBaseResumeModal}>
+            <Button variant="secondary" onClick={handleCloseReviewResumeModal}>
                 Close
             </Button>
             

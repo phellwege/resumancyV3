@@ -5,6 +5,9 @@ const OpenAI = require('openai');
 // Function to handle summarization API call with retries
 async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
+    const experienceFormatted = user.resume.experience.map(item => {
+        return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
+    }).join("\n");
 
     try {
         const gptResponse = await openai.chat.completions.create({
@@ -12,7 +15,7 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
             messages: [
                 { role: 'system', content: 'Craft a professional resume summary for this resume in roughly 3 sentences.' },
                 { role: 'user', content: `
-                    Experience: ${user.resume.experience}
+                    Experience: ${experienceFormatted}
                     Education and Certifications: ${user.resume.education}
                     Skills: ${user.resume.skills}
                 ` },
@@ -44,7 +47,7 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
             messages: [
                 { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions. (Don\'t include a section name or anything like that, just the content in a format typically seen in a professional resume experience section).' },
                 { role: 'user', content: `
-                    Experience: ${user.resume.experience}
+                    Experience: ${experienceFormatted}
                     Education and Certifications: ${user.resume.education}
                     Skills: ${user.resume.skills}
                 ` },
@@ -74,9 +77,10 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. (Don\'t return a Section name or anything like that)' },
+                // { role: 'system', content: 'Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. (Don\'t return a Section name or anything like that)' },
+                { role: 'system', content: 'Craft a compelling experience section for the resume, highlighting the candidate\'s professional achievements and contributions based solely on the information provided. Do not invent or add any data that is not already present in the user\'s experience. Ensure that the language is professional and clear, while also maintaining factual accuracy. Avoid any fabricated statistics or details.' },
                 { role: 'user', content: `
-                    Experience: ${user.resume.experience}
+                    Experience: ${experienceFormatted}
                     Education and Certifications: ${user.resume.education}
                     Skills: ${user.resume.skills}
                 ` },
@@ -98,6 +102,39 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
     }
 }
 
+
+async function improveEducationSection(user, apiKey, retryCount = 0) {
+    const openai = new OpenAI({ apiKey });
+
+    try {
+        const gptResponse = await openai.chat.completions.create({
+            model: 'gpt-4o-mini',
+            messages: [
+                { role: 'system', content: 'I am building a resume and need help improving the Education and Certifications section. The current content is:' },
+                { role: 'user', content: `
+                    "${user.resume.education}" 
+                    Please help by making this section more structured, highlighting key accomplishments, certifications, degrees, and institutions, if applicable. 
+                    Ensure that the language is professional, concise, and appealing to potential employers.
+                ` },
+            ],
+            temperature: 0.4,
+            max_tokens: 1000,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+        });
+
+        return gptResponse.choices[0].message.content;
+    } catch (error) {
+        if (retryCount < 3) {
+            return improveEducationSection(user, apiKey, retryCount + 1);
+        } else {
+            throw new Error('Error generating skills section after 3 attempts');
+        }
+    }
+}
+
+
 exports.generate_base_resume = onRequest(
     { cors: true, memory: "512Mi", secrets: ["GPT_API_KEY"] },
     async (req, res) => {
@@ -115,6 +152,7 @@ exports.generate_base_resume = onRequest(
                     summarizeResumeWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateExperienceSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateSkillsSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
+                    improveEducationSection(user, apiKey).catch(e => `Error: ${e.message}`),
                 ]);
 
                 res.status(200).json({
