@@ -26,7 +26,6 @@ const renderTextWithNewLines = (text) => {
 
   return (
     <>
-    {console.log(user)}
     <div className='cardInnerDiv' id='resumeStyle2'>
       <div id='resumeStyle2Header'>
         <h2>

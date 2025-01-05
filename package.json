@@ -20,6 +20,7 @@
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "react-spring": "^9.7.3",
+    "react-to-pdf": "^1.0.1",
     "states-us": "^1.0.4",
     "stripe": "^17.5.0",
     "styled-components": "^6.1.8",
