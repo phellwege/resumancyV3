@@ -57,7 +57,7 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
                         - The language is professional, clear, and concise.
                         - Factual accuracy is maintained.
                         - The "expDesc" field is formatted as a bulleted list with each bullet point separated by a newline character (\n).
-
+                        - There are between 3 and 5 bullet points with at least 1-3 sentences each.
                         Return the experience section in the following valid JSON structure (not in a code block):
                         [
                             {
@@ -103,12 +103,25 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. In Bullet Point format. (Don\'t return a Section name or anything like that)' },
-                { role: 'user', content: `
-                    Experience: ${experienceFormatted}
-                    Education and Certifications: ${user.resume.education}
-                    Skills: ${user.resume.skills}
-                ` },
+                { 
+                    role: 'system', 
+                    content: `
+                        Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. 
+                        Ensure that:
+                        - Formatted as a bulleted list 
+                        - (Don\'t return a Section name or anything like that)
+                        - list a maximum of 6 skills
+                    ` 
+                },
+                { 
+                    role: 'user', 
+                    content: 
+                    `
+                        Experience: ${experienceFormatted}
+                        Education and Certifications: ${user.resume.education}
+                        Skills: ${user.resume.skills}
+                    ` 
+                },
             ],
             temperature: 0.4,
             max_tokens: 2000,

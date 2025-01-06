@@ -26,50 +26,52 @@ const renderTextWithNewLines = (text) => {
 
   return (
     <>
-    <div className='cardInnerDiv' id='resumeStyle2'>
-      <div id='resumeStyle2Header'>
-        <h2>
-          {capitalizeFirstLetter(user?.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}{capitalizeFirstLetter(user?.lastName)}
-        </h2>
-        <h4>{user.jobTitle}</h4>
-      </div>
-      <div className='resumeStyleLowerWrap'>
-        <div className='resumeStyleLeftBlock'>
-          <div className='reviewDefaultResumeSections'>
-            <h4>Contact Info:</h4>
-            {renderTextWithNewLines(user.contactInfo.phone)}
-            {renderTextWithNewLines(user.contactInfo.email)}
-            {/* {renderTextWithNewLines(user.contactInfo.socialMedia)} */}
-          </div>
-          <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
-            <h4>Skills:</h4>
-            <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.skills)}</span>
-          </div>
+    <div className='reviewHeight'>
+        <div className='cardInnerDiv' id='resumeStyle2'>
+        <div id='resumeStyle2Header'>
+            <h3>
+            {capitalizeFirstLetter(user?.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}{capitalizeFirstLetter(user?.lastName)}
+            </h3>
+            <h5>{user.jobTitle}</h5>
         </div>
-        <div className='resumeStyleRightBlock'>
+        <div className='resumeStyleLowerWrap'>
+            <div className='resumeStyleLeftBlock'>
             <div className='reviewDefaultResumeSections'>
-            <h4>Summary:</h4>
-            {renderTextWithNewLines(user.resume.summary)}
-        </div>
-        <div className='reviewDefaultResumeSections'>
-            <h4>Experience:</h4>
-            {user.resume.experience.map((exp, index) => (
-                <div key={index} className="experience-entry">
-                        <div>
-                            <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expJobTitle)}</span>
-                            <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expCompanyName)}</span>
-                            <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expTime)}</span>
+                <h4>Contact Info:</h4>
+                {renderTextWithNewLines(user.contactInfo.phone)}
+                {renderTextWithNewLines(user.contactInfo.email)}
+                {/* {renderTextWithNewLines(user.contactInfo.socialMedia)} */}
+            </div>
+            <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
+                <h5>Skills:</h5>
+                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.skills)}</span>
+            </div>
+            </div>
+            <div className='resumeStyleRightBlock'>
+                <div className='reviewDefaultResumeSections'>
+                <h5>Summary:</h5>
+                {renderTextWithNewLines(user.resume.summary)}
+            </div>
+            <div className='reviewDefaultResumeSections'>
+                <h5>Experience:</h5>
+                {user.resume.experience.map((exp, index) => (
+                    <div key={index} className="experience-entry">
+                        <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
+                        <div className='reviewResumeJobTitleAndTime'>
+                            <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expJobTitle)}</h6>
+                            <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expTime)}</h6>
                         </div>
                         <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expDesc)}</span>
                     </div>
-            ))}
+                ))}
+            </div>
+            <div className='reviewDefaultResumeSections' id='resumeStyle2Education'>
+                <h5>Education and Certifications:</h5>
+                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.education)}</span>
+            </div>
+            </div>
         </div>
-          <div className='reviewDefaultResumeSections' id='resumeStyle2Education'>
-            <h4>Education and Certifications:</h4>
-            <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.education)}</span>
-          </div>
         </div>
-      </div>
     </div>
     </>
   )

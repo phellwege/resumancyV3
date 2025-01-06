@@ -40,15 +40,15 @@ export function UserProvider({ children }) {
     // user object
     const [user, setUser] = useState({
         id: null,
-        firstName: '',
-        lastName: '',
+        firstName: '', // can be obtained via display name
+        lastName: '', // can be obtained via display name
         jobTitle: '',
         userName: '',
         avatarImg: userAvatars[0],
         contactInfo: {
             phone: '',
             email: '',
-            socialMedia: []
+            socialMedia: [] // this should require a name and a url so i can link them
         },
         address: {
             street: '',
