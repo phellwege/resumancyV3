@@ -58,7 +58,6 @@ export default function CreateBaselineResume() {
                 }
             }
         }));
-        {console.log(user)}
         setLoading(true);
         setError(null);
 
@@ -70,12 +69,18 @@ export default function CreateBaselineResume() {
             );
     
             const { summary, experienceSection, skillsSection, educationSection } = response.data;
-
+            let parsedExperience = [];
+            try {
+                parsedExperience = JSON.parse(experienceSection.data);
+            } catch (parseError) {
+                console.error('Error parsing experience section:', parseError);
+                parsedExperience = []; // Fallback to an empty array
+            }
             setUser(prevState => {
                 const newResume = {
                     ...prevState.resume,
                     summary: summary.data,
-                    experience: experienceSection.data,
+                    experience: parsedExperience,
                     skills: skillsSection.data,
                     education: educationSection.data
                 };

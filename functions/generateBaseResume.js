@@ -21,7 +21,7 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
                 ` },
             ],
             temperature: 0.4,
-            max_tokens: 3500,
+            max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -49,16 +49,25 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
             model: 'gpt-4o-mini',
             messages: [
                 // { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions. (Don\'t include a section name or anything like that, just the content in a format typically seen in a professional resume experience section).' },
-                { role: 'system', content: `'Craft a compelling experience section for the resume, highlighting the candidate\'s professional achievements and contributions based solely on the information provided. Ensure that the language is professional and clear, while also maintaining factual accuracy. Avoid any fabricated statistics or details. The job description should be roughly three bullet points worth of information'
-                    Please return the experience section with the following valid json structure (not in a codeblock) as I need to parse the data:
-                    [
-                        {
-                            "expJobTitle": "Job Title",
-                            "expCompanyName": "Company Name",
-                            "expTime": "Employment Duration",
-                            "expDesc": "Job Description"
-                        }
-                    ]` 
+                { 
+                    role: 'system', 
+                    content:  `
+                        Craft a compelling experience section for the resume, highlighting the candidate's professional achievements and contributions based solely on the information provided. 
+                        Ensure that:
+                        - The language is professional, clear, and concise.
+                        - Factual accuracy is maintained.
+                        - The "expDesc" field is formatted as a bulleted list with each bullet point separated by a newline character (\n).
+
+                        Return the experience section in the following valid JSON structure (not in a code block):
+                        [
+                            {
+                                "expJobTitle": "Job Title",
+                                "expCompanyName": "Company Name",
+                                "expTime": "Employment Duration",
+                                "expDesc": "• First responsibility or achievement\n• Second responsibility or achievement\n• Third responsibility or achievement"
+                            }
+                        ]
+                    `
                 },
                 { role: 'user', content: `
                     Experience: ${experienceFormatted}
@@ -94,7 +103,7 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. (Don\'t return a Section name or anything like that)' },
+                { role: 'system', content: 'Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. In Bullet Point format. (Don\'t return a Section name or anything like that)' },
                 { role: 'user', content: `
                     Experience: ${experienceFormatted}
                     Education and Certifications: ${user.resume.education}
@@ -102,7 +111,7 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
                 ` },
             ],
             temperature: 0.4,
-            max_tokens: 3500,
+            max_tokens: 2000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -130,12 +139,12 @@ async function improveEducationSection(user, apiKey, retryCount = 0) {
                 { role: 'user', content: `
                     "${user.resume.education}" 
                     Please help by making this section more structured, highlighting key accomplishments, certifications, degrees, and institutions, if applicable. 
-                    Ensure that the language is professional, concise, and appealing to potential employers.
-                    Do not make up false credentials
+                    Ensure that the language is professional, concise, and appealing to potential employers, and based solely on the information provided.
+                    Avoid any fabricated statistics or details.
                 ` },
             ],
             temperature: 0.4,
-            max_tokens: 1000,
+            max_tokens: 800,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,

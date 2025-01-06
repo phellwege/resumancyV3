@@ -13,7 +13,6 @@ export default function Review() {
   } = useUser()
   return (
     <>
-    {console.log(user)}
     <Header />
     <div className='pageWrapper'>
       {/* {recruiter.id && (
