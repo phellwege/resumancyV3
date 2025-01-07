@@ -100,21 +100,23 @@ export default function UserSetupModal() {
                             {user.contactInfo.socialMedia.map((account, index) => (
                                 <div key={index} className="social-media-entry">
                                     {/* Field for Social Media Platform Name */}
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Platform (e.g., LinkedIn)"
-                                        value={account.name} // Correctly access the 'name' property
-                                        onChange={(e) => handleSocialMediaChange(index, 'name', sanitizeUserInput(e.target.value))}
-                                        className="mb-2"
-                                    />
-                                    {/* Field for Social Media URL */}
-                                    <Form.Control
-                                        type="url"
-                                        placeholder="URL (e.g., https://linkedin.com/in/your-profile)"
-                                        value={account.url} // Correctly access the 'url' property
-                                        onChange={(e) => handleSocialMediaChange(index, 'url', sanitizeUserInput(e.target.value))}
-                                        className="mb-2"
-                                    />
+                                    <div className='userSetupModalSocialSquish'>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Platform (e.g., LinkedIn)"
+                                            value={account.name} // Correctly access the 'name' property
+                                            onChange={(e) => handleSocialMediaChange(index, 'name', sanitizeUserInput(e.target.value))}
+                                            className="mb-2"
+                                        />
+                                        {/* Field for Social Media URL */}
+                                        <Form.Control
+                                            type="url"
+                                            placeholder="URL (e.g., https://linkedin.com/in/your-profile)"
+                                            value={account.url} // Correctly access the 'url' property
+                                            onChange={(e) => handleSocialMediaChange(index, 'url', sanitizeUserInput(e.target.value))}
+                                            className="mb-2"
+                                        />    
+                                    </div>
                                     <div className='createResumePlusAndMinus'>
                                         <FaPlusSquare 
                                         size={25}

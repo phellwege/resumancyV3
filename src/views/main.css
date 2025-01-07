@@ -594,6 +594,16 @@ width: 45%;
 #CreateResumeMinusButton:hover {
     color: #F09440;
 }
+.userSetupModalSocialSquish {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.userSetupModalSocialSquish .form-control {
+    flex: 1;
+    min-width: 130px; 
+}
 
 
 @media (max-width: 850px) {
