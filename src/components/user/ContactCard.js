@@ -14,7 +14,7 @@ export default function ContactCard() {
                 <div className='cardInnerDiv'>
                     <div>
                         <h4>User Information</h4>
-                        <p className='leftShifted'>
+                        <div className='leftShifted'>
                         {user.firstName}{' '}{user.lastName}
                         <br/>
                         {user.jobTitle}
@@ -23,8 +23,22 @@ export default function ContactCard() {
                         <br/>
                         {user.contactInfo.email}
                         <br/>
-                        {user.contactInfo.socialMedia}
-                        <br/>
+                        {user.contactInfo.socialMedia.length > 0 && (
+                            <div>
+                                {user.contactInfo.socialMedia.map((account, index) => (
+                                    <div key={index}>
+                                        <a 
+                                            href={account.url} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                        >
+                                            {account.name}
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        <br />
                         {user.address && (
                             <>
                             {user.address.street && (
@@ -55,7 +69,7 @@ export default function ContactCard() {
                             )}
                             </>
                         )}
-                        </p>
+                        </div>
                         <Button onClick={handleOpenSetupUserModal}>Edit</Button>
                     </div>
                 </div>

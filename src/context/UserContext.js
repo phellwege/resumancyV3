@@ -48,7 +48,12 @@ export function UserProvider({ children }) {
         contactInfo: {
             phone: '',
             email: '',
-            socialMedia: [] // this should require a name and a url so i can link them
+            socialMedia: [
+                { 
+                    name: '', 
+                    url: '' 
+                }
+            ]
         },
         address: {
             street: '',
@@ -122,6 +127,41 @@ export function UserProvider({ children }) {
             contactInfo: {
                 ...prevState.contactInfo,
                 [key]: value
+            }
+        }));
+    };
+    const handleSocialMediaChange = (index, field, value) => {
+        setUser(prevUser => {
+            const updatedSocialMedia = [...prevUser.contactInfo.socialMedia];
+            updatedSocialMedia[index] = {
+                ...updatedSocialMedia[index],
+                [field]: value, // Update specific field (e.g., 'name' or 'url')
+            };
+            return {
+                ...prevUser,
+                contactInfo: {
+                    ...prevUser.contactInfo,
+                    socialMedia: updatedSocialMedia,
+                },
+            };
+        });
+    };
+    const addSocialMediaEntry = () => {
+        setUser(prevState => ({
+            ...prevState,
+            contactInfo: {
+                ...prevState.contactInfo,
+                socialMedia: [...prevState.contactInfo.socialMedia, { name: '', url: '' }]
+            }
+        }));
+    };
+    
+    const removeSocialMediaEntry = (index) => {
+        setUser(prevState => ({
+            ...prevState,
+            contactInfo: {
+                ...prevState.contactInfo,
+                socialMedia: prevState.contactInfo.socialMedia.filter((_, i) => i !== index)
             }
         }));
     };
@@ -217,6 +257,9 @@ export function UserProvider({ children }) {
         handleTailoredResumeChange, // will need DB in order to perform this action. (I will need to fetch the base resume from the db and pass it as a state object)
         handleAddressChange,
         handleContactChange,
+        handleSocialMediaChange,
+        addSocialMediaEntry,
+        removeSocialMediaEntry,
         handleUserChange,
 
     }), [

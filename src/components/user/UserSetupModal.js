@@ -3,8 +3,11 @@ import React, {useRef} from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Form } from 'react-bootstrap';
+
 import { useUser } from '../../context/UserContext';
 import SelectAvatarModal from './SelectAvatarModal';
+import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
+
 import '../../views/main.css';
 
 export default function UserSetupModal() {
@@ -14,7 +17,11 @@ export default function UserSetupModal() {
         handleCloseSetupUserModal,
         handleUserChange,
         handleContactChange,
-        handleOpenSelectAvatar
+        handleOpenSelectAvatar,
+        sanitizeUserInput,
+        addSocialMediaEntry,
+        removeSocialMediaEntry,
+        handleSocialMediaChange
     } = useUser();
     
     const handlePhoneNumberChange = (e) => {
@@ -88,14 +95,46 @@ export default function UserSetupModal() {
                                 onChange={(e) => handleContactChange('phone', handlePhoneNumberChange(e))}
                             />
                         </Form.Group>
-                            <Form.Group>
+                        <Form.Group>
                             <Form.Label>Social Media Accounts</Form.Label>
-                            <Form.Control 
-                                as="textarea"
-                                placeholder="Enter Social Media Accounts"
-                                value={user.contactInfo.socialMedia}
-                                onChange={(e) => handleContactChange('socialMedia', e.target.value)}
-                            />
+                            {user.contactInfo.socialMedia.map((account, index) => (
+                                <div key={index} className="social-media-entry">
+                                    {/* Field for Social Media Platform Name */}
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Platform (e.g., LinkedIn)"
+                                        value={account.name} // Correctly access the 'name' property
+                                        onChange={(e) => handleSocialMediaChange(index, 'name', sanitizeUserInput(e.target.value))}
+                                        className="mb-2"
+                                    />
+                                    {/* Field for Social Media URL */}
+                                    <Form.Control
+                                        type="url"
+                                        placeholder="URL (e.g., https://linkedin.com/in/your-profile)"
+                                        value={account.url} // Correctly access the 'url' property
+                                        onChange={(e) => handleSocialMediaChange(index, 'url', sanitizeUserInput(e.target.value))}
+                                        className="mb-2"
+                                    />
+                                    <div className='createResumePlusAndMinus'>
+                                        <FaPlusSquare 
+                                        size={25}
+                                        onClick={addSocialMediaEntry}
+                                        id='CreateResumePlusButton'
+                                        className='creationButton'
+                                        >
+                                            Add Social Media
+                                        </FaPlusSquare>
+                                        <FaMinusSquare
+                                            size={25}
+                                            onClick={() => removeSocialMediaEntry(index)}
+                                            id='CreateResumeMinusButton'
+                                            className='creationButton'
+                                        >
+                                            Remove
+                                        </FaMinusSquare>
+                                    </div>
+                                </div>
+                            ))}
                         </Form.Group>
                     </Form>
                 </div>

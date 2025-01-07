@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BsQuestionCircle } from "react-icons/bs";
 import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
 
-import DOMPurify from 'dompurify';
 import AddressForm from '../user/AddressForm';
 import '../../views/main.css';
 import {
