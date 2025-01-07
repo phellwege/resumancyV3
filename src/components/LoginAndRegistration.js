@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { Alert } from 'react-bootstrap';
-
 import { useUser } from '../context/UserContext';
 import { useAuth } from '../context/AuthContext';
-
-import '../views/main.css';
 import Logo from '../static/logo_monochrome.png';
 import UserSetupModal from './user/UserSetupModal';
+import '../views/main.css';
 
 export default function LoginAndRegistration() {
     const history = useNavigate();
@@ -16,15 +14,20 @@ export default function LoginAndRegistration() {
         registerModal,
         loginModal,
         handleCloseLoginModal,
-        handleUserChange
+        handleUserChange,
+        handleContactChange
     } = useUser();
     const { 
         firebaseUiInstance,
         currentUser
     } = useAuth();
-
     const [error, setError] = useState('');
-
+    const capitalizeEachWord = (text) => {
+        return text
+            .split(' ')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    };
     useEffect(() => {
         const uiConfig = {
             signInOptions: ['password', 'google.com'],
@@ -34,11 +37,17 @@ export default function LoginAndRegistration() {
             callbacks: {
                 signInSuccessWithAuthResult: (authResult) => {
                     const user = authResult.user;
-                    
+                    const capitalizedDisplayName = capitalizeEachWord(user.displayName);
+                    const nameParts = capitalizedDisplayName.split(' ');
+                    const firstName = nameParts[0] || 'Guest';
+                    const lastName = nameParts[1] || '';
+
                     // Update user state using handleUserChange
                     handleUserChange('id', user.uid); 
-                    handleUserChange('userName', user.displayName || 'Guest'); 
-                    handleUserChange('email', user.email); 
+                    handleUserChange('userName', capitalizedDisplayName || 'Guest'); 
+                    handleContactChange('email', user.email); 
+                    handleUserChange('firstName', firstName);
+                    handleUserChange('lastName', lastName);
                     // handleUserChange('avatarImg', user.photoURL || ''); // Set avatar image (if available)
                     
                     // Optionally, set a default displayName if it's not set

@@ -148,16 +148,31 @@ async function improveEducationSection(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: `I am building a resume and need help improving the Education and Certifications section. The current content is: (Don\'t return a Section name or anything like that) Keep this very concise and accurate, as it is for a resume.` },
-                { role: 'user', content: `
+                { 
+                    role: 
+                    'system', 
+                    content: 
+                    `
+
+                    I am building a resume and need help improving the Education and Certifications section. Please ensure the response is concise and limited to key details provided. (Don\'t return a Section name or anything like that).
+                    `
+                },
+                { 
+                    role: 
+                    'user', 
+                    content: 
+                    `
                     "${user.resume.education}" 
-                    Please help by making this section more structured, highlighting key accomplishments, certifications, degrees, and institutions, if applicable. 
-                    Ensure that the language is professional, concise, and appealing to potential employers, and based solely on the information provided.
-                    Avoid any fabricated statistics or details.
-                ` },
+                    Please rewrite this section in a professional, concise format suitable for a resume. 
+                    Ensure:
+                    - Key accomplishments or certifications are highlighted succinctly.
+                    - Avoid adding optional sections like dissertations or publications unless explicitly mentioned.
+                    - Keep the response brief and professional.
+                    ` 
+                },
             ],
             temperature: 0.4,
-            max_tokens: 800,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,

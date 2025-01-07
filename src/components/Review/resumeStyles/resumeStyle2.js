@@ -16,7 +16,7 @@ const renderTextWithNewLines = (text) => {
         return lines.map((line, index) => {
             const shouldIndent = line.startsWith('-');
             return (
-                <p key={index} className={shouldIndent ? 'indented' : ''}>{line}
+                <p key={index} className={shouldIndent ? 'indented' : ''} style={{ marginBottom: "5px" }}>{line}
                 </p>
             );
         });
@@ -45,6 +45,10 @@ const renderTextWithNewLines = (text) => {
             <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
                 <h5>Skills:</h5>
                 <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.skills)}</span>
+                <div className='reviewDefaultResumeSections' id='resumeStyle2Education'>
+                <h5>Education and Certifications:</h5>
+                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.education)}</span>
+            </div>
             </div>
             </div>
             <div className='resumeStyleRightBlock'>
@@ -56,7 +60,7 @@ const renderTextWithNewLines = (text) => {
                 <h5>Experience:</h5>
                 {user.resume.experience.map((exp, index) => (
                     <div key={index} className="experience-entry">
-                        <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
+                        <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
                         <div className='reviewResumeJobTitleAndTime'>
                             <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expJobTitle)}</h6>
                             <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expTime)}</h6>
@@ -65,10 +69,7 @@ const renderTextWithNewLines = (text) => {
                     </div>
                 ))}
             </div>
-            <div className='reviewDefaultResumeSections' id='resumeStyle2Education'>
-                <h5>Education and Certifications:</h5>
-                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.education)}</span>
-            </div>
+            
             </div>
         </div>
         </div>

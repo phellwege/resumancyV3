@@ -32,7 +32,6 @@ function Header(props) {
     const handleNavHome = () => {
         history('/')
     }
-
     const AlertNotificationMessage = "Notification";
     function AlertMessage(){
         // logic if a user has alerts

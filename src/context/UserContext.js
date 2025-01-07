@@ -58,6 +58,7 @@ export function UserProvider({ children }) {
             zip: ''
         },
         resume: {
+            id: null,
             experience: [{
                 expJobTitle: '',
                 expCompanyName: '',
@@ -74,6 +75,7 @@ export function UserProvider({ children }) {
             }
         },
         tailoredResume: {
+            id: null,
             companyName: '',
             description: '',
         },
