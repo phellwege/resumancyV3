@@ -390,6 +390,7 @@ width: 45%;
     min-height: 100%;
     background-color: lightgray;
     padding-top: 1%;
+    text-align: left;
 }
 .resumeStyleRightBlock {
     width: 75%;

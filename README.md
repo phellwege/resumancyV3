@@ -1,8 +1,8 @@
 TODO: Fix logout
 TODO: Fix sign in from email (doesnt appear to work, only google sign in works)
 TODO: handle user profile customization on account creation (new view most likely).
+TODO: fix pdf bug where hyperlinks cannot be interacted with
 
-TODO: fix styling on the reviewResumes modal.
 TODO: write functions for database connection and storage of state managed information from dataContext
 
 TODO: fix stripe so that it returns correct and expected values for users subscription
@@ -16,7 +16,6 @@ TODO: Fix contact us link in footer
 TODO: Update terms of use, faq and the privacy policy.
 
 TODO: fix bug on modal size
-TODO: add correct function for social media accounts with a name / url
 TODO: fix other resumeStyles for review.
 TODO: fix edit function for resume data on review
 

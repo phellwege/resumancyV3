@@ -38,9 +38,23 @@ const renderTextWithNewLines = (text) => {
             <div className='resumeStyleLeftBlock'>
             <div className='reviewDefaultResumeSections'>
                 <h4>Contact Info:</h4>
-                {renderTextWithNewLines(user.contactInfo.phone)}
                 {renderTextWithNewLines(user.contactInfo.email)}
-                {/* {renderTextWithNewLines(user.contactInfo.socialMedia)} */}
+                {renderTextWithNewLines(user.contactInfo.phone)}
+                {user.contactInfo.socialMedia.length > 0 && (
+                    <div>
+                        {user.contactInfo.socialMedia.map((account, index) => (
+                            <div key={index}>
+                                <a 
+                                    href={account.url} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                >
+                                    {account.name}
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
             <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
                 <h5>Skills:</h5>
