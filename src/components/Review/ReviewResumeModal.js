@@ -15,8 +15,6 @@ export default function ReviewBaseResumeModal() {
         handleCloseReviewResumeModal,
         user
     } = useUser();
-    // const contentRef = useRef(null);
-    // const [scale, setScale] = useState(1);
     const [edit, setEdit] = useState(false);
     const handleEditToggle = () => {
         setEdit(prevState => !prevState);
@@ -31,17 +29,6 @@ export default function ReviewBaseResumeModal() {
         toPDF();
         setIsGenPDF(false);
     };
-    // useEffect(() => {
-    //     if (contentRef.current) {
-    //         const contentHeight = contentRef.current.offsetHeight;
-    //         const targetHeight = 6.95 * 96; // 6.95 inches in pixels (96 DPI)
-    //         if (contentHeight > targetHeight) {
-    //             setScale(targetHeight / contentHeight);
-    //         } else {
-    //             setScale(1); // Reset scale if content fits
-    //         }
-    //     }
-    // }, [edit, reviewResumeModal]);
 
   return (
     <>
