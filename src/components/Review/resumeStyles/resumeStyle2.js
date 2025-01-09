@@ -4,12 +4,14 @@ import '../../../views/main.css';
 
 export default function ResumeStyle2({isGenPDF}) {
   const {
-    user
+    user,
+    stripFormatting
   } = useUser();
 
   const capitalizeFirstLetter = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
 };
+
 const renderTextWithNewLines = (text) => {
     if (text) {
         const lines = text.split('\n');
@@ -44,7 +46,11 @@ const renderTextWithNewLines = (text) => {
                 >
                     {renderTextWithNewLines(user.contactInfo.email)}
                 </a>
-                {renderTextWithNewLines(user.contactInfo.phone)}
+                <a
+                    href={`tel:${stripFormatting(user.contactInfo.phone)}`}
+                >
+                    {renderTextWithNewLines(user.contactInfo.phone)}
+                </a>
                 {user.contactInfo.socialMedia.length > 0 && (
                     <div>
                         {user.contactInfo.socialMedia.map((account, index) => (

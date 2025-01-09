@@ -223,6 +223,9 @@ export function UserProvider({ children }) {
             avatarImg: selectedAvatar
         }));
     };
+    const stripFormatting = (phoneNumber) => {
+        return phoneNumber.replace(/\D/g, '');
+    };
 
     const value = useMemo(() =>({
         generateUUID,
@@ -261,6 +264,8 @@ export function UserProvider({ children }) {
         addSocialMediaEntry,
         removeSocialMediaEntry,
         handleUserChange,
+
+        stripFormatting,
 
     }), [
         user, loginModal, setupUserModal, selectAvatar,

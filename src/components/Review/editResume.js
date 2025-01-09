@@ -48,6 +48,7 @@ export default function EditResume() {
                 onChange={(e) => handleUserChange('firstName', sanitizeUserInput(e.target.value))}
                 maxLength='50'
                 aria-label="Small"
+                className="mb-2"
                 />
                 <Form.Control 
                 type='text' 
@@ -56,6 +57,7 @@ export default function EditResume() {
                 onChange={(e) => handleUserChange('lastName', sanitizeUserInput(e.target.value))}
                 maxLength='50'
                 aria-label="Small"
+                className="mb-2"
                 />
             </Form.Group>
             <Form.Group  className="d-flex gap-3 align-items-center">
@@ -66,6 +68,7 @@ export default function EditResume() {
                 onChange={(e) => handleContactChange('phone', handlePhoneNumberChange(e))}
                 maxLength='500'
                 aria-label="Small"
+                className="mb-2"
                 />
                 <Form.Control 
                 type='text'
@@ -74,6 +77,7 @@ export default function EditResume() {
                 onChange={(e) => handleContactChange('email', sanitizeUserInput(e.target.value))}
                 maxLength='500'
                 aria-label="Small"
+                className="mb-2"
                 />
             </Form.Group>
             <Form.Group>
@@ -87,6 +91,7 @@ export default function EditResume() {
                 value={user.resume.summary || ''}
                 onChange={(e) => handleResumeChange('summary', sanitizeUserInput(e.target.value))}
                 maxLength='1000'
+                className="mb-2"
                 />
                 <Form.Label>
                     Experience
@@ -146,11 +151,11 @@ export default function EditResume() {
                 </Form.Label>
                 <Form.Control 
                 as='textarea'
-                rows={5}
+                rows={3}
                 placeholder='Skills'
                 value={user.resume.skills}
                 onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
-                maxLength='500'
+                maxLength='1000'
                 />
             </Form.Group>
         </div>
