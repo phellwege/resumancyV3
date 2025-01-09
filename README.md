@@ -4,7 +4,7 @@ TODO: handle user profile customization on account creation (new view most likel
 TODO: fix pdf bug where hyperlinks cannot be interacted with
 
 TODO: write functions for database connection and storage of state managed information from dataContext
-TODO: write inclusion of address
+
 TODO: fix stripe so that it returns correct and expected values for users subscription
 
 TODO: Develop effective subscription pricing.
@@ -12,12 +12,12 @@ TODO: Develop effective subscription pricing.
     - Basic Plan: $5/month for up to 5 tailored resumes.(and some formatting options)
     - Pro Plan: $15/month for unlimited resumes and additional features (full feature suit)
 
-TODO: Fix contact us link in footer
+TODO: Fix contact us link in footer - need modal
 TODO: Update terms of use, faq and the privacy policy.
 
+TODO: write inclusion of address - added bool to user object
 TODO: fix bug on modal size
 TODO: fix other resumeStyles for review.
-TODO: fix edit function for resume data on review
 
 
 

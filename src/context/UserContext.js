@@ -76,7 +76,8 @@ export function UserProvider({ children }) {
             summary: '',
             usage: {
                 timeStamp: null,
-                baseResume: true
+                baseResume: true,
+                useAddress: false
             }
         },
         tailoredResume: {
