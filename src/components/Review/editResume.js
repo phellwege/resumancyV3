@@ -23,6 +23,20 @@ export default function EditResume() {
         return text.charAt(0).toUpperCase() + text.slice(1);
     };
 
+    const handlePhoneNumberChange = (e) => {
+        const inputPhoneNumber = e.target.value.replace(/\D/g, '');
+        let formattedPhoneNumber = '';
+        if (inputPhoneNumber.length > 0) {
+            formattedPhoneNumber += `(${inputPhoneNumber.substring(0, 3)})`;
+            if (inputPhoneNumber.length >= 4) {
+                formattedPhoneNumber += ` ${inputPhoneNumber.substring(3, 6)}`;
+            }
+            if (inputPhoneNumber.length >= 7) {
+                formattedPhoneNumber += ` -${inputPhoneNumber.substring(6, 10)}`;
+            }
+        }
+        return formattedPhoneNumber;
+    };
     return (
         <>
         <div className='cardInnerDiv'>
@@ -48,8 +62,8 @@ export default function EditResume() {
                 <Form.Control 
                 type='text'
                 placeholder='Phone Number'
-                value={user.contactInfo.phoneNumber}
-                onChange={(e) => handleContactChange('phoneNumber', e.target.value)}
+                value={user.contactInfo.phone}
+                onChange={(e) => handleContactChange('phone', handlePhoneNumberChange(e))}
                 maxLength='500'
                 aria-label="Small"
                 />
