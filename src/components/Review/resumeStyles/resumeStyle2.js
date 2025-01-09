@@ -38,7 +38,12 @@ const renderTextWithNewLines = (text) => {
             <div className='resumeStyleLeftBlock'>
             <div className='reviewDefaultResumeSections'>
                 <h4>Contact Info:</h4>
-                {renderTextWithNewLines(user.contactInfo.email)}
+                <a 
+                    href={`mailto:${user.contactInfo.email}`}
+                    target="_blank"
+                >
+                    {renderTextWithNewLines(user.contactInfo.email)}
+                </a>
                 {renderTextWithNewLines(user.contactInfo.phone)}
                 {user.contactInfo.socialMedia.length > 0 && (
                     <div>

@@ -2,6 +2,9 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
 }
+p {
+    font-size: small;
+}
 #setupModal .loginModalForm {
 width: 45%;
 }

@@ -1,17 +1,22 @@
 import React from 'react';
 import { Form } from 'react-bootstrap'
 import { useUser } from '../../context/UserContext';
-
-import DOMPurify from 'dompurify';
+import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
 
 import '../../views/main.css';
 
 export default function EditResume() {
     const {
-        user,
+        user, 
+        setUser,
         handleResumeChange,
-        handleUserChange,
-        handleContactChange
+        sanitizeUserInput,
+        handleAddressChange,
+        handleExperienceChange,
+        addExperienceEntry,
+        removeExperienceEntry,
+        handleContactChange,
+        handleUserChange
     } = useUser();
 
     const capitalizeFirstLetter = (text) => {
@@ -21,48 +26,43 @@ export default function EditResume() {
     return (
         <>
         <div className='cardInnerDiv'>
-            <Form.Group>
-                <Form.Label>
-                    First Name
-                </Form.Label>
+            <Form.Group className="d-flex gap-3 align-items-center">
                 <Form.Control 
                 type='text' 
                 placeholder='first name'
                 value={capitalizeFirstLetter(user.firstName)}
                 onChange={(e) => handleUserChange('firstName', e.target.value)}
                 maxLength='50'
+                aria-label="Small"
                 />
-                <Form.Label>
-                    Last Name
-                </Form.Label>
                 <Form.Control 
                 type='text' 
                 placeholder='Last name'
                 value={capitalizeFirstLetter(user.lastName)}
                 onChange={(e) => handleUserChange('lastName', e.target.value)}
                 maxLength='50'
+                aria-label="Small"
                 />
-                <Form.Label>
-                    Job Title
-                </Form.Label>
+            </Form.Group>
+            <Form.Group  className="d-flex gap-3 align-items-center">
                 <Form.Control 
-                type='text' 
-                placeholder='Job Title'
-                value={user.jobTitle}
-                onChange={(e) => handleUserChange('jobTitle', e.target.value)}
-                maxLength='50'
-                />
-                <Form.Label>
-                    Contact Info
-                </Form.Label>
-                <Form.Control 
-                as='textarea'
-                rows={3}
-                placeholder='Contact Info'
+                type='text'
+                placeholder='Phone Number'
                 value={user.contactInfo.phoneNumber}
                 onChange={(e) => handleContactChange('phoneNumber', e.target.value)}
                 maxLength='500'
+                aria-label="Small"
                 />
+                <Form.Control 
+                type='text'
+                placeholder='Email'
+                value={user.contactInfo.email}
+                onChange={(e) => handleContactChange('email', e.target.value)}
+                maxLength='500'
+                aria-label="Small"
+                />
+            </Form.Group>
+            <Form.Group>
                 <Form.Label>
                     Summary
                 </Form.Label>
@@ -77,14 +77,45 @@ export default function EditResume() {
                 <Form.Label>
                     Experience
                 </Form.Label>
-                <Form.Control 
-                as='textarea'
-                rows={5}
-                placeholder='Experience'
-                value={user.resume.experience}
-                onChange={(e) => handleResumeChange('experience', e.target.value)}
-                maxLength='2000'
-                />
+                {user.resume.experience.map((exp, index) => (
+                    <div key={index} className="experience-entry" style={{border: '1px solid lightblue', padding: '5px', margin: '5px', borderRadius: '.5REM'}}>
+                        <Form.Control 
+                            type='text'
+                            placeholder='Job Title'
+                            value={exp.expJobTitle}
+                            onChange={(e) => handleExperienceChange(index, 'expJobTitle', sanitizeUserInput(e.target.value))}
+                            className="mb-2"
+                        />
+                        <Form.Group className="d-flex gap-3 align-items-center">
+                        <Form.Control 
+                            type='text'
+                            placeholder='Company Name'
+                            value={exp.expCompanyName}
+                            onChange={(e) => handleExperienceChange(index, 'expCompanyName', sanitizeUserInput(e.target.value))}
+                            className="mb-2"
+                        />
+                        <Form.Control 
+                            type='text'
+                            placeholder='Employment Duration (e.g., Jan 2020 - Dec 2022)'
+                            value={exp.expTime}
+                            onChange={(e) => handleExperienceChange(index, 'expTime', sanitizeUserInput(e.target.value))}
+                            className="mb-2"
+                            />
+                        </Form.Group>
+                        <Form.Control 
+                            as='textarea'
+                            rows={3}
+                            placeholder='Description'
+                            value={exp.expDesc}
+                            onChange={(e) => handleExperienceChange(index, 'expDesc', sanitizeUserInput(e.target.value))}
+                            className="mb-3"
+                        />
+                        <div className='createResumePlusAndMinus'>
+                            <FaPlusSquare onClick={addExperienceEntry}  size={25} className='creationButton' id='CreateResumePlusButton'/>
+                            <FaMinusSquare onClick={() => removeExperienceEntry(index)} size={25} className='creationButton' id='CreateResumeMinusButton'/>
+                        </div>
+                    </div>
+                ))}
                 <Form.Label>
                     Education
                 </Form.Label>
