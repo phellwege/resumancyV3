@@ -45,7 +45,7 @@ export default function EditResume() {
                 type='text' 
                 placeholder='first name'
                 value={capitalizeFirstLetter(user.firstName)}
-                onChange={(e) => handleUserChange('firstName', e.target.value)}
+                onChange={(e) => handleUserChange('firstName', sanitizeUserInput(e.target.value))}
                 maxLength='50'
                 aria-label="Small"
                 />
@@ -53,7 +53,7 @@ export default function EditResume() {
                 type='text' 
                 placeholder='Last name'
                 value={capitalizeFirstLetter(user.lastName)}
-                onChange={(e) => handleUserChange('lastName', e.target.value)}
+                onChange={(e) => handleUserChange('lastName', sanitizeUserInput(e.target.value))}
                 maxLength='50'
                 aria-label="Small"
                 />
@@ -71,7 +71,7 @@ export default function EditResume() {
                 type='text'
                 placeholder='Email'
                 value={user.contactInfo.email}
-                onChange={(e) => handleContactChange('email', e.target.value)}
+                onChange={(e) => handleContactChange('email', sanitizeUserInput(e.target.value))}
                 maxLength='500'
                 aria-label="Small"
                 />
@@ -85,7 +85,7 @@ export default function EditResume() {
                 rows={3}
                 placeholder='Summary'
                 value={user.resume.summary || ''}
-                onChange={(e) => handleResumeChange('summary', e.target.value)}
+                onChange={(e) => handleResumeChange('summary', sanitizeUserInput(e.target.value))}
                 maxLength='1000'
                 />
                 <Form.Label>
