@@ -156,7 +156,7 @@ export default function CreateBaselineResume() {
                                         <FaPlusSquare onClick={addExperienceEntry}  size={25} className='creationButton' id='CreateResumePlusButton'/>
                                     </div>
                                     {user.resume.experience.map((exp, index) => (
-                                        <div key={index} className="experience-entry">
+                                        <div key={index} className="experience-entry" style={{border: '1px solid whitesmoke', padding: '5px', margin: '5px', borderRadius: '.5REM'}}>
                                             <Form.Control 
                                                 type='text'
                                                 placeholder='Job Title'

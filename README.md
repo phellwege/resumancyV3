@@ -4,7 +4,7 @@ TODO: handle user profile customization on account creation (new view most likel
 TODO: fix pdf bug where hyperlinks cannot be interacted with
 
 TODO: write functions for database connection and storage of state managed information from dataContext
-
+TODO: write inclusion of address
 TODO: fix stripe so that it returns correct and expected values for users subscription
 
 TODO: Develop effective subscription pricing.

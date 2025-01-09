@@ -53,16 +53,6 @@ export default function ReviewBaseResumeModal() {
             <Modal.Body  
             ref={targetRef} 
             className='reviewSize'
-            style={{
-            //     height: '6.95in',
-                overflow: 'hidden',
-            //     transform: 'scale(.8)',
-            //     transformOrigin: 'top left',
-            //     display: 'flex',
-            //     flexDirection: 'column',
-            //     justifyContent: 'center',
-            //     alignItems: 'center',
-            }}
             >
                 {!edit ? (
                         <ResumeStyle2/>

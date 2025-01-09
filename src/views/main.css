@@ -286,7 +286,7 @@ width: 45%;
 #defaultResumeWrap {
     width: 100%;
     max-width: 924px;
-    height: 11in;
+    height: 11.35in;
     overflow: hidden;
     line-height:1;
     background-color: white;
@@ -352,20 +352,17 @@ width: 45%;
     display: flex;
     justify-content: space-between;
 }
-/* .reviewSize {
-    height:fit-content;
-} */
- /* .reviewHeight {
-    height: 6.95in;
- } */
-
-/* resume style 2 */
+.reviewSize {
+    height:11.35in;
+    overflow: hidden;
+    overflow-y: hidden;
+}
 
 #resumeStyle2 {
     background-color: white;
     color: black;
     width: 100%;
-    height: 11in;
+    height: 11.35in;
     overflow: hidden;
     line-height: 1;
 }
@@ -407,7 +404,7 @@ width: 45%;
     background-color: white;
     color: black;
     width: 100%;
-    height: 11in;
+    height: 11.35in;
     overflow: hidden;
     line-height: 1;
 }
@@ -452,7 +449,7 @@ width: 45%;
     background-color: white;
     color: black;
     width: 100%;
-    height: 11in;
+    height: 11.35in;
     overflow: hidden;
     line-height: 1;
 }
@@ -487,7 +484,7 @@ width: 45%;
     background-color: white;
     color: black;
     width: 100%;
-    height: 11in;
+    height: 11.35in;
     overflow: hidden;
     line-height: 1;
 }
@@ -604,6 +601,13 @@ width: 45%;
 .userSetupModalSocialSquish .form-control {
     flex: 1;
     min-width: 130px; 
+}
+.reviewSize {
+    overflow-y: hidden;
+    height: fit-content;
+    max-height: 11.35in;
+    overflow: hidden;
+
 }
 
 

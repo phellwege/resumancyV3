@@ -87,6 +87,15 @@ export default function UserSetupModal() {
                             />
                         </Form.Group>
                         <Form.Group>
+                            <Form.Label>email</Form.Label>
+                            <Form.Control 
+                                type="text"
+                                placeholder="EnterEmail"
+                                value={user.contactInfo.email}
+                                onChange={(e) => {handleContactChange('email', e.target.value)}}
+                            />
+                        </Form.Group>
+                        <Form.Group>
                             <Form.Label>Phone Number</Form.Label>
                             <Form.Control 
                                 type="tel"
