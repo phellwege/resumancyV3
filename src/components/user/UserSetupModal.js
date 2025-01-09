@@ -36,7 +36,7 @@ export default function UserSetupModal() {
                 formattedPhoneNumber += ` -${inputPhoneNumber.substring(6, 10)}`;
             }
         }
-        return formattedPhoneNumber;
+        return sanitizeUserInput(formattedPhoneNumber);
     };
     
 

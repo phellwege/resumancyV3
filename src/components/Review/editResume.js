@@ -35,7 +35,7 @@ export default function EditResume() {
                 formattedPhoneNumber += ` -${inputPhoneNumber.substring(6, 10)}`;
             }
         }
-        return formattedPhoneNumber;
+        return sanitizeUserInput(formattedPhoneNumber);
     };
     return (
         <>
@@ -138,7 +138,7 @@ export default function EditResume() {
                 rows={3}
                 placeholder='Education'
                 value={user.resume.education}
-                onChange={(e) => handleResumeChange('education', e.target.value)}
+                onChange={(e) => handleResumeChange('education', sanitizeUserInput(e.target.value))}
                 maxLength='500'
                 />
                 <Form.Label>
@@ -149,7 +149,7 @@ export default function EditResume() {
                 rows={5}
                 placeholder='Skills'
                 value={user.resume.skills}
-                onChange={(e) => handleResumeChange('skills', e.target.value)}
+                onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
                 maxLength='500'
                 />
             </Form.Group>
