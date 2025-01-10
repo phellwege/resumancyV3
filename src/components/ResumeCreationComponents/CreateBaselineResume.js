@@ -59,6 +59,18 @@ export default function CreateBaselineResume() {
                 }
             }
         }));
+        if(includeAddress == true){
+            setUser(prevState => ({
+                ...prevState,
+                resume: {
+                    ...prevState.resume,
+                    usage: {
+                        ...prevState.resume.usage,
+                        useAddress: true
+                    }
+                }
+            }));
+        }
         setLoading(true);
         setError(null);
 
