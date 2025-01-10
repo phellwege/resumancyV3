@@ -25,8 +25,8 @@ export default function CreateBaselineResume() {
         handleExperienceChange,
         addExperienceEntry,
         removeExperienceEntry,
-        includeAddress,
-        setIncludeAddress
+        // includeAddress,
+        // setIncludeAddress
     } = useUser();
     const {
         loading, 
@@ -38,7 +38,7 @@ export default function CreateBaselineResume() {
     const userEducation = "List your education and certifications (required):";
     const userSkills = "Specify your relevant skills (required):";
     const userAdditional = "Include any additional relevant information (optional):";
-    
+    const [includeAddress, setIncludeAddress] = useState(null);
     const [error, setError] = useState(null);
 
     const handleSubmit = async () => {

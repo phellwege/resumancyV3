@@ -18,7 +18,6 @@ export function UserProvider({ children }) {
     const [setupUserModal, setSetupUserModal] = useState(false);
     const handleOpenSetupUserModal = () => setSetupUserModal(true);
     const handleCloseSetupUserModal = () => setSetupUserModal(false);
-    const [includeAddress, setIncludeAddress] = useState(null);
 
     // reviewing resumes and cover letter modals
     const [reviewResumeModal, setReviewResumeModal] = useState(false);
@@ -78,7 +77,7 @@ export function UserProvider({ children }) {
             usage: {
                 timeStamp: null,
                 baseResume: true,
-                useAddress: false
+                useAddress: null
             }
         },
         tailoredResume: {
@@ -234,8 +233,6 @@ export function UserProvider({ children }) {
         user, setUser,
         userAvatars,
         handleSelectAvatar,
-        includeAddress,
-        setIncludeAddress,
 
         loginModal, setLoginModal,
         handleCloseLoginModal,

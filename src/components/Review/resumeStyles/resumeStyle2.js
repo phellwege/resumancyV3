@@ -66,6 +66,15 @@ const renderTextWithNewLines = (text) => {
                         ))}
                     </div>
                 )}
+                {user.resume.usage.useAddress && (
+                    <div>
+                        {user.address.street}
+                        {user.address.appt}
+                        {user.address.city}
+                        {user.address.state}
+                        {user.address.zip}
+                    </div>
+                )}
             </div>
             <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
                 <h5>Skills:</h5>
