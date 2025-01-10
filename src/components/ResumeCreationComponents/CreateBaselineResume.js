@@ -25,13 +25,15 @@ export default function CreateBaselineResume() {
         handleExperienceChange,
         addExperienceEntry,
         removeExperienceEntry,
+        includeAddress,
+        setIncludeAddress
     } = useUser();
     const {
         loading, 
         setLoading
     } = useAuth();
 
-    const [includeAddress, setIncludeAddress] = useState(null)
+    
     const userExperience = "Detail your relevant job history (required):";
     const userEducation = "List your education and certifications (required):";
     const userSkills = "Specify your relevant skills (required):";

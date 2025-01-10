@@ -15,9 +15,10 @@ TODO: Develop effective subscription pricing.
 TODO: Fix contact us link in footer - need modal
 TODO: Update terms of use, faq and the privacy policy.
 
-TODO: write inclusion of address - added bool to user object
+TODO: write inclusion of address - added bool to user object - need to make context function in user object for this and pass it to the appropriate places
 TODO: fix bug on modal size
 TODO: fix other resumeStyles for review.
+TODO: change font size on reviewResumes to assist with shrinking things down 
 
 
 
