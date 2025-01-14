@@ -68,10 +68,13 @@ const renderTextWithNewLines = (text) => {
                 )}
                 {user.resume.usage.useAddress && (
                     <div>
-                        {user.address.street}
+                        {user.address.street}{' '}
                         {user.address.appt}
+                        <br/>
                         {user.address.city}
+                        <br/>
                         {user.address.state}
+                        {' '}
                         {user.address.zip}
                     </div>
                 )}

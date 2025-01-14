@@ -38,22 +38,17 @@ export function UserProvider({ children }) {
     ];
     const userAvatars = userAvatarKeys.map(key => require(`../static/ProfilePics/${key}.png`));
     // user object
-    const [user, setUser] = useState({
+    const initialUserState = {
         id: null,
-        firstName: '', // can be obtained via display name
-        lastName: '', // can be obtained via display name
+        firstName: '',
+        lastName: '',
         jobTitle: '',
         userName: '',
         avatarImg: userAvatars[0],
         contactInfo: {
             phone: '',
             email: '',
-            socialMedia: [
-                { 
-                    name: '', 
-                    url: '' 
-                }
-            ]
+            socialMedia: [{ name: '', url: '' }]
         },
         address: {
             street: '',
@@ -89,12 +84,15 @@ export function UserProvider({ children }) {
             companyName: '',
             data: '',
             timeStamp: null,
+            response: null
         },
         subscription: {
             active: false,
             dateActivated: null,
         },
-    })
+    };
+    const [user, setUser] = useState(initialUserState)
+    const resetUser = () => setUser(initialUserState);
 
     const [review, setReview] = useState({
         userID : user.id,
@@ -227,9 +225,10 @@ export function UserProvider({ children }) {
     const stripFormatting = (phoneNumber) => {
         return phoneNumber.replace(/\D/g, '');
     };
-
+    
     const value = useMemo(() =>({
         generateUUID,
+        initialUserState,
         user, setUser,
         userAvatars,
         handleSelectAvatar,
@@ -269,8 +268,8 @@ export function UserProvider({ children }) {
         stripFormatting,
 
     }), [
-        user, loginModal, setupUserModal, selectAvatar,
-        reviewResumeModal, reviewCoverLetterModal
+        user, resetUser, loginModal, setupUserModal, selectAvatar,
+        reviewResumeModal, reviewCoverLetterModal, 
     ]);
 
     return (

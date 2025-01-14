@@ -3,6 +3,7 @@ import { auth } from '../server/firebaseConfig';
 import LoadingPage from '../components/loadingPage/LoadingPage';
 import { onAuthStateChanged } from 'firebase/auth';
 import * as firebaseui from 'firebaseui';
+import { useUser } from './UserContext';
 
 const AuthContext = React.createContext();
 
@@ -15,6 +16,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState(null);
+    const { setUser, initialUserState } = useUser();
 
     useEffect(() => {
         if (!firebaseUiInstance) {
@@ -29,10 +31,20 @@ export function AuthProvider({ children }) {
         return unsubscribe;
     }, []);
 
-    function logout() {
-        return auth.signOut();
+     function logout() {
+        return auth.signOut(auth)
+            .then(() => {
+                setCurrentUser(null);
+                setUser(initialUserState);
+                if (firebaseUiInstance) {
+                    firebaseUiInstance.reset();
+                }
+            })
+            .catch((error) => {
+                console.error('Sign out error: ', error);
+            });
     }
-
+    
     const value = {
         currentUser,
         logout,

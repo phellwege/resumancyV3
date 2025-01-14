@@ -75,7 +75,6 @@ export default function ReviewBaseResumeModal() {
                 <Button variant="secondary" onClick={handleCloseReviewResumeModal}>
                     Close
                 </Button>
-                
             </Modal.Footer>
         </Modal>
     </>

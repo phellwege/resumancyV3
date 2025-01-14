@@ -1,79 +1,93 @@
-import React from 'react'
+import React, {useState} from 'react'
+import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-// import { getFunctions, httpsCallable } from 'firebase/functions'
+
 import { Button, Card, Alert, OverlayTrigger, Tooltip} from "react-bootstrap";
 import { BsQuestionCircle } from "react-icons/bs";
 
+import { useAuth } from '../../context/AuthContext';
 import { useUser } from '../../context/UserContext';
 
 import '../../views/main.css';
 export default function CreateCustomTailoredResume() {
     const {
         user, 
+        setUser,
         handleTailoredResumeChange,
         sanitizeUserInput,
     } = useUser();
+    const {
+        setLoading
+    } = useAuth();
     const companyNameTooltip = "The name of the company you are applying for.";
     const prospectiveJobDescTooltip = "Copy/Paste a description of the role you are applying for.";
+    const [error, setError] = useState(null);
     const history = useNavigate();
 
-    const handleSubmit = () => {
-        generateTailoredResume(user);
-        generateCoverLetter(user)
-    }
-    const generateTailoredResume = async (user) => {
+    const handleSubmit = async () => {
+        setLoading(true);
+        setError(null);
+    
         try {
-        const response = await fetch(
-            "https://us-central1-gpt-resume-builder.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
-            {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user: user,
-                type: "tailored"
-            }),
-            }
-        );
-        if (!response.ok) {
-            throw new Error("Failed to generate resume");
-        }
-        const data = await response.json();
-        const summary = data.summary.data
-        const experience = data.experience.data
-        const skills = data.skills.data
-        await handleTailoredResumeChange('summary', summary);
-        await handleTailoredResumeChange('experience', experience);
-        await handleTailoredResumeChange('skills', skills);
-        // setLoading(false);
-        // setUserFailsafe(false);
+            await Promise.all([
+                generateTailoredResume(),
+                generateCoverLetter(user),
+            ]);
         } catch (error) {
-        // setError("Error generating resume:" + error);
+            console.error("Error during submission:", error);
+            setError("Failed to generate documents. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+    const generateTailoredResume = async () => {
+        try {
+            const response = await axios.post(
+                "https://us-central1-resumancy.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
+                { user },
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+    
+            const { summary, experience, skills } = response.data;
+    
+            let parsedExperience = [];
+            try {
+                parsedExperience = JSON.parse(experience);
+            } catch (parseError) {
+                console.error("Error parsing experience section:", parseError);
+                parsedExperience = [];
+            }
+    
+            setUser((prevState) => ({
+                ...prevState,
+                resume: {
+                    ...prevState.resume,
+                    summary: summary,
+                    experience: parsedExperience,
+                    skills: skills,
+                },
+            }));
+    
+        } catch (error) {
+            console.error("Error generating tailored resume:", error);
+            setError("Failed to generate tailored resume. Please try again.");
         }
     };
     const generateCoverLetter = async (user) => {
         try {
         const response = await fetch(
-            "https://us-central1-gpt-resume-builder.cloudfunctions.net/generate_cover_letter-generate_cover_letter",
-            {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user: user,
-            }),
-            }
+            "https://us-central1-resumancy.cloudfunctions.net/generate_cover_letter-generate_cover_letter",
+            { user },
+            { headers: { 'Content-Type': 'application/json' } }
         );
         if (!response.ok) {
-            // setError("Failed to generate resume");
+            setError("Failed to generate resume");
         }
-        const data = await response.json();
-        const coverLetterSummary = data.coverLetterSummary;
+        const coverLetterSummary = response.data;
         // setCoverLetterContent(coverLetterSummary);
         } catch (error) {
-        // setError("Error generating cover letter:" + error);
+            setError("Error generating cover letter:" + error);
+            throw new Error("Failed to generate cover letter.");
         }
     };
 

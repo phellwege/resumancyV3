@@ -48,7 +48,7 @@ exports.generate_cover_letter = onRequest(
         }
 
         try {
-            const apiKey = process.env.GPT_API_KEY; // Access secret from environment
+            const apiKey = process.env.GPT_API_KEY;
             const { user } = req.body;
 
             try {

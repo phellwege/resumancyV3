@@ -5,24 +5,27 @@ const OpenAI = require('openai');
 // Function to handle summarization API call with retries
 async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
+    const experienceFormatted = user.resume.experience.map(item => {
+        return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
+    }).join("\n");
 
     try {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Summarize this resume in roughly 3 sentences' },
+                { role: 'system', content: 'Craft a professional resume summary for this resume in roughly 3 sentences.' },
                 { role: 'user', content: `
                     Please customize the resume based on the provided job description and company name:
                     Job Description: ${user.resume.description}
                     Company Name: ${user.resume.companyName}
                     Here is the user's current resume information:
-                        Experience: ${user.resume.experience}
+                        Experience: ${experienceFormatted}
                         Education and Certifications: ${user.resume.education}
                         Skills: ${user.resume.skills}
                 ` },
             ],
             temperature: 0.4,
-            max_tokens: 3500,
+            max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -41,6 +44,9 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
 // Function to handle experience section API call with retries
 async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
+    const experienceFormatted = user.resume.experience.map(item => {
+        return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
+    }).join("\n");
 
     try {
         const gptResponse = await openai.chat.completions.create({
@@ -52,7 +58,7 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
                     Job Description: ${user.resume.description}
                     Company Name: ${user.resume.companyName}
                     Here is the user's current resume information:
-                        Experience: ${user.resume.experience}
+                        Experience: ${experienceFormatted}
                         Education and Certifications: ${user.resume.education}
                         Skills: ${user.resume.skills}
                 ` },
@@ -77,6 +83,9 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
 // Function to handle skills section API call with retries
 async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
+    const experienceFormatted = user.resume.experience.map(item => {
+        return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
+    }).join("\n");
 
     try {
         const gptResponse = await openai.chat.completions.create({
@@ -88,7 +97,7 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
                     Job Description: ${user.resume.description}
                     Company Name: ${user.resume.companyName}
                     Here is the user's current resume information:
-                        Experience: ${user.resume.experience}
+                        Experience: ${experienceFormatted}
                         Education and Certifications: ${user.resume.education}
                         Skills: ${user.resume.skills}
                 ` },
@@ -119,7 +128,7 @@ exports.generate_tailored_resume = onRequest(
         }
 
         try {
-            const apiKey = process.env.GPT_API_KEY; // Access secret from environment
+            const apiKey = process.env.GPT_API_KEY;
             const { user } = req.body;
 
             try {
