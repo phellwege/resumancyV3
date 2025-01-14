@@ -11,7 +11,7 @@ TODO: handle user profile customization on account creation (new view most likel
 ### Add Feature
 TODO: write functions for database connection and storage of state managed information from dataContext
 TODO: Develop effective subscription pricing.
-    - free base resume (no formatting options, option to make 1 tailored resume unless on paid tier)
+    - free base resume (no formatting options, option to make 1 tailored resume / cover letter unless on paid tier)
     - Basic Plan: $5/month for up to 5 tailored resumes.(and some formatting options)
     - Pro Plan: $15/month for unlimited resumes and additional features (full feature suit)
 TODO: fix other resumeStyles for review / flow for this.
