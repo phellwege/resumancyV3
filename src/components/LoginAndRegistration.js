@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import Logo from '../static/logo_monochrome.png';
 import UserSetupModal from './user/UserSetupModal';
 import '../views/main.css';
+import firebase from 'firebase/compat/app'
 
 export default function LoginAndRegistration() {
     const history = useNavigate();
@@ -30,7 +31,16 @@ export default function LoginAndRegistration() {
     };
     useEffect(() => {
         const uiConfig = {
-            signInOptions: ['password', 'google.com'],
+            signInOptions: [
+                {
+                    provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                    requireDisplayName: true,
+                    disableSignUp: {
+                        status: true
+                    }
+                }, 
+                'google.com'
+            ],
             tosUrl: '/TermsOfUse',
             privacyPolicyUrl: '/PrivacyPolicy',
             signInSuccessUrl: '/',

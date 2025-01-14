@@ -1,5 +1,4 @@
 ### Repair to working state
-TODO: Fix sign in from email (doesnt appear to work, only google sign in works)
 TODO: fix stripe so that it returns correct and expected values for users subscription
 TODO: Fix contact us link in footer - need modal
 TODO: Update terms of use, faq and the privacy policy.
