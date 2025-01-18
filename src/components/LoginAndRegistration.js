@@ -34,10 +34,7 @@ export default function LoginAndRegistration() {
             signInOptions: [
                 {
                     provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                    requireDisplayName: true,
-                    disableSignUp: {
-                        status: true
-                    }
+                    requireDisplayName: true
                 }, 
                 'google.com'
             ],
