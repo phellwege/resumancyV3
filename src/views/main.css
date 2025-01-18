@@ -612,7 +612,7 @@ width: 45%;
     overflow: hidden;
 }
 .social-media-entry {
-    border: 1px solid whitesmoke;
+    border: 1px solid lightgrey;
     border-radius: .25rem;
     padding: 5px;
     margin: 10px;

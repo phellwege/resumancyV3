@@ -140,6 +140,7 @@ export default function InitialUserSetup() {
                                     ))}
                                 </Form.Group>
                             </Form>
+                            <Button>Continue</Button>
                         </div>
                     </Card.Body>
                 </Card>
