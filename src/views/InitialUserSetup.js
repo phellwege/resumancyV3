@@ -148,7 +148,7 @@ export default function InitialUserSetup() {
                         <div  className='cardInnerDiv'>
                             Current version ie free / premium
                             <br/>
-                            CTA to enroll in premium
+                            Optional CTA to enroll in premium
                             <br/>
                             If user follows prompt and sets up premium this should be a modal and stay on this page
                         </div>
