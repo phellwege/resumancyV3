@@ -5,19 +5,14 @@ import { Button, Card, Alert, Form, Tooltip} from 'react-bootstrap';
 import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
 import './main.css';
 
-import SelectAvatarModal from '../components/user/SelectAvatarModal'
-
 import { useUser } from '../context/UserContext';
 
 
 export default function InitialUserSetup() {
     const {
         user,
-        setupUserModal,
-        handleCloseSetupUserModal,
         handleUserChange,
         handleContactChange,
-        handleOpenSelectAvatar,
         sanitizeUserInput,
         addSocialMediaEntry,
         removeSocialMediaEntry,
@@ -42,7 +37,6 @@ export default function InitialUserSetup() {
   return (
     <>
     <Header />
-    <SelectAvatarModal />
     <div className='pageWrapper'>
         <div className='secondaryPageWrapper'>
             <div>
