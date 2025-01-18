@@ -610,7 +610,12 @@ width: 45%;
     height: fit-content;
     max-height: 11.35in;
     overflow: hidden;
-
+}
+.social-media-entry {
+    border: 1px solid whitesmoke;
+    border-radius: .25rem;
+    padding: 5px;
+    margin: 10px;
 }
 
 

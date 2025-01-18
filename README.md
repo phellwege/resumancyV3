@@ -4,7 +4,7 @@ TODO: Fix contact us link in footer - need modal
 TODO: Update terms of use, faq and the privacy policy.
 TODO: add state management to cover letter function from context
 
-### Flow Correction
+### Flow Correction 
 TODO: handle user profile customization on account creation (new view most likely). 1st sign in should take them to a page to setup their account. (this will include name, email, phone etc.)
 
 ### Add Feature
