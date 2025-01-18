@@ -32,13 +32,17 @@ export default function Home() {
                         <Card.Body>
                             <div className='cardInnerDiv'>
                                 <div>
-                                    <h4>What We Do</h4>
+                                    <h5>What We Do</h5>
                                     <p className='leftShiftedText'>
                                     We use AI to transform your job search. 
                                     <br/> 
-                                    Start with creating a Base Resume, then tailor it for specific jobs by providing the company name and description. No more generic applications – stand out with personalized resumes showcasing your strengths. Elevate your job search with Resumancy and let AI be your secret weapon for landing your dream job. <br/> To learn more visit our 
+                                    Create a base resume quickly, then easily tailor it for specific jobs by simply entering the company name and job description. Our AI even generates a personalized cover letter for you!
+                                    <br/>
+                                    Say goodbye to generic applications and stand out with resumes and cover letters tailored to each job. Let Resumancy be your secret weapon for landing your dream job. 
+                                    </p>
+                                    <p>
                                         <Link className='faqSpan' to='/FAQ'>
-                                            FAQ
+                                        Have questions? Visit our FAQ to learn more
                                         </Link>
                                     </p>
                                 </div>
@@ -48,7 +52,7 @@ export default function Home() {
                     <Card>
                         <Card.Body>
                             <div className='cardInnerDiv'>
-                                <h4>Get Started</h4>
+                                <h5>Get Started</h5>
                                     <p>Create a Baseline Resume and custom tailor it to each application.</p>
                                 <div className='alignLeft'>
                                     <div>

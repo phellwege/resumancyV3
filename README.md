@@ -1,6 +1,5 @@
 ### Repair to working state
 TODO: fix stripe so that it returns correct and expected values for users subscription
-TODO: Update terms of use, faq and the privacy policy.
 TODO: add state management to cover letter function from context
 
 ### Flow Correction 
@@ -16,7 +15,6 @@ TODO: Develop effective subscription pricing.
 
 ### Bug
 TODO: fix bug on modal size when scrolling
-TODO: social media links / address not scaled to small
 
 ### Future Updates
 1. create custom login / registration - firebaseUI doesn't work with email enumeration

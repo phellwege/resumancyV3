@@ -52,7 +52,7 @@ const renderTextWithNewLines = (text) => {
                     {renderTextWithNewLines(user.contactInfo.phone)}
                 </a>
                 {user.contactInfo.socialMedia.length > 0 && (
-                    <div>
+                    <div className='socialMediaLinks'>
                         {user.contactInfo.socialMedia.map((account, index) => (
                             <div key={index}>
                                 <a 
@@ -67,7 +67,7 @@ const renderTextWithNewLines = (text) => {
                     </div>
                 )}
                 {user.resume.usage.useAddress && (
-                    <div>
+                    <div className='reviewAddress'>
                         {user.address.street}{' '}
                         {user.address.appt}
                         <br/>
