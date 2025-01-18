@@ -52,7 +52,26 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions.' },
+                { 
+                    role: 'system', 
+                    content: `
+                        Craft a compelling experience section for the resume, highlighting the candidate's professional achievements and contributions based solely on the information provided. 
+                        Ensure that:
+                        - The language is professional, clear, and concise.
+                        - Factual accuracy is maintained.
+                        - The "expDesc" field is formatted as a bulleted list with each bullet point separated by a newline character (\n).
+                        - There are at least 3 to 5 bullet points with at least 1-3 sentences each.
+                        Return the experience section in the following valid JSON structure (not in a code block):
+                        [
+                            {
+                                "expJobTitle": "Job Title",
+                                "expCompanyName": "Company Name",
+                                "expTime": "Employment Duration",
+                                "expDesc": "• First responsibility or achievement\n• Second responsibility or achievement\n• Third responsibility or achievement"
+                            }
+                        ]
+                    ` 
+                },
                 { role: 'user', content: `
                     Please customize the resume based on the provided job description and company name:
                     Job Description: ${user.resume.description}

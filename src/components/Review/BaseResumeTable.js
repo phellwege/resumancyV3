@@ -28,7 +28,7 @@ export default function BaseResumeTable() {
                     </Link>
                 </td>
                 <td> 
-                    {user.resume.usage.timeStamp ? 
+                    {user?.resume?.usage?.timeStamp ? 
                     (
                         <>
                         {new Intl.DateTimeFormat("en-US", {

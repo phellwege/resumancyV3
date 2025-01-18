@@ -5,6 +5,7 @@ import ReviewResumeModal from './ReviewResumeModal';
 import ReviewCoverLetterModal from './ReviewCoverLetterModal'
 export default function TailoredResumeTable() {
   const {
+    user,
     handleOpenReviewTailoredResumeModal,
     handleOpenReviewCoverLetterModal
   } = useUser();
@@ -25,8 +26,8 @@ export default function TailoredResumeTable() {
             </thead>
             <tbody>
             <tr>
-                <td></td>
-                <td></td>
+                <td>{user.tailoredResume.companyName}</td>
+                <td>{user.tailoredResume.description}</td>
                 <td onClick={handleOpenReviewTailoredResumeModal}>View</td>
                 <td onClick={handleOpenReviewCoverLetterModal}>Cover Letter</td>
                 <td></td>

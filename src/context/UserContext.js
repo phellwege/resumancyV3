@@ -83,10 +83,8 @@ export function UserProvider({ children }) {
             description: '',
         },
         coverLetter: {
-            companyName: '',
-            data: '',
-            timeStamp: null,
-            response: null
+            id: null,
+            response: ''
         },
         subscription: {
             active: false,

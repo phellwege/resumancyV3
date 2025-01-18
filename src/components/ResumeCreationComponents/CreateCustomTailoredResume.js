@@ -25,6 +25,11 @@ export default function CreateCustomTailoredResume() {
     const history = useNavigate();
 
     const handleSubmit = async () => {
+        if (!user.tailoredResume.companyName || !user.tailoredResume.description) {
+            setError("Company name and job description are required.");
+            return;
+        }
+    
         setLoading(true);
         setError(null);
     
@@ -33,6 +38,7 @@ export default function CreateCustomTailoredResume() {
                 generateTailoredResume(),
                 generateCoverLetter(user),
             ]);
+            history("/Review");
         } catch (error) {
             console.error("Error during submission:", error);
             setError("Failed to generate documents. Please try again.");
@@ -40,6 +46,7 @@ export default function CreateCustomTailoredResume() {
             setLoading(false);
         }
     };
+
     const generateTailoredResume = async () => {
         try {
             const response = await axios.post(
@@ -65,6 +72,10 @@ export default function CreateCustomTailoredResume() {
                     summary: summary,
                     experience: parsedExperience,
                     skills: skills,
+                    usage: {
+                        ...prevState.resume.usage,
+                        baseResume: false
+                    },
                 },
             }));
     
@@ -85,6 +96,15 @@ export default function CreateCustomTailoredResume() {
         }
         const coverLetterSummary = response.data;
         // setCoverLetterContent(coverLetterSummary);
+
+        setUser((prevState) => ({
+            ...prevState,
+            resume: {
+                ...prevState.coverLetter,
+                response: coverLetterSummary,
+            },
+        }));
+
         } catch (error) {
             setError("Error generating cover letter:" + error);
             throw new Error("Failed to generate cover letter.");
