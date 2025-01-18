@@ -26,7 +26,9 @@ export function UserProvider({ children }) {
     const [reviewCoverLetterModal, setReviewCoverLetterModal] = useState(false);
     const handleOpenReviewCoverLetterModal = () => setReviewCoverLetterModal(true);
     const handleCloseReviewCoverLetterModal = () => setReviewCoverLetterModal(false);
-    
+    const [contactUsModal, setContactUsModal] = useState(false);
+    const handleOpenContactUsModal = () => setContactUsModal(true);
+    const handleCloseContactUsModal = () => setContactUsModal(false);
     // user avatar selection stuff
     const [selectAvatar, setSelectAvatar] = useState(false);
     const handleOpenSelectAvatar = () => setSelectAvatar(true);
@@ -251,6 +253,9 @@ export function UserProvider({ children }) {
         reviewCoverLetterModal, setReviewCoverLetterModal,
         handleOpenReviewCoverLetterModal,
         handleCloseReviewCoverLetterModal,
+        contactUsModal,
+        handleOpenContactUsModal,
+        handleCloseContactUsModal,
 
         sanitizeUserInput,
 
@@ -270,7 +275,7 @@ export function UserProvider({ children }) {
 
     }), [
         user, resetUser, loginModal, setupUserModal, selectAvatar,
-        reviewResumeModal, reviewCoverLetterModal, 
+        reviewResumeModal, reviewCoverLetterModal, contactUsModal
     ]);
 
     return (
