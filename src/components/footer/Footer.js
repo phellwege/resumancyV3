@@ -2,9 +2,16 @@ import React from 'react'
 import Linkedin from '../../static/socialIcons/linkedin-3-32.png'
 import { Link } from 'react-router-dom';
 import './footer.css'
+import { useUser } from '../../context/UserContext';
+import ContactUsModal from '../ContactUsModal';
 export default function Footer() {
+    const {
+        handleOpenContactUsModal,
+        handleCloseContactUsModal
+    } = useUser();
   return (
     <>
+        <ContactUsModal />
         <div className='footWrap'>
             <div className='secondaryFootWrap'>
                 <div className='footerLeftDiv'>
@@ -16,7 +23,9 @@ export default function Footer() {
                     <img src={FaceBook} className='socialImg' alt='facebook image'/>
                     </a> */}
                 </div>
-                <Link to=''>
+                <Link to=''
+                    onClick={handleOpenContactUsModal}
+                >
                     CONTACT US
                 </Link>
                 </div>

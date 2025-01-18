@@ -39,7 +39,7 @@ export default function ReviewBaseResumeModal() {
         aria-labelledby="contained-modal-title-vcenter"
         centered
         >
-            <Modal.Header closeButton>
+            <Modal.Header closeButton  closeVariant='white'>
                 <div className='reviewButton'>
                     <Modal.Title>Review Base Resume</Modal.Title>
                     <Button 

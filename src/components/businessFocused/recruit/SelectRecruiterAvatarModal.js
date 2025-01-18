@@ -25,7 +25,7 @@ export default function SelectRecruiterAvatarModal() {
     aria-labelledby="contained-modal-title-vcenter"
     centered
     >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton  closeVariant='white'>
             <Modal.Title>Select Avatar</Modal.Title>
         </Modal.Header>
         <Modal.Body id='avatarModalBody'>

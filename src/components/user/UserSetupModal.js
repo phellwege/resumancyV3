@@ -52,7 +52,7 @@ export default function UserSetupModal() {
     aria-labelledby="contained-modal-title-vcenter"
     centered
     >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton  closeVariant='white'>
             <Modal.Title>Setup Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>

@@ -29,7 +29,7 @@ export default function RegisterBusinessAcct() {
     aria-labelledby="contained-modal-title-vcenter"
     centered
     >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton  closeVariant='white'>
             <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>

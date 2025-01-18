@@ -98,7 +98,7 @@ export default function LoginAndRegistration() {
         <>
         <UserSetupModal />
         <Modal show={loginModal} onHide={handleCloseLoginModal} size="lg" centered>
-            <Modal.Header closeButton>
+            <Modal.Header closeButton  closeVariant='white'>
             <Modal.Title>Login / Register</Modal.Title>
             </Modal.Header>
             <Modal.Body>

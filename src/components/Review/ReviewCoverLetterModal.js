@@ -18,7 +18,7 @@ export default function ReviewCoverLetterModal() {
     aria-labelledby="contained-modal-title-vcenter"
     centered
     >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton  closeVariant='white'>
             <Modal.Title>Review Cover Letter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
