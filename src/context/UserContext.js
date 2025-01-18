@@ -92,13 +92,14 @@ export function UserProvider({ children }) {
             active: false,
             plan: 'free',
             dateActivated: null,
+            billingCycleStart: null,
             usage: {
-                baseResume: 0, // Count of base resumes used
-                tailoredResumes: 0, // Count of tailored resumes used
+                baseResume: 0,
+                tailoredResumes: 0,
             },
             limits: {
-                baseResume: 1, // Limit for base resumes
-                tailoredResumes: 1, // Limit for tailored resumes on free plan
+                baseResume: 1,
+                tailoredResumes: 1,
             },
         },
         initialSetupDone: false
@@ -111,6 +112,11 @@ export function UserProvider({ children }) {
         rating: null,
         additionalInfo: null
     })
+    const subscriptionPlans = {
+        free: { baseResume: 1, tailoredResumes: 1 },
+        basic: { baseResume: 1, tailoredResumes: 5 },
+        premium: { baseResume: Infinity, tailoredResumes: Infinity },
+    };
 
     // prevent xss attacks
     const sanitizeUserInput = (input) => {
