@@ -90,7 +90,16 @@ export function UserProvider({ children }) {
         },
         subscription: {
             active: false,
+            plan: 'free',
             dateActivated: null,
+            usage: {
+                baseResume: 0, // Count of base resumes used
+                tailoredResumes: 0, // Count of tailored resumes used
+            },
+            limits: {
+                baseResume: 1, // Limit for base resumes
+                tailoredResumes: 1, // Limit for tailored resumes on free plan
+            },
         },
         initialSetupDone: false
     };
