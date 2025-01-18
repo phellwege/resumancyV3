@@ -5,7 +5,7 @@ TODO: Update terms of use, faq and the privacy policy.
 TODO: add state management to cover letter function from context
 
 ### Flow Correction 
-TODO: handle user profile customization on account creation (new view most likely). 1st sign in should take them to a page to setup their account. (this will include name, email, phone etc.)
+TODO: handle user profile customization on account creation. 1st sign in should take them to a page to setup their account. (this will include name, email, phone etc.) Shouldnt be able to view any other page or navigate anywhere with that user until that's completed
 
 ### Add Feature
 TODO: fix other resumeStyles for review / flow for this.

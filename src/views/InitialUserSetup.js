@@ -39,11 +39,11 @@ export default function InitialUserSetup() {
     <Header />
     <div className='pageWrapper'>
         <div className='secondaryPageWrapper'>
-            <div>
+            <div className='leftDiv'>
                 <Card>
                     <Card.Body>
                         <div className='cardInnerDiv'>
-                            Finish your Profile
+                            <h5>Finish setting up your profile</h5>
                             <Form>
                                 <Form.Group>
                                     <Form.Label>First Name</Form.Label>
@@ -134,7 +134,23 @@ export default function InitialUserSetup() {
                                     ))}
                                 </Form.Group>
                             </Form>
-                            <Button>Continue</Button>
+                            <Button
+                            // perform check to ensure all fields filled then click and redirect to home
+                            // onclick={()=> handleUserChange('initialSetupDone': true)}
+                            >Continue</Button>
+                        </div>
+                    </Card.Body>
+                </Card>
+            </div>
+            <div className='rightDiv'>
+                <Card>
+                    <Card.Body>
+                        <div  className='cardInnerDiv'>
+                            Current version ie free / premium
+                            <br/>
+                            CTA to enroll in premium
+                            <br/>
+                            If user follows prompt and sets up premium this should be a modal and stay on this page
                         </div>
                     </Card.Body>
                 </Card>

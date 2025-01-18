@@ -90,6 +90,7 @@ export function UserProvider({ children }) {
             active: false,
             dateActivated: null,
         },
+        initialSetupDone: false
     };
     const [user, setUser] = useState(initialUserState)
     const resetUser = () => setUser(initialUserState);
