@@ -4,7 +4,8 @@ import '../../../views/main.css';
 
 export default function DefaultResumeStyle({isGenPDF}) {
     const {
-        user
+        user,
+        stripFormatting
     } = useUser();
 
     const capitalizeFirstLetter = (text) => {
@@ -27,29 +28,46 @@ export default function DefaultResumeStyle({isGenPDF}) {
     return (
         <>
         <div className='cardInnerDiv' id='defaultResumeWrap'>
-            <h2>{capitalizeFirstLetter(user.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}{capitalizeFirstLetter(user.lastName)}</h2>
-            <h4>{user.jobTitle}</h4>
+            <h3>{capitalizeFirstLetter(user.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}{capitalizeFirstLetter(user.lastName)}</h3>
+            <h5>{user.jobTitle}</h5>
                 <div>
                     <div className='reviewDefaultResumeSections'>
-                        <h4>Contact Info:</h4>
-                        {renderTextWithNewLines(user.contactInfo.phone)}
-                        {renderTextWithNewLines(user.contactInfo.email)}
-                        {/* {renderTextWithNewLines(user.contactInfo.socialMedia)} */}
+                        <h5>Contact Info:</h5>
+                        <a
+                            href={`tel:${stripFormatting(user.contactInfo.phone)}`}
+                        >
+                            {renderTextWithNewLines(user.contactInfo.phone)}
+                        </a>
+                        <a 
+                            href={`mailto:${user.contactInfo.email}`}
+                            target="_blank"
+                        >
+                            {renderTextWithNewLines(user.contactInfo.email)}
+                        </a>
                     </div>
                     <div className='reviewDefaultResumeSections'>
-                        <h4>Summary:</h4>
+                        <h5>Summary:</h5>
                         {renderTextWithNewLines(user.resume.summary)}
                     </div>
                     <div className='reviewDefaultResumeSections'>
-                        <h4>Experience:</h4>
-                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.experience)}</span>
+                    <h5>Experience:</h5>
+                        {user.resume.experience.map((exp, index) => (
+                            <div key={index} className="experience-entry">
+                                <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
+                                <div className='reviewResumeJobTitleAndTime'>
+                                    <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expJobTitle)}</h6>
+                                    <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expTime)}</h6>
+                                </div>
+                                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expDesc)}</span>
+                            </div>
+                        ))}
                     </div>
                     <div className='reviewDefaultResumeSections'>
-                        <h4>Education and Certifications:</h4>
+                        <h5>Education and Certifications:</h5>
                         <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.education)}</span>
                     </div>
                     <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
-                        <h4>Skills:</h4>
+                        <h5>Skills:</h5>
                         <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.skills)}</span>
                     </div>
                 </div>

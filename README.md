@@ -5,8 +5,8 @@ TODO: fix stripe so that it returns correct and expected values for users subscr
 TODO: handle user profile customization on account creation. 1st sign in should take them to a page to finish setup of their account. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false.... I will also implement a navigation blocker and an alert message
 
 ### Add Feature
-TODO: fix other resumeStyles for review / flow for this.
 TODO: add edit to cover letter functionality.
+TODO: fix other resumeStyles for review / flow for this.
 TODO: write functions for database connection and storage of state managed information from dataContext
 TODO: Develop effective subscription pricing.
     - free base resume (no formatting options, option to make 1 tailored resume / cover letter unless on paid tier)
