@@ -47,21 +47,19 @@ export default function InitialUserSetup() {
                             <h5>Finish setting up your profile</h5>
                             <Form>
                                 <Form.Group>
-                                    <Form.Label>First Name</Form.Label>
                                     <Form.Control 
                                         type="text"
                                         placeholder="Enter First Name"
                                         value={user.firstName}
                                         onChange={(e) => {handleUserChange('firstName', e.target.value)}}
+                                        className="mb-2"
                                     />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Last Name</Form.Label>
                                     <Form.Control 
                                         type="text"
                                         placeholder="Enter Last Name"
                                         value={user.lastName}
                                         onChange={(e) => {handleUserChange('lastName', e.target.value)}}
+                                        className="mb-2"
                                     />
                                 </Form.Group>
                                 <Form.Group>
@@ -81,8 +79,6 @@ export default function InitialUserSetup() {
                                         value={user.contactInfo.email}
                                         onChange={(e) => {handleContactChange('email', e.target.value)}}
                                     />
-                                </Form.Group>
-                                <Form.Group>
                                     <Form.Label>Phone Number</Form.Label>
                                     <Form.Control 
                                         type="tel"
