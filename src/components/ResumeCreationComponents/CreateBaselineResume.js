@@ -110,7 +110,6 @@ export default function CreateBaselineResume() {
     return (
         <>
             <div className='pageWrapper'>
-                <h3>Step 1</h3>
                 <div className='cardInnerDiv' id='scratchCardInnerDiv'>
                 <Card>
                     <Card.Body>
