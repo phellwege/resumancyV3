@@ -87,7 +87,7 @@ return (
         <div className='headerRight'>
             {user.id ? (
                 <div className='avatarWindow'>
-                    {AlertMessage()}
+                    {/* {AlertMessage()} */}
                     <img src={user.avatarImg} alt='userAvatar' id='userAvatar' onClick={handleClickImg}/>
                     {user.userName && (
                         <>

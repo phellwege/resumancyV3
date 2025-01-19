@@ -168,9 +168,19 @@ export default function InitialUserSetup() {
                 </Card>
             </div>
             <div className='initSetupArrow'>
-            <FaArrowCircleRight size={50} color='#9cb9da'/>
-            <br/>
-            <p>Get started your free 7 day trial, or select a plan to continue.</p>
+                { isTableEnabled ? (
+                    <>
+                    <FaArrowCircleRight size={50} color='#9cb9da'/>
+                    <br/>
+                    <p>Get started your free 7 day trial, or select a plan to continue.</p>
+                    </>
+                ) : (
+                    <>
+                    <FaArrowCircleRight size={50} color='red'/>
+                    <br/>
+                    <p>Finish Setting up your profile to continue</p>
+                    </>
+                )}
             </div>
             <div className='rightDiv'>
                 <Card>
