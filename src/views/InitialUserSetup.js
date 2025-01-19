@@ -6,6 +6,7 @@ import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
 import './main.css';
 
 import { useUser } from '../context/UserContext';
+import StripePricingTable from '../components/StripePricingTable';
 
 
 export default function InitialUserSetup() {
@@ -146,9 +147,7 @@ export default function InitialUserSetup() {
                 <Card>
                     <Card.Body>
                         <div  className='cardInnerDiv'>
-                            Current version ie free / premium
-                            <br/>
-                            Optional CTA to enroll in premium
+                            <StripePricingTable />
                             <br/>
                             If user follows prompt and sets up premium this should be a modal and stay on this page
                         </div>
