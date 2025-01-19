@@ -66,6 +66,7 @@ function Header(props) {
             )
         }
     }
+    
 return (
     <>
     <NavBar />
@@ -101,7 +102,7 @@ return (
                 </div>
             ) : (
                 <>
-                {user.initialSetupDone && (
+                {user.initialSetupDone || window.location.pathname == '/' &&(
                     <div className='avatarWindow'>
                         <Link to='' onClick={handleOpenLoginModal}>
                             <CgProfile size={45} />
