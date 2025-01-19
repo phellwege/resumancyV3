@@ -53,8 +53,6 @@ export default function CreateCustomTailoredResume() {
                 { headers: { 'Content-Type': 'application/json' } }
             );
     
-            console.log("API Response:", response.data);
-    
             const { summary, experienceSection, skillsSection } = response.data;
     
             let parsedExperience = [];
