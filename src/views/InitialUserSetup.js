@@ -45,7 +45,7 @@ export default function InitialUserSetup() {
 
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
-            Complete the form to continue
+            Finish Setting up your profile to continue
         </Tooltip>
     );
     const handlePhoneNumberChange = (e) => {
@@ -72,7 +72,7 @@ export default function InitialUserSetup() {
                 <Card>
                     <Card.Body>
                         <div className='cardInnerDiv'>
-                            <h5>Finish setting up your profile</h5>
+                            <h4>Profile Setup</h4>
                             <Form>
                                 <Form.Group className="d-flex gap-3 align-items-center">
                                     <Form.Control 
