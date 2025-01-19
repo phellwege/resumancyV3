@@ -151,9 +151,8 @@ export default function UserSetupModal() {
                 </div>
                 <div className='loginModalLogo'>
                     <p>
-                        This is only used to populate Resumes, 
-                        <br/>
-                        We don't sell your information.
+                        This data is only used to populate Resumes, 
+                        we don't sell your information.
                     </p>
                     <div className='setupAvatarDiv'>
                         <img src={user.avatarImg} alt='user avatar image'/>
