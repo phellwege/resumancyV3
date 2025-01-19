@@ -32,10 +32,10 @@ export default function CreateBaselineResume() {
     } = useAuth();
 
     
-    const userExperience = "Detail your relevant job history (required):";
-    const userEducation = "List your education and certifications (required):";
-    const userSkills = "Specify your relevant skills (required):";
-    const userAdditional = "Include any additional relevant information (optional):";
+    const userExperience = "Detail your relevant job history (Required):";
+    const userEducation = "List your education and certifications (Required):";
+    const userSkills = "Specify your relevant skills (Required):";
+    const userAdditional = "Include any additional relevant information (Optional):";
     const [includeAddress, setIncludeAddress] = useState(null);
     const [error, setError] = useState(null);
 
@@ -161,7 +161,7 @@ export default function CreateBaselineResume() {
                                             </OverlayTrigger>
                                         </div>
                                         {/* <sub>({user.resume.experience.length} / 8000)</sub> */}
-                                        {/* this will need modified in order to crap each sections */}
+                                        {/* this will need modified in order to cap each sections */}
                                     </Form.Label>
                                     <div className='createResumePlusAndMinus'>
                                         <FaPlusSquare onClick={addExperienceEntry}  size={25} className='creationButton' id='CreateResumePlusButton'/>

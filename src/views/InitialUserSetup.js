@@ -3,6 +3,8 @@ import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import { Button, Card, Form, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FaMinusSquare , FaPlusSquare, FaArrowCircleRight  } from "react-icons/fa";
+import { BsQuestionCircle } from "react-icons/bs";
+
 
 import './main.css';
 
@@ -21,6 +23,13 @@ export default function InitialUserSetup() {
         isTableEnabled,
         setIsTableEnabled
     } = useUser();
+
+    const userFirstName = "First Name (Required)";
+    const userLastName = "Last Name (Required)";
+    const userJobTitle = "Last Name (Required)";
+    const userEmail = "Email Address (Required)";
+    const userPhoneNumber = "Phone Number (Required)";
+    const userSocialMediaAcct = "Social Media Accounts (Optional)";
 
     const validateForm = () => {
         const { firstName, lastName, jobTitle, contactInfo } = user;
@@ -73,41 +82,130 @@ export default function InitialUserSetup() {
                     <Card.Body>
                         <div className='cardInnerDiv'>
                             <h4>Profile Setup</h4>
+                            <sub>
+                                This data is only used to autofill your resume.
+                                <br/>
+                                We don't sell your data.
+                            </sub>
                             <Form>
-                                <Form.Group className="d-flex gap-3 align-items-center">
+                                <Form.Group>
+                                    <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                        First Name<span className="required-indicator">*</span> {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userFirstName}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                        <sub>({user.firstName.length} / 25)</sub>
+                                    </Form.Label>
                                     <Form.Control 
                                         type="text"
                                         placeholder="First Name"
                                         value={user.firstName}
                                         onChange={(e) => {handleUserChange('firstName', e.target.value)}}
                                         className="mb-2"
+                                        maxLength={25}
                                     />
+                                    <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                        Last Name<span className="required-indicator">*</span> {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userLastName}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                        <sub>({user.lastName.length} / 25)</sub>
+                                    </Form.Label>
                                     <Form.Control 
                                         type="text"
                                         placeholder="Last Name"
                                         value={user.lastName}
                                         onChange={(e) => {handleUserChange('lastName', e.target.value)}}
                                         className="mb-2"
+                                        maxLength={25}
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Job Title</Form.Label>
+                                <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                        Job Title<span className="required-indicator">*</span> {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userJobTitle}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                        <sub>({user.jobTitle.length} / 25)</sub>
+                                    </Form.Label>
                                     <Form.Control 
                                         type="text"
                                         placeholder="Current Job Title"
                                         value={user.jobTitle}
                                         onChange={(e) => {handleUserChange('jobTitle', e.target.value)}}
                                         className="mb-2"
+                                        maxLength={25}
                                     />
                                 </Form.Group>
-                                <Form.Group  className="d-flex gap-3 align-items-center">
+                                <Form.Group>
+                                    <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                        Email<span className="required-indicator">*</span> {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userEmail}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                        <sub>({user.contactInfo.email.length} / 25)</sub>
+                                    </Form.Label>
                                     <Form.Control 
                                         type="text"
                                         placeholder="Email"
                                         value={user.contactInfo.email}
                                         onChange={(e) => {handleContactChange('email', e.target.value)}}
                                         className="mb-2"
+                                        maxLength={25}
                                     />
+                                </Form.Group>
+                                <Form.Group>
+                                <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                        Phone<span className="required-indicator">*</span> {" "}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userPhoneNumber}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                    </Form.Label>
                                     <Form.Control 
                                         type="tel"
                                         placeholder="(123) 456 - 7890"
@@ -117,7 +215,21 @@ export default function InitialUserSetup() {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Social Media Accounts (optional)</Form.Label>
+                                <Form.Label className="d-flex justify-content-between align-items-center">
+                                        <div className='text-centered'>
+                                        Social Media Accounts (Optional){' '}
+                                            <OverlayTrigger 
+                                                overlay={
+                                                <Tooltip id="tooltip">
+                                                    {userSocialMediaAcct}
+                                                </Tooltip>
+                                                }>
+                                                <span className="question-icon">
+                                                    <BsQuestionCircle />
+                                                </span>
+                                            </OverlayTrigger>
+                                        </div>
+                                    </Form.Label>
                                     {user.contactInfo.socialMedia.map((account, index) => (
                                         <div key={index} className="social-media-entry">
                                             {/* Field for Social Media Platform Name */}
