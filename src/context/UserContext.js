@@ -18,14 +18,19 @@ export function UserProvider({ children }) {
     const [setupUserModal, setSetupUserModal] = useState(false);
     const handleOpenSetupUserModal = () => setSetupUserModal(true);
     const handleCloseSetupUserModal = () => setSetupUserModal(false);
-
-    // reviewing resumes and cover letter modals
+    // reviewing resumes
     const [reviewResumeModal, setReviewResumeModal] = useState(false);
     const handleOpenReviewResumeModal = () => setReviewResumeModal(true);
     const handleCloseReviewResumeModal = () => setReviewResumeModal(false);
+    // review cover letter
     const [reviewCoverLetterModal, setReviewCoverLetterModal] = useState(false);
     const handleOpenReviewCoverLetterModal = () => setReviewCoverLetterModal(true);
     const handleCloseReviewCoverLetterModal = () => setReviewCoverLetterModal(false);
+    // review job Description
+    const [reviewJobDescModal, setReviewJobDescModal] = useState(false);
+    const handleOpenReviewJobDescModal = () => setReviewJobDescModal(true);
+    const handleCloseReviewJobDescModal = () => setReviewJobDescModal(false);
+    // contact us
     const [contactUsModal, setContactUsModal] = useState(false);
     const handleOpenContactUsModal = () => setContactUsModal(true);
     const handleCloseContactUsModal = () => setContactUsModal(false);
@@ -259,6 +264,10 @@ export function UserProvider({ children }) {
         selectAvatar, setSelectAvatar,
         handleOpenSelectAvatar,
         handleCloseSelectAvatar,
+
+        reviewJobDescModal,
+        handleOpenReviewJobDescModal,
+        handleCloseReviewJobDescModal,
 
         reviewResumeModal, setReviewResumeModal,
         handleOpenReviewResumeModal,

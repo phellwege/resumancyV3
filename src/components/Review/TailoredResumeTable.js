@@ -1,18 +1,23 @@
 import React from 'react'
 import { Button, Card, Alert, Table, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import { Link } from "react-router-dom";
+
 import { useUser } from '../../context/UserContext';
 import ReviewResumeModal from './ReviewResumeModal';
 import ReviewCoverLetterModal from './ReviewCoverLetterModal'
+import ReviewJobDescModal from './ReviewJobDescModal';
 export default function TailoredResumeTable() {
   const {
     user,
-    handleOpenReviewTailoredResumeModal,
-    handleOpenReviewCoverLetterModal
+    handleOpenReviewResumeModal,
+    handleOpenReviewCoverLetterModal,
+    handleOpenReviewJobDescModal
   } = useUser();
   return (
     <>
     <ReviewResumeModal />
     <ReviewCoverLetterModal />
+    <ReviewJobDescModal />
         <h5>Tailored Resume(s)</h5>
         <Table striped bordered hover variant='dark'>
             <thead>
@@ -27,9 +32,21 @@ export default function TailoredResumeTable() {
             <tbody>
             <tr>
                 <td>{user.tailoredResume.companyName}</td>
-                <td>{user.tailoredResume.description}</td>
-                <td onClick={handleOpenReviewTailoredResumeModal}>View</td>
-                <td onClick={handleOpenReviewCoverLetterModal}>Cover Letter</td>
+                <td>
+                  <Link to='' onClick={handleOpenReviewJobDescModal}>
+                    View Job Description
+                  </Link>
+                </td>
+                <td>
+                  <Link to='' onClick={handleOpenReviewResumeModal}>
+                    View Tailored Resume
+                  </Link>
+                </td>
+                <td>
+                  <Link to='' onClick={handleOpenReviewCoverLetterModal}>
+                    Cover Letter
+                  </Link>
+                </td>
                 <td></td>
             </tr>
             </tbody>

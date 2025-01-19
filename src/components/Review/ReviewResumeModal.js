@@ -41,7 +41,7 @@ export default function ReviewBaseResumeModal() {
         >
             <Modal.Header closeButton  closeVariant='white'>
                 <div className='reviewButton'>
-                    <Modal.Title>Review Base Resume</Modal.Title>
+                    <Modal.Title>Review Resume</Modal.Title>
                     <Button 
                         aria-label='download pdf button'
                         onClick={() => handleToPDF()}
