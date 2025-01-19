@@ -63,7 +63,6 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
                         - The language is professional, clear, and concise.
                         - Factual accuracy is maintained.
                         - The "expDesc" field is formatted as a bulleted list with each bullet point separated by a newline character (\n).
-                        - There are at least 3 to 5 bullet points with at least 1-3 sentences each.
                         Return the experience section in the following valid JSON structure (not in a code block):
                         [
                             {

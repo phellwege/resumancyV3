@@ -22,7 +22,6 @@ export default function ReviewCoverLetterModal() {
         }
         return null;
     };
-    console.log("Cover Letter Response:", user.coverLetter.response);
   return (
     <>
     <Modal 

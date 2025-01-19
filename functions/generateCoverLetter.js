@@ -11,13 +11,22 @@ async function generateCoverLetterWithRetry(user, apiKey, retryCount = 0) {
             messages: [
                 {
                     role: 'system',
-                    content: 'Limit this response to a single paragraph.'
+                    content: `
+                        You are a professional assistant tasked with writing concise, compelling cover letters. 
+                        The response must be polite, professional, and error-free, and tailored to the user's resume and job description. 
+                        Use placeholders for unknown information like "Dear Hiring Manager" and omit specific addresses if unavailable.
+                    `
                 },
                 {
                     role: 'user',
                     content: `
-                        Write a cover letter for the following job description: ${user.tailoredResume.description}. 
+                        Write a cover letter for the following job description: ${user.tailoredResume.description}.
                         Here's a brief summary from their current resume for reference: ${user.resume.summary}.
+                        Additional information:
+                        First Name: ${user.firstName},
+                        Last Name: ${user.lastName},
+                        Company: ${user.tailoredResume.companyName}.
+                        Assume the recipient's name and company address are not provided.
                     `
                 }
             ],

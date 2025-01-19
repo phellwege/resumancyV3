@@ -72,6 +72,13 @@ export default function CreateCustomTailoredResume() {
                 console.warn("Experience section is missing or empty.");
             }
     
+            // Parse skills section if it exists
+            if (skillsSection && skillsSection.data) {
+                parsedSkills = skillsSection.data;
+            } else {
+                console.warn("Skills section is missing or empty.");
+            }
+    
             // Update user state
             setUser((prevState) => ({
                 ...prevState,
@@ -101,10 +108,9 @@ export default function CreateCustomTailoredResume() {
         if (!response.ok) {
             setError("Failed to generate resume");
         }
-        console.log("Cover Letter API Response:", response.data);
-        const coverLetterSummary = response.data;
-        console.log('coverletterSummary', coverLetterSummary)
-        // setCoverLetterContent(coverLetterSummary);
+
+        const coverLetterSummary = response.data.coverLetterSummary;
+
         setUser((prevState) => ({
             ...prevState,
             coverLetter: {
