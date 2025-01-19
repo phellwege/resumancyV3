@@ -48,7 +48,7 @@ const NavBar = () => {
 
     useEffect(() => {
         let handler = (event) => {
-            if(!menuRef.current.contains(event.target)){
+            if(user.initialSetupDone && !menuRef.current.contains(event.target)){
                 setNavbarOpen(false);
             }
         }
@@ -65,6 +65,7 @@ const NavBar = () => {
         <>
         <ThemeProvider theme={theme}>
         <GlobalStyle />
+        {user.initialSetupDone && (
             <div id="Hamburger_Menu">
                 <nav ref={menuRef} className="navBar">
                     <button 
@@ -130,6 +131,7 @@ const NavBar = () => {
                         </ul>
                 </nav>
             </div>
+        )}
             </ThemeProvider>
         </>
     )
