@@ -100,16 +100,24 @@ return (
                     }}>Logout</Link>
                 </div>
             ) : (
-                <div className='avatarWindow'>
-                    <Link to='' onClick={handleOpenLoginModal}>
-                        <CgProfile size={45} />
-                    </Link>
-                    <Link to='' onClick={handleOpenLoginModal}>Login / Register</Link>
-                </div>
+                <>
+                {user.initialSetupDone && (
+                    <div className='avatarWindow'>
+                        <Link to='' onClick={handleOpenLoginModal}>
+                            <CgProfile size={45} />
+                        </Link>
+                        <Link to='' onClick={handleOpenLoginModal}>Login / Register</Link>
+                    </div>
+                )}
+                </>
             )}
         </div>
     </div>
-    {ifNotfrontPage()}
+    {user.initialSetupDone && (
+        <>
+        {ifNotfrontPage()}
+        </>
+    )}
     </>
 );
 }

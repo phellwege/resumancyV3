@@ -100,17 +100,17 @@ export function DataProvider({ children }) {
     };
     
       // Upload file to Firebase Storage (e.g., avatar or resume)
-    const uploadFile = async (file, folderPath) => {
-        const storageRef = ref(storage, `${folderPath}/${file.name}`);
-        try {
-            await uploadBytes(storageRef, file);
-            const downloadURL = await getDownloadURL(storageRef);
-            return downloadURL;
-        } catch (error) {
-            console.error('Error uploading file:', error);
-            return null;
-        }
-    };
+    // const uploadFile = async (file, folderPath) => {
+    //     const storageRef = ref(storage, `${folderPath}/${file.name}`);
+    //     try {
+    //         await uploadBytes(storageRef, file);
+    //         const downloadURL = await getDownloadURL(storageRef);
+    //         return downloadURL;
+    //     } catch (error) {
+    //         console.error('Error uploading file:', error);
+    //         return null;
+    //     }
+    // };
     
     useEffect(() => {
         if (user.id) {
@@ -123,7 +123,7 @@ export function DataProvider({ children }) {
         setLoading,
         fetchUserData,
         updateUserData,
-        uploadFile,
+        // uploadFile,
         addTailoredResume,
         addCoverLetter,
     };

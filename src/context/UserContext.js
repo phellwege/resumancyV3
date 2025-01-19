@@ -117,7 +117,6 @@ export function UserProvider({ children }) {
         additionalInfo: null
     })
     const subscriptionPlans = {
-        free: { baseResume: 1, tailoredResumes: 1 },
         basic: { baseResume: 1, tailoredResumes: 5 },
         premium: { baseResume: Infinity, tailoredResumes: Infinity },
     };
