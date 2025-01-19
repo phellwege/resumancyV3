@@ -15,6 +15,7 @@ TODO: Develop effective subscription pricing.
 
 ### Bug
 TODO: fix bug on modal size when scrolling
+TODO: switch from edit modal to edit page so that there is no cutoff and user can edit whatever they need to
 
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions

@@ -111,12 +111,18 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
             messages: [
                 { 
                     role: 'system', 
-                    content: 'Craft a skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies.' 
+                    content: `
+                        Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. 
+                        Ensure that:
+                        - Formatted as a bulleted list 
+                        - (Don\'t return a Section name or anything like that)
+                        - list a maximum of 6 skills
+                    `
                 },
                 { 
                     role: 'user', 
                     content: `
-                    Please customize the resume based on the provided job description and company name:
+                    Please customize the skills based on the provided job description and company name:
                     Job Description: ${user.resume.description}
                     Company Name: ${user.resume.companyName}
                     Here is the user's current resume information:
