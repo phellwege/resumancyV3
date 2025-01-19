@@ -1,9 +1,9 @@
 ### Repair to working state
 TODO: fix stripe so that it returns correct and expected values for users subscription
-TODO: add state management to cover letter function from context
 
 ### Flow Correction 
 TODO: handle user profile customization on account creation. 1st sign in should take them to a page to finish setup of their account. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false.... I will also implement a navigation blocker and an alert message
+TODO: add job description modal instead of posting whole job description in tailored resume section
 
 ### Add Feature
 TODO: fix other resumeStyles for review / flow for this.
