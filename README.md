@@ -5,7 +5,6 @@ TODO: fix stripe so that it returns correct and expected values for users subscr
 TODO: handle user profile customization on account creation. 1st sign in should take them to a page to finish setup of their account. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false.... I will also implement a navigation blocker and an alert message
 
 ### Add Feature
-TODO: add edit to cover letter functionality.
 TODO: write functions for database connection and storage of state managed information from dataContext
 TODO: Develop effective subscription pricing.
     - free base resume (no formatting options, option to make 1 tailored resume / cover letter unless on paid tier)
@@ -15,6 +14,7 @@ TODO: Develop effective subscription pricing.
 ### Bug
 TODO: fix bug on modal size when scrolling
 TODO: switch from edit modal to edit page so that there is no cutoff and user can edit whatever they need to
+TODO: if editing on close modal then it stays in edit mode instead of returning to default state
 
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions

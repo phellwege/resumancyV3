@@ -24,7 +24,7 @@ export default function TailoredResumeTable() {
             <tr>
                 <th>Company Name</th>
                 <th>Job Description</th>
-                <th>View</th>
+                <th>Resume</th>
                 <th>Cover Letter</th>
                 <th>Date</th>
             </tr>
@@ -44,7 +44,7 @@ export default function TailoredResumeTable() {
                 </td>
                 <td>
                   <Link to='' onClick={handleOpenReviewCoverLetterModal}>
-                    Cover Letter
+                    View Cover Letter
                   </Link>
                 </td>
                 <td></td>

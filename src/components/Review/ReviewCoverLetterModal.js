@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../../views/main.css'
 import { useUser } from '../../context/UserContext';
+import EditCoverLetter from './editCoverLetter';
 
 export default function ReviewCoverLetterModal() {
     const {
@@ -10,6 +11,8 @@ export default function ReviewCoverLetterModal() {
         handleCloseReviewCoverLetterModal,
         user
     } = useUser();
+    const [edit, setEdit] = useState(false);
+    
     const renderTextWithNewLines = (text) => {
         if (text) {
             const lines = text.split('\n');
@@ -36,16 +39,20 @@ export default function ReviewCoverLetterModal() {
             <Modal.Title>Review Cover Letter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+            {!edit ? (
             <p>
             {renderTextWithNewLines(user.coverLetter.response)}
             </p>
+            ) : (
+                <EditCoverLetter />
+            )}
         </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseReviewCoverLetterModal}>
                 Close
             </Button>
-            <Button variant="primary" onClick={handleCloseReviewCoverLetterModal}>
-                Continue
+            <Button variant="warning" onClick={() => setEdit(!edit)}>
+                {edit ? 'Stop Edit' : 'Edit'}
             </Button>
         </Modal.Footer>
     </Modal>
