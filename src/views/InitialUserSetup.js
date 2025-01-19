@@ -142,7 +142,7 @@ export default function InitialUserSetup() {
             <div className='initSetupArrow'>
             <FaArrowCircleRight size={50} color='#9cb9da'/>
             <br/>
-            <p>Get started your free 7 day trial to continue</p>
+            <p>Get started your free 7 day trial, or select a plan to continue.</p>
             </div>
             <div className='rightDiv'>
                 <Card>
