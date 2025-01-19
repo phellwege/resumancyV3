@@ -179,7 +179,7 @@ export default function InitialUserSetup() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.contactInfo.email.length} / 25)</sub>
+                                        <sub>({user.contactInfo.email.length} / 75)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                         type="text"
@@ -187,7 +187,7 @@ export default function InitialUserSetup() {
                                         value={user.contactInfo.email}
                                         onChange={(e) => {handleContactChange('email', e.target.value)}}
                                         className="mb-2"
-                                        maxLength={25}
+                                        maxLength={75}
                                     />
                                 </Form.Group>
                                 <Form.Group>
