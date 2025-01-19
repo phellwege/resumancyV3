@@ -13,6 +13,7 @@ export function UserProvider({ children }) {
     const handleCloseLoginModal = () => setLoginModal(false);
     const handleOpenLoginModal = () => setLoginModal(true);
 
+    const [isTableEnabled, setIsTableEnabled] = useState(false);
 
     // creating profile modal
     const [setupUserModal, setSetupUserModal] = useState(false);
@@ -253,6 +254,9 @@ export function UserProvider({ children }) {
         user, setUser,
         userAvatars,
         handleSelectAvatar,
+
+        isTableEnabled,
+        setIsTableEnabled,
 
         loginModal, setLoginModal,
         handleCloseLoginModal,

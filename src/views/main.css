@@ -644,7 +644,16 @@ width: 45%;
     align-items: center;
     max-width: 8%;
 }
-
+.disabled-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(75, 69, 69, 0.7); /* Semi-transparent overlay */
+    z-index: 10; /* Ensures it sits above the pricing table */
+    cursor: not-allowed; /* Indicate to the user that interaction is disabled */
+}
 
 @media (max-width: 850px) {
     #defaultResumeWrap {

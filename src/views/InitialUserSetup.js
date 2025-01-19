@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
-import { Button, Card, Alert, Form, Tooltip} from 'react-bootstrap';
-import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
-import { FaArrowCircleRight } from "react-icons/fa";
+import { Button, Card, Form, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { FaMinusSquare , FaPlusSquare, FaArrowCircleRight  } from "react-icons/fa";
+
 import './main.css';
 
 import { useUser } from '../context/UserContext';
@@ -17,9 +17,37 @@ export default function InitialUserSetup() {
         sanitizeUserInput,
         addSocialMediaEntry,
         removeSocialMediaEntry,
-        handleSocialMediaChange
+        handleSocialMediaChange,
+        isTableEnabled,
+        setIsTableEnabled
     } = useUser();
 
+    const validateForm = () => {
+        const { firstName, lastName, jobTitle, contactInfo } = user;
+        const { email, phone } = contactInfo;
+
+        return (
+            firstName.trim() &&
+            lastName.trim() &&
+            jobTitle.trim() &&
+            email.trim() &&
+            phone.trim()
+        );
+    };
+
+    const handleContinue = () => {
+        if (validateForm()) {
+            setIsTableEnabled(true);
+        } else {
+            alert('Please complete all required fields.');
+        }
+    };
+
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Complete the form to continue
+        </Tooltip>
+    );
     const handlePhoneNumberChange = (e) => {
         const inputPhoneNumber = e.target.value.replace(/\D/g, '');
         let formattedPhoneNumber = '';
@@ -46,17 +74,17 @@ export default function InitialUserSetup() {
                         <div className='cardInnerDiv'>
                             <h5>Finish setting up your profile</h5>
                             <Form>
-                                <Form.Group>
+                                <Form.Group className="d-flex gap-3 align-items-center">
                                     <Form.Control 
                                         type="text"
-                                        placeholder="Enter First Name"
+                                        placeholder="First Name"
                                         value={user.firstName}
                                         onChange={(e) => {handleUserChange('firstName', e.target.value)}}
                                         className="mb-2"
                                     />
                                     <Form.Control 
                                         type="text"
-                                        placeholder="Enter Last Name"
+                                        placeholder="Last Name"
                                         value={user.lastName}
                                         onChange={(e) => {handleUserChange('lastName', e.target.value)}}
                                         className="mb-2"
@@ -66,29 +94,30 @@ export default function InitialUserSetup() {
                                     <Form.Label>Job Title</Form.Label>
                                     <Form.Control 
                                         type="text"
-                                        placeholder="Enter Current Job Title"
+                                        placeholder="Current Job Title"
                                         value={user.jobTitle}
                                         onChange={(e) => {handleUserChange('jobTitle', e.target.value)}}
+                                        className="mb-2"
                                     />
                                 </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>email</Form.Label>
+                                <Form.Group  className="d-flex gap-3 align-items-center">
                                     <Form.Control 
                                         type="text"
-                                        placeholder="EnterEmail"
+                                        placeholder="Email"
                                         value={user.contactInfo.email}
                                         onChange={(e) => {handleContactChange('email', e.target.value)}}
+                                        className="mb-2"
                                     />
-                                    <Form.Label>Phone Number</Form.Label>
                                     <Form.Control 
                                         type="tel"
                                         placeholder="(123) 456 - 7890"
                                         value={ user.contactInfo.phone }
                                         onChange={(e) => handleContactChange('phone', handlePhoneNumberChange(e))}
+                                        className="mb-2"
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Social Media Accounts</Form.Label>
+                                    <Form.Label>Social Media Accounts (optional)</Form.Label>
                                     {user.contactInfo.socialMedia.map((account, index) => (
                                         <div key={index} className="social-media-entry">
                                             {/* Field for Social Media Platform Name */}
@@ -131,6 +160,9 @@ export default function InitialUserSetup() {
                                     ))}
                                 </Form.Group>
                             </Form>
+                        <Button onClick={handleContinue}>
+                            Continue
+                        </Button>
                         </div>
                     </Card.Body>
                 </Card>
@@ -143,9 +175,14 @@ export default function InitialUserSetup() {
             <div className='rightDiv'>
                 <Card>
                     <Card.Body>
-                        <div  className='cardInnerDiv'>
-                            <StripePricingTable />
-                        </div>
+                    <div className="cardInnerDiv position-relative">
+                        {!isTableEnabled && (
+                            <OverlayTrigger placement="top" overlay={renderTooltip}>
+                                <div className="disabled-overlay"></div>
+                            </OverlayTrigger>
+                        )}
+                        <StripePricingTable />
+                    </div>
                     </Card.Body>
                 </Card>
             </div>

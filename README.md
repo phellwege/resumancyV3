@@ -26,7 +26,7 @@ TODO: setup hard limitations for firebase functions
 3. Notification for user. Store unread alerts for the user and have a notification icon that appears. (add ads and such to this que so they can be viewed by the user)
 
 ### enhancement
-1. nothing at this time
+1. Setup Custom Alerts
 
     <!-- premium icon used to delineate between premium features and free features -->
     import { MdOutlineWorkspacePremium } from "react-icons/md";
