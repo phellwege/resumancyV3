@@ -3,11 +3,11 @@ import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import { Button, Card, Alert, Form, Tooltip} from 'react-bootstrap';
 import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
+import { FaArrowCircleRight } from "react-icons/fa";
 import './main.css';
 
 import { useUser } from '../context/UserContext';
 import StripePricingTable from '../components/StripePricingTable';
-
 
 export default function InitialUserSetup() {
     const {
@@ -135,21 +135,20 @@ export default function InitialUserSetup() {
                                     ))}
                                 </Form.Group>
                             </Form>
-                            <Button
-                            // perform check to ensure all fields filled then click and redirect to home
-                            // onclick={()=> handleUserChange('initialSetupDone': true)}
-                            >Continue</Button>
                         </div>
                     </Card.Body>
                 </Card>
+            </div>
+            <div className='initSetupArrow'>
+            <FaArrowCircleRight size={50} color='#9cb9da'/>
+            <br/>
+            <p>Get started your free 7 day trial to continue</p>
             </div>
             <div className='rightDiv'>
                 <Card>
                     <Card.Body>
                         <div  className='cardInnerDiv'>
                             <StripePricingTable />
-                            <br/>
-                            If user follows prompt and sets up premium this should be a modal and stay on this page
                         </div>
                     </Card.Body>
                 </Card>
