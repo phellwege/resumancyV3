@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import '../../views/main.css'
 import { useUser } from '../../context/UserContext';
 import EditCoverLetter from './editCoverLetter';
+import { MdContentCopy } from "react-icons/md";
 
 export default function ReviewCoverLetterModal() {
     const {
@@ -12,7 +13,8 @@ export default function ReviewCoverLetterModal() {
         user
     } = useUser();
     const [edit, setEdit] = useState(false);
-    
+    const [showAlert, setShowAlert] = useState(false);
+
     const renderTextWithNewLines = (text) => {
         if (text) {
             const lines = text.split('\n');
@@ -25,6 +27,20 @@ export default function ReviewCoverLetterModal() {
             });
         }
         return null;
+    };
+    const [copySuccess, setCopySuccess] = useState(false);
+    const handleCopy = () => {
+        const textToCopy = user.coverLetter.response;
+        if (textToCopy) {
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    setShowAlert(true); // Show the custom "Copied!" alert
+                    setTimeout(() => setShowAlert(false), 3500); // Hide the alert after 2 seconds
+                })
+                .catch(() => {
+                    alert('Failed to copy text!');
+                });
+        }
     };
   return (
     <>
@@ -40,9 +56,23 @@ export default function ReviewCoverLetterModal() {
         </Modal.Header>
         <Modal.Body>
             {!edit ? (
+            <div>
+            <MdContentCopy style={{ cursor: 'pointer' }} onClick={handleCopy}/>
             <p>
-            {renderTextWithNewLines(user.coverLetter.response)}
+                {renderTextWithNewLines(user.coverLetter.response)}
             </p>
+            {showAlert && (
+                                <p
+                                    style={{
+                                        color: 'green',
+                                        fontWeight: 'bold',
+                                        marginTop: '10px',
+                                    }}
+                                >
+                                    Text Successfully Copied!
+                                </p>
+                            )}
+            </div>
             ) : (
                 <EditCoverLetter />
             )}
