@@ -34,10 +34,8 @@ export default function CreateCustomTailoredResume() {
         setError(null);
     
         try {
-            await Promise.all([
-                generateTailoredResume(),
-                generateCoverLetter(user),
-            ]);
+            await generateTailoredResume(user);
+            await generateCoverLetter(user);
             history("/Review");
         } catch (error) {
             console.error("Error during submission:", error);
@@ -47,7 +45,7 @@ export default function CreateCustomTailoredResume() {
         }
     };
 
-    const generateTailoredResume = async () => {
+    const generateTailoredResume = async (user) => {
         try {
             const response = await axios.post(
                 "https://us-central1-resumancy.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
@@ -55,30 +53,39 @@ export default function CreateCustomTailoredResume() {
                 { headers: { 'Content-Type': 'application/json' } }
             );
     
-            const { summary, experience, skills } = response.data;
+            console.log("API Response:", response.data);
+    
+            const { summary, experienceSection, skillsSection } = response.data;
     
             let parsedExperience = [];
-            try {
-                parsedExperience = JSON.parse(experience);
-            } catch (parseError) {
-                console.error("Error parsing experience section:", parseError);
-                parsedExperience = [];
+            let parsedSkills = [];
+    
+            // Parse experience section if it exists
+            if (experienceSection && experienceSection.data) {
+                try {
+                    parsedExperience = JSON.parse(experienceSection.data);
+                } catch (parseError) {
+                    console.error("Error parsing experience section:", parseError);
+                    parsedExperience = []; // Fallback to an empty array
+                }
+            } else {
+                console.warn("Experience section is missing or empty.");
             }
     
+            // Update user state
             setUser((prevState) => ({
                 ...prevState,
                 resume: {
                     ...prevState.resume,
-                    summary: summary,
+                    summary: summary?.data || prevState.resume.summary,
                     experience: parsedExperience,
-                    skills: skills,
+                    skills: parsedSkills,
                     usage: {
                         ...prevState.resume.usage,
-                        baseResume: false
+                        baseResume: false,
                     },
                 },
             }));
-    
         } catch (error) {
             console.error("Error generating tailored resume:", error);
             setError("Failed to generate tailored resume. Please try again.");
@@ -86,7 +93,7 @@ export default function CreateCustomTailoredResume() {
     };
     const generateCoverLetter = async (user) => {
         try {
-        const response = await fetch(
+        const response = await axios.post(
             "https://us-central1-resumancy.cloudfunctions.net/generate_cover_letter-generate_cover_letter",
             { user },
             { headers: { 'Content-Type': 'application/json' } }
@@ -94,12 +101,13 @@ export default function CreateCustomTailoredResume() {
         if (!response.ok) {
             setError("Failed to generate resume");
         }
+        console.log("Cover Letter API Response:", response.data);
         const coverLetterSummary = response.data;
+        console.log('coverletterSummary', coverLetterSummary)
         // setCoverLetterContent(coverLetterSummary);
-
         setUser((prevState) => ({
             ...prevState,
-            resume: {
+            coverLetter: {
                 ...prevState.coverLetter,
                 response: coverLetterSummary,
             },

@@ -25,8 +25,6 @@ export default function CreateBaselineResume() {
         handleExperienceChange,
         addExperienceEntry,
         removeExperienceEntry,
-        // includeAddress,
-        // setIncludeAddress
     } = useUser();
     const {
         loading, 

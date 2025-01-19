@@ -6,9 +6,23 @@ import { useUser } from '../../context/UserContext';
 export default function ReviewCoverLetterModal() {
     const {
         reviewCoverLetterModal,
-        handleCloseReviewCoverLetterModal
+        handleCloseReviewCoverLetterModal,
+        user
     } = useUser();
-
+    const renderTextWithNewLines = (text) => {
+        if (text) {
+            const lines = text.split('\n');
+            return lines.map((line, index) => {
+                const shouldIndent = line.startsWith('-');
+                return (
+                    <p key={index} className={shouldIndent ? 'indented' : ''} style={{ marginBottom: "5px" }}>{line}
+                    </p>
+                );
+            });
+        }
+        return null;
+    };
+    console.log("Cover Letter Response:", user.coverLetter.response);
   return (
     <>
     <Modal 
@@ -22,7 +36,9 @@ export default function ReviewCoverLetterModal() {
             <Modal.Title>Review Cover Letter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            
+            <p>
+            {renderTextWithNewLines(user.coverLetter.response)}
+            </p>
         </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseReviewCoverLetterModal}>

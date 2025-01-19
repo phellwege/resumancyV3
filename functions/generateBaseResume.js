@@ -13,12 +13,18 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a professional resume summary for this resume in roughly 3 sentences.' },
-                { role: 'user', content: `
+                { 
+                    role: 'system', 
+                    content: 'Craft a professional resume summary for this resume in roughly 3 sentences.' 
+                },
+                { 
+                    role: 'user', 
+                    content: `
                     Experience: ${experienceFormatted}
                     Education and Certifications: ${user.resume.education}
                     Skills: ${user.resume.skills}
-                ` },
+                ` 
+                },
             ],
             temperature: 0.4,
             max_tokens: 1000,
