@@ -491,6 +491,12 @@ width: 45%;
     overflow: hidden;
     line-height: 1;
 }
+#resumeStyle5 a {
+    color: #F45B69;
+}
+#resumeStyle5 a:hover {
+    color: whitesmoke;
+}
 #resumeStyle5 .reviewDefaultResumeSections {
     border-bottom: none;
 }
@@ -569,7 +575,7 @@ width: 45%;
     font-weight: bold;
 }
 .reviewButton { 
-    width: 75%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -622,6 +628,11 @@ width: 45%;
 }
 .reviewAddress {
     font-size: small;
+}
+.reviewResumeStyleToggleButtonGroup{
+    display: flex;
+    justify-content: space-around;
+    width:45%;
 }
 
 

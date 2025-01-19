@@ -6,7 +6,6 @@ TODO: handle user profile customization on account creation. 1st sign in should 
 
 ### Add Feature
 TODO: add edit to cover letter functionality.
-TODO: fix other resumeStyles for review / flow for this.
 TODO: write functions for database connection and storage of state managed information from dataContext
 TODO: Develop effective subscription pricing.
     - free base resume (no formatting options, option to make 1 tailored resume / cover letter unless on paid tier)

@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../../views/main.css'
 import { useUser } from '../../context/UserContext';
+
 export default function ReviewCoverLetterModal() {
     const {
         reviewCoverLetterModal,
