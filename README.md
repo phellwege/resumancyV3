@@ -1,9 +1,8 @@
 ### Repair to working state
-TODO: fix stripe so that it returns correct and expected values for users subscription
+TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
 
 ### Flow Correction 
-TODO: handle user profile customization on account creation. 1st sign in should take them to a page to finish setup of their account. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false.... I will also implement a navigation blocker and an alert message
-TODO: add protected routs
+TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....
 
 ### Add Feature
 TODO: write functions for database connection and storage of state managed information from dataContext
