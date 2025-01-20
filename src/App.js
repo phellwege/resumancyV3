@@ -35,7 +35,6 @@ function App() {
           <React.Fragment>
             <Routes>
             <Route exact path="/" element={<Home />} />
-            {/* <Route exact path="/RecruiterSetupPage" element={<RecruiterSetupPage />} /> */}
             <Route exact path="/FAQ" element={<FAQ />} />
             <Route exact path="/TermsOfUse" element={<TermsOfUse />} />
             <Route exact path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
@@ -45,6 +44,8 @@ function App() {
             <Route exact path='/Review' element={<Review />} />
             <Route exact path='/UserProfile' element={<UserProfile />} />
             <Route exact path='/InitialUserSetup' element={<InitialUserSetup />} />
+
+            {/* <Route exact path="/RecruiterSetupPage" element={<RecruiterSetupPage />} /> */}
             {/* <Route exact path='/RecruiterMainPage' element={<RecruiterMainPage />} /> */}
             {/* <Route exact path='/Recruit' element={ <Recruit/> } />
             <Route exact path='/Recruit/:recruitId' element={ <Recruit/> } />
