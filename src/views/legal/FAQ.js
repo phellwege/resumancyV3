@@ -27,13 +27,13 @@ export default function FAQ() {
             <li>
                 <h5>Is there a fee for using this AI resume builder?</h5>
                 <p>
-                    We offer both free and a premium version of our tool. The free tier includes one base resume and one tailored resume/cover letter per user. The $5/month basic tier gives you one base resume and five tailored resumes/cover letters per month. The $15/month premium tier offers unlimited tailored resumes/cover letters per month.
+                We offer a free 7-day trial of the Basic Plan. The $5/month Basic Plan includes one base resume and up to five tailored resumes/cover letters per month. The $15/month Premium Plan provides unlimited tailored resumes/cover letters per month.
                 </p>
             </li>
             <li>
                 <h5>Is my data secure when using this tool?</h5>
                 <p>
-                    Yes, we take data security seriously. Your personal information and resume data are encrypted and stored securely. We do not share your data with third parties.
+                    Yes, we take data security seriously. Your personal information and resume data are stored securely. We do not share your data with third parties.
                 </p>
             </li>
             <li>
