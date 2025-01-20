@@ -30,7 +30,6 @@ export default function CreateBaselineResume() {
         loading, 
         setLoading
     } = useAuth();
-
     
     const userExperience = "Detail your relevant job history (Required):";
     const userEducation = "List your education and certifications (Required):";
@@ -160,13 +159,13 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        {/* <sub>({user.resume.experience.length} / 8000)</sub> */}
+                                        {/* <sub>({user.resume[0].experience.length} / 8000)</sub> */}
                                         {/* this will need modified in order to cap each sections */}
                                     </Form.Label>
                                     <div className='createResumePlusAndMinus'>
                                         <FaPlusSquare onClick={addExperienceEntry}  size={25} className='creationButton' id='CreateResumePlusButton'/>
                                     </div>
-                                    {user.resume.experience.map((exp, index) => (
+                                    {(user.resume[0].experience || []).map((exp, index) => (
                                         <div key={index} className="experience-entry" style={{border: '1px solid lightblue', padding: '5px', margin: '5px', borderRadius: '.5REM'}}>
                                             <Form.Control 
                                                 type='text'
@@ -224,13 +223,13 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.education.length} / 500)</sub>
+                                        <sub>({user.resume[0].education.length} / 500)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
                                     rows={3} 
                                     placeholder='Education'
-                                    value={user.resume.education}
+                                    value={user.resume[0].education}
                                     onChange={(e) => handleResumeChange('education', sanitizeUserInput(e.target.value))}
                                     maxLength='500'
                                     className="mobile-textarea"
@@ -254,13 +253,13 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.skills.length} / 1000)</sub>
+                                        <sub>({user.resume[0].skills.length} / 1000)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
                                     rows={2} 
                                     placeholder='Skills'
-                                    value={user.resume.skills}
+                                    value={user.resume[0].skills}
                                     onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
                                     maxLength='1000'
                                     className="mobile-textarea"
@@ -284,13 +283,13 @@ export default function CreateBaselineResume() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.resume.additional.length} / 1000)</sub>
+                                        <sub>({user.resume[0].additional.length} / 1000)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                     as='textarea' 
                                     rows={3} 
                                     placeholder='Additional Information' 
-                                    value={user.resume.additional}
+                                    value={user.resume[0].additional}
                                     onChange={(e) => handleResumeChange('additional', sanitizeUserInput(e.target.value))}
                                     maxLength='1000'
                                     className="mobile-textarea"
