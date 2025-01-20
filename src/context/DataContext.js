@@ -57,18 +57,39 @@ export function DataProvider({ children }) {
     };
     
     const updateUserData = async (userId, updatedData) => {
-    try {
-        const userDocRef = doc(db, 'users', userId);
-        await updateDoc(userDocRef, updatedData);
-        setUser((prevUser) => ({
-        ...prevUser,
-        ...updatedData,
-        }));
-    } catch (error) {
-        console.error('Error updating user data:', error);
-    }
+        try {
+            const userDocRef = doc(db, 'users', userId);
+            await updateDoc(userDocRef, updatedData);
+            setUser((prevUser) => ({
+            ...prevUser,
+            ...updatedData,
+            }));
+        } catch (error) {
+            console.error('Error updating user data:', error);
+        }
     };
 
+    const checkUserExists = async (userId) => {
+        const userDocRef = doc(db, 'users', userId);
+        const userDocSnap = await getDoc(userDocRef);
+        return userDocSnap.exists();
+    };
+    const addUserData = async (userId, newUserData) => {
+        try {
+            const userExists = await checkUserExists(userId);
+
+            if (!userExists) {
+                const userDocRef = doc(db, 'users', userId);
+                await setDoc(userDocRef, newUserData);
+                console.log('User data added to Firestore:', newUserData);
+            } else {
+                console.log('User already exists, skipping data addition.');
+            }
+        } catch (error) {
+            console.error('Error adding user data:', error);
+        }
+    };
+    
     const addTailoredResume = async (userId, newResume) => {
         try {
             const userDocRef = doc(db, 'users', userId);
@@ -126,6 +147,8 @@ export function DataProvider({ children }) {
         // uploadFile,
         addTailoredResume,
         addCoverLetter,
+        addUserData,
+        checkUserExists,
     };
 
     return (

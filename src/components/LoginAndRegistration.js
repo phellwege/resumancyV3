@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Alert } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 import { useAuth } from '../context/AuthContext';
+import { useData } from '../context/DataContext';
 import Logo from '../static/logo_monochrome.png';
 import UserSetupModal from './user/UserSetupModal';
 import '../views/main.css';
@@ -12,6 +13,8 @@ import firebase from 'firebase/compat/app'
 export default function LoginAndRegistration() {
     const history = useNavigate();
     const {
+        user,
+        initialUserState,
         registerModal,
         loginModal,
         handleCloseLoginModal,
@@ -20,8 +23,14 @@ export default function LoginAndRegistration() {
     } = useUser();
     const { 
         firebaseUiInstance,
-        currentUser
+        currentUser,
     } = useAuth();
+    const { 
+        updateUserData,
+        addUserData,
+        checkUserExists
+    } = useData();
+    
     const [error, setError] = useState('');
     const capitalizeEachWord = (text) => {
         return text
@@ -57,21 +66,40 @@ export default function LoginAndRegistration() {
                     handleUserChange('lastName', lastName);
                     // handleUserChange('avatarImg', user.photoURL || ''); // Set avatar image (if available)
                     
-                    // Optionally, set a default displayName if it's not set
-                    if (!user.displayName) {
-                        user.updateProfile({
-                            displayName: 'Guest',
-                        }).then(() => {
-                            console.log('Display name set to Guest');
-                        }).catch((error) => {
-                            console.error('Error setting display name: ', error);
-                        });
-                    }
-    
+                    
+                    handleUserRegistrationOrLogin(user, firstName, lastName, capitalizedDisplayName);
+                    
                     handleCloseLoginModal();
                     return false;
                 },
             },
+        };
+        const handleUserRegistrationOrLogin = async (user, firstName, lastName, displayName) => {
+            try {
+                const newUserData = {
+                    ...initialUserState,
+                    id: user.uid,
+                    firstName,
+                    lastName,
+                    userName: displayName,
+                    contactInfo: {
+                        ...initialUserState.contactInfo,
+                        email: user.email,
+                    },
+                };
+        
+                const userExists = await checkUserExists(user.uid);
+                if (!userExists) {
+                    // Add new user to Firestore and redirect to InitialUserSetup
+                    await addUserData(user.uid, newUserData);
+                    history('/InitialUserSetup');
+                } else {
+                    console.log('Welcome back,', displayName);
+                }
+            } catch (error) {
+                console.error('Error handling user registration or login:', error);
+                setError('Failed to complete registration or login.');
+            }
         };
         
         if (loginModal) {
@@ -92,7 +120,7 @@ export default function LoginAndRegistration() {
         return () => {
             firebaseUiInstance.reset();
         };
-    }, [loginModal, registerModal]);
+    }, [loginModal, registerModal, updateUserData]);
 
     return (
         <>

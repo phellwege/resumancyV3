@@ -65,7 +65,7 @@ export function UserProvider({ children }) {
             state: '',
             zip: ''
         },
-        resume: {
+        resume: [{
             id: null,
             experience: [{
                 expJobTitle: '',
@@ -82,7 +82,7 @@ export function UserProvider({ children }) {
                 baseResume: true,
                 useAddress: null
             }
-        },
+        }],
         tailoredResume: {
             id: null,
             companyName: '',
