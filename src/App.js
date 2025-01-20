@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import PrivateRoute from '../src/components/privateRoute';
+import InitialSetupCheck from '../src/components/InitialSetupCheck'
 import {ThemeProvider} from 'styled-components';
 import { UserProvider } from './context/UserContext';
 import { AuthProvider } from './context/AuthContext';
@@ -38,6 +39,7 @@ function App() {
             <Route exact path="/FAQ" element={<FAQ />} />
             <Route exact path="/TermsOfUse" element={<TermsOfUse />} />
             <Route exact path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
+            
             <Route exact path='/Create' element={<Create />} />
             <Route exact path='/Tailor' element={<Tailor />} />
             <Route exact path='/Review' element={<Review />} />
