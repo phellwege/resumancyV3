@@ -89,7 +89,33 @@ export function DataProvider({ children }) {
             console.error('Error adding user data:', error);
         }
     };
-    
+    const saveUserData = async (userId, updatedData) => {
+        try {
+            const userDocRef = doc(db, 'users', userId);
+            const userDocSnap = await getDoc(userDocRef);
+            
+            if (userDocSnap.exists()) {
+                // If the user exists, update their existing data
+                await updateDoc(userDocRef, updatedData);
+                setUser((prevUser) => ({
+                    ...prevUser,
+                    ...updatedData,
+                }));
+            } else {
+                // If the user doesn't exist, create a new document
+                await setDoc(userDocRef, {
+                    ...updatedData,
+                    createdAt: serverTimestamp(),
+                });
+                setUser((prevUser) => ({
+                    ...prevUser,
+                    ...updatedData,
+                }));
+            }
+        } catch (error) {
+            console.error('Error saving user data:', error);
+        }
+    };
     const addTailoredResume = async (userId, newResume) => {
         try {
             const userDocRef = doc(db, 'users', userId);
@@ -149,6 +175,7 @@ export function DataProvider({ children }) {
         addCoverLetter,
         addUserData,
         checkUserExists,
+        saveUserData
     };
 
     return (

@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
+import { useUser } from '../context/UserContext';
 
 const StripePricingTable = () => {
+  const {
+    user
+  } = useUser();
 
   useEffect(() => {
     const script = document.createElement('script');

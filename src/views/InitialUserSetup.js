@@ -10,6 +10,7 @@ import './main.css';
 
 import { useUser } from '../context/UserContext';
 import StripePricingTable from '../components/StripePricingTable';
+import { useData } from '../context/DataContext';
 
 export default function InitialUserSetup() {
     const {
@@ -23,6 +24,9 @@ export default function InitialUserSetup() {
         isTableEnabled,
         setIsTableEnabled
     } = useUser();
+    const {
+        saveUserData
+    } = useData();
 
     const userFirstName = "First Name (Required)";
     const userLastName = "Last Name (Required)";
@@ -44,8 +48,24 @@ export default function InitialUserSetup() {
         );
     };
 
-    const handleContinue = () => {
+    const handleContinue = async () => {
         if (validateForm()) {
+            // Prepare updated user data
+            const updatedUserData = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                jobTitle: user.jobTitle,
+                contactInfo: {
+                    email: user.contactInfo.email,
+                    phone: user.contactInfo.phone,
+                    socialMedia: user.contactInfo.socialMedia,
+                },
+                plan: user.plan || null,
+            };
+    
+            // Save or update user data
+            await saveUserData(user.id, updatedUserData);
+    
             setIsTableEnabled(true);
         } else {
             alert('Please complete all required fields.');
@@ -153,7 +173,7 @@ export default function InitialUserSetup() {
                                                 </span>
                                             </OverlayTrigger>
                                         </div>
-                                        <sub>({user.jobTitle.length} / 25)</sub>
+                                        <sub>({user.jobTitle.length} / 50)</sub>
                                     </Form.Label>
                                     <Form.Control 
                                         type="text"
@@ -161,7 +181,7 @@ export default function InitialUserSetup() {
                                         value={user.jobTitle}
                                         onChange={(e) => {handleUserChange('jobTitle', e.target.value)}}
                                         className="mb-2"
-                                        maxLength={25}
+                                        maxLength={50}
                                     />
                                 </Form.Group>
                                 <Form.Group>
