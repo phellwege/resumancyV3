@@ -107,16 +107,11 @@ export default function LoginAndRegistration() {
         
         if (loginModal) {
             uiConfig.signInFlow = 'popup';
-        } 
-        
-        if (loginModal) {
-            
             firebaseUiInstance.start('#firebaseui-login-container', uiConfig);
         } 
         
         return () => {
             firebaseUiInstance.reset();
-            
         };
     }, [loginModal, registerModal, updateUserData]);
 
