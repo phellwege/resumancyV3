@@ -19,7 +19,11 @@ export default function LoginAndRegistration() {
         loginModal,
         handleCloseLoginModal,
         handleUserChange,
-        handleContactChange
+        handleContactChange,
+
+
+        setSuccessMessage,
+        setError,
     } = useUser();
     const { 
         firebaseUiInstance,
@@ -31,7 +35,7 @@ export default function LoginAndRegistration() {
         checkUserExists
     } = useData();
     
-    const [error, setError] = useState('');
+    
     const capitalizeEachWord = (text) => {
         return text
             .split(' ')
@@ -64,8 +68,6 @@ export default function LoginAndRegistration() {
                     handleContactChange('email', user.email); 
                     handleUserChange('firstName', firstName);
                     handleUserChange('lastName', lastName);
-                    // handleUserChange('avatarImg', user.photoURL || ''); // Set avatar image (if available)
-                    
                     
                     handleUserRegistrationOrLogin(user, firstName, lastName, capitalizedDisplayName);
                     
@@ -76,6 +78,7 @@ export default function LoginAndRegistration() {
         };
         const handleUserRegistrationOrLogin = async (user, firstName, lastName, displayName) => {
             try {
+                
                 const newUserData = {
                     ...initialUserState,
                     id: user.uid,
@@ -92,33 +95,29 @@ export default function LoginAndRegistration() {
                 if (!userExists) {
                     // Add new user to Firestore and redirect to InitialUserSetup
                     await addUserData(user.uid, newUserData);
+                    setSuccessMessage('Registration successful! Redirecting to setup...');
                     history('/InitialUserSetup');
                 } else {
-                    console.log('Welcome back,', displayName);
+                    setSuccessMessage(`Welcome back, ${displayName}!`);
                 }
             } catch (error) {
                 console.error('Error handling user registration or login:', error);
-                setError('Failed to complete registration or login.');
+                setError('Failed to complete registration or login. Please try again.');
             }
         };
         
         if (loginModal) {
             uiConfig.signInFlow = 'popup';
-        } else if (registerModal) {
-            uiConfig.signInFlow = 'popup';
-            uiConfig.callbacks.uiShown = () => {
-                firebaseUiInstance.setConfig({ initialScreen: 'signUp' });
-            };
-        }
+        } 
         
         if (loginModal) {
+            
             firebaseUiInstance.start('#firebaseui-login-container', uiConfig);
-        } else if (registerModal) {
-            firebaseUiInstance.start('#firebaseui-register-container', uiConfig);
-        }
+        } 
         
         return () => {
             firebaseUiInstance.reset();
+            
         };
     }, [loginModal, registerModal, updateUserData]);
 
@@ -140,13 +139,6 @@ export default function LoginAndRegistration() {
             </div>
             </Modal.Body>
         </Modal>
-
-        {error && (
-            <Alert variant="danger" className="alerts" id="registrationError" dismissible>
-            <Alert.Heading>Error</Alert.Heading>
-            {error}
-            </Alert>
-        )}
 
         </>
     );

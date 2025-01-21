@@ -18,10 +18,14 @@ import "./header.css";
 
 function Header(props) {
     const history = useNavigate();
-    const [error, setError] = useState('');
     const {
         user, 
         handleOpenLoginModal,
+        successMessage,
+        setSuccessMessage,
+        errorMessage,
+        error,
+        setError,
     } = useUser()
     const {
         logout
@@ -65,8 +69,21 @@ function Header(props) {
                 </Link>
             )
         }
-    }
-    
+    };
+
+    useEffect(() => {
+        const timeouts = [];
+        if (error) {
+            const timeout = setTimeout(() => setError(''), 3500);
+            timeouts.push(timeout);
+        }
+        if (successMessage) {
+            const timeout = setTimeout(() => setSuccessMessage(''), 3500);
+            timeouts.push(timeout);
+        }
+        return () => {
+        };
+    }, [error, successMessage]);
 return (
     <>
     <NavBar />
@@ -74,7 +91,30 @@ return (
     {/* <RegisterRecruiter /> */}
     <div className="head_wrap">
         <div className='headerLeft'>
-            
+
+        {/* Error Message Alert */}
+        {error && (
+            <Alert variant="danger" className="alerts" dismissible>
+            <Alert.Heading>Error</Alert.Heading>
+            {error}
+            </Alert>
+        )}
+
+        {/* Success Message Alert */}
+        {successMessage && (
+            <Alert variant="success" className="alerts" dismissible>
+                <Alert.Heading>Success</Alert.Heading>
+                    {successMessage}
+            </Alert>
+        )}
+
+        {/* Error Message Alert */}
+        {errorMessage && (
+            <Alert variant="danger" className="alerts" dismissible>
+                <Alert.Heading>Error</Alert.Heading>
+                {errorMessage}
+            </Alert>
+        )}
         </div>
         <div className="headerMid">
             <div className='logobkg'>

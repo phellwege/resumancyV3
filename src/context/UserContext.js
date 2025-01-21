@@ -110,7 +110,9 @@ export function UserProvider({ children }) {
     };
     const [user, setUser] = useState(initialUserState)
     const resetUser = () => setUser(initialUserState);
-
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [error, setError] = useState('');
     const [review, setReview] = useState({
         userID : user.id,
         rating: null,
@@ -297,6 +299,13 @@ export function UserProvider({ children }) {
         handleUserChange,
 
         stripFormatting,
+
+        successMessage,
+        setSuccessMessage,
+        errorMessage,
+        setErrorMessage,
+        error,
+        setError,
 
     }), [
         user, resetUser, loginModal, setupUserModal, selectAvatar,

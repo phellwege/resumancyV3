@@ -2,6 +2,7 @@
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
 TODO: fix resume creation and cover letter creation now that it is an array of objects
 TODO: fix review page since it is an array of objects
+TODO: on edit user information / save implement function to add the info to firebase
 
 ### Flow Correction 
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....
