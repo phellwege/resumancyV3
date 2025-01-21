@@ -15,13 +15,14 @@ export default function CreateCustomTailoredResume() {
         setUser,
         handleTailoredResumeChange,
         sanitizeUserInput,
+        setSuccessMessage,
+        setError,
     } = useUser();
     const {
         setLoading
     } = useAuth();
     const companyNameTooltip = "The name of the company you are applying for.";
     const prospectiveJobDescTooltip = "Copy/Paste a description of the role you are applying for.";
-    const [error, setError] = useState(null);
     const history = useNavigate();
 
     const handleSubmit = async () => {

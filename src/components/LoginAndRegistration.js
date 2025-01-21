@@ -21,7 +21,6 @@ export default function LoginAndRegistration() {
         handleUserChange,
         handleContactChange,
 
-
         setSuccessMessage,
         setError,
     } = useUser();
