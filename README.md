@@ -13,7 +13,7 @@ TODO: Develop effective subscription pricing.
     - free trial of basic plan
     - Basic Plan: $5/month for up to 5 tailored resumes.(and some formatting options)
     - Pro Plan: $15/month for unlimited resumes and additional features (full feature suit)
-
+ 
 ### Bug
 TODO: fix bug on modal size when scrolling
 TODO: switch from edit modal to edit page so that there is no cutoff and user can edit whatever they need to

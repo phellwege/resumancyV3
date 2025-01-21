@@ -97,7 +97,7 @@ export default function LoginAndRegistration() {
                     setSuccessMessage('Registration successful! Redirecting to setup...');
                     history('/InitialUserSetup');
                 } else {
-                    setSuccessMessage(`Welcome back, ${displayName}!`);
+                    setSuccessMessage(`Welcome back, ${firstName}!`);
                 }
             } catch (error) {
                 console.error('Error handling user registration or login:', error);
