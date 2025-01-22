@@ -74,11 +74,11 @@ function Header(props) {
     useEffect(() => {
         const timeouts = [];
         if (error) {
-            const timeout = setTimeout(() => setError(''), 3500);
+            const timeout = setTimeout(() => setError(''), 3000);
             timeouts.push(timeout);
         }
         if (successMessage) {
-            const timeout = setTimeout(() => setSuccessMessage(''), 3500);
+            const timeout = setTimeout(() => setSuccessMessage(''), 3000);
             timeouts.push(timeout);
         }
         return () => {
@@ -94,7 +94,7 @@ return (
 
         {/* Error Message Alert */}
         {error && (
-            <Alert variant="danger" className="alerts" dismissible>
+            <Alert variant="danger" className="alerts mt-4" dismissible>
             <Alert.Heading>Error</Alert.Heading>
             {error}
             </Alert>
@@ -102,19 +102,12 @@ return (
 
         {/* Success Message Alert */}
         {successMessage && (
-            <Alert variant="success" className="alerts" dismissible>
-                <Alert.Heading>Success</Alert.Heading>
+            <Alert variant="light" className="alerts mt-4" dismissible>
+                {/* <Alert.Heading>Success</Alert.Heading> */}
                     {successMessage}
             </Alert>
         )}
 
-        {/* Error Message Alert */}
-        {errorMessage && (
-            <Alert variant="danger" className="alerts" dismissible>
-                <Alert.Heading>Error</Alert.Heading>
-                {errorMessage}
-            </Alert>
-        )}
         </div>
         <div className="headerMid">
             <div className='logobkg'>
