@@ -23,6 +23,7 @@ export default function CreateBaselineResume() {
         handleExperienceChange,
         addExperienceEntry,
         removeExperienceEntry,
+        generateUUID,
 
         setSuccessMessage,
         setError,
@@ -52,7 +53,7 @@ export default function CreateBaselineResume() {
             setUser(prevState => ({
                 ...prevState,
                 resume: {
-                    ...prevState.resume,
+                    ...prevState.resume[0],
                     usage: {
                         ...prevState.resume[0].usage,
                         useAddress: true
@@ -81,23 +82,21 @@ export default function CreateBaselineResume() {
                 const updatedResume = [...prevState.resume];
                 updatedResume[0] = {
                     ...updatedResume[0],
+                    id: generateUUID(),
                     summary: summary.data,
                     experience: parsedExperience,
                     skills: skillsSection.data,
                     education: educationSection.data,
+                    usage: {
+                        ...updatedResume[0].usage,
+                        timeStamp,
+                        baseResume: true,
+                        useAddress: includeAddress,
+                    },
                 };
                 return { ...prevState, resume: updatedResume };
             });
-            setUser((prevState) => {
-                const updatedResume = [...prevState.resume];
-                updatedResume[0].usage = {
-                    ...updatedResume[0].usage,
-                    timeStamp,
-                    baseResume: true,
-                    useAddress: includeAddress,
-                };
-                return { ...prevState, resume: updatedResume };
-            });
+
             handleUserChange('subscription', {
                 ...user.subscription,
                 usage: {
@@ -105,6 +104,8 @@ export default function CreateBaselineResume() {
                     baseResume: 1,
                 },
             });
+
+            console.log(user)
     
             history('/Review');
         } catch (error) {

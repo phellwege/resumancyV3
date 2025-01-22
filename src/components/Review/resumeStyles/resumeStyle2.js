@@ -68,6 +68,7 @@ const renderTextWithNewLines = (text) => {
                 )}
                 {user.resume.usage.useAddress && (
                     <div className='reviewAddress'>
+                        <h5>Address</h5>
                         {user.address.street}{' '}
                         {user.address.appt}
                         <br/>
