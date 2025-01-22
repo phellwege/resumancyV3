@@ -120,7 +120,7 @@ export function UserProvider({ children }) {
     })
     const subscriptionPlans = {
         basic: { baseResume: 1, tailoredResumes: 5 },
-        premium: { baseResume: Infinity, tailoredResumes: Infinity },
+        premium: { baseResume: 1, tailoredResumes: Infinity },
     };
 
     // prevent xss attacks

@@ -16,6 +16,7 @@ export default function CreateBaselineResume() {
     const {
         user, 
         setUser,
+        handleUserChange,
         handleResumeChange,
         sanitizeUserInput,
         handleAddressChange,
@@ -43,16 +44,6 @@ export default function CreateBaselineResume() {
             setError('Experience, Education, and Skills are required fields.');
             return;
         }
-        setUser((prevState) => {
-            const updatedResume = [...prevState.resume];
-            updatedResume[0].usage = {
-                ...updatedResume[0].usage,
-                timeStamp,
-                baseResume: true,
-                useAddress: includeAddress,
-            };
-            return { ...prevState, resume: updatedResume };
-        });
         
         setLoading(true);
         setError(null);
@@ -63,7 +54,7 @@ export default function CreateBaselineResume() {
                 resume: {
                     ...prevState.resume,
                     usage: {
-                        ...prevState.resume.usage,
+                        ...prevState.resume[0].usage,
                         useAddress: true
                     }
                 }
@@ -87,16 +78,33 @@ export default function CreateBaselineResume() {
             }
 
             setUser((prevState) => {
-            const updatedResume = [...prevState.resume];
-            updatedResume[0] = {
-                ...updatedResume[0],
-                summary: summary.data,
-                experience: parsedExperience,
-                skills: skillsSection.data,
-                education: educationSection.data,
-            };
-            return { ...prevState, resume: updatedResume };
-        });
+                const updatedResume = [...prevState.resume];
+                updatedResume[0] = {
+                    ...updatedResume[0],
+                    summary: summary.data,
+                    experience: parsedExperience,
+                    skills: skillsSection.data,
+                    education: educationSection.data,
+                };
+                return { ...prevState, resume: updatedResume };
+            });
+            setUser((prevState) => {
+                const updatedResume = [...prevState.resume];
+                updatedResume[0].usage = {
+                    ...updatedResume[0].usage,
+                    timeStamp,
+                    baseResume: true,
+                    useAddress: includeAddress,
+                };
+                return { ...prevState, resume: updatedResume };
+            });
+            handleUserChange('subscription', {
+                ...user.subscription,
+                usage: {
+                    ...user.subscription.usage,
+                    baseResume: 1,
+                },
+            });
     
             history('/Review');
         } catch (error) {
