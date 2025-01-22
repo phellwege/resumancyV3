@@ -7,10 +7,7 @@ import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
 
 import AddressForm from '../user/AddressForm';
 import '../../views/main.css';
-import {
-    doc,
-    setDoc,
-} from 'firebase/firestore';
+
 import { useUser } from '../../context/UserContext';
 import { useAuth } from '../../context/AuthContext';
 
@@ -25,11 +22,11 @@ export default function CreateBaselineResume() {
         handleExperienceChange,
         addExperienceEntry,
         removeExperienceEntry,
+
         setSuccessMessage,
         setError,
     } = useUser();
     const {
-        loading, 
         setLoading
     } = useAuth();
     
