@@ -41,22 +41,25 @@ export default function CreateBaselineResume() {
 
     const handleSubmit = async () => {
         const timeStamp = new Date().toISOString();
-        const { experience, education, skills } = user.resume;
+        const { experience, education, skills } = user.resume[0];
         if (!education.trim() || !skills.trim()) {
             setError('Experience, Education, and Skills are required fields.');
             return;
         }
-        setUser(prevState => ({
-            ...prevState,
-            resume: {
-                ...prevState.resume,
-                usage: {
-                    ...prevState.resume.usage,
-                    timeStamp: timeStamp,
-                    baseResume: true
-                }
-            }
-        }));
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            updatedResume[0].usage = {
+                ...updatedResume[0].usage,
+                timeStamp,
+                baseResume: true,
+                useAddress: includeAddress,
+            };
+            return { ...prevState, resume: updatedResume };
+        });
+        
+        setLoading(true);
+        setError(null);
+
         if(includeAddress == true){
             setUser(prevState => ({
                 ...prevState,
@@ -69,8 +72,6 @@ export default function CreateBaselineResume() {
                 }
             }));
         }
-        setLoading(true);
-        setError(null);
 
         try {
             const response = await axios.post(
@@ -87,16 +88,18 @@ export default function CreateBaselineResume() {
                 console.error('Error parsing experience section:', parseError);
                 parsedExperience = []; // Fallback to an empty array
             }
-            setUser(prevState => {
-                const newResume = {
-                    ...prevState.resume,
-                    summary: summary.data,
-                    experience: parsedExperience,
-                    skills: skillsSection.data,
-                    education: educationSection.data
-                };
-                return { ...prevState, resume: newResume };
-            });
+
+            setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            updatedResume[0] = {
+                ...updatedResume[0],
+                summary: summary.data,
+                experience: parsedExperience,
+                skills: skillsSection.data,
+                education: educationSection.data,
+            };
+            return { ...prevState, resume: updatedResume };
+        });
     
             history('/Review');
         } catch (error) {

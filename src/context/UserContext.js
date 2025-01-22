@@ -188,46 +188,38 @@ export function UserProvider({ children }) {
         }));
     };
     const handleResumeChange = (key, value) => {
-        setUser(prevState => ({
-            ...prevState,
-            resume: {
-                ...prevState.resume,
-                [key]: value
-            }
-        }));
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            updatedResume[0][key] = value;
+            return { ...prevState, resume: updatedResume };
+        });
     };
     const handleExperienceChange = (index, key, value) => {
-        setUser(prevState => ({
-            ...prevState,
-            resume: {
-                ...prevState.resume,
-                experience: prevState.resume.experience.map((item, i) =>
-                    i === index ? { ...item, [key]: value } : item
-                )
-            }
-        }));
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            updatedResume[0].experience[index][key] = value;
+            return { ...prevState, resume: updatedResume };
+        });
     };
     const addExperienceEntry = () => {
-        setUser(prevState => ({
-            ...prevState,
-            resume: {
-                ...prevState.resume,
-                experience: [
-                    ...prevState.resume.experience,
-                    { expJobTitle: '', expCompanyName: '', expTime: '', expDesc: '' }
-                ]
-            }
-        }));
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            updatedResume[0].experience.push({
+                expJobTitle: '',
+                expCompanyName: '',
+                expTime: '',
+                expDesc: '',
+            });
+            return { ...prevState, resume: updatedResume };
+        });
     };
     
     const removeExperienceEntry = (index) => {
-        setUser(prevState => ({
-            ...prevState,
-            resume: {
-                ...prevState.resume,
-                experience: prevState.resume.experience.filter((_, i) => i !== index)
-            }
-        }));
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            updatedResume[0].experience = updatedResume[0].experience.filter((_, i) => i !== index);
+            return { ...prevState, resume: updatedResume };
+        });
     };
     const handleTailoredResumeChange = (key, value) => {
         setUser(prevState => ({
