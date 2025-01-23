@@ -36,6 +36,7 @@ export default function CreateBaselineResume() {
     const userEducation = "List your education and certifications (Required):";
     const userSkills = "Specify your relevant skills (Required):";
     const userAdditional = "Include any additional relevant information (Optional):";
+    
     const [includeAddress, setIncludeAddress] = useState(null);
 
     const handleSubmit = async () => {
@@ -75,7 +76,7 @@ export default function CreateBaselineResume() {
                 parsedExperience = JSON.parse(experienceSection.data);
             } catch (parseError) {
                 console.error('Error parsing experience section:', parseError);
-                parsedExperience = []; // Fallback to an empty array
+                parsedExperience = [];
             }
 
             setUser((prevState) => {
@@ -94,18 +95,18 @@ export default function CreateBaselineResume() {
                         useAddress: includeAddress,
                     },
                 };
-                return { ...prevState, resume: updatedResume };
+                return {
+                    ...prevState,
+                    resume: updatedResume,
+                    subscription: {
+                        ...prevState.subscription,
+                        usage: {
+                            ...prevState.subscription.usage,
+                            baseResume: 1,
+                        },
+                    },
+                };
             });
-
-            handleUserChange('subscription', {
-                ...user.subscription,
-                usage: {
-                    ...user.subscription.usage,
-                    baseResume: 1,
-                },
-            });
-
-            console.log(user)
     
             history('/Review');
         } catch (error) {

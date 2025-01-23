@@ -5,7 +5,7 @@ const OpenAI = require('openai');
 // Function to handle summarization API call with retries
 async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
-    const experienceFormatted = user.resume.experience.map(item => {
+    const experienceFormatted = user.resume[0].experience.map(item => {
         return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
     }).join("\n");
 
@@ -21,8 +21,8 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
                     role: 'user', 
                     content: `
                     Experience: ${experienceFormatted}
-                    Education and Certifications: ${user.resume.education}
-                    Skills: ${user.resume.skills}
+                    Education and Certifications: ${user.resume[0].education}
+                    Skills: ${user.resume[0].skills}
                 ` 
                 },
             ],
@@ -46,7 +46,7 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
 // Function to handle experience section API call with retries
 async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
-    const experienceFormatted = user.resume.experience.map(item => {
+    const experienceFormatted = user.resume[0].experience.map(item => {
         return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
     }).join("\n");
 
@@ -76,8 +76,8 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
                 },
                 { role: 'user', content: `
                     Experience: ${experienceFormatted}
-                    Education and Certifications: ${user.resume.education}
-                    Skills: ${user.resume.skills}
+                    Education and Certifications: ${user.resume[0].education}
+                    Skills: ${user.resume[0].skills}
                 ` },
             ],
             temperature: 0.4,
@@ -100,7 +100,7 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
 // Function to handle skills section API call with retries
 async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
-    const experienceFormatted = user.resume.experience.map(item => {
+    const experienceFormatted = user.resume[0].experience.map(item => {
         return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
     }).join("\n");
 
@@ -123,8 +123,8 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
                     content: 
                     `
                         Experience: ${experienceFormatted}
-                        Education and Certifications: ${user.resume.education}
-                        Skills: ${user.resume.skills}
+                        Education and Certifications: ${user.resume[0].education}
+                        Skills: ${user.resume[0].skills}
                     ` 
                 },
             ],
@@ -167,7 +167,7 @@ async function improveEducationSection(user, apiKey, retryCount = 0) {
                     'user', 
                     content: 
                     `
-                    "${user.resume.education}" 
+                    "${user.resume[0].education}" 
                     Please rewrite this section in a professional, concise format suitable for a resume. 
                     Ensure:
                     - Key accomplishments or certifications are highlighted succinctly.
@@ -207,6 +207,7 @@ exports.generate_base_resume = onRequest(
             const { user } = req.body;
 
             try {
+
                 const [summary, experienceSection, skillsSection, educationSection] = await Promise.all([
                     summarizeResumeWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateExperienceSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),

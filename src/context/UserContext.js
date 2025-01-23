@@ -83,11 +83,11 @@ export function UserProvider({ children }) {
                 useAddress: null
             }
         }],
-        tailoredResume: {
+        tailoredResume: [{
             id: null,
             companyName: '',
             description: '',
-        },
+        }],
         coverLetter: {
             id: null,
             response: ''
