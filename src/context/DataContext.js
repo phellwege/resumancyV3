@@ -145,11 +145,11 @@ export function DataProvider({ children }) {
             console.error('Error adding cover letter:', error);
         }
     };
-    const saveBaselineResume = async (userId, baselineResume) => {
+    const saveBaselineResume = async (userId, user) => {
         try {
             const userDocRef = doc(db, 'users', userId);
-            await updateDoc(userDocRef, { baselineResume });
-            console.log('Baseline resume saved successfully:', baselineResume);
+            await updateDoc(userDocRef, { user });
+            console.log('Baseline resume saved successfully:', user);
             return { status: 200 };
         } catch (error) {
             console.error('Error saving baseline resume:', error);

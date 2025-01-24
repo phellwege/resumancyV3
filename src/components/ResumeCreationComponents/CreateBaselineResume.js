@@ -83,6 +83,7 @@ export default function CreateBaselineResume() {
                 parsedExperience = [];
             }
 
+            // this needs to await response, then saveBaselineResume needs to await this
             setUser((prevState) => {
                 const updatedResume = [...prevState.resume];
                 updatedResume[0] = {
@@ -112,14 +113,13 @@ export default function CreateBaselineResume() {
                 };
             });
             
-            await saveBaselineResume(user.id, user);
-
             history('/Review');
         } catch (error) {
             console.error('Error generating resume:', error);
             return setError('Failed to generate resume. Please try again.');
         } finally {
             setLoading(false);
+            // saveBaselineResume(user.id, user);
         }
     };
 
