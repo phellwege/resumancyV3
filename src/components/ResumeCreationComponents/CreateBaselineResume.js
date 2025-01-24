@@ -42,7 +42,12 @@ export default function CreateBaselineResume() {
     const userAdditional = "Include any additional relevant information (Optional):";
     
     const [includeAddress, setIncludeAddress] = useState(false);
-
+    const addNewResume = (newResume) => {
+        setUser((prevState) => ({
+            ...prevState,
+            resume: [...prevState.resume, newResume],
+        }));
+    };
     const handleSubmit = async () => {
         const timeStamp = new Date().toISOString();
         const { experience, education, skills } = user.resume[0];
@@ -98,9 +103,12 @@ export default function CreateBaselineResume() {
                 },
             };
     
-            setUser(updatedUser);
+            addNewResume(updatedUser);
     
-            await saveBaselineResume(updatedUser.id, updatedUser);
+            await saveBaselineResume(updatedUser.id, {
+                resume: updatedUser.resume,
+                subscription: updatedUser.subscription,
+            });
     
             history('/Review');
         } catch (error) {

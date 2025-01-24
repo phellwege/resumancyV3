@@ -145,17 +145,18 @@ export function DataProvider({ children }) {
             console.error('Error adding cover letter:', error);
         }
     };
-    const saveBaselineResume = async (userId, user) => {
+    const saveBaselineResume = async (userId, fieldsToUpdate) => {
         try {
             const userDocRef = doc(db, 'users', userId);
-            await updateDoc(userDocRef, { user });
-            console.log('Baseline resume saved successfully:', user);
+            await updateDoc(userDocRef, fieldsToUpdate);
+            console.log('Baseline resume saved successfully:', fieldsToUpdate);
             return { status: 200 };
         } catch (error) {
             console.error('Error saving baseline resume:', error);
             return { status: 500, message: error.message };
         }
     };
+    
     
       // Upload file to Firebase Storage (e.g., avatar or resume)
     // const uploadFile = async (file, folderPath) => {
