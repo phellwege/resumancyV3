@@ -67,6 +67,7 @@ export function UserProvider({ children }) {
         },
         resume: [{
             id: null,
+            createdAt: null,
             experience: [{
                 expJobTitle: '',
                 expCompanyName: '',
@@ -85,11 +86,13 @@ export function UserProvider({ children }) {
         }],
         tailoredResume: [{
             id: null,
+            createdAt: null,
             companyName: '',
             description: '',
         }],
         coverLetter: {
             id: null,
+            createdAt: null,
             response: ''
         },
         subscription: {

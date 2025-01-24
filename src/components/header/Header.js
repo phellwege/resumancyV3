@@ -73,17 +73,13 @@ function Header(props) {
 
     useEffect(() => {
         const timeouts = [];
-        // if (error) {
-        //     const timeout = setTimeout(() => setError(''), 3000);
-        //     timeouts.push(timeout);
-        // }
         if (successMessage) {
             const timeout = setTimeout(() => setSuccessMessage(''), 3000);
             timeouts.push(timeout);
         }
         return () => {
         };
-    }, [error, successMessage]);
+    }, [successMessage]);
 return (
     <>
     <NavBar />

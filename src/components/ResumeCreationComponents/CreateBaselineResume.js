@@ -48,6 +48,7 @@ export default function CreateBaselineResume() {
             resume: [...prevState.resume, newResume],
         }));
     };
+    
     const handleSubmit = async () => {
         const timeStamp = new Date().toISOString();
         const { experience, education, skills } = user.resume[0];
