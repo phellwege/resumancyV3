@@ -46,27 +46,15 @@ export default function CreateBaselineResume() {
     const handleSubmit = async () => {
         const timeStamp = new Date().toISOString();
         const { experience, education, skills } = user.resume[0];
+    
         if (!education.trim() || !skills.trim()) {
             setError('Experience, Education, and Skills are required fields.');
             return;
         }
-        
+    
         setLoading(true);
         setError(null);
-
-        if(includeAddress){
-            setUser(prevState => ({
-                ...prevState,
-                resume: {
-                    ...prevState.resume[0],
-                    usage: {
-                        ...prevState.resume[0].usage,
-                        useAddress: true
-                    }
-                }
-            }));
-        }
-
+    
         try {
             const response = await axios.post(
                 'https://us-central1-resumancy.cloudfunctions.net/generate_base_resume-generate_base_resume',
@@ -75,59 +63,55 @@ export default function CreateBaselineResume() {
             );
     
             const { summary, experienceSection, skillsSection, educationSection } = response.data;
+    
             let parsedExperience = [];
             try {
                 parsedExperience = JSON.parse(experienceSection.data);
             } catch (parseError) {
                 console.error('Error parsing experience section:', parseError);
-                parsedExperience = [];
             }
-
-            // this needs to await response, then saveBaselineResume needs to await this
-            setUser((prevState) => {
-                const updatedResume = [...prevState.resume];
-                updatedResume[0] = {
-                    ...updatedResume[0],
-                    id: generateUUID(),
-                    summary: summary.data,
-                    experience: parsedExperience,
-                    skills: skillsSection.data,
-                    education: educationSection.data,
-                    usage: {
-                        ...updatedResume[0].usage,
-                        timeStamp,
-                        baseResume: true,
-                        useAddress: includeAddress,
-                    },
-                };
-                return {
-                    ...prevState,
-                    resume: updatedResume,
-                    subscription: {
-                        ...prevState.subscription,
+    
+            const updatedUser = {
+                ...user,
+                resume: [
+                    {
+                        ...user.resume[0],
+                        id: generateUUID(),
+                        summary: summary.data,
+                        experience: parsedExperience,
+                        skills: skillsSection.data,
+                        education: educationSection.data,
                         usage: {
-                            ...prevState.subscription.usage,
-                            baseResume: 1,
+                            ...user.resume[0].usage,
+                            timeStamp,
+                            baseResume: true,
+                            useAddress: includeAddress,
                         },
                     },
-                };
-            });
-            
+                ],
+                subscription: {
+                    ...user.subscription,
+                    usage: {
+                        ...user.subscription.usage,
+                        baseResume: 1,
+                    },
+                },
+            };
+    
+            setUser(updatedUser);
+    
+            await saveBaselineResume(updatedUser.id, updatedUser);
+    
             history('/Review');
         } catch (error) {
             console.error('Error generating resume:', error);
-            return setError('Failed to generate resume. Please try again.');
+            setError('Failed to generate resume. Please try again.');
         } finally {
             setLoading(false);
-            // saveBaselineResume(user.id, user);
+            setSuccessMessage('Base Resume Successfully Created')
         }
     };
-
-    // const finshedCrap = async () => {
-    //     await handleSubmit();
-    //     console.log(user)
-    //     saveBaselineResume(user.id, user);
-    // }
+    
     return (
         <>
             <div className='pageWrapper'>
