@@ -149,7 +149,6 @@ export function DataProvider({ children }) {
         try {
             const userDocRef = doc(db, 'users', userId);
             await updateDoc(userDocRef, fieldsToUpdate);
-            console.log('Baseline resume saved successfully:', fieldsToUpdate);
             return { status: 200 };
         } catch (error) {
             console.error('Error saving baseline resume:', error);
