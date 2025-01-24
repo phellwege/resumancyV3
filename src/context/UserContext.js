@@ -94,7 +94,7 @@ export function UserProvider({ children }) {
         },
         subscription: {
             active: false,
-            plan: 'free',
+            plan: 'basic',
             dateActivated: null,
             billingCycleStart: null,
             usage: {

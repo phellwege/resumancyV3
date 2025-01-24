@@ -73,10 +73,10 @@ function Header(props) {
 
     useEffect(() => {
         const timeouts = [];
-        if (error) {
-            const timeout = setTimeout(() => setError(''), 3000);
-            timeouts.push(timeout);
-        }
+        // if (error) {
+        //     const timeout = setTimeout(() => setError(''), 3000);
+        //     timeouts.push(timeout);
+        // }
         if (successMessage) {
             const timeout = setTimeout(() => setSuccessMessage(''), 3000);
             timeouts.push(timeout);

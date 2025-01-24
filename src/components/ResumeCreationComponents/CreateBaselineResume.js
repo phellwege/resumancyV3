@@ -10,6 +10,7 @@ import '../../views/main.css';
 
 import { useUser } from '../../context/UserContext';
 import { useAuth } from '../../context/AuthContext';
+import { useData } from '../../context/DataContext';
 
 export default function CreateBaselineResume() {
     const history = useNavigate();
@@ -31,13 +32,16 @@ export default function CreateBaselineResume() {
     const {
         setLoading
     } = useAuth();
+    const {
+        saveBaselineResume
+    } = useData();
     
     const userExperience = "Detail your relevant job history (Required):";
     const userEducation = "List your education and certifications (Required):";
     const userSkills = "Specify your relevant skills (Required):";
     const userAdditional = "Include any additional relevant information (Optional):";
     
-    const [includeAddress, setIncludeAddress] = useState(null);
+    const [includeAddress, setIncludeAddress] = useState(false);
 
     const handleSubmit = async () => {
         const timeStamp = new Date().toISOString();
@@ -50,7 +54,7 @@ export default function CreateBaselineResume() {
         setLoading(true);
         setError(null);
 
-        if(includeAddress == true){
+        if(includeAddress){
             setUser(prevState => ({
                 ...prevState,
                 resume: {
@@ -107,11 +111,13 @@ export default function CreateBaselineResume() {
                     },
                 };
             });
-    
+            
+            await saveBaselineResume(user.id, user);
+
             history('/Review');
         } catch (error) {
             console.error('Error generating resume:', error);
-            setError('Failed to generate resume. Please try again.');
+            return setError('Failed to generate resume. Please try again.');
         } finally {
             setLoading(false);
         }

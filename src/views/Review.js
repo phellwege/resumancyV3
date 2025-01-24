@@ -24,7 +24,6 @@ export default function Review() {
       <h1>Review</h1>
       <div>
         <BaseResumeTable />
-        {console.log(user)}
         <TailoredResumeTable />
       </div>
     </div>
