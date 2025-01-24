@@ -123,6 +123,11 @@ export default function CreateBaselineResume() {
         }
     };
 
+    // const finshedCrap = async () => {
+    //     await handleSubmit();
+    //     console.log(user)
+    //     saveBaselineResume(user.id, user);
+    // }
     return (
         <>
             <div className='pageWrapper'>
