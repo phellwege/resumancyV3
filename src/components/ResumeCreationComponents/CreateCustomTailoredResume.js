@@ -15,6 +15,8 @@ export default function CreateCustomTailoredResume() {
         setUser,
         handleTailoredResumeChange,
         sanitizeUserInput,
+        generateUUID,
+
         setSuccessMessage,
         setError,
     } = useUser();
@@ -65,20 +67,19 @@ export default function CreateCustomTailoredResume() {
                     parsedExperience = JSON.parse(experienceSection.data);
                 } catch (parseError) {
                     console.error("Error parsing experience section:", parseError);
-                    parsedExperience = []; // Fallback to an empty array
+                    parsedExperience = [];
                 }
             } else {
                 console.warn("Experience section is missing or empty.");
             }
     
-            // Parse skills section if it exists
             if (skillsSection && skillsSection.data) {
                 parsedSkills = skillsSection.data;
             } else {
                 console.warn("Skills section is missing or empty.");
             }
     
-            // Update user state
+            // old Update user state
             setUser((prevState) => ({
                 ...prevState,
                 resume: {
@@ -92,6 +93,43 @@ export default function CreateCustomTailoredResume() {
                     },
                 },
             }));
+
+            // adapt this to tailored resumes
+            // const updatedUser = {
+            //     ...user,
+            //     resume: [
+            //         {
+            //             ...user.resume[0],
+            //             id: generateUUID(),
+            //             summary: summary.data,
+            //             experience: parsedExperience,
+            //             skills: skillsSection.data,
+            //             education: educationSection.data,
+            //             usage: {
+            //                 ...user.resume[0].usage,
+            //                 timeStamp,
+            //                 baseResume: false,
+            //                 useAddress: includeAddress,
+            //             },
+            //         },
+            //     ],
+            //     subscription: {
+            //         ...user.subscription,
+            //         usage: {
+            //             ...user.subscription.usage,
+            //             tailoredResumes: +1,
+            //         },
+            //     },
+            // };
+    
+            // addNewResume(updatedUser);
+    
+            // await saveBaselineResume(updatedUser.id, {
+            //     resume: updatedUser.resume,
+            //     subscription: updatedUser.subscription,
+            // });
+
+
         } catch (error) {
             console.error("Error generating tailored resume:", error);
             setError("Failed to generate tailored resume. Please try again.");
@@ -127,7 +165,7 @@ export default function CreateCustomTailoredResume() {
   return (
     <>
         <div className="pageWrapper">
-            <h3>Step 2</h3>
+            <h5>Tailor Your Resume To The Job</h5>
             <div className="secondaryPageWrapper">
             <div className="cardInnerDiv" id="jobDescriptionCardInnerDiv">
                 <Card>
