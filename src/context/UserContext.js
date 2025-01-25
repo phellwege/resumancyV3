@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState, useCallback } from 'react';
 import DOMPurify from 'dompurify';
 import { v4 as uuidv4 } from 'uuid';
 const UserContext = React.createContext()
@@ -14,6 +14,7 @@ export function UserProvider({ children }) {
     const handleOpenLoginModal = () => setLoginModal(true);
 
     const [isTableEnabled, setIsTableEnabled] = useState(false);
+    const [selectedResumeId, setSelectedResumeId] = useState(null);
 
     // creating profile modal
     const [setupUserModal, setSetupUserModal] = useState(false);
@@ -21,7 +22,9 @@ export function UserProvider({ children }) {
     const handleCloseSetupUserModal = () => setSetupUserModal(false);
     // reviewing resumes
     const [reviewResumeModal, setReviewResumeModal] = useState(false);
-    const handleOpenReviewResumeModal = () => setReviewResumeModal(true);
+    const handleOpenReviewResumeModal = useCallback(() => {
+        setReviewResumeModal(true);
+    }, []);
     const handleCloseReviewResumeModal = () => setReviewResumeModal(false);
     // review cover letter
     const [reviewCoverLetterModal, setReviewCoverLetterModal] = useState(false);
@@ -67,7 +70,6 @@ export function UserProvider({ children }) {
         },
         resume: [{
             id: null,
-            createdAt: null,
             experience: [{
                 expJobTitle: '',
                 expCompanyName: '',
@@ -81,7 +83,7 @@ export function UserProvider({ children }) {
             usage: {
                 timeStamp: null,
                 baseResume: true,
-                useAddress: null
+                useAddress: false
             }
         }],
         tailoredResume: [{
@@ -113,6 +115,8 @@ export function UserProvider({ children }) {
     };
     const [user, setUser] = useState(initialUserState)
     const resetUser = () => setUser(initialUserState);
+    const selectedResume = user.resume.find((resume) => resume.id === selectedResumeId);
+
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [error, setError] = useState('');
@@ -302,9 +306,12 @@ export function UserProvider({ children }) {
         error,
         setError,
 
+        selectedResumeId, setSelectedResumeId, selectedResume
+
     }), [
         user, resetUser, loginModal, setupUserModal, selectAvatar,
-        reviewResumeModal, reviewCoverLetterModal, contactUsModal
+        reviewResumeModal, reviewCoverLetterModal, contactUsModal, 
+        handleOpenReviewResumeModal, selectedResume
     ]);
 
     return (

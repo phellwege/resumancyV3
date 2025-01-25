@@ -5,7 +5,8 @@ import '../../../views/main.css';
 export default function ResumeStyle2({isGenPDF}) {
   const {
     user,
-    stripFormatting
+    stripFormatting,
+    selectedResume
   } = useUser();
 
   const capitalizeFirstLetter = (text) => {
@@ -66,37 +67,34 @@ const renderTextWithNewLines = (text) => {
                         ))}
                     </div>
                 )}
-                {user.resume.usage.useAddress && (
-                    <div className='reviewAddress'>
+                {selectedResume?.usage?.useAddress && (
+                    <div className="reviewAddress">
                         <h5>Address</h5>
-                        {user.address.street}{' '}
-                        {user.address.appt}
-                        <br/>
+                        {user.address.street} {user.address.appt}
+                        <br />
                         {user.address.city}
-                        <br/>
-                        {user.address.state}
-                        {' '}
-                        {user.address.zip}
+                        <br />
+                        {user.address.state} {user.address.zip}
                     </div>
                 )}
             </div>
             <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
                 <h5>Skills:</h5>
-                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.skills)}</span>
+                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(selectedResume?.skills)}</span>
                 <div className='reviewDefaultResumeSections' id='resumeStyle2Education'>
                 <h5>Education and Certifications:</h5>
-                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.education)}</span>
+                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(selectedResume?.education)}</span>
             </div>
             </div>
             </div>
             <div className='resumeStyleRightBlock'>
                 <div className='reviewDefaultResumeSections'>
                 <h5>Summary:</h5>
-                {renderTextWithNewLines(user.resume.summary)}
+                {renderTextWithNewLines(selectedResume?.summary)}
             </div>
             <div className='reviewDefaultResumeSections'>
                 <h5>Experience:</h5>
-                {user.resume.experience.map((exp, index) => (
+                {selectedResume?.experience.map((exp, index) => (
                     <div key={index} className="experience-entry">
                         <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
                         <div className='reviewResumeJobTitleAndTime'>
@@ -107,7 +105,6 @@ const renderTextWithNewLines = (text) => {
                     </div>
                 ))}
             </div>
-            
             </div>
         </div>
         </div>

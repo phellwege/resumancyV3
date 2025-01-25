@@ -156,7 +156,22 @@ export function DataProvider({ children }) {
         }
     };
     
+    const fetchResumes = async (userId) => {
+        try {
+            const userDocRef = doc(db, 'users', userId);
+            const userDocSnap = await getDoc(userDocRef);
     
+            if (userDocSnap.exists()) {
+                const userData = userDocSnap.data();
+                return userData.resume || [];
+            } else {
+                return [];
+            }
+        } catch (error) {
+            console.error('Error fetching resumes:', error);
+            return [];
+        }
+    };
       // Upload file to Firebase Storage (e.g., avatar or resume)
     // const uploadFile = async (file, folderPath) => {
     //     const storageRef = ref(storage, `${folderPath}/${file.name}`);
@@ -187,7 +202,8 @@ export function DataProvider({ children }) {
         addUserData,
         checkUserExists,
         saveUserData,
-        saveBaselineResume
+        saveBaselineResume,
+        fetchResumes,
     };
 
     return (

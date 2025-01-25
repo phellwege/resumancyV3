@@ -65,7 +65,7 @@ const NavBar = () => {
         <>
         <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {user.initialSetupDone && (
+        {/* {user.initialSetupDone && ( */}
             <div id="Hamburger_Menu">
                 <nav ref={menuRef} className="navBar">
                     <button 
@@ -131,7 +131,7 @@ const NavBar = () => {
                         </ul>
                 </nav>
             </div>
-        )}
+        {/* )} */}
             </ThemeProvider>
         </>
     )

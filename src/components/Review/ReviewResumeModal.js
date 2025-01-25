@@ -21,9 +21,16 @@ const styleComponents = {
 };
 
 export default function ReviewBaseResumeModal() {
-  const { reviewResumeModal, handleCloseReviewResumeModal, user } = useUser();
+  const { 
+    reviewResumeModal, 
+    handleCloseReviewResumeModal, 
+    user,
+    selectedResume
+  } = useUser();
+
   const [edit, setEdit] = useState(false);
   const [selectedStyle, setSelectedStyle] = useState('style2');
+
   const { toPDF, targetRef } = usePDF({
     filename: `${user.firstName}_${user.lastName}_Resume.pdf`,
     options: { format: [8.5, 11] },
@@ -57,9 +64,9 @@ export default function ReviewBaseResumeModal() {
         </Modal.Header>
         <Modal.Body ref={targetRef} className="reviewSize">
           {!edit ? (
-            <SelectedResumeComponent />
+            <SelectedResumeComponent/>
           ) : (
-            <EditResume />
+            <EditResume/>
           )}
         </Modal.Body>
         <Modal.Footer>
