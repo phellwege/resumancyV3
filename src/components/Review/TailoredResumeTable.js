@@ -1,18 +1,44 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Button, Card, Alert, Table, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
-import { useUser } from '../../context/UserContext';
 import ReviewResumeModal from './ReviewResumeModal';
 import ReviewCoverLetterModal from './ReviewCoverLetterModal'
 import ReviewJobDescModal from './ReviewJobDescModal';
+
+import { useUser } from '../../context/UserContext';
+import { useData } from '../../context/DataContext';
+
 export default function TailoredResumeTable() {
   const {
     user,
     handleOpenReviewResumeModal,
     handleOpenReviewCoverLetterModal,
-    handleOpenReviewJobDescModal
+    handleOpenReviewJobDescModal,
+    setSelectedResumeId
   } = useUser();
+  const {
+          fetchResumes
+      } = useData();
+      const [resumes, setResumes] = useState([]);
+  
+      useEffect(() => {
+          const loadResumes = async () => {
+              const userId = user.id;
+              const fetchedResumes = await fetchResumes(userId);
+              const filteredResumes = fetchedResumes.filter(
+                  (resume) => resume.usage?.baseResume === false
+              );
+              setResumes(filteredResumes);
+          };
+  
+          loadResumes();
+      }, []);
+  
+      const handleViewResume = (resumeId) => {
+          setSelectedResumeId(resumeId);
+          handleOpenReviewResumeModal();
+      };
   return (
     <>
     <ReviewResumeModal />

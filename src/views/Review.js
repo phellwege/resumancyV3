@@ -6,6 +6,7 @@ import TailoredResumeTable from '../components/Review/TailoredResumeTable';
 import '../views/main.css';
 
 // import RecruitInfoTable from '../components/recruit/RecruitInfoTable';
+
 export default function Review() {
   
   return (

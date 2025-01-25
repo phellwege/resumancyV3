@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
-import { Button, Card, Form, Alert, OverlayTrigger, Tooltip} from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { BsQuestionCircle } from "react-icons/bs";
-import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 import AddressForm from '../user/AddressForm';
+import { BsQuestionCircle } from "react-icons/bs";
+import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
+import { Button, Card, Form, OverlayTrigger, Tooltip} from 'react-bootstrap';
+
 import '../../views/main.css';
 
 import { useUser } from '../../context/UserContext';

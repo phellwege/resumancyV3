@@ -33,7 +33,7 @@ export default function BaseResumeTable() {
         setSelectedResumeId(resumeId);
         handleOpenReviewResumeModal();
     };
-
+    console.log(user)
   return (
     <>
         <ReviewResumeModal/>
@@ -61,7 +61,8 @@ export default function BaseResumeTable() {
                                     month: 'short',
                                     day: 'numeric',
                                 }).format(new Date(resume.usage.timeStamp))
-                            : 'NA'}
+                            : 'NA'
+                        }
                     </td>
                 </tr>
             ))}

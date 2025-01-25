@@ -108,7 +108,7 @@ export function UserProvider({ children }) {
             },
             limits: {
                 baseResume: 1,
-                tailoredResumes: 1,
+                tailoredResumes: 5,
             },
         },
         initialSetupDone: false
