@@ -5,7 +5,8 @@ import '../../../views/main.css';
 export default function DefaultResumeStyle({isGenPDF}) {
     const {
         user,
-        stripFormatting
+        stripFormatting,
+        selectedResume
     } = useUser();
 
     const capitalizeFirstLetter = (text) => {
@@ -47,11 +48,11 @@ export default function DefaultResumeStyle({isGenPDF}) {
                     </div>
                     <div className='reviewDefaultResumeSections'>
                         <h5>Summary:</h5>
-                        {renderTextWithNewLines(user.resume.summary)}
+                        {renderTextWithNewLines(selectedResume.summary)}
                     </div>
                     <div className='reviewDefaultResumeSections'>
                     <h5>Experience:</h5>
-                        {user.resume.experience.map((exp, index) => (
+                        {selectedResume.experience.map((exp, index) => (
                             <div key={index} className="experience-entry">
                                 <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
                                 <div className='reviewResumeJobTitleAndTime'>
@@ -64,11 +65,11 @@ export default function DefaultResumeStyle({isGenPDF}) {
                     </div>
                     <div className='reviewDefaultResumeSections'>
                         <h5>Education and Certifications:</h5>
-                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.education)}</span>
+                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(selectedResume.education)}</span>
                     </div>
                     <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
                         <h5>Skills:</h5>
-                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(user.resume.skills)}</span>
+                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(selectedResume.skills)}</span>
                     </div>
                 </div>
         </div>

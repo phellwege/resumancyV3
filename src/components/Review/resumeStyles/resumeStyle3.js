@@ -5,7 +5,8 @@ import '../../../views/main.css';
 export default function ResumeStyle3({isGenPDF}) {
   const {
     stripFormatting,
-    user
+    user,
+    selectedResume
 } = useUser();
 
 const capitalizeFirstLetter = (text) => {
@@ -63,7 +64,7 @@ const renderTextWithNewLines = (text) => {
                         ))}
                     </div>
                 )}
-                {user.resume.usage.useAddress && (
+                {selectedResume.usage.useAddress && (
                     <div className='reviewAddress'>
                         {user.address.street}{' '}
                         {user.address.appt}
@@ -80,14 +81,14 @@ const renderTextWithNewLines = (text) => {
           <div >
             <div className="reviewDefaultResumeSections">
               <h4>Summary:</h4>
-              {renderTextWithNewLines(user.resume.summary)}
+              {renderTextWithNewLines(selectedResume.summary)}
             </div>
             <div className='reviewSection3LowerSections'>
             <div className='reviewStyle3RightDiv'>
               <div className="reviewDefaultResumeSections" id='resumeStyle3ExperiencSection'>
                 <h4>Experience:</h4>
                 <span className="leftOrientedReviewSections">
-                    {user.resume.experience.map((exp, index) => (
+                    {selectedResume.experience.map((exp, index) => (
                         <div key={index} className="experience-entry">
                             <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
                             <div className='reviewResumeJobTitleAndTime'>
@@ -104,7 +105,7 @@ const renderTextWithNewLines = (text) => {
               <div className="reviewDefaultResumeSections">
                 <h4>Education and Certifications:</h4>
                 <span className="leftOrientedReviewSections">
-                  {renderTextWithNewLines(user.resume.education)}
+                  {renderTextWithNewLines(selectedResume.education)}
                 </span>
               </div>
               <div
@@ -113,7 +114,7 @@ const renderTextWithNewLines = (text) => {
               >
                 <h4>Skills:</h4>
                 <span className="leftOrientedReviewSections">
-                  {renderTextWithNewLines(user.resume.skills)}
+                  {renderTextWithNewLines(selectedResume.skills)}
                 </span>
               </div>
             </div>

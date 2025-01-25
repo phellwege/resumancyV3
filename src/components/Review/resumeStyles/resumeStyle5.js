@@ -5,7 +5,8 @@ import '../../../views/main.css';
 export default function ResumeStyle5({isGenPDF}) {
   const {
     stripFormatting,
-    user
+    user,
+    selectedResume
 } = useUser();
 
 const capitalizeFirstLetter = (text) => {
@@ -67,7 +68,7 @@ const renderTextWithNewLines = (text) => {
                                 ))}
                             </div>
                         )}
-                        {user.resume.usage.useAddress && (
+                        {selectedResume.usage.useAddress && (
                             <div className='reviewAddress'>
                                 {user.address.street}{' '}
                                 {user.address.appt}
@@ -86,24 +87,24 @@ const renderTextWithNewLines = (text) => {
               >
                 <h5>Skills:</h5>
                 <span className="leftOrientedReviewSections">
-                  {renderTextWithNewLines(user.resume.skills)}
+                  {renderTextWithNewLines(selectedResume.skills)}
                 </span>
               </div>
               <div className="reviewDefaultResumeSections">
                 <h5>Education and Certifications:</h5>
                 <span className="leftOrientedReviewSections">
-                  {renderTextWithNewLines(user.resume.education)}
+                  {renderTextWithNewLines(selectedResume.education)}
                 </span>
               </div>
             </div>
             <div id='resumeStyle5RightDiv'>
               <div className="reviewDefaultResumeSections">
                 <h5>Summary:</h5>
-                {renderTextWithNewLines(user.resume.summary)}
+                {renderTextWithNewLines(selectedResume.summary)}
               </div>
               <div className="reviewDefaultResumeSections">
                 <h5>Experience:</h5>
-                {user.resume.experience.map((exp, index) => (
+                {selectedResume.experience.map((exp, index) => (
                     <div key={index} className="experience-entry">
                         <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
                         <div className='reviewResumeJobTitleAndTime'>
