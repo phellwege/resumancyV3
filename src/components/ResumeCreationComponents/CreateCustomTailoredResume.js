@@ -28,6 +28,7 @@ export default function CreateCustomTailoredResume() {
     const history = useNavigate();
 
     const handleSubmit = async () => {
+        const newId = generateUUID();
         if (!user.tailoredResume.companyName || !user.tailoredResume.description) {
             setError("Company name and job description are required.");
             return;
@@ -37,8 +38,8 @@ export default function CreateCustomTailoredResume() {
         setError(null);
     
         try {
-            await generateTailoredResume(user);
-            await generateCoverLetter(user);
+            await generateTailoredResume(user, newId);
+            await generateCoverLetter(user, newId);
             history("/Review");
         } catch (error) {
             console.error("Error during submission:", error);
@@ -100,7 +101,7 @@ export default function CreateCustomTailoredResume() {
             //     resume: [
             //         {
             //             ...user.resume[0],
-            //             id: generateUUID(),
+            //             id: newId,
             //             summary: summary.data,
             //             experience: parsedExperience,
             //             skills: skillsSection.data,
