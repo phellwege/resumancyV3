@@ -29,6 +29,7 @@ export default function CreateCustomTailoredResume() {
 
     const handleSubmit = async () => {
         const newId = generateUUID();
+        const timeStamp = new Date().toISOString();
         if (!user.tailoredResume.companyName || !user.tailoredResume.description) {
             setError("Company name and job description are required.");
             return;
@@ -38,8 +39,8 @@ export default function CreateCustomTailoredResume() {
         setError(null);
     
         try {
-            await generateTailoredResume(user, newId);
-            await generateCoverLetter(user, newId);
+            await generateTailoredResume(user, newId, timeStamp);
+            await generateCoverLetter(user, newId, timeStamp);
             history("/Review");
         } catch (error) {
             console.error("Error during submission:", error);
@@ -49,7 +50,7 @@ export default function CreateCustomTailoredResume() {
         }
     };
 
-    const generateTailoredResume = async (user) => {
+    const generateTailoredResume = async (user, newId, timeStamp) => {
         try {
             const response = await axios.post(
                 "https://us-central1-resumancy.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
@@ -136,7 +137,8 @@ export default function CreateCustomTailoredResume() {
             setError("Failed to generate tailored resume. Please try again.");
         }
     };
-    const generateCoverLetter = async (user) => {
+    
+    const generateCoverLetter = async (user, newId, timeStamp) => {
         try {
         const response = await axios.post(
             "https://us-central1-resumancy.cloudfunctions.net/generate_cover_letter-generate_cover_letter",
@@ -153,6 +155,8 @@ export default function CreateCustomTailoredResume() {
             ...prevState,
             coverLetter: {
                 ...prevState.coverLetter,
+                id: newId,
+                createdAt: timeStamp,
                 response: coverLetterSummary,
             },
         }));
