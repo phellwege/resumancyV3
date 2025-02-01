@@ -5,7 +5,8 @@ import { Form } from 'react-bootstrap'
 export default function EditCoverLetter() {
     const {
         user,
-        setUser
+        setUser,
+        selectedCoverLetterIdData
     } = useUser();
 
     const handleCoverLetterChange = (e) => {
@@ -28,9 +29,9 @@ export default function EditCoverLetter() {
             <Form.Group>
                 <Form.Control 
                     as='textarea'
-                    rows={3}
+                    rows={25}
                     placeholder='Cover Letter'
-                    value={user.coverLetter.response}
+                    value={selectedCoverLetterIdData.response}
                     onChange={handleCoverLetterChange}
                     maxLength='5000'
                 />

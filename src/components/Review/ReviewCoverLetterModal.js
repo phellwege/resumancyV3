@@ -49,7 +49,10 @@ export default function ReviewCoverLetterModal() {
     <>
     <Modal 
     show={reviewCoverLetterModal} 
-    onHide={handleCloseReviewCoverLetterModal}
+    onHide={() => {
+        handleCloseReviewCoverLetterModal(); 
+        setEdit(false);
+    }}
     size="lg"
     aria-labelledby="contained-modal-title-vcenter"
     centered
@@ -77,11 +80,14 @@ export default function ReviewCoverLetterModal() {
             </div>
             </div>
             ) : (
-                <EditCoverLetter />
+                <EditCoverLetter selectedCoverLetterIdData={selectedCoverLetterIdData}/>
             )}
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseReviewCoverLetterModal}>
+            <Button variant="secondary" onClick={() =>{
+                handleCloseReviewCoverLetterModal();
+                setEdit(false);
+            }}>
                 Close
             </Button>
             <Button variant="warning" onClick={() => setEdit(!edit)}>

@@ -31,6 +31,9 @@ width: 45%;
 .modalFooterRight button {
     margin: 5%;
 }
+.modal-body {
+    color: black;
+}
 .modalBodyWrap {
     display: flex;
     justify-content: space-evenly;
