@@ -32,7 +32,7 @@ export default function ReviewCoverLetterModal() {
     };
 
     const handleCopy = () => {
-        const textToCopy = user.coverLetter.response;
+        const textToCopy = selectedCoverLetterIdData.response;
         if (textToCopy) {
             navigator.clipboard.writeText(textToCopy)
                 .then(() => {
@@ -44,8 +44,6 @@ export default function ReviewCoverLetterModal() {
                 });
         }
     };
-    console.log(selectedCoverLetterIdData)
-    console.log("🔍 Selected Cover Letter Data:", JSON.stringify(selectedCoverLetterIdData, null, 2));
 
   return (
     <>
