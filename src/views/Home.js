@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
 import { Button, Card, Alert} from 'react-bootstrap';
-
+import { useUser } from '../context/UserContext';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 
@@ -9,7 +9,9 @@ import './main.css';
 import ResumeStyles from '../components/ResumeStyles';
 
 export default function Home() {
-    
+    const {
+        user
+    } = useUser();
   return (
     <>
     <Header />
@@ -79,13 +81,23 @@ export default function Home() {
                                     </div>
                                     
                                 </div>
-                                <Link to='/Create'>
-                                    <Button
-                                    aria-label='create button'
-                                    >
-                                        Create
-                                    </Button>
-                                </Link>
+                                {user.subscription.usage.baseResume === 0 ? (
+                                    <Link to='/Create'>
+                                        <Button
+                                        aria-label='create button'
+                                        >
+                                            Create
+                                        </Button>
+                                    </Link>
+                                ):(
+                                    <Link to='/Tailor'>
+                                        <Button
+                                        aria-label='create button'
+                                        >
+                                            Custom Tailor
+                                        </Button>
+                                    </Link>
+                                )}
                             </div>
                         </Card.Body>
                     </Card>
