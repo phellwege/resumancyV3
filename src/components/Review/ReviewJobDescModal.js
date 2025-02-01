@@ -8,6 +8,7 @@ export default function ReviewJobDescModal() {
     const {
         reviewJobDescModal,
         handleCloseReviewJobDescModal,
+        selectedTailoredResumeIdData,
         user
     } = useUser();
     const renderTextWithNewLines = (text) => {
@@ -37,7 +38,7 @@ export default function ReviewJobDescModal() {
         </Modal.Header>
         <Modal.Body>
             <p>
-            {renderTextWithNewLines(user.tailoredResume.description)}
+            {renderTextWithNewLines(selectedTailoredResumeIdData.description)}
             </p>
         </Modal.Body>
         <Modal.Footer>

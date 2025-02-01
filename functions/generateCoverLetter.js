@@ -21,7 +21,7 @@ async function generateCoverLetterWithRetry(selectedTailoredResumeIdData, user, 
                     role: 'user',
                     content: `
                         Write a cover letter for the following job description: ${selectedTailoredResumeIdData.description}.
-                        Here's a brief summary from their current resume for reference: ${user.resume.summary}.
+                        Here's a brief summary from their current resume for reference: ${user.resume[0].summary}.
                         Additional information:
                         First Name: ${user.firstName},
                         Last Name: ${user.lastName},
@@ -58,7 +58,7 @@ exports.generate_cover_letter = onRequest(
 
         try {
             const apiKey = process.env.GPT_API_KEY;
-            const { user } = req.body;
+            const { user, selectedTailoredResumeIdData } = req.body;
 
             try {
                 const coverLetterSummary = await generateCoverLetterWithRetry(selectedTailoredResumeIdData, user, apiKey);

@@ -9,6 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useUser } from '../../context/UserContext';
 
 import '../../views/main.css';
+import { useData } from '../../context/DataContext';
 
 export default function CreateCustomTailoredResume() {
     const {
@@ -23,30 +24,32 @@ export default function CreateCustomTailoredResume() {
         setSuccessMessage,
         setError,
     } = useUser();
-    
     const {
         setLoading
     } = useAuth();
+    const {
+        addTailoredResume,
+        addCoverLetter
+    } = useData();
+
     const history = useNavigate();
 
     const companyNameTooltip = "The name of the company you are applying for.";
     const prospectiveJobDescTooltip = "Copy/Paste a description of the role you are applying for.";
-    
 
     const handleSubmit = async () => {
+        setLoading(true);
         const newId = generateUUID();
         const timeStamp = new Date().toISOString();
         setSelectedTailoredResumeId(newId);
+
+        setError(null);
 
         const firstResume = user.tailoredResume[0];
         if (!firstResume.companyName || !firstResume.description) {
             setError("Company name and job description are required.");
             return;
         }
-    
-        setLoading(true);
-        setError(null);
-
         
         try {
             const finalizedResume = {
@@ -68,8 +71,6 @@ export default function CreateCustomTailoredResume() {
                 ];
     
                 const updatedSelectedResume = updatedTailoredResumes.find((resume) => resume.id === newId);
-    
-                console.log("Finalized Resume Data:", updatedSelectedResume);
     
                 generateTailoredResume(updatedSelectedResume, prevUser, newId, timeStamp);
                 generateCoverLetter(updatedSelectedResume, prevUser, newId, timeStamp);
@@ -149,7 +150,7 @@ export default function CreateCustomTailoredResume() {
                     },
                 };
             });
-    
+
         } catch (error) {
             console.error("Error generating tailored resume:", error);
             setError("Failed to generate tailored resume. Please try again.");
@@ -175,6 +176,7 @@ export default function CreateCustomTailoredResume() {
                 response: coverLetterSummary,
             },
         }));
+        
 
         } catch (error) {
             setError("Error generating cover letter:" + error);
