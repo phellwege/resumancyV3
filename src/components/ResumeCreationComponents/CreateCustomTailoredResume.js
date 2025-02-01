@@ -93,8 +93,6 @@ export default function CreateCustomTailoredResume() {
                 { headers: { 'Content-Type': 'application/json' } }
             );
 
-            console.log("API Response:", response.data);
-
             const { summary, experienceSection, skillsSection } = response.data;
     
             let parsedExperience = experienceSection?.data ? JSON.parse(experienceSection.data) : [];
@@ -153,7 +151,7 @@ export default function CreateCustomTailoredResume() {
 
         setUser((prevState) => ({
             ...prevState,
-            coverLetter: newCoverLetter,
+            coverLetter: [...prevState.coverLetter, newCoverLetter],
         }));
         
 

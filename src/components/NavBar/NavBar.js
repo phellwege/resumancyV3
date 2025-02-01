@@ -87,12 +87,14 @@ const NavBar = () => {
                             </li>
                             {user && (
                                 <>
+                                {user.subscription.usage.baseResume === 0 && (
                                     <li>
                                         <Link to='/Create' onClick={() => closeMenu()}>
                                             <MdOutlinePostAdd className='navIcons'/> 
                                             Create Resume
                                         </Link>
                                     </li>
+                                )}
                                     <li>
                                         <Link to='/Tailor' onClick={() => closeMenu()}>
                                             <MdOutlineNoteAdd className='navIcons'/> 

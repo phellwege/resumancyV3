@@ -3,6 +3,7 @@ import LoadingPage from '../components/loadingPage/LoadingPage';
 import {db, auth, storage} from '../server/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
+import { increment } from "firebase/firestore";
 
 import {
     collection,
@@ -59,15 +60,59 @@ export function DataProvider({ children }) {
     const updateUserData = async (userId, updatedData) => {
         try {
             const userDocRef = doc(db, 'users', userId);
-            await updateDoc(userDocRef, updatedData);
+    
+            // Get the current user data to merge existing nested fields
+            const userDocSnap = await getDoc(userDocRef);
+            if (!userDocSnap.exists()) {
+                console.error('User document does not exist');
+                return;
+            }
+    
+            const currentUserData = userDocSnap.data();
+    
+            // Merge updatedData into current user data
+            const mergedData = {
+                ...currentUserData,
+                ...updatedData,
+                contactInfo: {
+                    ...currentUserData.contactInfo,
+                    ...updatedData.contactInfo, // Merge contact info safely
+                },
+                address: {
+                    ...currentUserData.address,
+                    ...updatedData.address, // Merge address safely
+                },
+                resume: updatedData.resume ? [...currentUserData.resume, ...updatedData.resume] : currentUserData.resume,
+                tailoredResume: updatedData.tailoredResume ? [...currentUserData.tailoredResume, ...updatedData.tailoredResume] : currentUserData.tailoredResume,
+                coverLetter: updatedData.coverLetter ? [...currentUserData.coverLetter, ...updatedData.coverLetter] : currentUserData.coverLetter,
+                subscription: {
+                    ...currentUserData.subscription,
+                    ...updatedData.subscription, // Merge subscription safely
+                    usage: {
+                        ...currentUserData.subscription.usage,
+                        ...updatedData.subscription?.usage, // Merge nested usage safely
+                    },
+                    limits: {
+                        ...currentUserData.subscription.limits,
+                        ...updatedData.subscription?.limits, // Merge nested limits safely
+                    },
+                },
+            };
+    
+            // Update Firestore with merged data
+            await updateDoc(userDocRef, mergedData);
+    
+            // Update local state with merged data
             setUser((prevUser) => ({
-            ...prevUser,
-            ...updatedData,
+                ...prevUser,
+                ...mergedData,
             }));
+    
         } catch (error) {
             console.error('Error updating user data:', error);
         }
     };
+    
 
     const checkUserExists = async (userId) => {
         const userDocRef = doc(db, 'users', userId);
@@ -95,14 +140,12 @@ export function DataProvider({ children }) {
             const userDocSnap = await getDoc(userDocRef);
             
             if (userDocSnap.exists()) {
-                // If the user exists, update their existing data
                 await updateDoc(userDocRef, updatedData);
                 setUser((prevUser) => ({
                     ...prevUser,
                     ...updatedData,
                 }));
             } else {
-                // If the user doesn't exist, create a new document
                 await setDoc(userDocRef, {
                     ...updatedData,
                     createdAt: serverTimestamp(),
@@ -123,6 +166,7 @@ export function DataProvider({ children }) {
             await updateDoc(userDocRef, {
                 resume: arrayUnion(newResume),
                 tailoredResume: arrayUnion(newTailoredEntry),
+                "subscription.usage.tailoredResumes": increment(1),
             });
     
             setUser((prevUser) => ({
@@ -132,6 +176,13 @@ export function DataProvider({ children }) {
                     ...prevUser.tailoredResume.filter(tr => tr.id !== newTailoredEntry.id),
                     newTailoredEntry,
                 ],
+                subscription: {
+                    ...prevUser.subscription,
+                    usage: {
+                        ...prevUser.subscription.usage,
+                        tailoredResumes:  prevUser.subscription.usage.tailoredResumes + 1 + 1,
+                    }
+                }
             }));
     
         } catch (error) {

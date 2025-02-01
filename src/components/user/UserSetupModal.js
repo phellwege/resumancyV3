@@ -3,7 +3,7 @@ import React, {useRef} from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Form } from 'react-bootstrap';
-
+import { useData } from '../../context/DataContext';
 import { useUser } from '../../context/UserContext';
 import SelectAvatarModal from './SelectAvatarModal';
 import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
@@ -23,7 +23,10 @@ export default function UserSetupModal() {
         removeSocialMediaEntry,
         handleSocialMediaChange
     } = useUser();
-    
+    const {
+        updateUserData
+    } = useData();
+
     const handlePhoneNumberChange = (e) => {
         const inputPhoneNumber = e.target.value.replace(/\D/g, '');
         let formattedPhoneNumber = '';
@@ -39,7 +42,24 @@ export default function UserSetupModal() {
         return sanitizeUserInput(formattedPhoneNumber);
     };
     
+    const handleSaveUser = async () => {
+        const userId = user.id; // Ensure user ID is available
 
+        const updatedUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            jobTitle: user.jobTitle,
+            contactInfo: {
+                phone: user.contactInfo.phone,
+                email: user.contactInfo.email,
+                socialMedia: user.contactInfo.socialMedia,
+            },
+            avatarImg: user.avatarImg
+        };
+
+        await updateUserData(userId, updatedUser);
+        handleCloseSetupUserModal(); // Close modal after saving
+    };
 
 
   return (
@@ -172,7 +192,7 @@ export default function UserSetupModal() {
             <Button variant="danger" onClick={handleCloseSetupUserModal}>
                 Cancel
             </Button>
-            <Button variant="primary" onClick={handleCloseSetupUserModal}>
+            <Button variant="primary" onClick={handleSaveUser}>
                 Save
             </Button>
         </Modal.Footer>
