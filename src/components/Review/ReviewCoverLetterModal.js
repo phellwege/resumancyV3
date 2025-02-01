@@ -61,9 +61,6 @@ export default function ReviewCoverLetterModal() {
             {!edit ? (
             <div>
             <MdContentCopy style={{ cursor: 'pointer' }} onClick={handleCopy}/>
-            <p>
-            {selectedCoverLetterIdData?.response ? renderTextWithNewLines(selectedCoverLetterIdData.response) : "No cover letter available."}
-            </p>
             {showAlert && (
                 <p
                     style={{
@@ -75,6 +72,9 @@ export default function ReviewCoverLetterModal() {
                     Text Successfully Copied!
                 </p>
             )}
+            <div>
+                {selectedCoverLetterIdData?.response ? renderTextWithNewLines(selectedCoverLetterIdData.response) : "No cover letter available."}
+            </div>
             </div>
             ) : (
                 <EditCoverLetter />
