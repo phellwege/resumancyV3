@@ -19,7 +19,7 @@ export default function DefaultResumeStyle({isGenPDF}) {
             return lines.map((line, index) => {
                 const shouldIndent = line.startsWith('-');
                 return (
-                    <p key={index} className={shouldIndent ? 'indented' : ''}>{line}</p>
+                    <p key={index} className={shouldIndent ? 'indented' : ''} style={{marginBottom: '5px'}}>{line}</p>
                 );
             });
         }

@@ -424,6 +424,7 @@ width: 45%;
 #resumeStyle3 .reviewDefaultResumeSections {
     border-bottom: none;
 }
+
 #resumeStyle3Skills {
     display: flex;
     flex-direction: column;
@@ -447,6 +448,21 @@ width: 45%;
     background-color: lightblue;
     min-height: 100%;
     padding-top: 1%;
+}
+.spreadHorizontally{
+    display: flex;
+    /* flex-direction: column; */
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+.spreadHorizontally div {
+    display: flex;
+    flex-direction: column;
+    /* width: 51%; */
+    /* justify-content: space-around; */
+    /* align-items: flex-start; */
+    /* margin-left: 5px; */
 }
 
 /* resume style 4 */
