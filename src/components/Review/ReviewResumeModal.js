@@ -6,16 +6,16 @@ import '../../views/main.css';
 import { useUser } from '../../context/UserContext';
 import EditResume from './editResume';
 import ToggleStyle from './resumeStyles/ToggleStyle';
-import DefaultResumeStyle from './resumeStyles/defaultResumeStyle';
+// import DefaultResumeStyle from './resumeStyles/defaultResumeStyle';
 import ResumeStyle2 from './resumeStyles/resumeStyle2';
-import ResumeStyle3 from './resumeStyles/resumeStyle3';
+// import ResumeStyle3 from './resumeStyles/resumeStyle3';
 import ResumeStyle4 from './resumeStyles/resumeStyle4';
 import ResumeStyle5 from './resumeStyles/resumeStyle5';
 
 const styleComponents = {
-  style1: DefaultResumeStyle,
+  // style1: DefaultResumeStyle,
   style2: ResumeStyle2,
-  style3: ResumeStyle3,
+  // style3: ResumeStyle3,
   style4: ResumeStyle4,
   style5: ResumeStyle5,
 };
