@@ -58,28 +58,26 @@ export default function CreateCustomTailoredResume() {
                 createdAt: timeStamp,
             };
     
-            setUser((prevUser) => {
-                const updatedTailoredResumes = [
+            // 🔹 Store the tailored resume first
+            await generateTailoredResume(finalizedResume, user, newId, timeStamp);
+            
+            // 🔹 Then generate the cover letter (only after resume is stored)
+            await generateCoverLetter(finalizedResume, user, newId, timeStamp);
+    
+            // 🔹 Update state only once after both processes are completed
+            setUser((prevUser) => ({
+                ...prevUser,
+                tailoredResume: [
                     {
                         id: null,
                         createdAt: null,
                         companyName: '',
                         description: '',
                     },
-                    ...prevUser.tailoredResume.slice(1),
+                    ...prevUser.tailoredResume.filter(resume => resume.id !== null),
                     finalizedResume,
-                ];
-    
-                const updatedSelectedResume = updatedTailoredResumes.find((resume) => resume.id === newId);
-    
-                generateTailoredResume(updatedSelectedResume, prevUser, newId, timeStamp);
-                generateCoverLetter(updatedSelectedResume, prevUser, newId, timeStamp);
-    
-                return {
-                    ...prevUser,
-                    tailoredResume: updatedTailoredResumes,
-                };
-            });
+                ],
+            }));
     
             history("/Review");
         } catch (error) {
@@ -102,30 +100,11 @@ export default function CreateCustomTailoredResume() {
 
             const { summary, experienceSection, skillsSection } = response.data;
     
-            let parsedExperience = [];
-            let parsedSkills = [];
-    
-            // Parse experience section if it exists
-            if (experienceSection && experienceSection.data) {
-                try {
-                    parsedExperience = JSON.parse(experienceSection.data);
-                } catch (parseError) {
-                    console.error("Error parsing experience section:", parseError);
-                    parsedExperience = [];
-                }
-            } else {
-                console.warn("Experience section is missing or empty.");
-            }
-    
-            // Parse skills section
-            if (skillsSection && skillsSection.data) {
-                parsedSkills = skillsSection.data;
-            } else {
-                console.warn("Skills section is missing or empty.");
-            }
-    
+            let parsedExperience = experienceSection?.data ? JSON.parse(experienceSection.data) : [];
+            let parsedSkills = skillsSection?.data || [];
+
             const tailoredResume = {
-                ...user.resume[0],
+                ...user.resume[0], // Copy base resume
                 id: newId,
                 summary: summary?.data || user.resume[0].summary,
                 experience: parsedExperience,
@@ -133,23 +112,25 @@ export default function CreateCustomTailoredResume() {
                 usage: {
                     ...user.resume[0].usage,
                     timeStamp: timeStamp,
-                    baseResume: false,
+                    baseResume: false, // Mark it as a tailored resume
                 },
             };
-    
-            setUser((prevState) => {
-                return {
-                    ...prevState,
-                    resume: [...prevState.resume, tailoredResume],
-                    subscription: {
-                        ...prevState.subscription,
-                        usage: {
-                            ...prevState.subscription.usage,
-                            tailoredResumes: prevState.subscription.usage.tailoredResumes + 1,  // Increment tailored resumes
-                        },
-                    },
-                };
-            });
+
+            const tailoredResumeEntry = {
+                id: newId,
+                createdAt: timeStamp,
+                companyName: selectedTailoredResumeIdData.companyName, // ✅ Correct structure
+                description: selectedTailoredResumeIdData.description, // ✅ Correct structure
+            };
+
+            // 🔹 Save to Firestore and ensure it's stored
+            await addTailoredResume(user.id, tailoredResume, tailoredResumeEntry);
+
+            // 🔹 Then update local state
+            setUser((prevState) => ({
+            ...prevState,
+            resume: [...prevState.resume, tailoredResume], // ✅ Append to local resume array
+        }));
 
         } catch (error) {
             console.error("Error generating tailored resume:", error);
@@ -166,15 +147,18 @@ export default function CreateCustomTailoredResume() {
         );
 
         const coverLetterSummary = response.data.coverLetterSummary;
+        
+        const newCoverLetter = {
+            id: newId,
+            createdAt: timeStamp,
+            response: coverLetterSummary,
+        };
+
+        await addCoverLetter(user.id, newCoverLetter);
 
         setUser((prevState) => ({
             ...prevState,
-            coverLetter: {
-                ...prevState.coverLetter,
-                id: newId,
-                createdAt: timeStamp,
-                response: coverLetterSummary,
-            },
+            coverLetter: newCoverLetter,
         }));
         
 

@@ -93,11 +93,11 @@ export function UserProvider({ children }) {
             companyName: '',
             description: '',
         }],
-        coverLetter: {
+        coverLetter: [{
             id: null,
             createdAt: null,
             response: ''
-        },
+        }],
         subscription: {
             active: false,
             plan: 'basic',

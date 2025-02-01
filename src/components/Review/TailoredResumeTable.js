@@ -27,17 +27,26 @@ export default function TailoredResumeTable() {
       const itemsPerPage = 10;
   
       useEffect(() => {
-          const loadResumes = async () => {
-              const userId = user.id;
-              const fetchedResumes = await fetchResumes(userId);
-              const filteredResumes = fetchedResumes.filter(
-                  (resume) => resume.usage?.baseResume === false
-              );
-              setResumes(filteredResumes);
-          };
-  
-          loadResumes();
-      }, []);
+        const loadResumes = async () => {
+            const userId = user.id;
+            const fetchedResumes = await fetchResumes(userId);
+    
+            const filteredResumes = fetchedResumes.filter(resume => resume.usage?.baseResume === false);
+    
+            const mergedResumes = filteredResumes.map(resume => {
+                const tailoredData = user.tailoredResume.find(tr => tr.id === resume.id);
+                return {
+                    ...resume,
+                    companyName: tailoredData?.companyName || "Unknown",
+                };
+            });
+    
+            setResumes(mergedResumes);
+        };
+    
+        loadResumes();
+    }, [user.tailoredResume]);
+    
 
       const handleViewResume = (resumeId) => {
           setSelectedResumeId(resumeId);
@@ -82,7 +91,7 @@ export default function TailoredResumeTable() {
             </tr>
             </thead>
             <tbody>
-            {user.tailoredResume.slice(1).map((resume) => (
+            {currentItems.map((resume) => (
               <tr key={resume.id}>
                 <td>{resume.companyName}</td>
                 <td>
@@ -101,13 +110,13 @@ export default function TailoredResumeTable() {
                   </Link>
                 </td>
                 <td>
-                  {resume.createdAt
+                  {resume.usage.timeStamp
                     ? new Intl.DateTimeFormat("en-US", {
                       weekday: "short",
                       year: "numeric",
                       month: "short",
                       day: "numeric",
-                    }).format(new Date(resume.createdAt))
+                    }).format(new Date(resume.usage.timeStamp))
                     : "NA"
                   }
                 </td>

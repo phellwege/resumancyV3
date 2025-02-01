@@ -116,18 +116,30 @@ export function DataProvider({ children }) {
             console.error('Error saving user data:', error);
         }
     };
-    const addTailoredResume = async (userId, newResume) => {
+    const addTailoredResume = async (userId, newResume, newTailoredEntry) => {
         try {
-            const userDocRef = doc(db, 'users', userId);
+            const userDocRef = doc(db, "users", userId);
+    
+            // 🔹 Save the tailored resume inside the resume array (not tailoredResume)
             await updateDoc(userDocRef, {
-                tailoredResume: arrayUnion(newResume),
+                resume: arrayUnion(newResume),
+                tailoredResume: arrayUnion(newTailoredEntry),
             });
+    
+            // 🔹 THEN update local state
             setUser((prevUser) => ({
                 ...prevUser,
-                tailoredResume: [...prevUser.tailoredResume, newResume],
+                resume: [...prevUser.resume, newResume],
+                tailoredResume: [
+                    ...prevUser.tailoredResume.filter(tr => tr.id !== newTailoredEntry.id),
+                    newTailoredEntry,
+                ],
             }));
-            } catch (error) {
-            console.error('Error adding tailored resume:', error);
+    
+            console.log("Tailored resume successfully saved to Firestore!");
+    
+        } catch (error) {
+            console.error("Error adding tailored resume:", error);
         }
     };
     

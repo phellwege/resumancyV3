@@ -104,13 +104,12 @@ export default function CreateBaselineResume() {
                     },
                 },
             };
-    
-            addNewResume(updatedUser);
-    
+
             await saveBaselineResume(updatedUser.id, {
                 resume: updatedUser.resume,
                 subscription: updatedUser.subscription,
             });
+            addNewResume(updatedUser);
     
             history('/Review');
         } catch (error) {
