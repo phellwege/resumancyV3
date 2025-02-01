@@ -104,7 +104,7 @@ export default function CreateCustomTailoredResume() {
             let parsedSkills = skillsSection?.data || [];
 
             const tailoredResume = {
-                ...user.resume[0], // Copy base resume
+                ...user.resume[0],
                 id: newId,
                 summary: summary?.data || user.resume[0].summary,
                 experience: parsedExperience,
@@ -112,24 +112,22 @@ export default function CreateCustomTailoredResume() {
                 usage: {
                     ...user.resume[0].usage,
                     timeStamp: timeStamp,
-                    baseResume: false, // Mark it as a tailored resume
+                    baseResume: false,
                 },
             };
 
             const tailoredResumeEntry = {
                 id: newId,
                 createdAt: timeStamp,
-                companyName: selectedTailoredResumeIdData.companyName, // ✅ Correct structure
-                description: selectedTailoredResumeIdData.description, // ✅ Correct structure
+                companyName: selectedTailoredResumeIdData.companyName,
+                description: selectedTailoredResumeIdData.description,
             };
 
-            // 🔹 Save to Firestore and ensure it's stored
             await addTailoredResume(user.id, tailoredResume, tailoredResumeEntry);
 
-            // 🔹 Then update local state
             setUser((prevState) => ({
             ...prevState,
-            resume: [...prevState.resume, tailoredResume], // ✅ Append to local resume array
+            resume: [...prevState.resume, tailoredResume],
         }));
 
         } catch (error) {

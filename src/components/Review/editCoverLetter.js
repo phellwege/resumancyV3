@@ -4,7 +4,6 @@ import { Form } from 'react-bootstrap'
 
 export default function EditCoverLetter() {
     const {
-        user,
         setUser,
         selectedCoverLetterIdData
     } = useUser();
@@ -12,7 +11,6 @@ export default function EditCoverLetter() {
     const handleCoverLetterChange = (e) => {
         const coverLetterSummary = e.target.value;
         
-        // Use setUser to update the user state
         setUser((prevState) => ({
           ...prevState,
           coverLetter: {
