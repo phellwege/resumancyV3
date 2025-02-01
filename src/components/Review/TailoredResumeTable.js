@@ -67,7 +67,7 @@ export default function TailoredResumeTable() {
             <tbody>
             {user.tailoredResume.slice(1).map((resume) => (
               <tr key={resume.id}>
-                <td>{user.tailoredResume.companyName}</td>
+                <td>{resume.companyName}</td>
                 <td>
                   <Link to='' onClick={() => handleViewJobDesc(resume.id)}>
                     View Job Description
