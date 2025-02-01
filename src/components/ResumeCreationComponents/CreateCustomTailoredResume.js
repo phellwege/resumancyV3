@@ -58,13 +58,10 @@ export default function CreateCustomTailoredResume() {
                 createdAt: timeStamp,
             };
     
-            // 🔹 Store the tailored resume first
             await generateTailoredResume(finalizedResume, user, newId, timeStamp);
             
-            // 🔹 Then generate the cover letter (only after resume is stored)
             await generateCoverLetter(finalizedResume, user, newId, timeStamp);
     
-            // 🔹 Update state only once after both processes are completed
             setUser((prevUser) => ({
                 ...prevUser,
                 tailoredResume: [
