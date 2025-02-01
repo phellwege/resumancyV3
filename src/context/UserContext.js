@@ -120,7 +120,7 @@ export function UserProvider({ children }) {
     
     const selectedResume = user.resume.find((resume) => resume.id === selectedResumeId);
     const selectedTailoredResumeIdData = user.tailoredResume.find((resume) => resume.id === selectedTailoredResumeId);
-    const selectedCoverLetterIdData = user.coverLetter.find((resume) => resume.id === selectedTailoredResumeId);
+    const selectedCoverLetterIdData = user.coverLetter.find((resume) => resume.id === selectedCoverLetterId);
     
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');

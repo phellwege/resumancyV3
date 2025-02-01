@@ -17,7 +17,7 @@ export default function TailoredResumeTable() {
     handleOpenReviewJobDescModal,
     setSelectedResumeId,
     setSelectedTailoredResumeId,
-    setSelectedCoverLetterIdData
+    setSelectedCoverLetterId
   } = useUser();
   const {
       fetchResumes,
@@ -52,11 +52,11 @@ export default function TailoredResumeTable() {
     
 
       const handleViewResume = (resumeId) => {
-          setSelectedResumeId(resumeId);
-          handleOpenReviewResumeModal();
+        setSelectedResumeId(resumeId);
+        handleOpenReviewResumeModal();
       };
       const handleViewCoverLetter = (resumeId) => {
-        setSelectedCoverLetterIdData(resumeId);
+        setSelectedCoverLetterId(resumeId);
         handleOpenReviewCoverLetterModal();
       };
       const handleViewJobDesc = (resumeId) => {
