@@ -15,6 +15,7 @@ export function UserProvider({ children }) {
 
     const [isTableEnabled, setIsTableEnabled] = useState(false);
     const [selectedResumeId, setSelectedResumeId] = useState(null);
+    const [selectedTailoredResumeId, setSelectedTailoredResumeId] = useState(null);
 
     // creating profile modal
     const [setupUserModal, setSetupUserModal] = useState(false);
@@ -111,11 +112,13 @@ export function UserProvider({ children }) {
                 tailoredResumes: 5,
             },
         },
-        initialSetupDone: false
+        initialSetupDone: false,
     };
     const [user, setUser] = useState(initialUserState)
     const resetUser = () => setUser(initialUserState);
+    
     const selectedResume = user.resume.find((resume) => resume.id === selectedResumeId);
+    const selectedTailoredResumeIdData = user.tailoredResume.find((resume) => resume.id === selectedTailoredResumeId);
 
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -228,14 +231,18 @@ export function UserProvider({ children }) {
             return { ...prevState, resume: updatedResume };
         });
     };
-    const handleTailoredResumeChange = (key, value) => {
-        setUser(prevState => ({
-            ...prevState,
-            tailoredResume: {
-                ...prevState.tailoredResume,
-                [key]: value
-            }
-        }));
+    const handleTailoredResumeChange = (index, key, value) => {
+        setUser((prevState) => {
+            const updatedTailoredResume = [...prevState.tailoredResume];
+            updatedTailoredResume[index] = {
+                ...updatedTailoredResume[index],
+                [key]: value,
+            };
+            return {
+                ...prevState,
+                tailoredResume: updatedTailoredResume,
+            };
+        });
     };
     const handleSelectAvatar = (avatarIndex) => {
         const selectedAvatar = userAvatars[avatarIndex];
@@ -306,12 +313,13 @@ export function UserProvider({ children }) {
         error,
         setError,
 
-        selectedResumeId, setSelectedResumeId, selectedResume
+        selectedResumeId, setSelectedResumeId, selectedResume,
+        selectedTailoredResumeIdData, selectedTailoredResumeId, setSelectedTailoredResumeId,
 
     }), [
         user, resetUser, loginModal, setupUserModal, selectAvatar,
         reviewResumeModal, reviewCoverLetterModal, contactUsModal, 
-        handleOpenReviewResumeModal, selectedResume
+        handleOpenReviewResumeModal, selectedResume, selectedTailoredResumeIdData
     ]);
 
     return (

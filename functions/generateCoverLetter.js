@@ -2,7 +2,7 @@ const { onRequest } = require("firebase-functions/v2/https");
 const OpenAI = require('openai');
 
 // Function to handle cover letter generation with retries
-async function generateCoverLetterWithRetry(user, apiKey, retryCount = 0) {
+async function generateCoverLetterWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
 
     try {
@@ -20,12 +20,12 @@ async function generateCoverLetterWithRetry(user, apiKey, retryCount = 0) {
                 {
                     role: 'user',
                     content: `
-                        Write a cover letter for the following job description: ${user.tailoredResume.description}.
+                        Write a cover letter for the following job description: ${selectedTailoredResumeIdData.description}.
                         Here's a brief summary from their current resume for reference: ${user.resume.summary}.
                         Additional information:
                         First Name: ${user.firstName},
                         Last Name: ${user.lastName},
-                        Company: ${user.tailoredResume.companyName}.
+                        Company: ${selectedTailoredResumeIdData.companyName}.
                         Assume the recipient's name and company address are not provided.
                     `
                 }
@@ -41,7 +41,7 @@ async function generateCoverLetterWithRetry(user, apiKey, retryCount = 0) {
         return gptResponse.choices[0].message.content;
     } catch (error) {
         if (retryCount < 3) {
-            return generateCoverLetterWithRetry(user, apiKey, retryCount + 1);
+            return generateCoverLetterWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount + 1);
         } else {
             throw new Error('Error generating cover letter after 3 attempts');
         }
@@ -61,7 +61,7 @@ exports.generate_cover_letter = onRequest(
             const { user } = req.body;
 
             try {
-                const coverLetterSummary = await generateCoverLetterWithRetry(user, apiKey);
+                const coverLetterSummary = await generateCoverLetterWithRetry(selectedTailoredResumeIdData, user, apiKey);
                 res.status(200).json({ coverLetterSummary });
             } catch (error) {
                 res.status(500).json({ error: 'Error generating cover letter: ' + error.message });

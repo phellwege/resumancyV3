@@ -3,9 +3,9 @@ const { onRequest } = require("firebase-functions/v2/https");
 const OpenAI = require('openai');
 
 // Function to handle summarization API call with retries
-async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
+async function summarizeResumeWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
-    const experienceFormatted = user.resume.experience.map(item => {
+    const experienceFormatted = user.resume[0].experience.map(item => {
         return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
     }).join("\n");
 
@@ -16,12 +16,12 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
                 { role: 'system', content: 'Craft a professional resume summary for this resume in roughly 3 sentences.' },
                 { role: 'user', content: `
                     Please customize the resume based on the provided job description and company name:
-                    Job Description: ${user.resume.description}
-                    Company Name: ${user.resume.companyName}
+                    Job Description: ${selectedTailoredResumeIdData.description}
+                    Company Name: ${selectedTailoredResumeIdData.companyName}
                     Here is the user's current resume information:
                         Experience: ${experienceFormatted}
-                        Education and Certifications: ${user.resume.education}
-                        Skills: ${user.resume.skills}
+                        Education and Certifications: ${user.resume[0].education}
+                        Skills: ${user.resume[0].skills}
                 ` },
             ],
             temperature: 0.4,
@@ -34,7 +34,7 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
         return gptResponse.choices[0].message.content;
     } catch (error) {
         if (retryCount < 3) {
-            return summarizeResumeWithRetry(user, apiKey, retryCount + 1);
+            return summarizeResumeWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount + 1);
         } else {
             throw new Error('Error summarizing resume after 3 attempts');
         }
@@ -42,9 +42,9 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
 }
 
 // Function to handle experience section API call with retries
-async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) {
+async function generateExperienceSectionWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
-    const experienceFormatted = user.resume.experience.map(item => {
+    const experienceFormatted = user.resume[0].experience.map(item => {
         return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
     }).join("\n");
 
@@ -72,13 +72,13 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
                     ` 
                 },
                 { role: 'user', content: `
-                    Please customize the resume based on the provided job description and company name:
-                    Job Description: ${user.resume.description}
-                    Company Name: ${user.resume.companyName}
+                    Please tailor the resume based on the provided job description and company name:
+                    Job Description: ${selectedTailoredResumeIdData.description}
+                    Company Name: ${selectedTailoredResumeIdData.companyName}
                     Here is the user's current resume information:
                         Experience: ${experienceFormatted}
-                        Education and Certifications: ${user.resume.education}
-                        Skills: ${user.resume.skills}
+                        Education and Certifications: ${user.resume[0].education}
+                        Skills: ${user.resume[0].skills}
                 ` },
             ],
             temperature: 0.4,
@@ -91,7 +91,7 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
         return gptResponse.choices[0].message.content;
     } catch (error) {
         if (retryCount < 3) {
-            return generateExperienceSectionWithRetry(user, apiKey, retryCount + 1);
+            return generateExperienceSectionWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount + 1);
         } else {
             throw new Error('Error generating experience section after 3 attempts');
         }
@@ -99,9 +99,9 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
 }
 
 // Function to handle skills section API call with retries
-async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
+async function generateSkillsSectionWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
-    const experienceFormatted = user.resume.experience.map(item => {
+    const experienceFormatted = user.resume[0].experience.map(item => {
         return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
     }).join("\n");
 
@@ -122,13 +122,13 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
                 { 
                     role: 'user', 
                     content: `
-                    Please customize the skills based on the provided job description and company name:
-                    Job Description: ${user.resume.description}
-                    Company Name: ${user.resume.companyName}
+                    Please customize the skills based on the provided job description and company name while taking into account the users current resume experience:
+                    Job Description: ${selectedTailoredResumeIdData.description}
+                    Company Name: ${selectedTailoredResumeIdData.companyName}
                     Here is the user's current resume information:
                         Experience: ${experienceFormatted}
-                        Education and Certifications: ${user.resume.education}
-                        Skills: ${user.resume.skills}
+                        Education and Certifications: ${user.resume[0].education}
+                        Skills: ${user.resume[0].skills}
                 ` 
                 },
             ],
@@ -142,7 +142,7 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
         return gptResponse.choices[0].message.content;
     } catch (error) {
         if (retryCount < 3) {
-            return generateSkillsSectionWithRetry(user, apiKey, retryCount + 1);
+            return generateSkillsSectionWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount + 1);
         } else {
             throw new Error('Error generating skills section after 3 attempts');
         }
@@ -159,13 +159,13 @@ exports.generate_tailored_resume = onRequest(
 
         try {
             const apiKey = process.env.GPT_API_KEY;
-            const { user } = req.body;
+            const { user, selectedTailoredResumeIdData } = req.body;
 
             try {
                 const [summary, experienceSection, skillsSection] = await Promise.all([
-                    summarizeResumeWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
-                    generateExperienceSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
-                    generateSkillsSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
+                    summarizeResumeWithRetry(selectedTailoredResumeIdData, user, apiKey).catch(e => `Error: ${e.message}`),
+                    generateExperienceSectionWithRetry(selectedTailoredResumeIdData, user, apiKey).catch(e => `Error: ${e.message}`),
+                    generateSkillsSectionWithRetry(selectedTailoredResumeIdData, user, apiKey).catch(e => `Error: ${e.message}`),
                 ]);
 
                 res.status(200).json({

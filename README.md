@@ -1,8 +1,9 @@
 ### Repair to working state
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
-TODO: fix tailored resume creation and cover letter creation now that it is an array of objects
+TODO: fix cover letter creation now that it is an array of objects
 TODO: fix review page since it is an array of objects
 TODO: on edit user information / save implement function to add the info to firebase
+TODO: fix tailored resume job description and company name to work with array objects instead of string. will need to map to tailoredResumeId so they all share the same id. tailoredResume, resume, coverletter -> this way each of them can easily be retrieved and viewed without additional issues.
 
 ### Flow Correction 
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....

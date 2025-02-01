@@ -33,7 +33,7 @@ export default function BaseResumeTable() {
         setSelectedResumeId(resumeId);
         handleOpenReviewResumeModal();
     };
-    console.log(user)
+
   return (
     <>
         <ReviewResumeModal/>
