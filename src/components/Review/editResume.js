@@ -16,7 +16,8 @@ export default function EditResume() {
         addExperienceEntry,
         removeExperienceEntry,
         handleContactChange,
-        handleUserChange
+        handleUserChange,
+        selectedResume
     } = useUser();
 
     const capitalizeFirstLetter = (text) => {
@@ -88,7 +89,7 @@ export default function EditResume() {
                 as='textarea'
                 rows={3}
                 placeholder='Summary'
-                value={user.resume.summary || ''}
+                value={selectedResume.summary || ''}
                 onChange={(e) => handleResumeChange('summary', sanitizeUserInput(e.target.value))}
                 maxLength='1000'
                 className="mb-2"
@@ -96,7 +97,7 @@ export default function EditResume() {
                 <Form.Label>
                     Experience
                 </Form.Label>
-                {user.resume.experience.map((exp, index) => (
+                {selectedResume.experience.map((exp, index) => (
                     <div key={index} className="experience-entry" style={{border: '1px solid lightblue', padding: '5px', margin: '5px', borderRadius: '.5REM'}}>
                         <Form.Control 
                             type='text'
@@ -142,7 +143,7 @@ export default function EditResume() {
                 as='textarea'
                 rows={3}
                 placeholder='Education'
-                value={user.resume.education}
+                value={selectedResume.education}
                 onChange={(e) => handleResumeChange('education', sanitizeUserInput(e.target.value))}
                 maxLength='500'
                 />
@@ -153,7 +154,7 @@ export default function EditResume() {
                 as='textarea'
                 rows={3}
                 placeholder='Skills'
-                value={user.resume.skills}
+                value={selectedResume.skills}
                 onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
                 maxLength='1000'
                 />

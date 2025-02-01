@@ -80,7 +80,7 @@ export default function ReviewCoverLetterModal() {
             </div>
             </div>
             ) : (
-                <EditCoverLetter selectedCoverLetterIdData={selectedCoverLetterIdData}/>
+                <EditCoverLetter/>
             )}
         </Modal.Body>
         <Modal.Footer>

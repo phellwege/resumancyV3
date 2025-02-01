@@ -24,8 +24,7 @@ export default function ReviewBaseResumeModal() {
   const { 
     reviewResumeModal, 
     handleCloseReviewResumeModal, 
-    user,
-    selectedResume
+    user
   } = useUser();
 
   const [edit, setEdit] = useState(false);
@@ -46,7 +45,10 @@ export default function ReviewBaseResumeModal() {
     <>
       <Modal
         show={reviewResumeModal}
-        onHide={handleCloseReviewResumeModal}
+        onHide={() =>{
+          handleCloseReviewResumeModal();
+          setEdit(false);
+        }}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
