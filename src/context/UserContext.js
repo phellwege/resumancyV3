@@ -256,6 +256,18 @@ export function UserProvider({ children }) {
     const stripFormatting = (phoneNumber) => {
         return phoneNumber.replace(/\D/g, '');
     };
+
+    useEffect(() => {
+        if (user.id) {
+            localStorage.setItem("user", JSON.stringify(user));
+        }
+    }, [user]);
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser)); 
+        } 
+    }, []);
     
     const value = useMemo(() =>({
         generateUUID,

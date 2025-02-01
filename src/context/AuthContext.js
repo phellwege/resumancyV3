@@ -35,6 +35,7 @@ export function AuthProvider({ children }) {
         return auth.signOut(auth)
             .then(() => {
                 setCurrentUser(null);
+                localStorage.removeItem("user");
                 setUser(initialUserState);
                 if (firebaseUiInstance) {
                     firebaseUiInstance.reset();
