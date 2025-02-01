@@ -1,16 +1,13 @@
 ### Repair to working state
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
-TODO: fix cover letter creation now that it is an array of objects
-TODO: fix review page since it is an array of objects
 TODO: on edit user information / save implement function to add the info to firebase
-TODO: fix tailored resume job description and company name to work with array objects instead of string. 
+TODO: fix cover letter so it displays properly
 
 ### Flow Correction 
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....
 
 ### Add Feature
-TODO: write functions for database connection and storage of state managed information from dataContext
-TODO: Develop effective subscription pricing.
+TODO: Implement subscription pricing.
     - free 7 day trial of basic plan
     - Basic Plan: $5/month for up to 5 tailored resumes.(and some formatting options)
     - Pro Plan: $15/month for unlimited resumes and additional features (full feature suit)
@@ -18,8 +15,8 @@ TODO: Develop effective subscription pricing.
 ### Bug
 TODO: fix bug on modal size when scrolling
 TODO: switch from edit modal to edit page so that there is no cutoff and user can edit whatever they need to
-TODO: if editing on close modal then it stays in edit mode instead of returning to default state
-TODO: fix extra experience being created on click to add. (not sure exactly why this is occuring)
+TODO: if editing on close modal then it stays in edit mode, instead of returning to default state
+TODO: fix extra experience being created on click to add. (not sure exactly why this is occurring)
 
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions

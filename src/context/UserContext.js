@@ -16,6 +16,7 @@ export function UserProvider({ children }) {
     const [isTableEnabled, setIsTableEnabled] = useState(false);
     const [selectedResumeId, setSelectedResumeId] = useState(null);
     const [selectedTailoredResumeId, setSelectedTailoredResumeId] = useState(null);
+    const [selectedCoverLetterId, setSelectedCoverLetterId] = useState(null);
 
     // creating profile modal
     const [setupUserModal, setSetupUserModal] = useState(false);
@@ -119,7 +120,8 @@ export function UserProvider({ children }) {
     
     const selectedResume = user.resume.find((resume) => resume.id === selectedResumeId);
     const selectedTailoredResumeIdData = user.tailoredResume.find((resume) => resume.id === selectedTailoredResumeId);
-
+    const selectedCoverLetterIdData = user.coverLetter.find((resume) => resume.id === selectedTailoredResumeId);
+    
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [error, setError] = useState('');
@@ -315,11 +317,12 @@ export function UserProvider({ children }) {
 
         selectedResumeId, setSelectedResumeId, selectedResume,
         selectedTailoredResumeIdData, selectedTailoredResumeId, setSelectedTailoredResumeId,
+        selectedCoverLetterIdData, selectedCoverLetterId, setSelectedCoverLetterId
 
     }), [
         user, resetUser, loginModal, setupUserModal, selectAvatar,
         reviewResumeModal, reviewCoverLetterModal, contactUsModal, 
-        handleOpenReviewResumeModal, selectedResume, selectedTailoredResumeIdData
+        handleOpenReviewResumeModal, selectedResume, selectedTailoredResumeIdData, selectedCoverLetterIdData
     ]);
 
     return (

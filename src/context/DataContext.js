@@ -120,13 +120,11 @@ export function DataProvider({ children }) {
         try {
             const userDocRef = doc(db, "users", userId);
     
-            // 🔹 Save the tailored resume inside the resume array (not tailoredResume)
             await updateDoc(userDocRef, {
                 resume: arrayUnion(newResume),
                 tailoredResume: arrayUnion(newTailoredEntry),
             });
     
-            // 🔹 THEN update local state
             setUser((prevUser) => ({
                 ...prevUser,
                 resume: [...prevUser.resume, newResume],
@@ -135,8 +133,6 @@ export function DataProvider({ children }) {
                     newTailoredEntry,
                 ],
             }));
-    
-            console.log("Tailored resume successfully saved to Firestore!");
     
         } catch (error) {
             console.error("Error adding tailored resume:", error);
@@ -180,10 +176,27 @@ export function DataProvider({ children }) {
                 return [];
             }
         } catch (error) {
-            console.error('Error fetching resumes:', error);
+            console.error('❌ Error fetching resumes:', error);
             return [];
         }
     };
+    const fetchCoverLetters = async (userId) => {
+        try {
+            const userDocRef = doc(db, "users", userId);
+            const userDocSnap = await getDoc(userDocRef);
+    
+            if (userDocSnap.exists()) {
+                const userData = userDocSnap.data();
+                return userData.coverLetter || [];
+            } else {
+                return [];
+            }
+        } catch (error) {
+            console.error("❌ Error fetching cover letters:", error);
+            return [];
+        }
+    };
+    
       // Upload file to Firebase Storage (e.g., avatar or resume)
     // const uploadFile = async (file, folderPath) => {
     //     const storageRef = ref(storage, `${folderPath}/${file.name}`);
@@ -216,6 +229,7 @@ export function DataProvider({ children }) {
         saveUserData,
         saveBaselineResume,
         fetchResumes,
+        fetchCoverLetters
     };
 
     return (

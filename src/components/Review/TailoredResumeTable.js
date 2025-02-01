@@ -16,10 +16,12 @@ export default function TailoredResumeTable() {
     handleOpenReviewCoverLetterModal,
     handleOpenReviewJobDescModal,
     setSelectedResumeId,
-    setSelectedTailoredResumeId
+    setSelectedTailoredResumeId,
+    setSelectedCoverLetterIdData
   } = useUser();
   const {
-      fetchResumes
+      fetchResumes,
+      fetchCoverLetters,
   } = useData();
 
       const [resumes, setResumes] = useState([]);
@@ -30,6 +32,7 @@ export default function TailoredResumeTable() {
         const loadResumes = async () => {
             const userId = user.id;
             const fetchedResumes = await fetchResumes(userId);
+            const fetchedCoverLetters = await fetchCoverLetters(userId);
     
             const filteredResumes = fetchedResumes.filter(resume => resume.usage?.baseResume === false);
     
@@ -53,7 +56,7 @@ export default function TailoredResumeTable() {
           handleOpenReviewResumeModal();
       };
       const handleViewCoverLetter = (resumeId) => {
-        setSelectedTailoredResumeId(resumeId);
+        setSelectedCoverLetterIdData(resumeId);
         handleOpenReviewCoverLetterModal();
       };
       const handleViewJobDesc = (resumeId) => {
