@@ -23,7 +23,9 @@ export default function EditResume() {
     const capitalizeFirstLetter = (text) => {
         return text.charAt(0).toUpperCase() + text.slice(1);
     };
-
+    console.log("Selected Resume:", selectedResume);
+    console.log("Experience:", selectedResume?.experience);
+    
     const handlePhoneNumberChange = (e) => {
         const inputPhoneNumber = e.target.value.replace(/\D/g, '');
         let formattedPhoneNumber = '';

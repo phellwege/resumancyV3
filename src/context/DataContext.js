@@ -247,7 +247,29 @@ export function DataProvider({ children }) {
             return [];
         }
     };
+    const updateSpecificResume = async (userId, updatedResume) => {
+        try {
+            const userDocRef = doc(db, "users", userId);
+            const userDocSnap = await getDoc(userDocRef);
     
+            if (!userDocSnap.exists()) {
+                console.error("User document not found.");
+                return;
+            }
+    
+            const userData = userDocSnap.data();
+            const updatedResumes = userData.resume.map(resume =>
+                resume.id === updatedResume.id ? { ...resume, ...updatedResume } : resume
+            );
+    
+            // Update Firestore with the modified resume list
+            await updateDoc(userDocRef, { resume: updatedResumes });
+    
+            console.log("✅ Resume successfully updated!");
+        } catch (error) {
+            console.error("❌ Error updating resume:", error);
+        }
+    };
       // Upload file to Firebase Storage (e.g., avatar or resume)
     // const uploadFile = async (file, folderPath) => {
     //     const storageRef = ref(storage, `${folderPath}/${file.name}`);
@@ -280,7 +302,8 @@ export function DataProvider({ children }) {
         saveUserData,
         saveBaselineResume,
         fetchResumes,
-        fetchCoverLetters
+        fetchCoverLetters,
+        updateSpecificResume
     };
 
     return (

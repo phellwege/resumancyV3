@@ -11,6 +11,7 @@ import ResumeStyle2 from './resumeStyles/resumeStyle2';
 // import ResumeStyle3 from './resumeStyles/resumeStyle3';
 import ResumeStyle4 from './resumeStyles/resumeStyle4';
 import ResumeStyle5 from './resumeStyles/resumeStyle5';
+import { useData } from '../../context/DataContext';
 
 const styleComponents = {
   // style1: DefaultResumeStyle,
@@ -24,8 +25,12 @@ export default function ReviewBaseResumeModal() {
   const { 
     reviewResumeModal, 
     handleCloseReviewResumeModal, 
-    user
+    user,
+    selectedResume
   } = useUser();
+  const {
+    updateSpecificResume
+  } = useData();
 
   const [edit, setEdit] = useState(false);
   const [selectedStyle, setSelectedStyle] = useState('style2');
@@ -38,6 +43,20 @@ export default function ReviewBaseResumeModal() {
   const handleToPDF = async () => {
     await toPDF();
   };
+  const updateResumeInFirebase = async () => {
+    await updateSpecificResume(user.id, {
+      id: selectedResume.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      contactInfo: {
+          phone: user.contactInfo.phone,
+          email: user.contactInfo.email,
+      },
+      summary: selectedResume.summary,
+      experience: selectedResume.experience,
+      education: selectedResume.education,
+      skills: selectedResume.skills,
+  })};
 
   const SelectedResumeComponent = styleComponents[selectedStyle];
 
@@ -75,7 +94,12 @@ export default function ReviewBaseResumeModal() {
           <Button variant="primary" onClick={handleCloseReviewResumeModal}>
             Continue
           </Button>
-          <Button variant="warning" onClick={() => setEdit(!edit)}>
+          <Button variant="warning" onClick={() => {
+            if (edit) {
+              updateResumeInFirebase();
+            }
+            setEdit(!edit);
+          }}>
             {edit ? 'Stop Edit' : 'Edit'}
           </Button>
           <Button variant="secondary" onClick={handleCloseReviewResumeModal}>
