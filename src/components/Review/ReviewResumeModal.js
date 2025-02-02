@@ -94,10 +94,8 @@ export default function ReviewBaseResumeModal() {
           {
             edit ? (
               <Button variant="success" onClick={() => {
-                handleCloseReviewResumeModal();
-                if(edit){
-                  updateResumeInFirebase();
-                }
+                setEdit(false);
+                updateResumeInFirebase();
               }}>
                 Save Changes
               </Button>
@@ -109,8 +107,6 @@ export default function ReviewBaseResumeModal() {
               </Button>
             )
           }
-          
-          
           <Button variant="secondary" onClick={() => {
             handleCloseReviewResumeModal();
             setEdit(false)

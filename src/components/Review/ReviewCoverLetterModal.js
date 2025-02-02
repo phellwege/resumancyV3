@@ -84,14 +84,27 @@ export default function ReviewCoverLetterModal() {
             )}
         </Modal.Body>
         <Modal.Footer>
+            {!edit ?
+            (
+                <Button variant="warning" onClick={() => {
+                    setEdit(true)
+                }}>
+                    Edit
+                </Button>
+            ) : (
+                <Button variant="success" onClick={() => {
+                    setEdit(false);
+                }}>
+                    Save
+                </Button>
+            )
+            }
+            
             <Button variant="secondary" onClick={() =>{
                 handleCloseReviewCoverLetterModal();
                 setEdit(false);
             }}>
                 Close
-            </Button>
-            <Button variant="warning" onClick={() => setEdit(!edit)}>
-                {edit ? 'Stop Edit' : 'Edit'}
             </Button>
         </Modal.Footer>
     </Modal>
