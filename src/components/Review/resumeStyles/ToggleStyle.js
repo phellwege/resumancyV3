@@ -8,7 +8,7 @@ export default function ToggleStyle({ selectedStyle, onStyleChange }) {
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
+      <Dropdown.Toggle variant="info" id="dropdown-basic">
         {/* {selectedStyle === 'style1'
           ? 'Classic'
           : selectedStyle === 'style2'

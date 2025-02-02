@@ -91,20 +91,30 @@ export default function ReviewBaseResumeModal() {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={() => {
+          {
+            edit ? (
+              <Button variant="success" onClick={() => {
+                handleCloseReviewResumeModal();
+                if(edit){
+                  updateResumeInFirebase();
+                }
+              }}>
+                Save Changes
+              </Button>
+            ) : (
+              <Button variant="warning" onClick={() => {
+                setEdit(true);
+              }}>
+                Edit
+              </Button>
+            )
+          }
+          
+          
+          <Button variant="secondary" onClick={() => {
             handleCloseReviewResumeModal();
-            if(edit){
-              updateResumeInFirebase();
-            }
+            setEdit(false)
           }}>
-            Continue
-          </Button>
-          <Button variant="warning" onClick={() => {
-            setEdit(!edit);
-          }}>
-            {edit ? 'Stop Edit' : 'Edit'}
-          </Button>
-          <Button variant="secondary" onClick={handleCloseReviewResumeModal}>
             Close
           </Button>
         </Modal.Footer>
