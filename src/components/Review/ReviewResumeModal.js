@@ -93,7 +93,9 @@ export default function ReviewBaseResumeModal() {
         <Modal.Footer>
           <Button variant="primary" onClick={() => {
             handleCloseReviewResumeModal();
-            updateResumeInFirebase();
+            if(edit){
+              updateResumeInFirebase();
+            }
           }}>
             Continue
           </Button>

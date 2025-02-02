@@ -40,7 +40,8 @@ export function DataProvider({ children }) {
     const [loading, setLoading] = useState(false);
     const { 
         user, 
-        setUser 
+        setUser,
+        setSuccessMessage
     } = useUser();
 
     const fetchUserData = async (userId) => {
@@ -262,10 +263,9 @@ export function DataProvider({ children }) {
                 resume.id === updatedResume.id ? { ...resume, ...updatedResume } : resume
             );
     
-            // Update Firestore with the modified resume list
             await updateDoc(userDocRef, { resume: updatedResumes });
     
-            console.log("✅ Resume successfully updated!");
+            setSuccessMessage("✅ Resume successfully updated!");
         } catch (error) {
             console.error("❌ Error updating resume:", error);
         }

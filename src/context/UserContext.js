@@ -201,11 +201,16 @@ export function UserProvider({ children }) {
     };
     const handleResumeChange = (key, value) => {
         setUser((prevState) => {
-            const updatedResume = [...prevState.resume];
-            updatedResume[0][key] = value;
+            const updatedResume = prevState.resume.map(resume =>
+                resume.id === selectedResume?.id
+                    ? { ...resume, [key]: value }
+                    : resume
+            );
+    
             return { ...prevState, resume: updatedResume };
         });
     };
+    
     const handleExperienceChange = (index, key, value) => {
         setUser((prevState) => {
             const updatedResume = prevState.resume.map(resume => 
