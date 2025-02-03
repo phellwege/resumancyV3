@@ -13,11 +13,17 @@ async function summarizeResumeWithRetry(selectedTailoredResumeIdData, user, apiK
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'Craft a professional resume summary for this resume in roughly 3 sentences.' },
+                { 
+                    role: 'system', 
+                    content: `
+                        Craft a concise and professional resume summary (around three sentences) that highlights the candidate’s skills, experience, and qualifications in a way that aligns with the provided job description. 
+                        DO NOT mention any company names in the response. Keep the language natural and broadly applicable.
+                    ` },
                 { role: 'user', content: `
-                    Please customize the resume based on the provided job description and company name:
+                    The candidate is applying for a position that requires the following:
                     Job Description: ${selectedTailoredResumeIdData.description}
-                    Company Name: ${selectedTailoredResumeIdData.companyName}
+                    Company Name (for context, but should NOT be mentioned in the summary): ${selectedTailoredResumeIdData.companyName}
+
                     Here is the user's current resume information:
                         Experience: ${experienceFormatted}
                         Education and Certifications: ${user.resume[0].education}
