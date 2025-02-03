@@ -270,7 +270,7 @@ export function DataProvider({ children }) {
             console.error("❌ Error updating resume:", error);
         }
     };
-    
+
     const updateSpecificCoverLetter = async (userId, updatedCoverLetter) => {
         try {
             const userDocRef = doc(db, "users", userId);
@@ -310,6 +310,47 @@ export function DataProvider({ children }) {
         }
     }, [user.id]);
 
+    const [readyTailoredResume, setReadyTailoredResume] = useState([]);
+    useEffect(() => {
+        if (!user?.id) return;
+
+        const loadResumes = async () => {
+            const userId = user.id;
+            const fetchedResumes = await fetchResumes(userId);
+
+            const filteredResumes = fetchedResumes.filter(resume => resume.usage?.baseResume === false);
+
+            const mergedResumes = filteredResumes.map(resume => {
+                const tailoredData = user.tailoredResume.find(tr => tr.id === resume.id);
+                return {
+                    ...resume,
+                    companyName: tailoredData?.companyName || "Unknown",
+                };
+            });
+
+            setReadyTailoredResume(mergedResumes);
+        };
+
+        loadResumes();
+    }, [user.id, user.tailoredResume]); 
+
+    const [readyBaseResume, setReadyBaseResume] = useState([])
+    useEffect(() => {
+        if (!user?.id) return;
+
+        const loadResumes = async () => {
+            const userId = user.id;
+            const fetchedResumes = await fetchResumes(userId);
+
+            const filteredResumes = fetchedResumes.filter(resume => resume.usage?.baseResume === true);
+
+            setReadyBaseResume(filteredResumes);
+        };
+
+        loadResumes();
+    }, [user.id, user.resume[0]]); 
+
+
     const value = {
         loading,
         setLoading,
@@ -325,7 +366,9 @@ export function DataProvider({ children }) {
         fetchResumes,
         fetchCoverLetters,
         updateSpecificResume,
-        updateSpecificCoverLetter
+        updateSpecificCoverLetter,
+        readyTailoredResume,
+        readyBaseResume
     };
 
     return (

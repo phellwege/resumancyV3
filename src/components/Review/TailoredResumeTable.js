@@ -20,36 +20,12 @@ export default function TailoredResumeTable() {
     setSelectedCoverLetterId
   } = useUser();
   const {
-      fetchResumes,
-      fetchCoverLetters,
+    readyTailoredResume
   } = useData();
 
-      const [resumes, setResumes] = useState([]);
+      // const [resumes, setResumes] = useState([]);
       const [currentPage, setCurrentPage] = useState(1);
       const itemsPerPage = 10;
-  
-      useEffect(() => {
-        const loadResumes = async () => {
-            const userId = user.id;
-            const fetchedResumes = await fetchResumes(userId);
-            const fetchedCoverLetters = await fetchCoverLetters(userId);
-    
-            const filteredResumes = fetchedResumes.filter(resume => resume.usage?.baseResume === false);
-    
-            const mergedResumes = filteredResumes.map(resume => {
-                const tailoredData = user.tailoredResume.find(tr => tr.id === resume.id);
-                return {
-                    ...resume,
-                    companyName: tailoredData?.companyName || "Unknown",
-                };
-            });
-    
-            setResumes(mergedResumes);
-        };
-    
-        loadResumes();
-    }, [user.tailoredResume]);
-    
 
       const handleViewResume = (resumeId) => {
         setSelectedResumeId(resumeId);
@@ -67,8 +43,8 @@ export default function TailoredResumeTable() {
   // Pagination logic
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = resumes.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(resumes.length / itemsPerPage);
+    const currentItems = readyTailoredResume.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(readyTailoredResume.length / itemsPerPage);
   return (
     <>
     <ReviewResumeModal />
@@ -76,10 +52,10 @@ export default function TailoredResumeTable() {
     <ReviewJobDescModal />
 
         <h5>Tailored Resume(s)</h5>
-        {resumes.length > 0 && (
+        {readyTailoredResume.length > 0 && (
           <p className="text-muted">
             Showing {indexOfFirstItem + 1} -{" "}
-            {Math.min(indexOfLastItem, resumes.length)} of {resumes.length} records
+            {Math.min(indexOfLastItem, readyTailoredResume.length)} of {readyTailoredResume.length} records
           </p>
         )}
 
@@ -128,7 +104,7 @@ export default function TailoredResumeTable() {
             </tbody>
         </Table>
 
-        {resumes.length > itemsPerPage && (
+        {readyTailoredResume.length > itemsPerPage && (
           <Pagination className="justify-content-center">
             <Pagination.Prev
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

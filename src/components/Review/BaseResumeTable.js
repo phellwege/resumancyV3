@@ -12,22 +12,8 @@ export default function BaseResumeTable() {
         setSelectedResumeId,
     } = useUser();
     const {
-        fetchResumes
+        readyBaseResume
     } = useData();
-    const [resumes, setResumes] = useState([]);
-
-    useEffect(() => {
-        const loadResumes = async () => {
-            const userId = user.id;
-            const fetchedResumes = await fetchResumes(userId);
-            const filteredResumes = fetchedResumes.filter(
-                (resume) => resume.usage?.baseResume === true
-            );
-            setResumes(filteredResumes);
-        };
-
-        loadResumes();
-    }, []);
 
     const handleViewResume = (resumeId) => {
         setSelectedResumeId(resumeId);
@@ -46,7 +32,7 @@ export default function BaseResumeTable() {
             </tr>
         </thead>
         <tbody>
-            {resumes.map((resume, index) => (
+            {readyBaseResume.map((resume, index) => (
                 <tr key={index}>
                     <td>
                         <Link to='' onClick={() => handleViewResume(resume.id)}>
