@@ -1,6 +1,5 @@
 ### Repair to working state
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
-TODO: after making edits it should overwrite current resume with new data.
 
 ### Flow Correction 
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....
@@ -13,7 +12,6 @@ TODO: Implement subscription pricing.
  
 ### Bug
 TODO: fix bug on modal size when scrolling
-TODO: switch from edit modal to edit page so that there is no cutoff and user can edit whatever they need to
 TODO: fix extra experience being created on click to add. (not sure exactly why this is occurring)
 
 ### CRITICAL BEFORE DEPLOY
