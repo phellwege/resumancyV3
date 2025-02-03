@@ -214,7 +214,6 @@ export default function CreateBaselineResume() {
                                                 className="mb-3"
                                             />
                                             <div className='createResumePlusAndMinus'>
-                                                <FaPlusSquare onClick={addExperienceEntry}  size={25} className='creationButton' id='CreateResumePlusButton'/>
                                                 <FaMinusSquare onClick={() => removeExperienceEntry(index)} size={25} className='creationButton' id='CreateResumeMinusButton'/>
                                             </div>
                                         </div>
