@@ -15,8 +15,10 @@ TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
 
 ### Flow Correction 
 TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier and also redirect them to upgrade their pricing tier with a timer to show how long until the next month rolls around and they can create another 5 on their current plan.
+TODO: make card showing plans or current plan and usage for home page
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....
 TODO: add Success/failure Messages where relevant
+
 
 ### Add Feature
 TODO: Implement subscription pricing.
