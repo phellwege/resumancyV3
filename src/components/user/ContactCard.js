@@ -24,7 +24,7 @@ export default function ContactCard() {
                         {user.contactInfo.email}
                         <br/>
                         {user.contactInfo.socialMedia.length > 0 && (
-                            <div>
+                            <div className='socialMediaLinkColor'>
                                 {user.contactInfo.socialMedia.map((account, index) => (
                                     <div key={index}>
                                         <a 

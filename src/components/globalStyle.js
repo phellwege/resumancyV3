@@ -23,6 +23,10 @@ h2 {
     color: ${props => 
         props.theme.mode === 'dark' ? '#E4FDE1' : 'white' };
 }
+.socialMediaLinkColor a:hover {
+    color: ${props => 
+        props.theme.mode === 'dark' ? '#E4FDE1' : 'black' };
+}
 .modal-header {
     background-color: ${props => 
         props.theme.mode === 'dark' ? '#114B5F' : '#456990' };

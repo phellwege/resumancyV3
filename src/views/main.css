@@ -673,6 +673,16 @@ width: 45%;
     z-index: 10; /* Ensures it sits above the pricing table */
     cursor: not-allowed; /* Indicate to the user that interaction is disabled */
 }
+.socialMediaLinkColor a {
+    text-decoration: none;
+    color: #F45B69;
+}
+.socialMediaLinkColor a:hover {
+    /* text-decoration: none; */
+    font-weight: bold;
+    /* color: #E4FDE1; */
+}
+
 
 @media (max-width: 850px) {
     #defaultResumeWrap {
