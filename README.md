@@ -3,6 +3,7 @@ TODO: fix stripe so that it returns correct and expected values for users subscr
 
 ### Flow Correction 
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....
+TODO: add Success Messages where relevant such as updating user
 
 ### Add Feature
 TODO: Implement subscription pricing.

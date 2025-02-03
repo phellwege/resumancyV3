@@ -229,17 +229,22 @@ export function UserProvider({ children }) {
     };
     
     const addExperienceEntry = () => {
-        setUser((prevState) => {
-            const updatedResume = [...prevState.resume];
-            updatedResume[0].experience.push({
-                expJobTitle: '',
-                expCompanyName: '',
-                expTime: '',
-                expDesc: '',
-            });
-            return { ...prevState, resume: updatedResume };
-        });
+        setUser((prevState) => ({
+            ...prevState,
+            resume: prevState.resume.map((resume, index) =>
+                index === 0
+                    ? {
+                        ...resume,
+                        experience: [
+                            ...(resume.experience || []), 
+                            { expJobTitle: '', expCompanyName: '', expTime: '', expDesc: '' }
+                        ],
+                    }
+                    : resume
+            ),
+        }));
     };
+    
     
     const removeExperienceEntry = (index) => {
         setUser((prevState) => {

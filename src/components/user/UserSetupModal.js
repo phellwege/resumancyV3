@@ -21,7 +21,8 @@ export default function UserSetupModal() {
         sanitizeUserInput,
         addSocialMediaEntry,
         removeSocialMediaEntry,
-        handleSocialMediaChange
+        handleSocialMediaChange,
+        setSuccessMessage
     } = useUser();
     const {
         updateUserData
@@ -59,6 +60,7 @@ export default function UserSetupModal() {
 
         await updateUserData(userId, updatedUser);
         handleCloseSetupUserModal(); // Close modal after saving
+        setSuccessMessage("✅ Profile successfully updated!");
     };
 
 
