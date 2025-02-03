@@ -50,7 +50,7 @@ export default function TailoredResumeTable() {
     <ReviewResumeModal />
     <ReviewCoverLetterModal />
     <ReviewJobDescModal />
-
+        <>
         <h5>Tailored Resume(s)</h5>
         {readyTailoredResume.length > 0 && (
           <p className="text-muted">
@@ -58,7 +58,7 @@ export default function TailoredResumeTable() {
             {Math.min(indexOfLastItem, readyTailoredResume.length)} of {readyTailoredResume.length} records
           </p>
         )}
-
+  
         <Table striped bordered hover variant='dark'>
             <thead>
             <tr>
@@ -103,7 +103,7 @@ export default function TailoredResumeTable() {
             ))}
             </tbody>
         </Table>
-
+  
         {readyTailoredResume.length > itemsPerPage && (
           <Pagination className="justify-content-center">
             <Pagination.Prev
@@ -127,7 +127,7 @@ export default function TailoredResumeTable() {
             />
           </Pagination>
         )}
-        
+        </>
     </>
   )
 }

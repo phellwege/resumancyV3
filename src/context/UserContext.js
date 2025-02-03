@@ -123,7 +123,6 @@ export function UserProvider({ children }) {
     const selectedCoverLetterIdData = user.coverLetter.find((resume) => resume.id === selectedCoverLetterId);
     
     const [successMessage, setSuccessMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const [error, setError] = useState('');
     const [review, setReview] = useState({
         userID : user.id,
@@ -342,8 +341,6 @@ export function UserProvider({ children }) {
 
         successMessage,
         setSuccessMessage,
-        errorMessage,
-        setErrorMessage,
         error,
         setError,
 

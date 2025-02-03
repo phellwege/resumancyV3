@@ -23,7 +23,6 @@ function Header(props) {
         handleOpenLoginModal,
         successMessage,
         setSuccessMessage,
-        errorMessage,
         error,
         setError,
     } = useUser()
@@ -77,9 +76,13 @@ function Header(props) {
             const timeout = setTimeout(() => setSuccessMessage(''), 3000);
             timeouts.push(timeout);
         }
+        if (error) {
+            const timeout = setTimeout(() => setError(''), 4500);
+            timeouts.push(timeout);
+        }
         return () => {
         };
-    }, [successMessage]);
+    }, [successMessage, error]);
 return (
     <>
     <NavBar />

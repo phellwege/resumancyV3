@@ -16,6 +16,7 @@ import { CgProfile } from "react-icons/cg";
 
 import "./NavBar.css";
 import { useUser } from '../../context/UserContext';
+import { useData } from '../../context/DataContext';
 
 
 const NavBar = () => {
@@ -24,7 +25,10 @@ const NavBar = () => {
     const [theme, setTheme] = useState({mode: 'dark'})
     const {
         user
-    } = useUser()
+    } = useUser();
+    const {
+        readyBaseResume
+    } = useData();
     const handleClick =() => {
         setToggled((s)=>!s);
         setTheme(theme.mode === 'dark' ? {mode: 'light'}: {mode:'dark'})
@@ -85,28 +89,32 @@ const NavBar = () => {
                                     Home
                                 </Link>
                             </li>
-                            {user && (
+                            {user.id && (
                                 <>
-                                {user.subscription.usage.baseResume === 0 && (
-                                    <li>
-                                        <Link to='/Create' onClick={() => closeMenu()}>
-                                            <MdOutlinePostAdd className='navIcons'/> 
-                                            Create Resume
-                                        </Link>
-                                    </li>
-                                )}
-                                    <li>
-                                        <Link to='/Tailor' onClick={() => closeMenu()}>
-                                            <MdOutlineNoteAdd className='navIcons'/> 
-                                            Custom Tailor
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to='/Review' onClick={() => closeMenu()}>
-                                            <MdPreview className='navIcons'/> 
-                                            Review
-                                        </Link>
-                                    </li>
+                                    {user.subscription.usage.baseResume === 0 && (
+                                        <li>
+                                            <Link to='/Create' onClick={() => closeMenu()}>
+                                                <MdOutlinePostAdd className='navIcons'/> 
+                                                Create Resume
+                                            </Link>
+                                        </li>
+                                    )}
+                                    {user.subscription.usage.baseResume > 0 && (
+                                    <>
+                                        <li>
+                                            <Link to='/Tailor' onClick={() => closeMenu()}>
+                                                <MdOutlineNoteAdd className='navIcons'/> 
+                                                Custom Tailor
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to='/Review' onClick={() => closeMenu()}>
+                                                <MdPreview className='navIcons'/> 
+                                                Review
+                                            </Link>
+                                        </li>
+                                    </>
+                                    )}
                                 </>
                             )}
                             {user.id && (
