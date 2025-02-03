@@ -270,6 +270,27 @@ export function DataProvider({ children }) {
             console.error("❌ Error updating resume:", error);
         }
     };
+    
+    const updateSpecificCoverLetter = async (userId, updatedCoverLetter) => {
+        try {
+            const userDocRef = doc(db, "users", userId);
+    
+            const userSnapshot = await getDoc(userDocRef);
+            if (!userSnapshot.exists()) throw new Error("User not found");
+    
+            const userData = userSnapshot.data();
+    
+            const updatedCoverLetters = userData.coverLetter.map(cl =>
+                cl.id === updatedCoverLetter.id ? updatedCoverLetter : cl
+            );
+    
+            await updateDoc(userDocRef, { coverLetter: updatedCoverLetters });
+    
+            setSuccessMessage("✅ Cover letter updated successfully in Firestore");
+        } catch (error) {
+            console.error("❌ Error updating cover letter:", error);
+        }
+    };
       // Upload file to Firebase Storage (e.g., avatar or resume)
     // const uploadFile = async (file, folderPath) => {
     //     const storageRef = ref(storage, `${folderPath}/${file.name}`);
@@ -303,7 +324,8 @@ export function DataProvider({ children }) {
         saveBaselineResume,
         fetchResumes,
         fetchCoverLetters,
-        updateSpecificResume
+        updateSpecificResume,
+        updateSpecificCoverLetter
     };
 
     return (

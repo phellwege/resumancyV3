@@ -5,14 +5,18 @@ import '../../views/main.css'
 import { useUser } from '../../context/UserContext';
 import EditCoverLetter from './editCoverLetter';
 import { MdContentCopy } from "react-icons/md";
+import { useData } from '../../context/DataContext';
 
 export default function ReviewCoverLetterModal() {
     const {
         reviewCoverLetterModal,
         handleCloseReviewCoverLetterModal,
         selectedCoverLetterIdData,
-        user
+        user,
     } = useUser();
+    const {
+        updateSpecificCoverLetter
+    } = useData();
 
     const [edit, setEdit] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
@@ -29,6 +33,12 @@ export default function ReviewCoverLetterModal() {
             });
         }
         return null;
+    };
+    const handleSaveChanges = async () => {
+        if (selectedCoverLetterIdData) {
+            await updateSpecificCoverLetter(user.id, selectedCoverLetterIdData);
+        }
+        setEdit(false);
     };
 
     const handleCopy = () => {
@@ -93,9 +103,9 @@ export default function ReviewCoverLetterModal() {
                 </Button>
             ) : (
                 <Button variant="success" onClick={() => {
-                    setEdit(false);
+                    handleSaveChanges();
                 }}>
-                    Save
+                    Save Changes
                 </Button>
             )
             }

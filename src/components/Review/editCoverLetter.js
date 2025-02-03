@@ -9,33 +9,32 @@ export default function EditCoverLetter() {
     } = useUser();
 
     const handleCoverLetterChange = (e) => {
-        const coverLetterSummary = e.target.value;
-        
-        setUser((prevState) => ({
+      const coverLetterSummary = e.target.value;
+  
+      setUser((prevState) => ({
           ...prevState,
-          coverLetter: {
-            ...prevState.coverLetter,
-            response: coverLetterSummary,
-          },
-        }));
-      };
+          coverLetter: prevState.coverLetter.map((cl) =>
+              cl.id === selectedCoverLetterIdData.id
+                  ? { ...cl, response: coverLetterSummary }
+                  : cl
+          ),
+      }));
+  };
 
   return (
     <>
-    <div className='cardInnerDiv'>
-        <Form>
-            <Form.Group>
-                <Form.Control 
-                    as='textarea'
-                    rows={25}
-                    placeholder='Cover Letter'
-                    value={selectedCoverLetterIdData.response}
-                    onChange={handleCoverLetterChange}
-                    maxLength='5000'
-                />
-            </Form.Group>
-        </Form>
-    </div>
+      <Form>
+          <Form.Group>
+              <Form.Control 
+                  as='textarea'
+                  rows={20}
+                  placeholder='Cover Letter'
+                  value={selectedCoverLetterIdData.response}
+                  onChange={handleCoverLetterChange}
+                  maxLength='5000'
+              />
+          </Form.Group>
+      </Form>
     </>
   )
 }
