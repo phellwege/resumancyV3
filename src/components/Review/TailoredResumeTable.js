@@ -53,7 +53,7 @@ export default function TailoredResumeTable() {
         <>
         <h5>Tailored Resume(s)</h5>
         {readyTailoredResume.length > 0 && (
-          <p className="text-muted">
+          <p >
             Showing {indexOfFirstItem + 1} -{" "}
             {Math.min(indexOfLastItem, readyTailoredResume.length)} of {readyTailoredResume.length} records
           </p>

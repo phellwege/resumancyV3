@@ -101,7 +101,7 @@ export function UserProvider({ children }) {
         }],
         subscription: {
             active: false,
-            plan: 'basic',
+            plan: null,
             dateActivated: null,
             billingCycleStart: null,
             usage: {
@@ -109,8 +109,8 @@ export function UserProvider({ children }) {
                 tailoredResumes: 0,
             },
             limits: {
-                baseResume: 1,
-                tailoredResumes: 5,
+                baseResume: 0,
+                tailoredResumes: 0,
             },
         },
         initialSetupDone: false,
@@ -118,6 +118,11 @@ export function UserProvider({ children }) {
     const [user, setUser] = useState(initialUserState)
     const resetUser = () => setUser(initialUserState);
     
+    const subscriptionPlans = {
+        basic: { baseResume: 1, tailoredResumes: 5 },
+        premium: { baseResume: 1, tailoredResumes: Infinity },
+    };
+
     const selectedResume = user.resume.find((resume) => resume.id === selectedResumeId);
     const selectedTailoredResumeIdData = user.tailoredResume.find((resume) => resume.id === selectedTailoredResumeId);
     const selectedCoverLetterIdData = user.coverLetter.find((resume) => resume.id === selectedCoverLetterId);
@@ -131,11 +136,6 @@ export function UserProvider({ children }) {
         additionalInfo: null
     });
     
-    const subscriptionPlans = {
-        basic: { baseResume: 1, tailoredResumes: 5 },
-        premium: { baseResume: 1, tailoredResumes: Infinity },
-    };
-
     // prevent xss attacks
     const sanitizeUserInput = (input) => {
         return DOMPurify.sanitize(input);
