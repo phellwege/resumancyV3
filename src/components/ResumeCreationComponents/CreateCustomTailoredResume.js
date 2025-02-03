@@ -227,21 +227,28 @@ export default function CreateCustomTailoredResume() {
                     Submit
                 </Button>
             </div>
-            <Card>
-                <Card.Body>
-                    <div>
-                        <h5>Plan:{' '}{capitalizeAllLetters(user.subscription.plan)}</h5>
-                        <h6>
-                        Current Usage:
-                        ( {user.subscription.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan].tailoredResumes} )
-                        </h6>
-                    </div>
-                    <Button>
-                        Upgrade Now
-                    </Button>
-                </Card.Body>
-            </Card>
             </div>
+            {user.subscription.plan != 'premium' && (
+                <Card>
+                    <Card.Body>
+                        <div>
+                            <h5>Plan:{' '}{capitalizeAllLetters(user.subscription.plan)}</h5>
+                            <h6>
+                            Current Usage:
+                            ( {user.subscription.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan].tailoredResumes} )
+                            </h6>
+                        </div>
+                        <Button onClick={() => {
+                            const userEmail = encodeURIComponent(user.contactInfo.email);
+                            const stripeUrl = `https://billing.stripe.com/p/login/test_00gbLu5P7bjzcucdQQ?prefilled_email=${userEmail}`;
+                            
+                            window.open(stripeUrl, "_blank"); // Opens in a new tab
+                        }}>
+                            Upgrade Now
+                        </Button>
+                    </Card.Body>
+                </Card>
+            )}
         </div>
     </>
   )
