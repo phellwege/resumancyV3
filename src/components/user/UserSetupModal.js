@@ -59,7 +59,7 @@ export default function UserSetupModal() {
         };
 
         await updateUserData(userId, updatedUser);
-        handleCloseSetupUserModal(); // Close modal after saving
+        handleCloseSetupUserModal();
         setSuccessMessage("✅ Profile successfully updated!");
     };
 
@@ -143,7 +143,7 @@ export default function UserSetupModal() {
                                         <Form.Control
                                             type="url"
                                             placeholder="URL (e.g., https://linkedin.com/in/your-profile)"
-                                            value={account.url} // Correctly access the 'url' property
+                                            value={account.url}
                                             onChange={(e) => handleSocialMediaChange(index, 'url', sanitizeUserInput(e.target.value))}
                                             className="mb-2"
                                         />    
