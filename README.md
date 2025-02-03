@@ -1,8 +1,8 @@
 ### Repair to working state
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
-TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier and also redirect them to upgrade their pricing tier with a timer to show how long until the next month rolls around and they can create another 5 on their current plan.
 
 ### Flow Correction 
+TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier and also redirect them to upgrade their pricing tier with a timer to show how long until the next month rolls around and they can create another 5 on their current plan.
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....
 TODO: add Success/failure Messages where relevant
 

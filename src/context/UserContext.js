@@ -124,11 +124,13 @@ export function UserProvider({ children }) {
     
     const [successMessage, setSuccessMessage] = useState('');
     const [error, setError] = useState('');
+
     const [review, setReview] = useState({
         userID : user.id,
         rating: null,
         additionalInfo: null
-    })
+    });
+    
     const subscriptionPlans = {
         basic: { baseResume: 1, tailoredResumes: 5 },
         premium: { baseResume: 1, tailoredResumes: Infinity },
@@ -343,6 +345,7 @@ export function UserProvider({ children }) {
         setSuccessMessage,
         error,
         setError,
+        subscriptionPlans,
 
         selectedResumeId, setSelectedResumeId, selectedResume,
         selectedTailoredResumeIdData, selectedTailoredResumeId, setSelectedTailoredResumeId,
