@@ -23,6 +23,7 @@ export default function CreateCustomTailoredResume() {
 
         setSuccessMessage,
         setError,
+        subscriptionPlans
     } = useUser();
     const {
         setLoading
@@ -161,6 +162,8 @@ export default function CreateCustomTailoredResume() {
         }
     };
 
+    const capitalizeAllLetters = (str) => str?.toUpperCase() || "";
+
   return (
     <>
         <div className="pageWrapper">
@@ -168,62 +171,76 @@ export default function CreateCustomTailoredResume() {
             <div className="secondaryPageWrapper">
             <div className="cardInnerDiv" id="jobDescriptionCardInnerDiv">
                 <Card>
-                <Card.Body className="cardBody">
-                    <h4>
-                    Prospective Company Name<span className="required-indicator">*</span> {" "} 
-                    <OverlayTrigger 
-                    overlay={
-                    <Tooltip id="tooltip">
-                        {companyNameTooltip}
-                    </Tooltip>
-                    }>
-                    <span className="question-icon">
-                        <BsQuestionCircle />
-                    </span>
-                    </OverlayTrigger>
-                    </h4>
-                    <textarea
-                    rows="1"
-                    cols="75"
-                    value={user.tailoredResume[0]?.companyName}
-                    onChange={(e) => handleTailoredResumeChange(0, 'companyName', sanitizeUserInput(e.target.value))}
-                    placeholder="Enter the prospective company name here..."
-                    className="mobile-textarea"
-                    />
-                    <br />
-                    <h4>Prospective Job Description<span className="required-indicator">*</span> {" "} 
-                    <OverlayTrigger 
+                    <Card.Body className="cardBody">
+                        <h4>
+                        Prospective Company Name<span className="required-indicator">*</span> {" "} 
+                        <OverlayTrigger 
                         overlay={
                         <Tooltip id="tooltip">
-                        {prospectiveJobDescTooltip}
+                            {companyNameTooltip}
                         </Tooltip>
-                    }>
+                        }>
                         <span className="question-icon">
-                        <BsQuestionCircle />
+                            <BsQuestionCircle />
                         </span>
-                    </OverlayTrigger>
-                    </h4>
-                    <textarea
-                    rows="10"
-                    cols="75"
-                    value={user.tailoredResume[0]?.description}
-                    onChange={(e) => handleTailoredResumeChange(0, 'description', sanitizeUserInput(e.target.value))}
-                    placeholder="Enter the prospective job description here..."
-                    className="mobile-textarea"
-                    />
-                    <br />
-                    <p  className="required-note">Fields marked with <span className="required-indicator">*</span> are required.</p>
-                </Card.Body>
+                        </OverlayTrigger>
+                        </h4>
+                        <textarea
+                            rows="1"
+                            cols="75"
+                            value={user.tailoredResume[0]?.companyName}
+                            onChange={(e) => handleTailoredResumeChange(0, 'companyName', sanitizeUserInput(e.target.value))}
+                            placeholder="Enter the prospective company name here..."
+                            className="mobile-textarea"
+                        />
+                        <br />
+                        <h4>Prospective Job Description<span className="required-indicator">*</span> {" "} 
+                        <OverlayTrigger 
+                            overlay={
+                            <Tooltip id="tooltip">
+                            {prospectiveJobDescTooltip}
+                            </Tooltip>
+                        }>
+                            <span className="question-icon">
+                            <BsQuestionCircle />
+                            </span>
+                        </OverlayTrigger>
+                        </h4>
+                        <textarea
+                            rows="10"
+                            cols="75"
+                            value={user.tailoredResume[0]?.description}
+                            onChange={(e) => handleTailoredResumeChange(0, 'description', sanitizeUserInput(e.target.value))}
+                            placeholder="Enter the prospective job description here..."
+                            className="mobile-textarea"
+                        />
+                        <br />
+                        <p className="required-note">Fields marked with <span className="required-indicator">*</span> are required.</p>
+                    </Card.Body>
                 </Card>
                 <Button
-                aria-label='submit button'
-                onClick={() => {
-                    handleSubmit();
-                }}
+                    aria-label='submit button'
+                    onClick={() => {
+                        handleSubmit();
+                    }}
                 >
-                Submit
+                    Submit
                 </Button>
             </div>
+            <Card>
+                <Card.Body>
+                    <div>
+                        <h5>Plan:{' '}{capitalizeAllLetters(user.subscription.plan)}</h5>
+                        <h6>
+                        Current Usage:
+                        ( {user.subscription.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan].tailoredResumes} )
+                        </h6>
+                    </div>
+                    <Button>
+                        Upgrade Now
+                    </Button>
+                </Card.Body>
+            </Card>
             </div>
         </div>
     </>

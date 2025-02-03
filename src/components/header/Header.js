@@ -83,6 +83,7 @@ function Header(props) {
         return () => {
         };
     }, [successMessage, error]);
+    
 return (
     <>
     <NavBar />
@@ -127,10 +128,12 @@ return (
                             <Link to='/UserProfile'>{user.userName}</Link>
                         </>
                     )}
-                    <Link to='' onClick={() => {
-                        logout();
+                    <Link to='' onClick={async () => {
+                        await logout();
                         history('/');
-                    }}>Logout</Link>
+                    }}>
+                        Logout
+                    </Link>
                 </div>
             ) : (
                 <>

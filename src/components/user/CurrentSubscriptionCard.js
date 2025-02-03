@@ -17,7 +17,7 @@ export default function CurrentSubscriptionCard() {
         document.body.appendChild(script);
 
         return () => {
-            document.body.removeChild(script); // Cleanup script on unmount
+            document.body.removeChild(script);
         };
     }, []);
 
