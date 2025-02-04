@@ -9,10 +9,12 @@ export default function PrivateRoute({children}) {
     // const {currentUser} = useAuth();
 
     // return currentUser ? children : <Navigate to='/Home'/>
-    if (!user?.initialSetupDone) {
+    if (user?.id && !user?.initialSetupDone) {
         return <Navigate to="/InitialUserSetup" replace />;
     }
 
     // check to see if subscription is expired or no longer active - if they attempt to access resume creation, reroute to /Subscribe
-    // if (user?.)
+    // if (user?.initialSetupDone && !user?.subscription.plan) {
+    //     return <Navigate to="/Subscribe" replace />;
+    // }
 }
