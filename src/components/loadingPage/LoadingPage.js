@@ -1,6 +1,6 @@
 import React from 'react'
 import './loadingPage.css'
-import Loading1 from '../../static/spinner1.png'
+import Loading1 from '../../static/spinner2.png'
 import { useSpring, animated } from 'react-spring';
 
 export default (props) => {
@@ -8,7 +8,7 @@ export default (props) => {
             loop: true,
             from: { rotateZ: 0 },
             to: { rotateZ: 360 },
-            config: {duration: 5000},
+            config: {duration: 10000},
         })
   return (
     <div className='loadingPageWrapper'>
