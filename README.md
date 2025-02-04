@@ -14,28 +14,39 @@ TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
 
 
 ### Flow Correction 
-TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier and also redirect them to upgrade their pricing tier with a timer to show how long until the next month rolls around and they can create another 5 on their current plan.
-TODO: make card showing plans or current plan and usage for home page, basic should have CTA
+TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their pricing tier with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.
+    --- maybe a component for this so that it is cleaner and less messy
+    TODO: make card showing plans or current plan and usage for home page, basic should have CTA, 
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, after which they are redirected to a subscription page. They must sign up for a plan before being able to create a resume
+    --- maybe a component to handle both of these so that it is cleaner
+    TODO: if user clicks create and isnt signed in modal to sign in is displayed.
+    TODO: if user clicks create and doesnt have active subscription -> redirect to "/Subscribe"
+
+### Cleanup
 TODO: add Success/failure Messages where relevant
+TODO: add more places to update address and include it in the resume
+TODO: add a delete button to the tailored resume table row level -> this must not impact the number of resumes made, and some sort of placeholder will need assigned to that array such as "deleted by user"
 
 
 ### Add Feature
 TODO: Implement subscription pricing.
     - free 7 day trial of basic plan
-    - Basic Plan: $5/month for up to 5 tailored resumes.(and some formatting options)
-    - Pro Plan: $15/month for unlimited resumes and additional features (full feature suit)
+    - Basic Plan: $5/month for up to 5 tailored resumes.
+    - Pro Plan: $15/month for unlimited resumes and additional features
  
 ### Bug
 TODO: fix bug on modal size when scrolling
 
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions
+TODO: limit firebase functions to authorized users only (logged in)
 
 ### Future Updates
 1. create custom login / registration - firebaseUI doesn't work with email enumeration
 2. add google reviews to website put them on home page
 3. Notification for user. Store unread alerts for the user and have a notification icon that appears. (add ads and such to this que so they can be viewed by the user)
+4. additional Styles for users
+5. custom sections
 
 ### enhancement
  ---- nothing at this time ----
