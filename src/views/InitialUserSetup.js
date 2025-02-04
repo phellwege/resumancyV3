@@ -9,7 +9,7 @@ import { BsQuestionCircle } from "react-icons/bs";
 import './main.css';
 
 import { useUser } from '../context/UserContext';
-import StripePricingTable from '../components/StripePricingTable';
+// import StripePricingTable from '../components/StripePricingTable';
 import { useData } from '../context/DataContext';
 
 export default function InitialUserSetup() {
@@ -22,7 +22,9 @@ export default function InitialUserSetup() {
         removeSocialMediaEntry,
         handleSocialMediaChange,
         isTableEnabled,
-        setIsTableEnabled
+        setIsTableEnabled,
+        setError,
+        setSuccessMessage
     } = useUser();
     const {
         saveUserData
@@ -68,15 +70,15 @@ export default function InitialUserSetup() {
     
             setIsTableEnabled(true);
         } else {
-            alert('Please complete all required fields.');
+            setError('Please complete all required fields.');
         }
     };
 
-    const renderTooltip = (props) => (
-        <Tooltip id="button-tooltip" {...props}>
-            Finish Setting up your profile to continue
-        </Tooltip>
-    );
+    // const renderTooltip = (props) => (
+    //     <Tooltip id="button-tooltip" {...props}>
+    //         Finish Setting up your profile to continue
+    //     </Tooltip>
+    // );
     const handlePhoneNumberChange = (e) => {
         const inputPhoneNumber = e.target.value.replace(/\D/g, '');
         let formattedPhoneNumber = '';
@@ -299,7 +301,7 @@ export default function InitialUserSetup() {
                     </Card.Body>
                 </Card>
             </div>
-            <div className='initSetupArrow'>
+            {/* <div className='initSetupArrow'>
                 { isTableEnabled ? (
                     <>
                     <FaArrowCircleRight size={50} color='#9cb9da'/>
@@ -313,8 +315,8 @@ export default function InitialUserSetup() {
                     <p>Finish Setting up your profile to continue</p>
                     </>
                 )}
-            </div>
-            <div className='rightDiv'>
+            </div> */}
+            {/* <div className='rightDiv'>
                 <Card>
                     <Card.Body>
                     <div className="cardInnerDiv position-relative">
@@ -327,7 +329,7 @@ export default function InitialUserSetup() {
                     </div>
                     </Card.Body>
                 </Card>
-            </div>
+            </div> */}
         </div>
     </div>
     <Footer />

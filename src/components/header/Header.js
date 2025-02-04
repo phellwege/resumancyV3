@@ -116,7 +116,7 @@ return (
             <h1>
                 Resumancy
             </h1>
-            {error && <Alert variant='danger' className='alerts' dismissible>{error}</Alert>}
+            {/* {error && <Alert variant='danger' className='alerts' dismissible>{error}</Alert>} */}
         </div>
         <div className='headerRight'>
             {user.id ? (

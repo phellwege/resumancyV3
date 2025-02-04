@@ -15,8 +15,8 @@ TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
 
 ### Flow Correction 
 TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier and also redirect them to upgrade their pricing tier with a timer to show how long until the next month rolls around and they can create another 5 on their current plan.
-TODO: make card showing plans or current plan and usage for home page
-TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, and prevent routing to other pages if false....
+TODO: make card showing plans or current plan and usage for home page, basic should have CTA
+TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, after which they are redirected to a subscription page. They must sign up for a plan before being able to create a resume
 TODO: add Success/failure Messages where relevant
 
 
@@ -28,7 +28,6 @@ TODO: Implement subscription pricing.
  
 ### Bug
 TODO: fix bug on modal size when scrolling
-TODO: fix extra experience being created on click to add. (not sure exactly why this is occurring)
 
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions

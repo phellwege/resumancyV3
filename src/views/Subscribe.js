@@ -8,6 +8,7 @@ export default function Subscribe() {
   return (
     <>
         <Header />
+            Stripe Pricing and basic information about plans
         <Footer />
     </>
   )
