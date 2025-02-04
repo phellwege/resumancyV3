@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import { Button, Card, Form, Tooltip, OverlayTrigger } from 'react-bootstrap';
@@ -13,6 +14,8 @@ import { useUser } from '../context/UserContext';
 import { useData } from '../context/DataContext';
 
 export default function InitialUserSetup() {
+    const history = useNavigate();
+    
     const {
         user,
         handleUserChange,
@@ -63,6 +66,7 @@ export default function InitialUserSetup() {
             };
     
             await saveUserData(user.id, updatedUserData);
+            history('/Subscribe')
     
         } else {
             setError('Please complete all required fields.');

@@ -680,6 +680,9 @@ width: 45%;
 .socialMediaLinkColor a:hover {
     font-weight: bold;
 }
+.subscriptionCard {
+    width: 75%;
+}
 
 
 @media (max-width: 850px) {

@@ -49,13 +49,7 @@ export default function FAQ() {
                 </p>
             </li>
             <li>
-                <h5>Can I save multiple versions of my resume for different job applications?</h5>
-                <p>
-                    Yes, you can save multiple versions of your resume. This feature allows you to create customized resumes for various job opportunities and switch between them as needed.
-                </p>
-            </li>
-            <li>
-                <h5>Can I download my resume in different formats like PDF, ?</h5>
+                <h5>Can I download my resume in different formats like PDF?</h5>
                 <p>
                     Currently, you can only download your customized resume in PDF format, making it easy to share with employers.
                 </p>
@@ -70,6 +64,12 @@ export default function FAQ() {
                 <h5>How can I get started with the AI resume builder?</h5>
                 <p>
                     To get started, simply follow the prompts to input your information and the job description. Our AI will guide you through the process, helping you create a tailored resume in no time.
+                </p>
+            </li>
+            <li>
+                <h5>How do I change my subscription?</h5>
+                <p>
+                    To change or cancel your subscription, open the menu and go to "Profile," or click on your avatar. Then, select "Manage Account" and choose the option that fits your needs.
                 </p>
             </li>
         </ul>
