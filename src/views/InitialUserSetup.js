@@ -21,8 +21,6 @@ export default function InitialUserSetup() {
         addSocialMediaEntry,
         removeSocialMediaEntry,
         handleSocialMediaChange,
-        isTableEnabled,
-        setIsTableEnabled,
         setError,
         setSuccessMessage
     } = useUser();
@@ -52,7 +50,6 @@ export default function InitialUserSetup() {
 
     const handleContinue = async () => {
         if (validateForm()) {
-            // Prepare updated user data
             const updatedUserData = {
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -62,23 +59,16 @@ export default function InitialUserSetup() {
                     phone: user.contactInfo.phone,
                     socialMedia: user.contactInfo.socialMedia,
                 },
-                plan: user.plan || null,
+                initialSetupDone: true
             };
     
-            // Save or update user data
             await saveUserData(user.id, updatedUserData);
     
-            setIsTableEnabled(true);
         } else {
             setError('Please complete all required fields.');
         }
     };
 
-    // const renderTooltip = (props) => (
-    //     <Tooltip id="button-tooltip" {...props}>
-    //         Finish Setting up your profile to continue
-    //     </Tooltip>
-    // );
     const handlePhoneNumberChange = (e) => {
         const inputPhoneNumber = e.target.value.replace(/\D/g, '');
         let formattedPhoneNumber = '';
@@ -254,7 +244,6 @@ export default function InitialUserSetup() {
                                     </Form.Label>
                                     {user.contactInfo.socialMedia.map((account, index) => (
                                         <div key={index} className="social-media-entry">
-                                            {/* Field for Social Media Platform Name */}
                                             <div className='userSetupModalSocialSquish'>
                                                 <Form.Control
                                                     type="text"
@@ -263,7 +252,6 @@ export default function InitialUserSetup() {
                                                     onChange={(e) => handleSocialMediaChange(index, 'name', sanitizeUserInput(e.target.value))}
                                                     className="mb-2"
                                                 />
-                                                {/* Field for Social Media URL */}
                                                 <Form.Control
                                                     type="url"
                                                     placeholder="URL (e.g., https://linkedin.com/in/your-profile)"
@@ -301,35 +289,6 @@ export default function InitialUserSetup() {
                     </Card.Body>
                 </Card>
             </div>
-            {/* <div className='initSetupArrow'>
-                { isTableEnabled ? (
-                    <>
-                    <FaArrowCircleRight size={50} color='#9cb9da'/>
-                    <br/>
-                    <p>Get started your free 7 day trial, or select a plan to continue.</p>
-                    </>
-                ) : (
-                    <>
-                    <FaArrowCircleRight size={50} color='red'/>
-                    <br/>
-                    <p>Finish Setting up your profile to continue</p>
-                    </>
-                )}
-            </div> */}
-            {/* <div className='rightDiv'>
-                <Card>
-                    <Card.Body>
-                    <div className="cardInnerDiv position-relative">
-                        {!isTableEnabled && (
-                            <OverlayTrigger placement="top" overlay={renderTooltip}>
-                                <div className="disabled-overlay"></div>
-                            </OverlayTrigger>
-                        )}
-                        <StripePricingTable />
-                    </div>
-                    </Card.Body>
-                </Card>
-            </div> */}
         </div>
     </div>
     <Footer />

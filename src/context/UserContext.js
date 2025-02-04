@@ -13,7 +13,6 @@ export function UserProvider({ children }) {
     const handleCloseLoginModal = () => setLoginModal(false);
     const handleOpenLoginModal = () => setLoginModal(true);
 
-    const [isTableEnabled, setIsTableEnabled] = useState(false);
     const [selectedResumeId, setSelectedResumeId] = useState(null);
     const [selectedTailoredResumeId, setSelectedTailoredResumeId] = useState(null);
     const [selectedCoverLetterId, setSelectedCoverLetterId] = useState(null);
@@ -296,9 +295,6 @@ export function UserProvider({ children }) {
         user, setUser,
         userAvatars,
         handleSelectAvatar,
-
-        isTableEnabled,
-        setIsTableEnabled,
 
         loginModal, setLoginModal,
         handleCloseLoginModal,
