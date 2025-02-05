@@ -14,7 +14,7 @@ TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
 
 
 ### Flow Correction 
-TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their pricing tier with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.
+TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their plan to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.
     --- maybe a component for this so that it is cleaner and less messy
     TODO: make card showing plans or current plan and usage for home page, basic should have CTA, 
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, after which they are redirected to a subscription page. They must sign up for a plan before being able to create a resume
@@ -28,7 +28,7 @@ TODO: add more places to update address and include it in the resume
 TODO: add a delete button to the tailored resume table row level -> this must not impact the number of resumes made, and some sort of placeholder will need assigned to that array such as "deleted by user"
 
 
-### Add Feature
+### Pricing Strategy
 TODO: Implement subscription pricing.
     - free 7 day trial of basic plan
     - Basic Plan: $5/month for up to 5 tailored resumes.
