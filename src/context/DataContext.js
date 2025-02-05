@@ -41,7 +41,8 @@ export function DataProvider({ children }) {
     const { 
         user, 
         setUser,
-        setSuccessMessage
+        setSuccessMessage,
+        setError
     } = useUser();
 
     const fetchUserData = async (userId) => {
@@ -127,7 +128,6 @@ export function DataProvider({ children }) {
             if (!userExists) {
                 const userDocRef = doc(db, 'users', userId);
                 await setDoc(userDocRef, newUserData);
-                console.log('User data added to Firestore:', newUserData);
             } else {
                 console.log('User already exists, skipping data addition.');
             }
