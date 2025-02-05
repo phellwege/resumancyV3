@@ -12,6 +12,8 @@ Step	Action	                                                    Outcome
 TODO: firebase functions:config:set stripe.webhook_secret="your_webhook_secret"
 TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
 
+TODO: implement some sort of time based delete for resume, tailoredResume and coverLetter as long as they are not base resumes. deleting these records from my db will keep costs lower and also improve performance. maybe rolling 30 day delete
+
 
 ### Flow Correction 
 TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their plan to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.
@@ -25,8 +27,6 @@ TODO: handle user profile customization on account creation. Created a function 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
 TODO: add more places to update address and include it in the resume
-TODO: add a delete button to the tailored resume table row level -> this must not impact the number of resumes made, and some sort of placeholder will need assigned to that array such as "deleted by user"
-
 
 ### Pricing Strategy
 TODO: Implement subscription pricing.
@@ -45,8 +45,9 @@ TODO: limit firebase functions to authorized users only (logged in)
 1. create custom login / registration - firebaseUI doesn't work with email enumeration
 2. add google reviews to website put them on home page
 3. Notification for user. Store unread alerts for the user and have a notification icon that appears. (add ads and such to this que so they can be viewed by the user)
-4. additional Styles for users
+4. additional resume styles
 5. custom sections
+6. add a delete button to the tailored resume table row level -> this must not impact the number of resumes made, and some sort of placeholder will need assigned to that array such as "deleted by user"
 
 ### enhancement
  ---- nothing at this time ----
