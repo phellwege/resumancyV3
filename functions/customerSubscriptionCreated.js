@@ -3,7 +3,6 @@ const client = new SecretManagerServiceClient();
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const stripe = require('stripe'); // No need to initialize stripe at this point
-admin.initializeApp();
 
 // Secret Manager function to retrieve secrets
 async function getSecret(secretName) {

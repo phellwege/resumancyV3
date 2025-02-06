@@ -2,9 +2,6 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const Stripe = require("stripe");
 
-// Initialize Firebase Admin
-admin.initializeApp();
-
 // Initialize Stripe with your secret key
 const stripe = new Stripe("sk_test_yourSecretKey"); // Replace with your actual Secret Key
 

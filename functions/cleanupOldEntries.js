@@ -1,11 +1,14 @@
-const functions = require("firebase-functions");
+const { onSchedule } = require("firebase-functions/v2/scheduler");
+const { getFirestore, Timestamp } = require("firebase-admin/firestore");
 const admin = require("firebase-admin");
-admin.initializeApp();
-const db = admin.firestore();
 
-exports.cleanUpOldEntries = functions.pubsub.schedule('every 24 hours').onRun(async (context) => {
+const db = getFirestore();
+
+exports.cleanUpOldEntries = onSchedule("every 24 hours", async (event) => {
+    console.log("🕒 Running clean-up function...");
+
     const usersSnapshot = await db.collection("users").get();
-    const thirtyDaysAgo = admin.firestore.Timestamp.fromDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+    const thirtyDaysAgo = Timestamp.fromDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
 
     const batch = db.batch();
 
@@ -21,15 +24,16 @@ exports.cleanUpOldEntries = functions.pubsub.schedule('every 24 hours').onRun(as
 
         // Filter out old non-base resumes
         const updatedResume = userData.resume?.filter(resume => 
-            resume.usage?.baseResume === true ||  // Keep base resumes
-            (resume.usage?.timeStamp && resume.usage.timeStamp.toDate() > thirtyDaysAgo) // Keep non-base resumes if recent
+            resume.usage?.baseResume === true ||  
+            (resume.usage?.timeStamp && resume.usage.timeStamp.toDate() > thirtyDaysAgo)
         ) || [];
-        
-        // Update only if necessary
-        if (updatedTailoredResume.length !== userData.tailoredResume?.length || 
+
+        // Update Firestore only if necessary
+        if (
+            updatedTailoredResume.length !== userData.tailoredResume?.length || 
             updatedCoverLetter.length !== userData.coverLetter?.length ||
-            updatedResume.length !== userData.resume?.length) {
-            
+            updatedResume.length !== userData.resume?.length
+        ) {
             batch.update(userRef, {
                 tailoredResume: updatedTailoredResume,
                 coverLetter: updatedCoverLetter,
@@ -40,5 +44,4 @@ exports.cleanUpOldEntries = functions.pubsub.schedule('every 24 hours').onRun(as
 
     await batch.commit();
     console.log("✅ Old entries successfully cleaned up.");
-    return null;
 });
