@@ -43,7 +43,10 @@ export default function TailoredResumeTable() {
   // Pagination logic
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = readyTailoredResume.slice(indexOfFirstItem, indexOfLastItem);
+    const sortedResumes = [...readyTailoredResume].sort((a, b) => 
+      new Date(b.usage.timeStamp) - new Date(a.usage.timeStamp)
+    );
+    const currentItems = sortedResumes.slice(indexOfFirstItem, indexOfLastItem);
     const totalPages = Math.ceil(readyTailoredResume.length / itemsPerPage);
   return (
     <>
