@@ -27,6 +27,7 @@ TODO: handle user profile customization on account creation. Created a function 
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
+TODO: add address changes to the edit for the resume
 
 ### Pricing Strategy
 TODO: Implement subscription pricing.
