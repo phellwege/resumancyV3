@@ -113,6 +113,7 @@ export function UserProvider({ children }) {
             },
         },
         initialSetupDone: false,
+        coupon: '' // this will be used to try to get more annual subscribers
     };
     const [user, setUser] = useState(initialUserState)
     const resetUser = () => setUser(initialUserState);
