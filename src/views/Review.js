@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import BaseResumeTable from '../components/Review/BaseResumeTable';
@@ -12,6 +14,7 @@ import { useUser } from '../context/UserContext';
 // import RecruitInfoTable from '../components/recruit/RecruitInfoTable';
 
 export default function Review() {
+    const history = useNavigate();
     const capitalizeAllLetters = (str) => str?.toUpperCase() || "";
     const {
       user,
@@ -30,6 +33,13 @@ export default function Review() {
       <h1>Review</h1>
       <div>
         <BaseResumeTable />
+        <div className='centeredReviewButtonDiv'>
+          <h6>Create Tailored Resume</h6>
+          <p>Custom tailoring your resume to a given job is shown to improve your odds of receiving an interview.</p>
+          <Button onClick={() => history('/Tailor')}>
+            Tailor
+          </Button>
+        </div>
         <TailoredResumeTable />
         {user.subscription.plan != 'premium' && (
             <Card>

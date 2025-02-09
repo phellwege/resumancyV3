@@ -11,7 +11,8 @@ Step	Action	                                                    Outcome
 
 TODO: firebase functions:config:set stripe.webhook_secret="your_webhook_secret"
 TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
-
+    
+- should be functional now...wait for success tomorrow
 TODO: implement some sort of time based delete for resume, tailoredResume and coverLetter as long as they are not base resumes. deleting these records from my db will keep costs lower and also improve performance. maybe rolling 30 day delete
 --- added cloud function for this. check to see if vanta only has one entry as of 02/10/2025 - I set one of them to january as a creation date so it should drop off when the cloud function runs 
 
@@ -23,7 +24,6 @@ TODO: handle user profile customization on account creation. Created a function 
     --- maybe a component to handle both of these so that it is cleaner
     TODO: if user clicks create and isnt signed in modal to sign in is displayed.
     TODO: if user clicks create and doesnt have active subscription -> redirect to "/Subscribe"
-TODO: add button to review to create another tailored Resume reducing number of clicks by 1
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
