@@ -117,6 +117,8 @@ export function UserProvider({ children }) {
     const [user, setUser] = useState(initialUserState)
     const resetUser = () => setUser(initialUserState);
     
+    const [includeAddress, setIncludeAddress] = useState(false);
+
     const subscriptionPlans = {
         basic: { baseResume: 1, tailoredResumes: 5 },
         premium: { baseResume: 1, tailoredResumes: Infinity },
@@ -334,6 +336,9 @@ export function UserProvider({ children }) {
         addSocialMediaEntry,
         removeSocialMediaEntry,
         handleUserChange,
+
+        includeAddress,
+        setIncludeAddress,
 
         stripFormatting,
 

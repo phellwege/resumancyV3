@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,6 +25,8 @@ export default function CreateBaselineResume() {
         addExperienceEntry,
         removeExperienceEntry,
         generateUUID,
+        includeAddress,
+        setIncludeAddress,
 
         setSuccessMessage,
         setError,
@@ -41,7 +43,6 @@ export default function CreateBaselineResume() {
     const userSkills = "Specify your relevant skills (Required):";
     const userAdditional = "Include any additional relevant information (Optional):";
     
-    const [includeAddress, setIncludeAddress] = useState(false);
     const addNewResume = (newResume) => {
         setUser((prevState) => ({
             ...prevState,

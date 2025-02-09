@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React from 'react'
 // import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -25,6 +25,8 @@ export default function UserSetupModal() {
         removeSocialMediaEntry,
         handleSocialMediaChange,
         setSuccessMessage,
+        includeAddress,
+        setIncludeAddress,
     } = useUser();
     const {
         updateUserData
@@ -139,7 +141,7 @@ export default function UserSetupModal() {
                                         <Form.Control
                                             type="text"
                                             placeholder="Platform (e.g., LinkedIn)"
-                                            value={account.name} // Correctly access the 'name' property
+                                            value={account.name}
                                             onChange={(e) => handleSocialMediaChange(index, 'name', sanitizeUserInput(e.target.value))}
                                             className="mb-2"
                                         />
@@ -193,7 +195,36 @@ export default function UserSetupModal() {
                     </div>
                     <br/>
                     <div>
-                        <AddressForm/>
+                        <Form>
+                            <Form.Group>
+                                <Form.Label>
+                                    Want to include your address?
+                                </Form.Label>
+                                <br/>
+                                <Form.Check
+                                    inline
+                                    label="Yes"
+                                    type={'checkbox'}
+                                    onChange={() => setIncludeAddress(true)}
+                                    checked={includeAddress}
+                                    />
+                                <Form.Check
+                                    inline
+                                    label="No"
+                                    type={'checkbox'}
+                                    onChange={() => setIncludeAddress(false)}
+                                    checked={!includeAddress}
+                                    />
+                                {includeAddress && (
+                                    <div>
+                                        <sub>
+                                            Feel free to fill out only the fields you wish to provide.
+                                        </sub>
+                                        <AddressForm/>
+                                    </div>
+                                )}
+                        </Form.Group>
+                    </Form>
                     </div>
                 </div>
             </div>
