@@ -691,6 +691,10 @@ width: 45%;
     align-items: center;
     justify-content: space-around;
 }
+.userInfoCardInnerWrap {
+    display: flex;
+    justify-content: space-evenly;
+}
 
 @media (max-width: 850px) {
     #defaultResumeWrap {

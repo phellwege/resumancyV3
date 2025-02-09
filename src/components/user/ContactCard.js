@@ -12,17 +12,17 @@ export default function ContactCard() {
         <Card>
             <Card.Body>
                 <div className='cardInnerDiv'>
-                    <div>
                         <h4>User Information</h4>
+                        <h6>{user.firstName}{' '}{user.lastName}</h6>
+                    <div className='userInfoCardInnerWrap'>
                         <div className='leftShifted'>
-                        {user.firstName}{' '}{user.lastName}
-                        <br/>
                         {user.jobTitle}
                         <br/>
                         {user.contactInfo.phone}
                         <br/>
                         {user.contactInfo.email}
                         <br/>
+                        </div>
                         {user.contactInfo.socialMedia.length > 0 && (
                             <div className='socialMediaLinkColor'>
                                 {user.contactInfo.socialMedia.map((account, index) => (
@@ -38,40 +38,29 @@ export default function ContactCard() {
                                 ))}
                             </div>
                         )}
-                        <br />
+                        {/* <br /> */}
                         {user.address && (
-                            <>
-                            {user.address.street && (
-                                <>
-                                    {user.address.street}{' '}
-                                </>
-                            )}
-                            {user.address.appt && (
-                                <>
-                                    {user.address.appt}
-                                </>
-                            )}
-                            <br/>
-                            {user.address.city && (
-                                <>
-                                    {user.address.city}{' '}
-                                </>
-                            )}
-                            {user.address.state && (
-                                <>
-                                    {user.address.state}{' '}
-                                </>
-                            )}
-                            {user.address.zip && (
-                                <>
-                                    {user.address.zip}{' '}
-                                </>
-                            )}
-                            </>
+                            <div>
+                                <h6>Address:</h6>
+                                {(user.address.street || user.address.appt) && (
+                                    <>
+                                        {user.address.street && `${user.address.street} `}
+                                        {user.address.appt && user.address.appt}
+                                        <br />
+                                    </>
+                                )}
+                                {(user.address.city || user.address.state || user.address.zip) && (
+                                    <>
+                                        {user.address.city && `${user.address.city}, `}
+                                        {user.address.state && `${user.address.state} `}
+                                        {user.address.zip && user.address.zip}
+                                    </>
+                                )}
+                            </div>
                         )}
-                        </div>
-                        <Button onClick={handleOpenSetupUserModal}>Edit</Button>
+                        
                     </div>
+                    <Button onClick={handleOpenSetupUserModal}>Edit</Button>
                 </div>
             </Card.Body>
         </Card>

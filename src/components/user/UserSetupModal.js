@@ -8,6 +8,8 @@ import { useUser } from '../../context/UserContext';
 import SelectAvatarModal from './SelectAvatarModal';
 import { FaMinusSquare , FaPlusSquare  } from "react-icons/fa";
 
+import AddressForm from './AddressForm';
+
 import '../../views/main.css';
 
 export default function UserSetupModal() {
@@ -22,7 +24,8 @@ export default function UserSetupModal() {
         addSocialMediaEntry,
         removeSocialMediaEntry,
         handleSocialMediaChange,
-        setSuccessMessage
+        setSuccessMessage,
+        handleAddressChange
     } = useUser();
     const {
         updateUserData
@@ -44,7 +47,8 @@ export default function UserSetupModal() {
     };
     
     const handleSaveUser = async () => {
-        const userId = user.id; // Ensure user ID is available
+        const userId = user.id;
+        const hasAddress = Object.values(user.address).some(value => value.trim() !== '');
 
         const updatedUser = {
             firstName: user.firstName,
@@ -55,7 +59,8 @@ export default function UserSetupModal() {
                 email: user.contactInfo.email,
                 socialMedia: user.contactInfo.socialMedia,
             },
-            avatarImg: user.avatarImg
+            avatarImg: user.avatarImg,
+            ...(hasAddress && { address: { ...user.address } })
         };
 
         await updateUserData(userId, updatedUser);
@@ -187,15 +192,19 @@ export default function UserSetupModal() {
                         Change Avatar
                         </Button>
                     </div>
+                    <br/>
+                    <div>
+                        <AddressForm onChange={handleAddressChange}/>
+                    </div>
                 </div>
             </div>
         </Modal.Body>
         <Modal.Footer>
+            <Button variant="success" onClick={handleSaveUser}>
+                Save
+            </Button>
             <Button variant="danger" onClick={handleCloseSetupUserModal}>
                 Cancel
-            </Button>
-            <Button variant="primary" onClick={handleSaveUser}>
-                Save
             </Button>
         </Modal.Footer>
     </Modal>
