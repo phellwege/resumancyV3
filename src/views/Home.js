@@ -88,7 +88,12 @@ export default function Home() {
                                         <h5>
                                             Current Plan: 
                                             <br/>
-                                            <span style={{color:"gold"}}>{capitalizeAllLetters(user.subscription.plan)}</span>
+                                            <span style={{
+                                                color:"gold",
+                                                fontWeight:"bold"
+                                            }}>
+                                                {capitalizeAllLetters(user.subscription.plan)}
+                                            </span>
                                         </h5>
                                     </>
                                 )}
@@ -118,7 +123,7 @@ export default function Home() {
                                             <br/>
                                             <span className='HomeSectionSubScript'>Create Custom Resumes for each application.</span>
                                             <br/>
-                                            <span className='homeNum'>Step 3. </span> Click on <b>Custom Tailor</b>, then provide prospective job details.
+                                            <span className='homeNum'>Step 3. </span> Click on <b>Tailor Resume</b>, then provide prospective job details.
                                             <br/>
                                             <span className='homeNum'> Step 4. </span> Enjoy your custom tailored resume(s).
                                         </p>
@@ -130,7 +135,7 @@ export default function Home() {
                                         <Button
                                         aria-label='create button'
                                         >
-                                            Create
+                                            Create Resume
                                         </Button>
                                     </Link>
                                 ):(
@@ -138,7 +143,7 @@ export default function Home() {
                                         <Button
                                         aria-label='create button'
                                         >
-                                            Custom Tailor
+                                            Tailor Resume
                                         </Button>
                                     </Link>
                                 )}
