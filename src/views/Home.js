@@ -85,7 +85,11 @@ export default function Home() {
                                 )}
                                 {user?.subscription.plan === 'premium' && (
                                     <>
-                                        <h5>Current Plan: <br/>{capitalizeAllLetters(user.subscription.plan)}</h5>
+                                        <h5>
+                                            Current Plan: 
+                                            <br/>
+                                            <span style={{color:"gold"}}>{capitalizeAllLetters(user.subscription.plan)}</span>
+                                        </h5>
                                     </>
                                 )}
                             </div>
