@@ -88,18 +88,19 @@ export default function ResumeStyle4({isGenPDF}) {
                             ))}
                         </div>
                     )}
-                    {selectedResume.usage.useAddress && (
-                    <div className='reviewAddress'>
-                        {user.address.street}{' '}
-                        {user.address.appt}
-                        <br/>
-                        {user.address.city}
-                        <br/>
-                        {user.address.state}
-                        {' '}
-                        {user.address.zip}
-                    </div>
-                )}
+                    {user.address?.useAddress && (
+                        <div className="reviewAddress">
+                            <h6 className="mb-0">Address:</h6>
+                            <p className="mb-0">
+                                {user.address.street && `${user.address.street} `}
+                                {user.address.appt && user.address.appt}
+                                <br />
+                                {user.address.city && `${user.address.city}`}
+                                {user.address.state && `, ${user.address.state}`}
+                                {user.address.zip && ` ${user.address.zip}`}
+                            </p>
+                        </div>
+                    )}
                 </div>
               <div
                 className="reviewDefaultResumeSections"

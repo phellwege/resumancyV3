@@ -35,12 +35,12 @@ const renderTextWithNewLines = (text) => {
             <h3>
             {capitalizeFirstLetter(user?.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}{capitalizeFirstLetter(user?.lastName)}
             </h3>
-            <h5>{user.jobTitle}</h5>
+            <h6>{user.jobTitle}</h6>
         </div>
         <div className='resumeStyleLowerWrap'>
             <div className='resumeStyleLeftBlock'>
             <div className='reviewDefaultResumeSections'>
-                <h5>Contact Info:</h5>
+                <h6>Contact Info:</h6>
                 <a 
                     href={`mailto:${user.contactInfo.email}`}
                     target="_blank"
@@ -67,33 +67,36 @@ const renderTextWithNewLines = (text) => {
                         ))}
                     </div>
                 )}
-                {selectedResume?.usage?.useAddress && (
+                {user.address?.useAddress && (
                     <div className="reviewAddress">
-                        <h5>Address</h5>
-                        {user.address.street} {user.address.appt}
-                        <br />
-                        {user.address.city}
-                        <br />
-                        {user.address.state} {user.address.zip}
+                        <h6 className="mb-0">Address:</h6>
+                        <p className="mb-0">
+                            {user.address.street && `${user.address.street} `}
+                            {user.address.appt && user.address.appt}
+                            <br />
+                            {user.address.city && `${user.address.city}`}
+                            {user.address.state && `, ${user.address.state}`}
+                            {user.address.zip && ` ${user.address.zip}`}
+                        </p>
                     </div>
                 )}
             </div>
             <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
-                <h5>Skills:</h5>
+                <h6>Skills:</h6>
                 <span className='leftOrientedReviewSections'>{renderTextWithNewLines(selectedResume?.skills)}</span>
                 <div className='reviewDefaultResumeSections' id='resumeStyle2Education'>
-                <h5>Education and Certifications:</h5>
+                <h6>Education and Certifications:</h6>
                 <span className='leftOrientedReviewSections'>{renderTextWithNewLines(selectedResume?.education)}</span>
             </div>
             </div>
             </div>
             <div className='resumeStyleRightBlock'>
                 <div className='reviewDefaultResumeSections'>
-                <h5>Summary:</h5>
+                <h6>Summary:</h6>
                 {renderTextWithNewLines(selectedResume?.summary)}
             </div>
             <div className='reviewDefaultResumeSections'>
-                <h5>Experience:</h5>
+                <h6>Experience:</h6>
                 {selectedResume?.experience.map((exp, index) => (
                     <div key={index} className="experience-entry">
                         <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>

@@ -58,8 +58,8 @@ export default function ContactCard() {
                                 )}
                             </div>
                         )}
-                        
                     </div>
+                    <br/>
                     <Button onClick={handleOpenSetupUserModal}>Edit</Button>
                 </div>
             </Card.Body>

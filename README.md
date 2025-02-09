@@ -22,12 +22,11 @@ TODO: setup something so that it prevents users from creating a resume if they a
     TODO: make card showing plans or current plan and usage for home page, basic should have CTA, 
 TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, after which they are redirected to a subscription page. They must sign up for a plan before being able to create a resume
     --- maybe a component to handle both of these so that it is cleaner
-    TODO: if user clicks create and isnt signed in modal to sign in is displayed.
-    TODO: if user clicks create and doesnt have active subscription -> redirect to "/Subscribe"
+    TODO: if user clicks create and isn't signed in modal to sign in is displayed.
+    TODO: if user clicks create and doesn't have active subscription -> redirect to "/Subscribe"
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
-TODO: add more places to update address and include it in the resume
 
 ### Pricing Strategy
 TODO: Implement subscription pricing.

@@ -49,7 +49,13 @@ export default function UserSetupModal() {
     
     const handleSaveUser = async () => {
         const userId = user.id;
-        const hasAddress = Object.values(user.address).some(value => value.trim() !== '');
+        const updatedAddress = {
+            ...user.address,
+            useAddress: includeAddress,
+        };
+        const hasAddress = Object.entries(updatedAddress)
+        .filter(([key]) => key !== 'useAddress')
+        .some(([, value]) => value.trim() !== '');
 
         const updatedUser = {
             firstName: user.firstName,
@@ -61,7 +67,7 @@ export default function UserSetupModal() {
                 socialMedia: user.contactInfo.socialMedia,
             },
             avatarImg: user.avatarImg,
-            ...(hasAddress && { address: { ...user.address } })
+            address: hasAddress ? updatedAddress : { useAddress: includeAddress },
         };
 
         await updateUserData(userId, updatedUser);

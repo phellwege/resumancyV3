@@ -80,6 +80,10 @@ export default function CreateBaselineResume() {
     
             const updatedUser = {
                 ...user,
+                address: {
+                    ...user.address,
+                    useAddress: includeAddress,
+                },
                 resume: [
                     {
                         ...user.resume[0],

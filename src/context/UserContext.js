@@ -63,6 +63,7 @@ export function UserProvider({ children }) {
             socialMedia: [{ name: '', url: '' }]
         },
         address: {
+            useAddress: false,
             street: '',
             appt: '',
             city: '',
@@ -84,7 +85,6 @@ export function UserProvider({ children }) {
             usage: {
                 timeStamp: null,
                 baseResume: true,
-                useAddress: false
             }
         }],
         tailoredResume: [{
@@ -247,7 +247,6 @@ export function UserProvider({ children }) {
         }));
     };
     
-    
     const removeExperienceEntry = (index) => {
         setUser((prevState) => {
             const updatedResume = [...prevState.resume];
@@ -329,7 +328,7 @@ export function UserProvider({ children }) {
         handleExperienceChange,
         addExperienceEntry,
         removeExperienceEntry,
-        handleTailoredResumeChange, // will need DB in order to perform this action. (I will need to fetch the base resume from the db and pass it as a state object)
+        handleTailoredResumeChange,
         handleAddressChange,
         handleContactChange,
         handleSocialMediaChange,
