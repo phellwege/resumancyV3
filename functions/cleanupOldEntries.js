@@ -8,24 +8,31 @@ exports.cleanUpOldEntries = onSchedule("every 24 hours", async (event) => {
     console.log("🕒 Running clean-up function...");
 
     const usersSnapshot = await db.collection("users").get();
-    const thirtyDaysAgo = Timestamp.fromDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // Convert to JS Date
 
     const batch = db.batch();
-
+    let batchCounter = 0;
+    
     usersSnapshot.forEach((userDoc) => {
         const userData = userDoc.data();
         const userRef = userDoc.ref;
 
+        // Helper function to safely parse dates
+        const isRecent = (dateStr) => {
+            if (!dateStr) return false;
+            const date = new Date(dateStr); // Convert Firestore string to Date
+            return date > thirtyDaysAgo;
+        };
+
         // Filter out old tailored resumes
-        const updatedTailoredResume = userData.tailoredResume?.filter(tr => tr.createdAt && tr.createdAt.toDate() > thirtyDaysAgo) || [];
+        const updatedTailoredResume = userData.tailoredResume?.filter(tr => isRecent(tr.createdAt)) || [];
         
         // Filter out old cover letters
-        const updatedCoverLetter = userData.coverLetter?.filter(cl => cl.createdAt && cl.createdAt.toDate() > thirtyDaysAgo) || [];
+        const updatedCoverLetter = userData.coverLetter?.filter(cl => isRecent(cl.createdAt)) || [];
 
         // Filter out old non-base resumes
         const updatedResume = userData.resume?.filter(resume => 
-            resume.usage?.baseResume === true ||  
-            (resume.usage?.timeStamp && resume.usage.timeStamp.toDate() > thirtyDaysAgo)
+            resume.usage?.baseResume === true || isRecent(resume.usage?.timeStamp)
         ) || [];
 
         // Update Firestore only if necessary
@@ -39,9 +46,22 @@ exports.cleanUpOldEntries = onSchedule("every 24 hours", async (event) => {
                 coverLetter: updatedCoverLetter,
                 resume: updatedResume
             });
+
+            batchCounter++;
+
+            // Commit batch if nearing Firestore limit (500 writes per batch)
+            if (batchCounter >= 450) {
+                batch.commit();
+                console.log("✅ Batch committed to Firestore.");
+                batchCounter = 0; // Reset counter for new batch
+            }
         }
     });
 
-    await batch.commit();
+    if (batchCounter > 0) {
+        await batch.commit();
+        console.log("✅ Final batch committed to Firestore.");
+    }
+
     console.log("✅ Old entries successfully cleaned up.");
 });
