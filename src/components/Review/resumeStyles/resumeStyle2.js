@@ -67,10 +67,11 @@ const renderTextWithNewLines = (text) => {
                         ))}
                     </div>
                 )}
+                <br/>
                 {user.address?.useAddress && (
                     <div className="reviewAddress">
                         <h6 className="mb-0">Address:</h6>
-                        <p className="mb-0">
+                        <p className="mb-1">
                             {user.address.street && `${user.address.street} `}
                             {user.address.appt && user.address.appt}
                             <br />
