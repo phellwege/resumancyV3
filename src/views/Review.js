@@ -34,10 +34,10 @@ export default function Review() {
       <div>
         <BaseResumeTable />
         <div className='centeredReviewButtonDiv'>
-          <h6>Create Tailored Resume</h6>
-          <p>Custom tailoring your resume to a given job is shown to improve your odds of receiving an interview.</p>
+          <h6>Create a Tailored Resume</h6>
+          <p>Customizing your resume for a specific job has been shown to increase your chances of landing an interview.</p>
           <Button onClick={() => history('/Tailor')}>
-            Tailor
+            Tailor Resume
           </Button>
         </div>
         <TailoredResumeTable />
