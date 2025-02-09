@@ -1,12 +1,19 @@
 import React from 'react'
 import { Form, Row, Col } from 'react-bootstrap';
 import usStates from 'states-us';
+import { useUser } from '../../context/UserContext';
 
 import '../../views/main.css';
-export default function AddressForm({ address, onChange}) {
+export default function AddressForm() {
+    const {
+        user,
+        handleAddressChange
+    } = useUser();
+
     const handleChange = (key, value) => {
-        onChange(key, value);
+        handleAddressChange(key, value);
       };
+
   return (
     <div className='addressForm'>
         <sub>Address Info is Optional</sub>
@@ -18,7 +25,8 @@ export default function AddressForm({ address, onChange}) {
         <Col sm="10">
             <Form.Control 
             type="text" 
-            placeholder="Street Address" 
+            placeholder="Street Address"
+            value={user?.address?.street || ''}
             onChange={(e) => {handleChange('street', e.target.value)}} 
             maxLength='50'
             />
@@ -29,7 +37,8 @@ export default function AddressForm({ address, onChange}) {
         <Col sm="7">
             <Form.Control 
             type="text" 
-            placeholder="City" 
+            placeholder="City"
+            value={user?.address?.city || ''}
             onChange={(e) => {handleChange('city', e.target.value)}} 
             maxLength='50'
             />
@@ -38,9 +47,19 @@ export default function AddressForm({ address, onChange}) {
         <Form.Group as={Row} controlId="addressState">
         <Form.Label column sm="2">State</Form.Label>
             <Col sm="5">
-            <Form.Control as="select" onChange={(e) => {handleChange('state', e.target.value)}}>
+            <Form.Control 
+            as="select" 
+            value={user?.address?.state || ''}
+            onChange={(e) => {handleChange('state', e.target.value)}}
+            >
+                <option value="">Select a state</option>
                 {usStates.map(state => (
-                    <option key={state.name} value={state.abbr}>{state.name}</option>
+                    <option 
+                        key={state.name} 
+                        value={state.abbr}
+                    >
+                        {state.name}
+                    </option>
                 ))}
             </Form.Control>
             </Col>
@@ -50,7 +69,8 @@ export default function AddressForm({ address, onChange}) {
         <Col sm="5">
             <Form.Control 
             type="text" 
-            placeholder="ZIP" 
+            placeholder="ZIP"
+            value={user?.address?.zip || ''}
             onChange={(e) => handleChange('zip', e.target.value)} 
             maxLength='50'
             />

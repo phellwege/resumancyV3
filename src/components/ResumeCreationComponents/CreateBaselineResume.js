@@ -21,7 +21,6 @@ export default function CreateBaselineResume() {
         handleUserChange,
         handleResumeChange,
         sanitizeUserInput,
-        handleAddressChange,
         handleExperienceChange,
         addExperienceEntry,
         removeExperienceEntry,
@@ -157,7 +156,7 @@ export default function CreateBaselineResume() {
                                                 <br/>
                                                 Feel free to fill out only the fields you wish to provide.
                                             </sub>
-                                            <AddressForm onChange={handleAddressChange}/>
+                                            <AddressForm/>
                                         </div>
                                     )}
                                     <Form.Label className="d-flex justify-content-between align-items-center">

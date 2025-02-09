@@ -25,7 +25,6 @@ export default function UserSetupModal() {
         removeSocialMediaEntry,
         handleSocialMediaChange,
         setSuccessMessage,
-        handleAddressChange
     } = useUser();
     const {
         updateUserData
@@ -194,7 +193,7 @@ export default function UserSetupModal() {
                     </div>
                     <br/>
                     <div>
-                        <AddressForm onChange={handleAddressChange}/>
+                        <AddressForm/>
                     </div>
                 </div>
             </div>
