@@ -20,6 +20,7 @@ import Review from './views/Review';
 import InitialUserSetup from './views/InitialUserSetup';
 import UserProfile from './views/UserProfile';
 import Subscribe from './views/Subscribe';
+import Account from './views/Account';
 // import RecruiterMainPage from './views/RecruiterMainPage';
 // import Recruit from './views/Recruit';
 // import RecruitCreateResume from './views/RecruitCreateResume';
@@ -46,6 +47,7 @@ function App() {
             <Route exact path='/UserProfile' element={<UserProfile />} />
             <Route exact path='/InitialUserSetup' element={<InitialUserSetup />} />
             <Route exact path='/Subscribe' element={<Subscribe />} />
+            <Route exact path='/Account' element={<Account />} />
 
             {/* <Route exact path="/RecruiterSetupPage" element={<RecruiterSetupPage />} /> */}
             {/* <Route exact path='/RecruiterMainPage' element={<RecruiterMainPage />} /> */}

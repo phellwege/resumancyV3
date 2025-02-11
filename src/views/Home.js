@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { Button, Card, Alert} from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 import Header from '../components/header/Header';
@@ -13,7 +14,10 @@ export default function Home() {
         user,
         subscriptionPlans
     } = useUser();
+
     const capitalizeAllLetters = (str) => str?.toUpperCase() || "";
+
+    const history = useNavigate();
 
   return (
     <>
@@ -95,6 +99,9 @@ export default function Home() {
                                                 {capitalizeAllLetters(user.subscription.plan)}
                                             </span>
                                         </h5>
+                                        <Button onClick={() => history('/Account')}>
+                                            Manage Account
+                                        </Button>
                                     </>
                                 )}
                             </div>

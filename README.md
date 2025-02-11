@@ -1,5 +1,6 @@
 ### Repair to working state
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
+
 TODO: fix the stripe payment thing so it is a stripe payment portal, this way the client cannot edit their email and it is more secure. Call it using a cloud function. 
  - steps to succeed
 Step	Action	                                                    Outcome
@@ -11,10 +12,11 @@ Step	Action	                                                    Outcome
 
 TODO: firebase functions:config:set stripe.webhook_secret="your_webhook_secret"
 TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
-    
-- should be functional now...wait for success tomorrow
-TODO: implement some sort of time based delete for resume, tailoredResume and coverLetter as long as they are not base resumes. deleting these records from my db will keep costs lower and also improve performance. maybe rolling 30 day delete
---- added cloud function for this. check to see if vanta only has one entry as of 02/10/2025 - I set one of them to january as a creation date so it should drop off when the cloud function runs 
+
+TODO: add manage account section to delete acct, change subscription etc.
+icon for this in nav will be
+import { MdManageAccounts } from "react-icons/md";
+<MdManageAccounts />
 
 ### Flow Correction 
 TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their plan to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.

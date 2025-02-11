@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import {Button, Card} from 'react-bootstrap'
 import { useUser } from '../../context/UserContext'
+import { Link, useNavigate } from 'react-router-dom';
 
 
 export default function CurrentSubscriptionCard() {
@@ -21,6 +22,8 @@ export default function CurrentSubscriptionCard() {
         };
     }, []);
 
+        const history = useNavigate();
+    
   return (
     <>
         <Card>
@@ -48,9 +51,13 @@ export default function CurrentSubscriptionCard() {
                         </div>
                     </Card.Body>
                 </Card>
+                <Button onClick={() => history('/Account')}>
+                    Manage Account
+                </Button>
             </div>
             </Card.Body>
         </Card>
     </>
   )
 }
+ 

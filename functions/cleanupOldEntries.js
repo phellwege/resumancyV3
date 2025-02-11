@@ -25,8 +25,10 @@ exports.cleanUpOldEntries = onSchedule("every 24 hours", async (event) => {
         };
 
         // Filter out old tailored resumes
-        const updatedTailoredResume = userData.tailoredResume?.filter(tr => isRecent(tr.createdAt)) || [];
-        
+        const updatedTailoredResume = userData.tailoredResume
+            ? userData.tailoredResume.filter((tr, index) => index === 0 || isRecent(tr.createdAt))
+            : [];
+
         // Filter out old cover letters
         const updatedCoverLetter = userData.coverLetter?.filter(cl => isRecent(cl.createdAt)) || [];
 

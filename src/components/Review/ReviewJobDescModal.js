@@ -11,6 +11,14 @@ export default function ReviewJobDescModal() {
         selectedTailoredResumeIdData,
         user
     } = useUser();
+    
+    if (!selectedTailoredResumeIdData) {
+        console.warn("Warning: selectedTailoredResumeIdData is undefined. Preventing error.");
+        return null; // Or show a placeholder UI
+    }
+    
+    const { description } = selectedTailoredResumeIdData;
+
     const renderTextWithNewLines = (text) => {
         if (text) {
             const lines = text.split('\n');

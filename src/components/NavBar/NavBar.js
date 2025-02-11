@@ -3,14 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import { ThemeProvider } from 'styled-components';
 import Toggle from '../Toggle/DayNight_Mode';
-import { MdClose } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 import GlobalStyle from '../globalStyle';
 
 import { FaHome } from "react-icons/fa";
-import { MdOutlinePostAdd } from "react-icons/md";
-import { MdOutlineNoteAdd } from "react-icons/md";
-import { MdPreview } from "react-icons/md";
+import { MdClose, MdOutlinePostAdd, MdManageAccounts, MdOutlineNoteAdd, MdPreview } from "react-icons/md";
 
 import { CgProfile } from "react-icons/cg";
 
@@ -118,12 +115,21 @@ const NavBar = () => {
                                 </>
                             )}
                             {user.id && (
-                                <li>
-                                    <Link to="/UserProfile" onClick={() => closeMenu()}>
-                                        <CgProfile className='navIcons'/> 
-                                        Profile
-                                    </Link>
-                                </li>
+                                <>
+                                    <li>
+                                        <Link to="/UserProfile" onClick={() => closeMenu()}>
+                                            <CgProfile className='navIcons'/> 
+                                            Profile
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to='/Account' onClick={() => closeMenu()}>
+                                            <MdManageAccounts className='navIcons'/> 
+                                            Account
+                                        </Link>
+                                    </li>
+                                </>
+                                
                             )}
                             {/* {user.recruiter === true && (
                                 <li>

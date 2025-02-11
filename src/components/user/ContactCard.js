@@ -12,7 +12,7 @@ export default function ContactCard() {
         <Card>
             <Card.Body>
                 <div className='cardInnerDiv'>
-                        <h4>User Information</h4>
+                        <h4>Profile Information</h4>
                         <h6>{user.firstName}{' '}{user.lastName}</h6>
                     <div className='userInfoCardInnerWrap'>
                         <div className='leftShifted'>
