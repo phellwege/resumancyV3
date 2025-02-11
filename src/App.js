@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import PrivateRoute from '../src/components/privateRoute';
-import InitialSetupCheck from '../src/components/InitialSetupCheck'
 import {ThemeProvider} from 'styled-components';
 import { UserProvider } from './context/UserContext';
 import { AuthProvider } from './context/AuthContext';
@@ -36,18 +35,18 @@ function App() {
         <DataProvider>
           <React.Fragment>
             <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route exact path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route exact path="/FAQ" element={<FAQ />} />
             <Route exact path="/TermsOfUse" element={<TermsOfUse />} />
             <Route exact path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
             
-            <Route exact path='/Create' element={<Create />} />
-            <Route exact path='/Tailor' element={<Tailor />} />
-            <Route exact path='/Review' element={<Review />} />
-            <Route exact path='/UserProfile' element={<UserProfile />} />
+            <Route exact path='/Create' element={<PrivateRoute><Create /></PrivateRoute>} />
+            <Route exact path='/Tailor' element={<PrivateRoute><Tailor /></PrivateRoute>} />
+            <Route exact path='/Review' element={<PrivateRoute><Review /></PrivateRoute>} />
+            <Route exact path='/UserProfile' element={<PrivateRoute><UserProfile /></PrivateRoute>} />
             <Route exact path='/InitialUserSetup' element={<InitialUserSetup />} />
             <Route exact path='/Subscribe' element={<Subscribe />} />
-            <Route exact path='/Account' element={<Account />} />
+            <Route exact path='/Account' element={<PrivateRoute><Account /></PrivateRoute>} />
 
             {/* <Route exact path="/RecruiterSetupPage" element={<RecruiterSetupPage />} /> */}
             {/* <Route exact path='/RecruiterMainPage' element={<RecruiterMainPage />} /> */}

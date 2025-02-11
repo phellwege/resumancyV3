@@ -20,8 +20,8 @@ const StripePricingTable = () => {
   return (
     <>
       <stripe-pricing-table
-      pricing-table-id="prctbl_1Qj47YEsYMRYIVaA31CZAp2S"
-      publishable-key="pk_test_51NnmBdEsYMRYIVaA4kiZMQ7x5OcluaMWIPuifz7RsxhgIJc5d3RmzUNmhn3fUZnvKltX9fRrnWhivnZXz7g08qNZ00npXts5bt"
+      pricing-table-id="prctbl_1QrLB9EsYMRYIVaAT1qV5Q4H"
+      publishable-key="pk_live_51NnmBdEsYMRYIVaAunenBfJtxFr8cXbFofZkjIKdWvBxOBaigJptlp7O803BgYaWnZIgmpm6kEitJ4VLWs1PRiZl00NEXjL08i"
       >
       </stripe-pricing-table>
     </>

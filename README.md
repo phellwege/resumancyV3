@@ -1,6 +1,5 @@
 ### Repair to working state
 TODO: repair user object state on home page
-TODO: private routing
 
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
 
