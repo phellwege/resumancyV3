@@ -5,7 +5,7 @@ const stripe = require("stripe");
 const db = admin.firestore();
 
 exports.handle_stripe_webhook = onRequest(
-    { secrets: ["STRIPE_KEY", "STRIPE_WEBHOOK_SECRET"] }, 
+    { cors: true, secrets: ["STRIPE_KEY", "STRIPE_WEBHOOK_SECRET"] }, 
     async (req, res) => {
         if (req.method === 'OPTIONS') {
             res.status(204).send('');

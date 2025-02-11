@@ -42,7 +42,7 @@ export function DataProvider({ children }) {
         user, 
         setUser,
         setSuccessMessage,
-        setError
+        setError,
     } = useUser();
 
     const fetchUserData = async (userId) => {
@@ -52,7 +52,7 @@ export function DataProvider({ children }) {
             if (docSnap.exists()) {
             setUser(docSnap.data());
             } else {
-            console.log('No such document!');
+                setUser(null)
             }
         } catch (error) {
             console.error('Error fetching user data:', error);

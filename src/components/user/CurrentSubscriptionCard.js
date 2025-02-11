@@ -43,10 +43,10 @@ export default function CurrentSubscriptionCard() {
                         <div>
                             <h5>Current Usage:</h5>
                             <h6>Base Resume:
-                            ( {user.subscription.usage.baseResume} / {subscriptionPlans[user.subscription.plan].baseResume} )
+                            ( {user.subscription?.usage?.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume} )
                             </h6>
                             <h6>Tailored Resumes:
-                            ( {user.subscription.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan].tailoredResumes} )
+                            ( {user.subscription?.usage?.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes} )
                             </h6>
                         </div>
                     </Card.Body>
