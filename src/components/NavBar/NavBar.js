@@ -86,9 +86,9 @@ const NavBar = () => {
                                     Home
                                 </Link>
                             </li>
-                            {user.id && (
+                            {user?.id && (
                                 <>
-                                    {user.subscription.usage.baseResume === 0 && (
+                                    {user?.subscription?.usage.baseResume === 0 && (
                                         <li>
                                             <Link to='/Create' onClick={() => closeMenu()}>
                                                 <MdOutlinePostAdd className='navIcons'/> 
@@ -96,7 +96,7 @@ const NavBar = () => {
                                             </Link>
                                         </li>
                                     )}
-                                    {user.subscription.usage.baseResume > 0 && (
+                                    {user?.subscription?.usage.baseResume > 0 && (
                                     <>
                                         <li>
                                             <Link to='/Tailor' onClick={() => closeMenu()}>
@@ -114,7 +114,7 @@ const NavBar = () => {
                                     )}
                                 </>
                             )}
-                            {user.id && (
+                            {user?.id && (
                                 <>
                                     <li>
                                         <Link to="/UserProfile" onClick={() => closeMenu()}>

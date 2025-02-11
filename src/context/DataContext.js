@@ -30,7 +30,6 @@ import {
 
 const DataContext = React.createContext();
 
-
 export function useData() {
   return useContext(DataContext);
 }

@@ -1,5 +1,7 @@
 ### Repair to working state
-TODO: fix login and registration...issue around stripe
+TODO: repair user object state on home page
+TODO: private routing
+
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
 
 TODO: fix the stripe payment thing so it is a stripe payment portal, this way the client cannot edit their email and it is more secure. Call it using a cloud function. 
@@ -10,9 +12,6 @@ Step	Action	                                                    Outcome
 3	Deploy Firebase Cloud Function for Stripe Webhooks	Stripe notifies Firebase when plan changes
 4	Store updated Stripe status in Firestore	        Keeps user subscription info up-to-date
 5	Firebase Listener updates UI automatically	        React app displays new subscription status
-
-TODO: firebase functions:config:set stripe.webhook_secret="your_webhook_secret"
-TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
 
 TODO: add manage account section to delete acct, change subscription etc.
 
@@ -41,6 +40,7 @@ TODO: fix bug on modal size when scrolling
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions
 TODO: limit firebase functions to authorized users only (logged in)
+TODO: email verifications
 
 ### Future Updates
 1. create custom login / registration - firebaseUI doesn't work with email enumeration

@@ -71,15 +71,15 @@ export default function Home() {
                                 )}
                                 {user?.subscription.plan === 'basic' && (
                                     <>
-                                        <h5>Current Plan: <br/>{capitalizeAllLetters(user.subscription.plan)}</h5>
+                                        <h5>Current Plan: <br/>{capitalizeAllLetters(user?.subscription?.plan)}</h5>
                                         <div>
                                             <h6>
                                                 Usage:<br/>
                                                 Base Resume:
-                                                ( {user.subscription.usage.baseResume} / {subscriptionPlans[user.subscription.plan].baseResume} )
+                                                ( {user.subscription?.usage.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume} )
                                                 <br/>
                                                 Tailored Resume(s):
-                                                ( {user.subscription.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan].tailoredResumes} )
+                                                ( {user.subscription?.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes} )
                                             </h6>
                                                 <Button>
                                                     Upgrade Now
