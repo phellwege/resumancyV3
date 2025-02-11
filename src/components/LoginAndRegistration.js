@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
-import { Alert } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';

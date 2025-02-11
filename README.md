@@ -1,4 +1,5 @@
 ### Repair to working state
+TODO: fix login and registration...issue around stripe
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
 
 TODO: fix the stripe payment thing so it is a stripe payment portal, this way the client cannot edit their email and it is more secure. Call it using a cloud function. 
