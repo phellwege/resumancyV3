@@ -31,7 +31,6 @@ export default function LoginAndRegistration() {
         checkUserExists
     } = useData();
 
-    // Capitalizes each word in a string
     const capitalizeEachWord = (text) => {
         return text
             .split(' ')
@@ -39,7 +38,6 @@ export default function LoginAndRegistration() {
             .join(' ');
     };
 
-    // ✅ **Moved `handleUserRegistrationOrLogin` OUTSIDE of useEffect**
     const handleUserRegistrationOrLogin = async (user, firstName, lastName, displayName) => {
         try {
             const newUserData = {
@@ -57,8 +55,7 @@ export default function LoginAndRegistration() {
             const userExists = await checkUserExists(user.uid);
             
             if (!userExists) {
-                // **STEP 1: Create Stripe Customer**
-                const response = await fetch("https://us-central1-your-project-id.cloudfunctions.net/createStripeCustomer", {
+                const response = await fetch("https://us-central1-resumancy.cloudfunctions.net/createStripeCustomer-createStripeCustomer", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email: user.email, firebaseUID: user.uid }),
@@ -67,11 +64,9 @@ export default function LoginAndRegistration() {
                 const data = await response.json();
 
                 if (data.stripeCustomerId) {
-                    // **STEP 2: Store Stripe Customer ID in Firestore**
                     newUserData.stripeCustomerId = data.stripeCustomerId;
                 }
 
-                // **STEP 3: Save New User Data in Firestore**
                 await addUserData(user.uid, newUserData);
                 setSuccessMessage('Registration successful! Redirecting to setup...');
                 history('/InitialUserSetup');

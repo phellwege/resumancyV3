@@ -15,9 +15,6 @@ TODO: firebase functions:config:set stripe.webhook_secret="your_webhook_secret"
 TODO: firebase functions:config:set stripe.secret_key="your_stripe_secret_key"
 
 TODO: add manage account section to delete acct, change subscription etc.
-icon for this in nav will be
-import { MdManageAccounts } from "react-icons/md";
-<MdManageAccounts />
 
 ### Flow Correction 
 TODO: setup something so that it prevents users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their plan to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.

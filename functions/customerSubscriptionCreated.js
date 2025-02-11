@@ -1,17 +1,21 @@
-const functions = require("firebase-functions");
+const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const stripe = require("stripe");
 
 const db = admin.firestore();
 
-exports.handle_stripe_webhook = functions
-    .runWith({
-        secrets: ["STRIPE_KEY", "STRIPE_WEBHOOK_SECRET"],
-    })
-    .https.onRequest(async (req, res) => {
+exports.handle_stripe_webhook = onRequest(
+    { secrets: ["STRIPE_KEY", "STRIPE_WEBHOOK_SECRET"] }, 
+    async (req, res) => {
+        if (req.method === 'OPTIONS') {
+            res.status(204).send('');
+            return;
+        }
+
         try {
-            const stripeInstance = stripe(functions.secrets.STRIPE_KEY);
-            const stripeWebhookSecret = functions.secrets.STRIPE_WEBHOOK_SECRET;
+            // ✅ Use process.env to match `generate_cover_letter` behavior
+            const stripeInstance = stripe(process.env.STRIPE_KEY);
+            const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
             const sig = req.headers["stripe-signature"];
             const event = stripeInstance.webhooks.constructEvent(req.rawBody, sig, stripeWebhookSecret);
@@ -29,8 +33,10 @@ exports.handle_stripe_webhook = functions
             console.error("❌ Error handling webhook:", error);
             res.status(500).json({ error: "Internal Server Error" });
         }
-    });
+    }
+);
 
+// ✅ Handle Subscription Updates
 async function handleSubscriptionUpdate(subscription) {
     try {
         const customerId = subscription.customer;
@@ -61,6 +67,7 @@ async function handleSubscriptionUpdate(subscription) {
     }
 }
 
+// ✅ Handle Subscription Cancellations
 async function handleSubscriptionCancel(subscription) {
     try {
         const customerId = subscription.customer;
@@ -75,18 +82,19 @@ async function handleSubscriptionCancel(subscription) {
 
         const userDoc = snapshot.docs[0];
         await userDoc.ref.update({
-            "subscription.plan": "basic",
+            "subscription.plan": "cancelled",
             "subscription.active": false,
             "subscription.billingCycleStart": null,
             "subscription.dateActivated": null,
         });
 
-        console.log(`⚠️ Subscription canceled for user ${userDoc.id}, reverted to "basic" plan.`);
+        console.log(`⚠️ Subscription canceled for user ${userDoc.id}, marked as "cancelled".`);
     } catch (error) {
         console.error("❌ Error canceling subscription:", error);
     }
 }
 
+// ✅ Handle Checkout Session Completion
 async function handleCheckoutSessionCompleted(session) {
     try {
         const customerId = session.customer;
