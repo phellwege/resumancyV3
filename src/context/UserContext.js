@@ -125,6 +125,17 @@ export function UserProvider({ children }) {
         premium: { baseResume: 1, tailoredResumes: Infinity },
     };
 
+    const canCreateMore = (type) => {
+        if (!user.subscription.active) {
+            return false; // No active subscription means no resume creation allowed
+        }
+        
+        const usage = user.subscription.usage[type];
+        const limit = user.subscription.limits[type];
+    
+        return limit === Infinity || usage < limit;
+    };
+    
     const selectedResume = user.resume.find((resume) => resume.id === selectedResumeId);
     const selectedTailoredResumeIdData = user.tailoredResume.find((resume) => resume.id === selectedTailoredResumeId);
     const selectedCoverLetterIdData = user.coverLetter.find((resume) => resume.id === selectedCoverLetterId);
@@ -336,6 +347,7 @@ export function UserProvider({ children }) {
         addSocialMediaEntry,
         removeSocialMediaEntry,
         handleUserChange,
+        canCreateMore,
 
         includeAddress,
         setIncludeAddress,

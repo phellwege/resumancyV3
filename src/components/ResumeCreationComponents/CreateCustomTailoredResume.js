@@ -20,7 +20,7 @@ export default function CreateCustomTailoredResume() {
         generateUUID,
         setSelectedTailoredResumeId,
         selectedTailoredResumeIdData,
-
+        canCreateMore,
         setSuccessMessage,
         setError,
         subscriptionPlans
@@ -39,6 +39,10 @@ export default function CreateCustomTailoredResume() {
     const prospectiveJobDescTooltip = "Copy/Paste a description of the role you are applying for.";
 
     const handleSubmit = async () => {
+        if (!canCreateMore("tailoredResumes")) {
+            setError("You have reached the maximum number of tailored resumes for your subscription.");
+            return;
+        };
         setLoading(true);
         const newId = generateUUID();
         const timeStamp = new Date().toISOString();

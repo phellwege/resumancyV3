@@ -27,7 +27,7 @@ export default function CreateBaselineResume() {
         generateUUID,
         includeAddress,
         setIncludeAddress,
-
+        canCreateMore,
         setSuccessMessage,
         setError,
     } = useUser();
@@ -51,6 +51,10 @@ export default function CreateBaselineResume() {
     };
 
     const handleSubmit = async () => {
+        if (!canCreateMore("baseResume")){
+            setError("You have reached the maximum number of base resumes for your subscription.");
+            return;
+        }
         const timeStamp = new Date().toISOString();
         const { experience, education, skills } = user.resume[0];
     
