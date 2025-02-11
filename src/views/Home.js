@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Button, Card, Alert} from 'react-bootstrap';
+import { Button, Card} from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
