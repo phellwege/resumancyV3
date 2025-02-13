@@ -12,12 +12,24 @@ import ResumeStyles from '../components/ResumeStyles';
 export default function Home() {
     const {
         user,
-        subscriptionPlans
+        subscriptionPlans,
+        handleOpenLoginModal,
+        setError
     } = useUser();
 
     const capitalizeAllLetters = (str) => str?.toUpperCase() || "";
 
     const history = useNavigate();
+
+    const handleCreateClick = () => {
+        if (!user?.id) {
+            setError("You must be signed in to create a resume");
+            handleOpenLoginModal();
+        } else {
+            history('/Create');
+        }
+    };
+
 
   return (
     <>
@@ -138,13 +150,12 @@ export default function Home() {
                                     
                                 </div>
                                 {user.subscription.usage.baseResume === 0 ? (
-                                    <Link to='/Create'>
                                         <Button
+                                        onClick={handleCreateClick}
                                         aria-label='create button'
                                         >
                                             Create Resume
                                         </Button>
-                                    </Link>
                                 ):(
                                     <Link to='/Tailor'>
                                         <Button

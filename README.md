@@ -1,6 +1,4 @@
 ### Repair to working state
-TODO: repair user object state on home page
-
 TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
 
 TODO: fix the stripe payment thing so it is a stripe payment portal, this way the client cannot edit their email and it is more secure. Call it using a cloud function. 
@@ -13,14 +11,14 @@ Step	Action	                                                    Outcome
 5	Firebase Listener updates UI automatically	        React app displays new subscription status
 
 TODO: add manage account section to delete acct, change subscription etc.
+TODO: add a button to delete account which will cancel their subscription and remove their user
 
 ### Flow Correction 
 TODO: prevent users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their plan to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.
     --- maybe a component for this so that it is cleaner and less messy
     TODO: make card showing plans or current plan and usage for home page, basic should have CTA, 
-TODO: handle user profile customization on account creation. Created a function to check if the state for initialSetupDone state is set to true, after which they are redirected to a subscription page. They must sign up for a plan before being able to create a resume
+TODO: handle user profile customization on account creation.
     --- maybe a component to handle both of these so that it is cleaner
-    TODO: if user clicks create and isn't signed in modal to sign in is displayed.
     TODO: if user clicks create and doesn't have active subscription -> redirect to "/Subscribe"
 
 ### Cleanup
