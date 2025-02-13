@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
-import { Button, Card, Form, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import StripePricingTable from '../components/StripePricingTable'
 import './main.css';
 

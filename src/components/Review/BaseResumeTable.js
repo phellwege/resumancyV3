@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
-import { Button, Card, Alert, Table, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 import ReviewResumeModal from './ReviewResumeModal';
 import { useUser } from '../../context/UserContext';
 import { useData } from '../../context/DataContext';
@@ -8,7 +8,6 @@ import { useData } from '../../context/DataContext';
 export default function BaseResumeTable() {
     const {
         handleOpenReviewResumeModal,
-        user,
         setSelectedResumeId,
     } = useUser();
     const {

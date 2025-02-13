@@ -32,7 +32,7 @@ export default function Review() {
           </Button>
         </div>
         <TailoredResumeTable />
-        {user.subscription.plan != 'premium' && (
+        {user.subscription.plan !== 'premium' && (
             <Card>
                 <Card.Body>
                     <div>
