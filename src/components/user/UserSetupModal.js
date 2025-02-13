@@ -189,7 +189,7 @@ export default function UserSetupModal() {
                         we don't sell your information.
                     </p>
                     <div className='setupAvatarDiv'>
-                        <img src={user.avatarImg} alt='user avatar image'/>
+                        <img src={user.avatarImg} alt='current user avatar image'/>
                         <Button 
                         onClick={()=> {
                             handleCloseSetupUserModal(); 

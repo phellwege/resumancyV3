@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Alert, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import LoginAndRegistration from '../LoginAndRegistration';
-// import RegisterRecruiter from '../RegisterRecruiter';
 import NavBar from '../NavBar/NavBar';
 
 import { useUser } from '../../context/UserContext';
@@ -56,11 +55,6 @@ function Header(props) {
     }
     const ifNotfrontPage = () => {
         if(window.location.pathname !== '/' 
-        // && window.location.pathname !== '/RecruiterMainPage'
-        // && window.location.pathname !== '/RecruiterSetupPage'
-        // && window.location.pathname !== '/Recruit'
-        // && !window.location.pathname.startsWith('/Recruit/')
-        // && !window.location.pathname.startsWith('/RecruitCreateResume/')
         ){
             return (
                 <Link to='/' className='backButton'>
@@ -88,7 +82,6 @@ return (
     <>
     <NavBar />
     <LoginAndRegistration />
-    {/* <RegisterRecruiter /> */}
     <div className="head_wrap">
         <div className='headerLeft'>
 
@@ -116,7 +109,6 @@ return (
             <h1>
                 Resumancy
             </h1>
-            {/* {error && <Alert variant='danger' className='alerts' dismissible>{error}</Alert>} */}
         </div>
         <div className='headerRight'>
             {user.id ? (

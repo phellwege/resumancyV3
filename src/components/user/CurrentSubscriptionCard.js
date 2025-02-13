@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {Button, Card} from 'react-bootstrap'
 import { useUser } from '../../context/UserContext'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function CurrentSubscriptionCard() {

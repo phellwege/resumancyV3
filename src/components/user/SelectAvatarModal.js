@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useUser } from '../../context/UserContext';
@@ -8,7 +7,6 @@ import { useUser } from '../../context/UserContext';
 import '../../views/main.css';
 export default function UserSetupModal() {
   const {
-    user,
     userAvatars,
     handleSelectAvatar,
     selectAvatar,

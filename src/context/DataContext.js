@@ -1,32 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import LoadingPage from '../components/loadingPage/LoadingPage';
-import {db, auth, storage} from '../server/firebaseConfig';
+import {db} from '../server/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
 import { increment } from "firebase/firestore";
 
 import {
-    collection,
     doc,
-    getDocs,
     getDoc,
     setDoc,
-    addDoc,
-    query,
-    where,
     updateDoc,
     arrayUnion,
-    Timestamp,
     serverTimestamp,
 } from 'firebase/firestore';
-
-import { 
-    getStorage, 
-    ref, 
-    uploadBytes,
-    listAll,
-    getDownloadURL
-} from "firebase/storage";
 
 const DataContext = React.createContext();
 

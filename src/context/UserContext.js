@@ -360,6 +360,7 @@ export function UserProvider({ children }) {
         error,
         setError,
         subscriptionPlans,
+        resetUser,
 
         selectedResumeId, setSelectedResumeId, selectedResume,
         selectedTailoredResumeIdData, selectedTailoredResumeId, setSelectedTailoredResumeId,
@@ -368,7 +369,10 @@ export function UserProvider({ children }) {
     }), [
         user, resetUser, loginModal, setupUserModal, selectAvatar,
         reviewResumeModal, reviewCoverLetterModal, contactUsModal, 
-        handleOpenReviewResumeModal, selectedResume, selectedTailoredResumeIdData, selectedCoverLetterIdData
+        handleOpenReviewResumeModal, selectedResume, selectedTailoredResumeIdData, selectedCoverLetterIdData,
+        canCreateMore, error, includeAddress, 
+        initialUserState, reviewJobDescModal, selectedCoverLetterId, selectedResumeId, selectedTailoredResumeId, 
+        subscriptionPlans, successMessage, userAvatars
     ]);
 
     return (
