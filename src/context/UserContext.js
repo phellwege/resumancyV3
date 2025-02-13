@@ -122,8 +122,10 @@ export function UserProvider({ children }) {
     const [includeAddress, setIncludeAddress] = useState(false);
 
     const subscriptionPlans = {
-        basic: { baseResume: 1, tailoredResumes: 5 },
-        premium: { baseResume: 1, tailoredResumes: Infinity },
+        price_1QrL8vEsYMRYIVaAx4EV21RU: { baseResume: 1, tailoredResumes: 5 },
+        price_1QrL8vEsYMRYIVaAnoVKXDwS: { baseResume: 1, tailoredResumes: 5 },
+        price_1QrL8rEsYMRYIVaAR2eJ9Vta: { baseResume: 1, tailoredResumes: Infinity },
+        price_1QrL8rEsYMRYIVaABNH1JBGo: { baseResume: 1, tailoredResumes: Infinity },
     };
 
     const canCreateMore = (type) => {
@@ -302,7 +304,17 @@ export function UserProvider({ children }) {
             setUser(JSON.parse(storedUser)); 
         } 
     }, []);
-    
+    const displayCorrectPlan = () => {
+        if(user.subscription.plan == 'price_1QrL8vEsYMRYIVaAx4EV21RU'){
+            return <span style={{color: "#66FF00"}}>BASIC</span>
+        } else if (user.subscription.plan === 'price_1QrL8vEsYMRYIVaAnoVKXDwS') {
+            return <span style={{color: "#66FF00"}}>BASIC ANNUAL</span>
+        } else if (user.subscription.plan === 'price_1QrL8rEsYMRYIVaAR2eJ9Vta'){
+            return <span style={{color: "gold"}}>PREMIUM</span>
+        } else if (user.subscription.plan === 'price_1QrL8rEsYMRYIVaABNH1JBGo'){
+            return <span style={{color: "gold"}}>PREMIUM ANNUAL</span>
+        }
+    }
     const value = useMemo(() =>({
         generateUUID,
         initialUserState,
@@ -361,6 +373,7 @@ export function UserProvider({ children }) {
         setError,
         subscriptionPlans,
         resetUser,
+        displayCorrectPlan,
 
         selectedResumeId, setSelectedResumeId, selectedResume,
         selectedTailoredResumeIdData, selectedTailoredResumeId, setSelectedTailoredResumeId,
