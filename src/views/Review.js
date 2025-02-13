@@ -1,17 +1,14 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import BaseResumeTable from '../components/Review/BaseResumeTable';
 import TailoredResumeTable from '../components/Review/TailoredResumeTable';
-import { Button, Card, OverlayTrigger, Tooltip} from "react-bootstrap";
-
+import { Button, Card} from "react-bootstrap";
 
 import '../views/main.css';
 import { useUser } from '../context/UserContext';
-
-// import RecruitInfoTable from '../components/recruit/RecruitInfoTable';
 
 export default function Review() {
     const history = useNavigate();
@@ -24,12 +21,6 @@ export default function Review() {
     <>
     <Header />
     <div className='pageWrapper'>
-      {/* {recruiter.id && (
-        <div>
-          <h3>Recruit Information</h3>
-          <RecruitInfoTable />
-        </div>
-      )} */}
       <h1>Review</h1>
       <div>
         <BaseResumeTable />

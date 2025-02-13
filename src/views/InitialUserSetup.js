@@ -1,16 +1,15 @@
-import React, {useState} from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import { Button, Card, Form, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { FaMinusSquare , FaPlusSquare, FaArrowCircleRight  } from "react-icons/fa";
+import { FaMinusSquare , FaPlusSquare } from "react-icons/fa";
 import { BsQuestionCircle } from "react-icons/bs";
 
 
 import './main.css';
 
 import { useUser } from '../context/UserContext';
-// import StripePricingTable from '../components/StripePricingTable';
 import { useData } from '../context/DataContext';
 
 export default function InitialUserSetup() {
@@ -24,8 +23,7 @@ export default function InitialUserSetup() {
         addSocialMediaEntry,
         removeSocialMediaEntry,
         handleSocialMediaChange,
-        setError,
-        setSuccessMessage
+        setError
     } = useUser();
     const {
         saveUserData
@@ -252,14 +250,14 @@ export default function InitialUserSetup() {
                                                 <Form.Control
                                                     type="text"
                                                     placeholder="Platform (e.g., LinkedIn)"
-                                                    value={account.name} // Correctly access the 'name' property
+                                                    value={account.name}
                                                     onChange={(e) => handleSocialMediaChange(index, 'name', sanitizeUserInput(e.target.value))}
                                                     className="mb-2"
                                                 />
                                                 <Form.Control
                                                     type="url"
                                                     placeholder="URL (e.g., https://linkedin.com/in/your-profile)"
-                                                    value={account.url} // Correctly access the 'url' property
+                                                    value={account.url}
                                                     onChange={(e) => handleSocialMediaChange(index, 'url', sanitizeUserInput(e.target.value))}
                                                     className="mb-2"
                                                 />    
