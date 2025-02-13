@@ -13,7 +13,6 @@ exports.handle_stripe_webhook = onRequest(
         }
 
         try {
-            // ✅ Use process.env to match `generate_cover_letter` behavior
             const stripeInstance = stripe(process.env.STRIPE_KEY);
             const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 

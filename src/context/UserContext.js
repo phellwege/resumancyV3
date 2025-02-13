@@ -113,7 +113,8 @@ export function UserProvider({ children }) {
             },
         },
         initialSetupDone: false,
-        coupon: '' // this will be used to try to get more annual subscribers
+        coupon: '',
+        stripeCustomerId: null
     };
     const [user, setUser] = useState(initialUserState)
     const resetUser = () => setUser(initialUserState);

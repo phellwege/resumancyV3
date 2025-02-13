@@ -40,6 +40,7 @@ TODO: fix bug on modal size when scrolling
 TODO: setup hard limitations for firebase functions
 TODO: limit firebase functions to authorized users only (logged in)
 TODO: email verifications
+TODO: obfuscate code
 
 ### Future Updates
 1. create custom login / registration - firebaseUI doesn't work with email enumeration

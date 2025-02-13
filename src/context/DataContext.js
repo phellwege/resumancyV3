@@ -42,27 +42,34 @@ export function DataProvider({ children }) {
         setUser,
         setSuccessMessage,
         setError,
+        initialUserState
     } = useUser();
 
     const fetchUserData = async (userId) => {
         try {
             const docRef = doc(db, 'users', userId);
             const docSnap = await getDoc(docRef);
+    
             if (docSnap.exists()) {
-            setUser(docSnap.data());
+                const userData = { ...initialUserState, ...docSnap.data() };
+                setUser(userData);
+                return userData;
             } else {
-                setUser(null)
+                console.warn(`User ${userId} not found.`);
+                setUser(initialUserState);
+                return null;
             }
         } catch (error) {
             console.error('Error fetching user data:', error);
+            return null;
         }
     };
+    
     
     const updateUserData = async (userId, updatedData) => {
         try {
             const userDocRef = doc(db, 'users', userId);
     
-            // Get the current user data to merge existing nested fields
             const userDocSnap = await getDoc(userDocRef);
             if (!userDocSnap.exists()) {
                 console.error('User document does not exist');
@@ -70,40 +77,37 @@ export function DataProvider({ children }) {
             }
     
             const currentUserData = userDocSnap.data();
-    
-            // Merge updatedData into current user data
+
             const mergedData = {
                 ...currentUserData,
                 ...updatedData,
                 contactInfo: {
                     ...currentUserData.contactInfo,
-                    ...updatedData.contactInfo, // Merge contact info safely
+                    ...updatedData.contactInfo,
                 },
                 address: {
                     ...currentUserData.address,
-                    ...updatedData.address, // Merge address safely
+                    ...updatedData.address,
                 },
                 resume: updatedData.resume ? [...currentUserData.resume, ...updatedData.resume] : currentUserData.resume,
                 tailoredResume: updatedData.tailoredResume ? [...currentUserData.tailoredResume, ...updatedData.tailoredResume] : currentUserData.tailoredResume,
                 coverLetter: updatedData.coverLetter ? [...currentUserData.coverLetter, ...updatedData.coverLetter] : currentUserData.coverLetter,
                 subscription: {
                     ...currentUserData.subscription,
-                    ...updatedData.subscription, // Merge subscription safely
+                    ...updatedData.subscription,
                     usage: {
                         ...currentUserData.subscription.usage,
-                        ...updatedData.subscription?.usage, // Merge nested usage safely
+                        ...updatedData.subscription?.usage,
                     },
                     limits: {
                         ...currentUserData.subscription.limits,
-                        ...updatedData.subscription?.limits, // Merge nested limits safely
+                        ...updatedData.subscription?.limits,
                     },
                 },
             };
     
-            // Update Firestore with merged data
             await updateDoc(userDocRef, mergedData);
     
-            // Update local state with merged data
             setUser((prevUser) => ({
                 ...prevUser,
                 ...mergedData,
