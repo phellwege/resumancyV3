@@ -5,6 +5,11 @@ export default function OverLimit() {
   return (
     <>
         <Header />
+        <div className='pageWrapper'>
+            <div className='secondaryPageWrapper'>
+                YoUr OvEr YoUr LiMiT Go HoMe
+            </div>
+        </div>
         <Footer />
     </>
   )
