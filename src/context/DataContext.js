@@ -3,6 +3,7 @@ import LoadingPage from '../components/loadingPage/LoadingPage';
 import {db} from '../server/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
+import { useAuth } from './AuthContext';
 import { increment } from "firebase/firestore";
 
 import {
@@ -12,6 +13,7 @@ import {
     updateDoc,
     arrayUnion,
     serverTimestamp,
+    onSnapshot
 } from 'firebase/firestore';
 
 const DataContext = React.createContext();
@@ -30,26 +32,25 @@ export function DataProvider({ children }) {
         setError,
         initialUserState
     } = useUser();
+    const {currentUser} = useAuth();
 
-    const fetchUserData = async (userId) => {
-        try {
-            const docRef = doc(db, 'users', userId);
-            const docSnap = await getDoc(docRef);
+    const fetchUserData = (userId) => {
+        if (!userId) return null;
     
+        const userDocRef = doc(db, 'users', userId);
+    
+        const unsubscribe = onSnapshot(userDocRef, (docSnap) => {
             if (docSnap.exists()) {
-                const userData = { ...initialUserState, ...docSnap.data() };
+                const userData = docSnap.data();
                 setUser(userData);
-                return userData;
             } else {
                 console.warn(`User ${userId} not found.`);
-                setUser(initialUserState);
-                return null;
             }
-        } catch (error) {
-            console.error('Error fetching user data:', error);
-            return null;
-        }
+        });
+    
+        return unsubscribe;
     };
+    
     
     
     const updateUserData = async (userId, updatedData) => {
@@ -280,7 +281,8 @@ export function DataProvider({ children }) {
             console.error("❌ Error updating cover letter:", error);
         }
     };
-      // Upload file to Firebase Storage (e.g., avatar or resume)
+
+    // Upload file to Firebase Storage (e.g., avatar or resume)
     // const uploadFile = async (file, folderPath) => {
     //     const storageRef = ref(storage, `${folderPath}/${file.name}`);
     //     try {
@@ -294,14 +296,25 @@ export function DataProvider({ children }) {
     // };
     
     useEffect(() => {
-        if (user.id) {
-            fetchUserData(user.id);
+        if (loading || !currentUser || !user?.id) return;
+    
+        let unsubscribe;
+        try {
+            unsubscribe = fetchUserData(user.id);
+        } catch (error) {
+            console.error("❌ Error in Firestore listener: ", error);
         }
-    }, [user.id]);
+    
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
+    }, [loading, currentUser, user?.id]);
 
     const [readyTailoredResume, setReadyTailoredResume] = useState([]);
     useEffect(() => {
-        if (!user?.id) return;
+        if (!user.id) return;
 
         const loadResumes = async () => {
             const userId = user.id;

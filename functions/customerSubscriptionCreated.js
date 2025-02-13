@@ -5,7 +5,7 @@ const stripe = require("stripe");
 const db = admin.firestore();
 
 exports.handle_stripe_webhook = onRequest(
-    { cors: true, secrets: ["STRIPE_KEY", "STRIPE_WEBHOOK_SECRET"] }, 
+    { cors: true, invoker: "public", secrets: ["STRIPE_KEY", "STRIPE_WEBHOOK_SECRET"] }, 
     async (req, res) => {
         if (req.method === 'OPTIONS') {
             res.status(204).send('');
@@ -15,11 +15,10 @@ exports.handle_stripe_webhook = onRequest(
         try {
             const stripeInstance = stripe(process.env.STRIPE_KEY);
             const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
             const sig = req.headers["stripe-signature"];
             const event = stripeInstance.webhooks.constructEvent(req.rawBody, sig, stripeWebhookSecret);
 
-            if (event.type === "customer.subscription.created") {
+            if (event.type === "customer.subscription.created" || event.type === "customer.subscription.updated") {
                 await handleSubscriptionUpdate(event.data.object);
             } else if (event.type === "customer.subscription.deleted") {
                 await handleSubscriptionCancel(event.data.object);
@@ -55,7 +54,7 @@ async function handleSubscriptionUpdate(subscription) {
         const userDoc = snapshot.docs[0];
         await userDoc.ref.update({
             "subscription.plan": planId,
-            "subscription.active": status === "active",
+            "subscription.active": status === "active" || status === "trialing",
             "subscription.billingCycleStart": billingCycleStart,
             "subscription.dateActivated": dateActivated,
         });
@@ -97,25 +96,21 @@ async function handleSubscriptionCancel(subscription) {
 async function handleCheckoutSessionCompleted(session) {
     try {
         const customerId = session.customer;
+        const userId = session.client_reference_id;
         const planId = session.subscription;
 
-        const usersRef = db.collection("users");
-        const snapshot = await usersRef.where("stripeCustomerId", "==", customerId).get();
+        console.log(`✅ Checkout completed: Updating user ${userId} with Stripe customer ${customerId}`);
 
-        if (snapshot.empty) {
-            console.warn("⚠️ No user found for Stripe customer:", customerId);
-            return;
-        }
-
-        const userDoc = snapshot.docs[0];
-        await userDoc.ref.update({
+        const userRef = db.collection("users").doc(userId);
+        await userRef.update({
+            "stripeCustomerId": customerId,
             "subscription.plan": planId,
             "subscription.active": true,
             "subscription.billingCycleStart": new Date().getTime(),
             "subscription.dateActivated": new Date().getTime(),
         });
 
-        console.log(`✅ Checkout completed: Subscription activated for user ${userDoc.id}`);
+        console.log(`✅ Subscription activated for user ${userId} with plan ${planId}`);
     } catch (error) {
         console.error("❌ Error processing checkout session:", error);
     }

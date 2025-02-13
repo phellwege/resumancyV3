@@ -10,7 +10,7 @@ export default function PrivateRoute({ children }) {
         if (user?.id && !user?.initialSetupDone) {
             setError("Please complete your initial setup before proceeding.");
             setRedirectPath("/InitialUserSetup");
-        } else if (user?.initialSetupDone && !user?.subscription.plan) {
+        } else if (user?.initialSetupDone && !user?.subscription.active) {
             setError("Your subscription is inactive. Please choose a plan to continue.");
             setRedirectPath("/Subscribe");
         } else {

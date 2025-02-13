@@ -29,6 +29,7 @@ const StripePricingTable = () => {
       publishable-key="pk_live_51NnmBdEsYMRYIVaAunenBfJtxFr8cXbFofZkjIKdWvBxOBaigJptlp7O803BgYaWnZIgmpm6kEitJ4VLWs1PRiZl00NEXjL08i"
       customer-email={user.contactInfo.email}
       customer-id={user.stripeCustomerId}
+      client-reference-id={user.id}
       >
       </stripe-pricing-table>
     </>

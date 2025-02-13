@@ -24,9 +24,9 @@ export default function CurrentPlans() {
                         </p>
                     </>
                 )}
-                {user?.subscription.plan === 'basic' && (
+                {user?.subscription.plan === 'price_1QrL8vEsYMRYIVaAx4EV21RU' && (
                     <>
-                        <h5>Current Plan: <br/>{capitalizeAllLetters(user?.subscription?.plan)}</h5>
+                        <h5>Current Plan: <br/>BASIC</h5>
                         <div>
                             <h6>
                                 Usage:<br/>
