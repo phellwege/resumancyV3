@@ -12,10 +12,11 @@ import { useUser } from '../context/UserContext';
 
 export default function Review() {
     const history = useNavigate();
-    const capitalizeAllLetters = (str) => str?.toUpperCase() || "";
+
     const {
       user,
-      subscriptionPlans
+      subscriptionPlans,
+      displayCorrectPlan
     } = useUser();
   return (
     <>
@@ -32,24 +33,22 @@ export default function Review() {
           </Button>
         </div>
         <TailoredResumeTable />
-        {user.subscription.plan !== 'premium' && (
             <Card>
                 <Card.Body>
                     <div>
-                        <h5>Plan:{' '}{capitalizeAllLetters(user.subscription.plan)}</h5>
+                        <h5>Plan:{' '}{displayCorrectPlan()}</h5>
                         <h6>
                         Tailored Resume(s):
                         ( {user.subscription.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan].tailoredResumes} )
                         </h6>
                     </div>
-                    <Button onClick={() => {
+                    {/* <Button onClick={() => {
                         const userEmail = encodeURIComponent(user.contactInfo.email);
                         const stripeUrl = `https://billing.stripe.com/p/login/test_00gbLu5P7bjzcucdQQ?prefilled_email=${userEmail}`;
-                        
                         window.open(stripeUrl, "_blank");
                     }}>
                         Upgrade Now
-                    </Button>
+                    </Button> */}
 
                     {/* this will be roughly how to set this up for the user to redirect to their own payment portal */}
                     {/* <Button onClick={async () => {
@@ -72,10 +71,8 @@ export default function Review() {
                     }}>
                         Manage Subscription
                     </Button> */}
-
                 </Card.Body>
             </Card>
-        )}
       </div>
     </div>
     <Footer />
