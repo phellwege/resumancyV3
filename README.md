@@ -22,6 +22,8 @@ TODO: handle user profile customization on account creation.
 ### Cleanup
 TODO: add Success/failure Messages where relevant
 TODO: add address changes to the edit for the resume
+TODO: update FAQ to reflect changes
+TODO: add logout button to navbar
  
 ### Bug
 TODO: fix bug on modal size when scrolling
