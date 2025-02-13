@@ -1,6 +1,4 @@
 ### Repair to working state
-TODO: fix stripe so that it returns correct and expected values for users subscription - looking into this now. this seems like it could be fairly straight forwards but time consuming
-
 TODO: fix the stripe payment thing so it is a stripe payment portal, this way the client cannot edit their email and it is more secure. Call it using a cloud function. 
  - steps to succeed
 Step	Action	                                                    Outcome
@@ -24,12 +22,6 @@ TODO: handle user profile customization on account creation.
 ### Cleanup
 TODO: add Success/failure Messages where relevant
 TODO: add address changes to the edit for the resume
-
-### Pricing Strategy
-TODO: Implement subscription pricing.
-    - free 7 day trial of basic plan
-    - Basic Plan: $5/month for up to 5 tailored resumes.
-    - Pro Plan: $15/month for unlimited resumes and additional features
  
 ### Bug
 TODO: fix bug on modal size when scrolling
