@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Alert, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Alert, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import LoginAndRegistration from '../LoginAndRegistration';
 // import RegisterRecruiter from '../RegisterRecruiter';

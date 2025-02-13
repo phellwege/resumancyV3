@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,6 @@ export default function CreateCustomTailoredResume() {
         sanitizeUserInput,
         generateUUID,
         setSelectedTailoredResumeId,
-        selectedTailoredResumeIdData,
         canCreateMore,
         setSuccessMessage,
         setError,
@@ -87,6 +86,7 @@ export default function CreateCustomTailoredResume() {
             setError("Failed to generate documents. Please try again.");
         } finally {
             setLoading(false);
+            setSuccessMessage("✅ Your resume has been successfully tailored for this job. Review the changes to make sure everything looks just right!");
         }
     };
 

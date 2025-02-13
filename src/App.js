@@ -8,7 +8,6 @@ import { UserProvider } from './context/UserContext';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 import Home from '../src/views/Home'
-// import RecruiterSetupPage from './views/RecruiterSetupPage';
 
 import FAQ from './views/legal/FAQ';
 import TermsOfUse from './views/legal/TermsOfUse';
@@ -20,9 +19,6 @@ import InitialUserSetup from './views/InitialUserSetup';
 import UserProfile from './views/UserProfile';
 import Subscribe from './views/Subscribe';
 import Account from './views/Account';
-// import RecruiterMainPage from './views/RecruiterMainPage';
-// import Recruit from './views/Recruit';
-// import RecruitCreateResume from './views/RecruitCreateResume';
 
 function App() {
   const [theme, setTheme] = useState({mode: 'light'})
@@ -47,12 +43,6 @@ function App() {
             <Route exact path='/InitialUserSetup' element={<InitialUserSetup />} />
             <Route exact path='/Subscribe' element={<Subscribe />} />
             <Route exact path='/Account' element={<PrivateRoute><Account /></PrivateRoute>} />
-
-            {/* <Route exact path="/RecruiterSetupPage" element={<RecruiterSetupPage />} /> */}
-            {/* <Route exact path='/RecruiterMainPage' element={<RecruiterMainPage />} /> */}
-            {/* <Route exact path='/Recruit' element={ <Recruit/> } />
-            <Route exact path='/Recruit/:recruitId' element={ <Recruit/> } />
-            <Route exact path='/RecruitCreateResume/:recruitId' element={<RecruitCreateResume />} /> */}
             </Routes>
           </React.Fragment>
         </DataProvider>

@@ -18,7 +18,6 @@ export default function CreateBaselineResume() {
     const {
         user, 
         setUser,
-        handleUserChange,
         handleResumeChange,
         sanitizeUserInput,
         handleExperienceChange,
