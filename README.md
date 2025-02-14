@@ -1,9 +1,8 @@
 ### Repair to working state
-TODO: fix limit
-TODO: delineate between trialing and subbed
 TODO: setup overLimit page that prompts them to upgrade their account to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.
 
 ### Flow Correction 
+TODO: delineate between trialing and subbed
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
@@ -12,7 +11,7 @@ TODO: update FAQ to reflect changes
  
 ### Bug
 TODO: fix bug on modal size when scrolling
-TODO: fix login scaling
+TODO: fix login scaling incorrectly
 
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions
