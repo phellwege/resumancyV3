@@ -5,15 +5,28 @@ import { useUser } from '../../context/UserContext'
 export default function ContactCard() {
     const {
         user,
-        handleOpenSetupUserModal
+        handleOpenSetupUserModal,
+        handleOpenSelectAvatar
     } = useUser();
   return (
     <>
+        <h4>Profile Information</h4>
         <Card>
             <Card.Body>
                 <div className='cardInnerDiv'>
-                        <h4>Profile Information</h4>
-                        <h6>{user.firstName}{' '}{user.lastName}</h6>
+                    <h5>{user.firstName}{' '}{user.lastName}</h5>
+                    <div className='userContactCardAvatar'>
+                        <div className='setupAvatarDiv'>
+                            <img src={user.avatarImg} alt='current user avatar image'/>
+                            <Button 
+                            onClick={()=> {
+                                handleOpenSelectAvatar()
+                            }}
+                            >
+                            Change Avatar
+                            </Button>
+                        </div>
+                    </div>
                     <div className='userInfoCardInnerWrap'>
                         <div className='leftShifted'>
                         {user.jobTitle}

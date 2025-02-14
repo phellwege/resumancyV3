@@ -63,7 +63,6 @@ export default function UserSetupModal() {
             jobTitle: user.jobTitle,
             contactInfo: {
                 phone: user.contactInfo.phone,
-                email: user.contactInfo.email,
                 socialMedia: user.contactInfo.socialMedia,
             },
             avatarImg: user.avatarImg,
@@ -118,15 +117,6 @@ export default function UserSetupModal() {
                                 placeholder="Enter Current Job Title"
                                 value={user.jobTitle}
                                 onChange={(e) => {handleUserChange('jobTitle', e.target.value)}}
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>email</Form.Label>
-                            <Form.Control 
-                                type="text"
-                                placeholder="EnterEmail"
-                                value={user.contactInfo.email}
-                                onChange={(e) => {handleContactChange('email', e.target.value)}}
                             />
                         </Form.Group>
                         <Form.Group>

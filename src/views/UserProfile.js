@@ -13,11 +13,8 @@ export default function UserProfile() {
         <div className='pageWrapper'>
           <UserSetupModal/>
           <div className='secondaryPageWrapper'>
-            <div className='leftDiv'>
-              <ContactCard />
-            </div>
             <div className='rightDiv'>
-            <CurrentSubscriptionCard />
+              <ContactCard />
             </div>
           </div>
         </div>

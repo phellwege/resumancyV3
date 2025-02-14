@@ -709,6 +709,12 @@ width: 45%;
 #tailoredInfoCard {
     width:40%;
 }
+.userContactCardAvatar img{
+    width:40%;
+}
+.userContactCardAvatar {
+    margin-bottom: 2%;
+}
 
 @media (max-width: 860px) {
     #defaultResumeWrap {

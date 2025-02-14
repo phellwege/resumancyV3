@@ -5,10 +5,12 @@ import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import BaseResumeTable from '../components/Review/BaseResumeTable';
 import TailoredResumeTable from '../components/Review/TailoredResumeTable';
-import { Button, Card} from "react-bootstrap";
+import { Button, Card, OverlayTrigger, Tooltip} from "react-bootstrap";
+import { BsQuestionCircle } from "react-icons/bs";
 
 import '../views/main.css';
 import { useUser } from '../context/UserContext';
+import { useData } from '../context/DataContext';
 
 export default function Review() {
     const history = useNavigate();
@@ -16,8 +18,14 @@ export default function Review() {
     const {
       user,
       subscriptionPlans,
-      displayCorrectPlan
+      displayCorrectPlan,
+      describeBaseResume,
+      describeTailoredResume,
+      daysLeft
     } = useUser();
+    const {
+      handleManagePlan
+    } = useData();
   return (
     <>
     <Header />
@@ -35,42 +43,51 @@ export default function Review() {
         <TailoredResumeTable />
             <Card>
                 <Card.Body>
-                    <div>
-                        <h5>Plan:{' '}{displayCorrectPlan()}</h5>
-                        <h6>
-                        Tailored Resume(s):
-                        ( {user.subscription.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan].tailoredResumes} )
-                        </h6>
+                <div className="cardInnerDiv p-3">
+                      <h4 className="mb-3">Subscription Plan</h4>
+                      <h6 className="mb-2">
+                        <strong>Current Plan: {displayCorrectPlan()}</strong> 
+                      </h6>
+                      <hr className="my-3" />
+                      <div className="usage-info mb-3">
+                        <h6 className="mb-2">Current Usage</h6>
+                        <p className="mb-1">
+                          <strong>Base Resume:</strong> {user.subscription?.usage.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume}
+                          <OverlayTrigger 
+                              overlay={
+                              <Tooltip id="tooltip">
+                                  {describeBaseResume}
+                              </Tooltip>
+                              }>
+                              <span className="question-icon">
+                                  <BsQuestionCircle />
+                              </span>
+                          </OverlayTrigger>
+                        </p>
+                        <p>
+                          <strong>Tailored Resume(s):</strong> {user.subscription?.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes}
+                          <OverlayTrigger 
+                              overlay={
+                              <Tooltip id="tooltip">
+                                  {describeTailoredResume}
+                              </Tooltip>
+                              }>
+                              <span className="question-icon">
+                                  <BsQuestionCircle />
+                              </span>
+                          </OverlayTrigger>
+                        </p>
+                      </div>
+                      <hr className="my-3" />
+                      <p className="mb-4">
+                        <strong>Days left in Billing Cycle:</strong> {daysLeft}
+                      </p>
+                      <div className="text-center">
+                        <Button variant="primary" onClick={handleManagePlan}>
+                          Update Plan
+                        </Button>
+                      </div>
                     </div>
-                    {/* <Button onClick={() => {
-                        const userEmail = encodeURIComponent(user.contactInfo.email);
-                        const stripeUrl = `https://billing.stripe.com/p/login/test_00gbLu5P7bjzcucdQQ?prefilled_email=${userEmail}`;
-                        window.open(stripeUrl, "_blank");
-                    }}>
-                        Upgrade Now
-                    </Button> */}
-
-                    {/* this will be roughly how to set this up for the user to redirect to their own payment portal */}
-                    {/* <Button onClick={async () => {
-                        try {
-                            const response = await fetch("https://us-central1-your-project-id.cloudfunctions.net/createStripePortalSession", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ customerId: user.stripeCustomerId }) // Pass Stripe Customer ID
-                            });
-
-                            const data = await response.json();
-                            if (data.url) {
-                                window.location.href = data.url; // Redirect user to Stripe
-                            } else {
-                                console.error("Failed to create Stripe portal session.");
-                            }
-                        } catch (error) {
-                            console.error("Error:", error);
-                        }
-                    }}>
-                        Manage Subscription
-                    </Button> */}
                 </Card.Body>
             </Card>
       </div>
