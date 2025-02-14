@@ -1,20 +1,13 @@
 ### Repair to working state
-TODO: add reviews
-TODO: 
+TODO: delineate between trialing and subbed
 
 ### Flow Correction 
 TODO: prevent users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their plan to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.
-    --- maybe a component for this so that it is cleaner and less messy
-    TODO: make card showing plans or current plan and usage for home page, basic should have CTA, 
-TODO: handle user profile customization on account creation.
-    --- maybe a component to handle both of these so that it is cleaner
-    TODO: if user clicks create and doesn't have active subscription -> redirect to "/Subscribe"
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
 TODO: add address changes to the edit for the resume
 TODO: update FAQ to reflect changes
-TODO: add logout button to navbar
  
 ### Bug
 TODO: fix bug on modal size when scrolling

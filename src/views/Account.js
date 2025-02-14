@@ -10,10 +10,8 @@ export default function Account() {
   const {
     displayCorrectPlan,
     user,
-    deleteAcctModal,
     setDeleteAcctModal,
-    handleOpenDeleteAcctModal,
-    handleCloseDeleteAcctModal,
+    subscriptionPlans
   } = useUser();
   const {
     handleManagePlan
@@ -37,19 +35,32 @@ export default function Account() {
             <div className='secondaryPageWrapper'>
               <DeleteUserModal/>
               <div className='leftDiv'>
-                <Card>
+                <Card className="mb-4 shadow-sm">
                   <Card.Body>
-                    <div className='cardInnerDiv'>
-                    <h4>Subscription Plan</h4>
-                    <h6>Current Plan:{' '}{displayCorrectPlan()}</h6>
-                    <div>
-                      <p>Days left in Billing Cycle: {daysLeft}</p>
-                    </div>
-                    <div>
-                      <Button  onClick={handleManagePlan}>
-                        Manage Plan
-                      </Button>  
-                    </div>
+                    <div className="cardInnerDiv p-3">
+                      <h4 className="mb-3">Subscription Plan</h4>
+                      <p className="mb-2">
+                        <strong>Current Plan:</strong> {displayCorrectPlan()}
+                      </p>
+                      <hr className="my-3" />
+                      <div className="usage-info mb-3">
+                        <h6 className="mb-2">Current Usage</h6>
+                        <p className="mb-1">
+                          <strong>Base Resume:</strong> {user.subscription?.usage.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume}
+                        </p>
+                        <p>
+                          <strong>Tailored Resume(s):</strong> {user.subscription?.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes}
+                        </p>
+                      </div>
+                      <hr className="my-3" />
+                      <p className="mb-4">
+                        <strong>Days left in Billing Cycle:</strong> {daysLeft}
+                      </p>
+                      <div className="text-center">
+                        <Button variant="primary" onClick={handleManagePlan}>
+                          Manage Plan
+                        </Button>
+                      </div>
                     </div>
                   </Card.Body>
                 </Card>
@@ -85,10 +96,9 @@ export default function Account() {
                   <p>Successful Referrals: <strong>{referralCount}</strong></p>
                   <Button onClick={() => navigator.clipboard.writeText(referralLink)}>Copy Link</Button>
                 </div>
-                
               </Card.Body>
             </Card>
-                <Card>
+                {/* <Card>
                   <Card.Body>
                     <div className='cardInnerDiv'>
                       <h4>Leave a review</h4>
@@ -101,9 +111,8 @@ export default function Account() {
                       </div>
                     </div>
                   </Card.Body>
-                </Card>
+                </Card> */}
               </div>
-              
             </div>
         </div>
         <Footer />
