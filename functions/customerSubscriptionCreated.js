@@ -43,6 +43,14 @@ async function handleSubscriptionUpdate(subscription) {
         const billingCycleStart = subscription.current_period_start * 1000;
         const dateActivated = subscription.start_date * 1000;
         const currentPeriodEndDate = subscription.current_period_end * 1000;
+        
+        const subscriptionPlans = {
+            price_1QrL8vEsYMRYIVaAx4EV21RU: { baseResume: 1, tailoredResumes: 5 },
+            price_1QrL8vEsYMRYIVaAnoVKXDwS: { baseResume: 1, tailoredResumes: 5 },
+            price_1QrL8rEsYMRYIVaAR2eJ9Vta: { baseResume: 1, tailoredResumes: Infinity },
+            price_1QrL8rEsYMRYIVaABNH1JBGo: { baseResume: 1, tailoredResumes: Infinity },
+        };
+        const limits = subscriptionPlans[planId] || { baseResume: 0, tailoredResumes: 0 };
 
         const usersRef = db.collection("users");
         const snapshot = await usersRef.where("stripeCustomerId", "==", customerId).get();
@@ -53,19 +61,35 @@ async function handleSubscriptionUpdate(subscription) {
         }
 
         const userDoc = snapshot.docs[0];
-        await userDoc.ref.update({
+        const userData = userDoc.data();
+
+        // Determine if a new billing cycle has begun
+        const isNewCycle = userData.subscription.billingCycleStart !== billingCycleStart;
+
+        // Build the update payload
+        const updatedData = {
             "subscription.plan": planId,
             "subscription.active": status === "active" || status === "trialing",
             "subscription.billingCycleStart": billingCycleStart,
             "subscription.dateActivated": dateActivated,
             "subscription.currentPeriodEndDate": currentPeriodEndDate,
-        });
+            "subscription.limits": limits,
+        };
+
+        // Only reset tailored resume usage if a new cycle has begun.
+        // Base resume usage remains static.
+        if (isNewCycle) {
+            updatedData["subscription.usage.tailoredResumes"] = 0;
+        }
+
+        await userDoc.ref.update(updatedData);
 
         console.log(`✅ Subscription updated for user ${userDoc.id} (Plan: ${planId}, Status: ${status})`);
     } catch (error) {
         console.error("❌ Error updating subscription in Firestore:", error);
     }
 }
+
 
 // ✅ Handle Subscription Cancellations
 async function handleSubscriptionCancel(subscription) {

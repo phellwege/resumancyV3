@@ -36,7 +36,6 @@ export default function CreateBaselineResume() {
     const {
         saveBaselineResume
     } = useData();
-    
     const userExperience = "Detail your relevant job history (Required):";
     const userEducation = "List your education and certifications (Required):";
     const userSkills = "Specify your relevant skills (Required):";

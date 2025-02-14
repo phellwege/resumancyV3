@@ -135,12 +135,14 @@ export function UserProvider({ children }) {
 
     const canCreateMore = (type) => {
         if (!user.subscription.active) {
-            return false; 
+            return false;
         }
-        
-        const usage = user.subscription.usage[type];
-        const limit = user.subscription.limits[type];
-    
+
+          // Safely retrieve usage and limit, defaulting to 0 if not defined
+        const usage = user.subscription.usage?.[type] ?? 0;
+        const limit = user.subscription.limits?.[type] ?? 0;
+
+          // Allow creation if the limit is Infinity or if the current usage is below the limit
         return limit === Infinity || usage < limit;
     };
     
