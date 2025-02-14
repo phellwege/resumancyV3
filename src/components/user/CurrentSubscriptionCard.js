@@ -8,7 +8,8 @@ export default function CurrentSubscriptionCard() {
     const {
         user,
         displayCorrectPlan,
-        subscriptionPlans
+        subscriptionPlans,
+        daysLeft
     } = useUser();
 
     useEffect(() => {
@@ -34,6 +35,7 @@ export default function CurrentSubscriptionCard() {
                         <h4>Plan:{' '}{displayCorrectPlan()}</h4>
                         <div>
                             <h5>Current Usage:</h5>
+                            <p><strong>Days left in Billing Cycle:</strong> {daysLeft}</p>
                             <h6>Base Resume:
                             ( {user.subscription?.usage?.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume} )
                             </h6>

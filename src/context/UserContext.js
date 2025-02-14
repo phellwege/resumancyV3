@@ -320,7 +320,18 @@ export function UserProvider({ children }) {
             return <span style={{color: "gold"}}>PREMIUM ANNUAL</span>
         }
     }
+
+    const currentPeriodEndDate = new Date(user.subscription.currentPeriodEndDate);
+    const now = new Date();
+    const diffTime = currentPeriodEndDate - now;
+    const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const describeBaseResume = "A Base Resume is the starting point for Resumancy. You provide your resume details, and we enhance and customize it to present your experience in the best light.";
+    const describeTailoredResume = "A Tailored Resume is built from your Base Resume and optimized for a specific job. Simply paste the job description and company name, and we’ll adjust your resume to highlight the most relevant skills and experience, boosting your chances of landing the role.";
+    
     const value = useMemo(() =>({
+        daysLeft,
+        describeBaseResume,
+        describeTailoredResume,
         generateUUID,
         initialUserState,
         user, setUser,

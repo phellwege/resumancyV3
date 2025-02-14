@@ -1,19 +1,27 @@
 import React from 'react'
 import { useUser } from '../../context/UserContext';
-import { Button, Card} from 'react-bootstrap';
+import { Button, Card, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
+import { BsQuestionCircle } from "react-icons/bs";
+
 
 export default function CurrentPlans() {
     const {
         user,
         subscriptionPlans,
-        displayCorrectPlan
+        displayCorrectPlan,
+        daysLeft,
+
+        describeBaseResume,
+        describeTailoredResume
     } = useUser();
     const {
         handleManagePlan
     } = useData();
     const history = useNavigate();
+    
+
 
   return (
     <>
@@ -30,15 +38,37 @@ export default function CurrentPlans() {
                 ): (
                     <>
                         <h5>Current Plan: <br/>{displayCorrectPlan()}</h5>
+                        <p><strong>Days left in Billing Cycle:</strong> {daysLeft}</p>
                         <div>
-                            <h6>
-                                Usage:<br/>
-                                Base Resume:
-                                ( {user.subscription?.usage.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume} )
+                            <p>
+                                <strong>Usage:</strong>
                                 <br/>
-                                Tailored Resume(s):
-                                ( {user.subscription?.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes} )
-                            </h6>
+                                <strong>Base Resume: </strong>
+                                ( {user.subscription?.usage.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume} ) {' '}
+                                <OverlayTrigger 
+                                    overlay={
+                                    <Tooltip id="tooltip">
+                                        {describeBaseResume}
+                                    </Tooltip>
+                                    }>
+                                    <span className="question-icon">
+                                        <BsQuestionCircle />
+                                    </span>
+                                </OverlayTrigger>
+                                <br/>
+                                <strong>Tailored Resume(s): </strong>
+                                ( {user.subscription?.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes} ){' '}
+                                <OverlayTrigger 
+                                    overlay={
+                                    <Tooltip id="tooltip">
+                                        {describeTailoredResume}
+                                    </Tooltip>
+                                    }>
+                                    <span className="question-icon">
+                                        <BsQuestionCircle />
+                                    </span>
+                                </OverlayTrigger>
+                            </p>
                             {user?.subscription.plan === 'price_1QrL8vEsYMRYIVaAx4EV21RU' || user?.subscription.plan === 'price_1QrL8vEsYMRYIVaAnoVKXDwS' ? (
                                 <Button onClick={handleManagePlan}>
                                     Update Plan

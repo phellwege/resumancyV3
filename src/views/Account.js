@@ -11,7 +11,8 @@ export default function Account() {
     displayCorrectPlan,
     user,
     setDeleteAcctModal,
-    subscriptionPlans
+    subscriptionPlans,
+    daysLeft
   } = useUser();
   const {
     handleManagePlan
@@ -19,10 +20,10 @@ export default function Account() {
   const [referralLink, setReferralLink] = useState('');
   const [referralCount, setReferralCount] = useState(0);
 
-  const currentPeriodEndDate = new Date(user.subscription.currentPeriodEndDate);
-  const now = new Date();
-  const diffTime = currentPeriodEndDate - now;
-  const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  // const currentPeriodEndDate = new Date(user.subscription.currentPeriodEndDate);
+  // const now = new Date();
+  // const diffTime = currentPeriodEndDate - now;
+  // const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
   const handleDeleteAccount = () => {
       setDeleteAcctModal(true);
@@ -81,7 +82,7 @@ export default function Account() {
                   </Card.Body>
                 </Card>
               </div>
-              <div className='rightDiv'>
+              {/* <div className='rightDiv'>
               <Card>
               <Card.Body>
                 <div className='cardInnerDiv'>
@@ -98,7 +99,7 @@ export default function Account() {
                 </div>
               </Card.Body>
             </Card>
-                {/* <Card>
+                <Card>
                   <Card.Body>
                     <div className='cardInnerDiv'>
                       <h4>Leave a review</h4>
@@ -111,8 +112,8 @@ export default function Account() {
                       </div>
                     </div>
                   </Card.Body>
-                </Card> */}
-              </div>
+                </Card>
+              </div> */}
             </div>
         </div>
         <Footer />
