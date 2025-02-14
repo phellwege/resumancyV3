@@ -706,21 +706,37 @@ width: 45%;
     margin-left: 4px;
     cursor: pointer;
 }
+#tailoredInfoCard {
+    width:40%;
+}
 
-@media (max-width: 850px) {
+@media (max-width: 860px) {
     #defaultResumeWrap {
         width: 100%;
         max-width: 497.33px;
         height: 710.47px;
     }
+    #tailoredInfoCard {
+        width:80%;
+        margin-left:10%;
+    }
     .pageWrapper .secondaryPageWrapper {
         flex-direction: column;
         flex-wrap: wrap;
+    }
+    .pageWrapper{
+        padding-top: 2.5%;
+    }
+    .backButton {
+        display: none;
     }
     .leftDiv {
         display: none;
     }
     .homeLeftCard .card-body {
+        display: none;
+    }
+    div.head_wrap {
         display: none;
     }
     .leftDiv {

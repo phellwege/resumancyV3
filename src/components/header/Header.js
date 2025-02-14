@@ -134,11 +134,10 @@ return (
                         <div className='modalAvatarImg'>
                             <>
                             <Link to='' onClick={handleOpenLoginModal}>
-                                <CgProfile size={80} />
+                                <CgProfile size={65} />
                             </Link>
                             <Link to='' onClick={handleOpenLoginModal}>Login / Register</Link>
                             </>
-                        
                         </div>
                     </div>
                 )}

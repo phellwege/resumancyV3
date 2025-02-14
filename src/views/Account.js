@@ -39,7 +39,7 @@ export default function Account() {
         <div className='pageWrapper'>
             <div className='secondaryPageWrapper'>
               <DeleteUserModal/>
-              <div className='leftDiv'>
+              <div className='rightDiv'>
                 <Card className="mb-4 shadow-sm">
                   <Card.Body>
                     <div className="cardInnerDiv p-3">

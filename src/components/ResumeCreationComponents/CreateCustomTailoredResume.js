@@ -22,14 +22,19 @@ export default function CreateCustomTailoredResume() {
         canCreateMore,
         setSuccessMessage,
         setError,
-        subscriptionPlans
+        subscriptionPlans,
+        displayCorrectPlan,
+        describeBaseResume,
+        describeTailoredResume,
+        daysLeft
     } = useUser();
     const {
         setLoading
     } = useAuth();
     const {
         addTailoredResume,
-        addCoverLetter
+        addCoverLetter,
+        handleManagePlan
     } = useData();
 
     const history = useNavigate();
@@ -233,24 +238,51 @@ export default function CreateCustomTailoredResume() {
                 </Button>
             </div>
             </div>
-            {user.subscription.plan != 'premium' && (
-                <Card>
+            {user.subscription.plan !== 'price_1QrL8vEsYMRYIVaAx4EV21RU' || user.subscription.plan !== 'price_1QrL8vEsYMRYIVaAnoVKXDwS' && (
+                <Card id='tailoredInfoCard'>
                     <Card.Body>
-                        <div>
-                            <h5>Plan:{' '}{capitalizeAllLetters(user.subscription.plan)}</h5>
-                            <h6>
-                            Current Usage:
-                            ( {user.subscription.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan].tailoredResumes} )
-                            </h6>
+                        <div className='cardInnerDiv'>
+                        <h6 className="mb-2">
+                        <strong>Current Plan: {displayCorrectPlan()}</strong> 
+                        </h6>
+                        <hr className="my-3" />
+                        <div className="usage-info mb-3">
+                        <h6 className="mb-2">Current Usage</h6>
+                        <p className="mb-1">
+                            <strong>Base Resume:</strong> {user.subscription?.usage.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume}
+                            <OverlayTrigger 
+                                overlay={
+                                <Tooltip id="tooltip">
+                                    {describeBaseResume}
+                                </Tooltip>
+                                }>
+                                <span className="question-icon">
+                                    <BsQuestionCircle />
+                                </span>
+                            </OverlayTrigger>
+                        </p>
+                        <p>
+                            <strong>Tailored Resume(s):</strong> {user.subscription?.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes}
+                            <OverlayTrigger 
+                                overlay={
+                                <Tooltip id="tooltip">
+                                    {describeTailoredResume}
+                                </Tooltip>
+                                }>
+                                <span className="question-icon">
+                                    <BsQuestionCircle />
+                                </span>
+                            </OverlayTrigger>
+                        </p>
                         </div>
-                        <Button onClick={() => {
-                            const userEmail = encodeURIComponent(user.contactInfo.email);
-                            const stripeUrl = `https://billing.stripe.com/p/login/test_00gbLu5P7bjzcucdQQ?prefilled_email=${userEmail}`;
-                            
-                            window.open(stripeUrl, "_blank"); // Opens in a new tab
-                        }}>
+                        <hr className="my-3" />
+                        <p className="mb-4">
+                        <strong>Days left in Billing Cycle:</strong> {daysLeft}
+                        </p>
+                        <Button onClick={() => {handleManagePlan()}}>
                             Upgrade Now
                         </Button>
+                        </div>
                     </Card.Body>
                 </Card>
             )}
