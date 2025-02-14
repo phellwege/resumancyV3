@@ -42,6 +42,7 @@ async function handleSubscriptionUpdate(subscription) {
         const status = subscription.status;
         const billingCycleStart = subscription.current_period_start * 1000;
         const dateActivated = subscription.start_date * 1000;
+        const currentPeriodEndDate = subscription.current_period_end * 1000;
 
         const usersRef = db.collection("users");
         const snapshot = await usersRef.where("stripeCustomerId", "==", customerId).get();
@@ -57,6 +58,7 @@ async function handleSubscriptionUpdate(subscription) {
             "subscription.active": status === "active" || status === "trialing",
             "subscription.billingCycleStart": billingCycleStart,
             "subscription.dateActivated": dateActivated,
+            "subscription.currentPeriodEndDate": currentPeriodEndDate,
         });
 
         console.log(`✅ Subscription updated for user ${userDoc.id} (Plan: ${planId}, Status: ${status})`);

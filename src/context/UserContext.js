@@ -103,6 +103,7 @@ export function UserProvider({ children }) {
             plan: null,
             dateActivated: null,
             billingCycleStart: null,
+            currentPeriodEndDate: null,
             usage: {
                 baseResume: 0,
                 tailoredResumes: 0,

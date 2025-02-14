@@ -47,8 +47,8 @@ export default function Account() {
                   <Card.Body>
                     <div className='cardInnerDiv'>
                       <h4>Delete Account</h4>
-                      <p>What happens when you delete your account? All your account information will be deleted from the database, and any saved resumes you have will be lost. Any outstanding subscription plans you are signed up for will be cancelled immediately.</p>
-                      <p>This action cannot be reversed</p>
+                      <p>What happens when you delete your account? All your account information will be deleted from the database, and any saved resumes you have will be lost. Any outstanding subscription plans you are signed up for will be cancelled immediately, and the service will no longer be accessible to you.</p>
+                      <p><strong>This action cannot be reversed.</strong></p>
                       <div>
                       <Button 
                         variant='danger' 
