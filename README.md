@@ -1,5 +1,6 @@
 ### Repair to working state
 TODO: delineate between trialing and subbed
+TODO: setup overLimit page that prompts them to upgrade their account
 
 ### Flow Correction 
 TODO: prevent users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their plan to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.
@@ -11,6 +12,7 @@ TODO: update FAQ to reflect changes
  
 ### Bug
 TODO: fix bug on modal size when scrolling
+TODO: fix login scaling
 
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions
