@@ -2,6 +2,7 @@ import React from 'react'
 import { useUser } from '../../context/UserContext';
 import { Button, Card} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useData } from '../../context/DataContext';
 
 export default function CurrentPlans() {
     const {
@@ -9,6 +10,9 @@ export default function CurrentPlans() {
         subscriptionPlans,
         displayCorrectPlan
     } = useUser();
+    const {
+        handleManagePlan
+    } = useData();
     const history = useNavigate();
 
   return (
@@ -36,11 +40,13 @@ export default function CurrentPlans() {
                                 ( {user.subscription?.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes} )
                             </h6>
                             {user?.subscription.plan === 'price_1QrL8vEsYMRYIVaAx4EV21RU' || user?.subscription.plan === 'price_1QrL8vEsYMRYIVaAnoVKXDwS' ? (
-                                <Button>
-                                    Upgrade Plan
+                                <Button onClick={handleManagePlan}>
+                                    Update Plan
                                 </Button>
                             ): (
-                                <Button>
+                                <Button onClick={
+                                    ()=> {history('/Account');
+                                    }}>
                                     Manage Account
                                 </Button>
                             )}

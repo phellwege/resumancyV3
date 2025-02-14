@@ -3,7 +3,7 @@ import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import { Button, Card } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
-import { useAuth } from '../context/AuthContext';
+import { useData } from '../context/DataContext';
 
 export default function Account() {
   const {
@@ -11,33 +11,12 @@ export default function Account() {
     user
   } = useUser();
   const {
-    setLoading
-  } = useAuth()
+    handleManagePlan
+  } = useData();
   const [referralLink, setReferralLink] = useState('');
   const [referralCount, setReferralCount] = useState(0);
 
-  const handleManagePlan = async () => {
-    setLoading(true);
-    try {
-      // Replace the URL with your deployed Firebase function endpoint if necessary
-      const response = await fetch('https://us-central1-resumancy.cloudfunctions.net/createStripePortalSession-createStripePortalSession', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customerId: user.stripeCustomerId }),
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`Failed to create Stripe portal session: ${errorData.error}`);
-      }
-      const data = await response.json();
-      // Redirect the user to the Stripe billing portal
-      window.location.href = data.url;
-    } catch (error) {
-      console.error('Error redirecting to Stripe portal:', error);
-      // Optionally, show an error notification to the user here
-    }
-    setLoading(false);
-  };
+  
 
   const handleDeleteAccount = () => {
     if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
@@ -67,12 +46,14 @@ export default function Account() {
                 <Card>
                   <Card.Body>
                     <div className='cardInnerDiv'>
-                      <h4>Manage your Account</h4>
+                      <h4>Delete Account</h4>
+                      <p>What happens when you delete your account? All your account information will be deleted from the database, and any saved resumes you have will be lost. Any outstanding subscription plans you are signed up for will be cancelled immediately.</p>
+                      <p>This action cannot be reversed</p>
                       <div>
                       <Button 
                         variant='danger' 
                         onClick={handleDeleteAccount}>
-                          Delete My Account
+                          Delete
                       </Button>
                       </div>
                     </div>

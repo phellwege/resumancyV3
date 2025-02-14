@@ -352,6 +352,25 @@ export function DataProvider({ children }) {
         loadResumes();
     }, [user.id, user.resume[0]]); 
 
+    const handleManagePlan = async () => {
+        setLoading(true);
+        try {
+        const response = await fetch('https://us-central1-resumancy.cloudfunctions.net/createStripePortalSession-createStripePortalSession', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customerId: user.stripeCustomerId }),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Failed to create Stripe portal session: ${errorData.error}`);
+        }
+        const data = await response.json();
+        window.location.href = data.url;
+        } catch (error) {
+            console.error('Error redirecting to Stripe portal:', error);
+        }
+        setLoading(false);
+    };
 
     const value = {
         loading,
@@ -370,7 +389,8 @@ export function DataProvider({ children }) {
         updateSpecificResume,
         updateSpecificCoverLetter,
         readyTailoredResume,
-        readyBaseResume
+        readyBaseResume,
+        handleManagePlan
     };
 
     return (
