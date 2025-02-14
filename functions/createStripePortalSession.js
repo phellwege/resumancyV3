@@ -1,35 +1,31 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-const Stripe = require("stripe");
+const { onRequest } = require("firebase-functions/v2/https");
+const stripe = require("stripe");
 
-// Initialize Stripe with your secret key
-const stripe = new Stripe("sk_test_yourSecretKey"); // Replace with your actual Secret Key
-
-exports.createStripePortalSession = functions.https.onRequest(async (req, res) => {
-    try {
-        res.set("Access-Control-Allow-Origin", "*");
-        res.set("Access-Control-Allow-Methods", "POST");
-        res.set("Access-Control-Allow-Headers", "Content-Type");
-
+// Securely access Stripe secret key from Firebase Secret Manager
+exports.createStripePortalSession = onRequest(
+    { cors: true, secrets: ["STRIPE_KEY"] }, 
+    async (req, res) => {
         if (req.method === "OPTIONS") {
             return res.status(204).send("");
         }
 
-        const { customerId } = req.body; // Get Stripe Customer ID from frontend
+        try {
+            const stripeInstance = stripe(process.env.STRIPE_KEY);
+            const { customerId } = req.body;
 
-        if (!customerId) {
-            return res.status(400).json({ error: "Stripe customer ID is required" });
+            if (!customerId) {
+                return res.status(400).json({ error: "Stripe customer ID is required" });
+            }
+
+            const session = await stripeInstance.billingPortal.sessions.create({
+                customer: customerId,
+                return_url: "https://resumancy.com",
+            });
+
+            return res.json({ url: session.url });
+        } catch (error) {
+            console.error("❌ Error creating Stripe portal session:", error);
+            return res.status(500).json({ error: error.message });
         }
-
-        // Create a Stripe billing portal session
-        const session = await stripe.billingPortal.sessions.create({
-            customer: customerId,
-            return_url: "https://yourwebsite.com/account", // Redirect back to your site
-        });
-
-        return res.json({ url: session.url }); // Send URL to frontend
-    } catch (error) {
-        console.error("Error creating Stripe portal session:", error);
-        return res.status(500).json({ error: error.message });
     }
-});
+);

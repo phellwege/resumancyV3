@@ -27,7 +27,7 @@ function Header(props) {
     } = useUser()
     const {
         logout
-    } = useAuth()
+    } = useAuth();
     const handleClickImg = () => {
         history('/UserProfile')
     }
@@ -131,10 +131,15 @@ return (
                 <>
                 {user.initialSetupDone || window.location.pathname == '/' &&(
                     <div className='avatarWindow'>
-                        <Link to='' onClick={handleOpenLoginModal}>
-                            <CgProfile size={45} />
-                        </Link>
-                        <Link to='' onClick={handleOpenLoginModal}>Login / Register</Link>
+                        <div className='modalAvatarImg'>
+                            <>
+                            <Link to='' onClick={handleOpenLoginModal}>
+                                <CgProfile size={80} />
+                            </Link>
+                            <Link to='' onClick={handleOpenLoginModal}>Login / Register</Link>
+                            </>
+                        
+                        </div>
                     </div>
                 )}
                 </>

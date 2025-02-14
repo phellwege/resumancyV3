@@ -39,6 +39,7 @@ export default function CreateCustomTailoredResume() {
 
     const handleSubmit = async () => {
         if (!canCreateMore("tailoredResumes")) {
+            history('/OverLimit');
             setError("You have reached the maximum number of tailored resumes for your subscription.");
             return;
         };

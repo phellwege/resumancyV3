@@ -130,7 +130,7 @@ export function UserProvider({ children }) {
 
     const canCreateMore = (type) => {
         if (!user.subscription.active) {
-            return false; // No active subscription means no resume creation allowed
+            return false; 
         }
         
         const usage = user.subscription.usage[type];
@@ -149,7 +149,7 @@ export function UserProvider({ children }) {
     const [review, setReview] = useState({
         userID : user.id,
         rating: null,
-        additionalInfo: null
+        additionalInfo: user.firstName
     });
     
     // prevent xss attacks

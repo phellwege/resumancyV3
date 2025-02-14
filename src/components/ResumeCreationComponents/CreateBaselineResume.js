@@ -51,6 +51,7 @@ export default function CreateBaselineResume() {
 
     const handleSubmit = async () => {
         if (!canCreateMore("baseResume")){
+            history('/OverLimit');
             setError("You have reached the maximum number of base resumes for your subscription.");
             return;
         }

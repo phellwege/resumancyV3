@@ -14,7 +14,7 @@ import { CgProfile } from "react-icons/cg";
 import "./NavBar.css";
 import { useUser } from '../../context/UserContext';
 import { useData } from '../../context/DataContext';
-
+import { useAuth } from '../../context/AuthContext';
 
 const NavBar = () => {
     const history = useNavigate();
@@ -26,6 +26,9 @@ const NavBar = () => {
     const {
         readyBaseResume
     } = useData();
+    const {
+        logout
+    } = useAuth();
     const handleClick =() => {
         setToggled((s)=>!s);
         setTheme(theme.mode === 'dark' ? {mode: 'light'}: {mode:'dark'})
@@ -129,15 +132,15 @@ const NavBar = () => {
                                         </Link>
                                     </li>
                                 </>
-                                
                             )}
-                            {/* {user.recruiter === true && (
-                                <li>
-                                    <Link to='/RecruiterMainPage' onClick={() => closeMenu()}>
-                                        Recruiter Home
-                                    </Link>
-                                </li>
-                            )} */}
+                            {user?.id && (
+                                <Button variant='danger' onClick={async () => {
+                                    await logout();
+                                    history('/');
+                                }}>
+                                    Logout
+                                </Button>
+                            )}
                             <li>
                                 <div className="Mode" id='menu_toggle' onClick={() => closeMenu()}>
                                     <Toggle toggled={toggled} onClick={handleClick} />
