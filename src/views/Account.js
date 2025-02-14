@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 import { useData } from '../context/DataContext';
 import DeleteUserModal from '../components/user/DeleteUserModal';
+import { BsQuestionCircle } from "react-icons/bs";
+
 
 export default function Account() {
   const {
@@ -12,7 +14,9 @@ export default function Account() {
     user,
     setDeleteAcctModal,
     subscriptionPlans,
-    daysLeft
+    daysLeft,
+    describeBaseResume,
+    describeTailoredResume
   } = useUser();
   const {
     handleManagePlan
@@ -40,17 +44,37 @@ export default function Account() {
                   <Card.Body>
                     <div className="cardInnerDiv p-3">
                       <h4 className="mb-3">Subscription Plan</h4>
-                      <p className="mb-2">
-                        <strong>Current Plan:</strong> {displayCorrectPlan()}
-                      </p>
+                      <h6 className="mb-2">
+                        <strong>Current Plan: {displayCorrectPlan()}</strong> 
+                      </h6>
                       <hr className="my-3" />
                       <div className="usage-info mb-3">
                         <h6 className="mb-2">Current Usage</h6>
                         <p className="mb-1">
                           <strong>Base Resume:</strong> {user.subscription?.usage.baseResume} / {subscriptionPlans[user.subscription.plan]?.baseResume}
+                          <OverlayTrigger 
+                              overlay={
+                              <Tooltip id="tooltip">
+                                  {describeBaseResume}
+                              </Tooltip>
+                              }>
+                              <span className="question-icon">
+                                  <BsQuestionCircle />
+                              </span>
+                          </OverlayTrigger>
                         </p>
                         <p>
                           <strong>Tailored Resume(s):</strong> {user.subscription?.usage.tailoredResumes} / {subscriptionPlans[user.subscription.plan]?.tailoredResumes}
+                          <OverlayTrigger 
+                              overlay={
+                              <Tooltip id="tooltip">
+                                  {describeTailoredResume}
+                              </Tooltip>
+                              }>
+                              <span className="question-icon">
+                                  <BsQuestionCircle />
+                              </span>
+                          </OverlayTrigger>
                         </p>
                       </div>
                       <hr className="my-3" />
