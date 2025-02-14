@@ -75,9 +75,7 @@ export default function CurrentPlans() {
                         Update Plan
                     </Button>
                     ) : (
-                    <Button variant="primary" onClick={() => history('/Account')}>
-                        Manage Account
-                    </Button>
+                    <></>
                     )}
                 </div>
                 </>
