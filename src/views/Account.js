@@ -4,11 +4,16 @@ import Footer from '../components/footer/Footer';
 import { Button, Card } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 import { useData } from '../context/DataContext';
+import DeleteUserModal from '../components/user/DeleteUserModal';
 
 export default function Account() {
   const {
     displayCorrectPlan,
-    user
+    user,
+    deleteAcctModal,
+    setDeleteAcctModal,
+    handleOpenDeleteAcctModal,
+    handleCloseDeleteAcctModal,
   } = useUser();
   const {
     handleManagePlan
@@ -16,12 +21,13 @@ export default function Account() {
   const [referralLink, setReferralLink] = useState('');
   const [referralCount, setReferralCount] = useState(0);
 
-  
+  const currentPeriodEndDate = new Date(user.subscription.currentPeriodEndDate);
+  const now = new Date();
+  const diffTime = currentPeriodEndDate - now;
+  const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
   const handleDeleteAccount = () => {
-    if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-      // deleteUserAccount(); // Your function to delete the account
-    }
+      setDeleteAcctModal(true);
   };
   
   return (
@@ -29,12 +35,16 @@ export default function Account() {
         <Header />
         <div className='pageWrapper'>
             <div className='secondaryPageWrapper'>
+              <DeleteUserModal/>
               <div className='leftDiv'>
                 <Card>
                   <Card.Body>
                     <div className='cardInnerDiv'>
                     <h4>Subscription Plan</h4>
                     <h6>Current Plan:{' '}{displayCorrectPlan()}</h6>
+                    <div>
+                      <p>Days left in Billing Cycle: {daysLeft}</p>
+                    </div>
                     <div>
                       <Button  onClick={handleManagePlan}>
                         Manage Plan
@@ -63,12 +73,19 @@ export default function Account() {
               <div className='rightDiv'>
               <Card>
               <Card.Body>
-                <h4>Referral Program</h4>
-                <p>Invite your friends and earn rewards!</p>
-                <p>Your Referral Link:</p>
-                <input type='text' value={referralLink} readOnly className='form-control' />
-                <p>Successful Referrals: <strong>{referralCount}</strong></p>
-                <Button onClick={() => navigator.clipboard.writeText(referralLink)}>Copy Link</Button>
+                <div className='cardInnerDiv'>
+                  <h4>Referral Program</h4>
+                  <p>Invite your friends and earn rewards!</p>
+                  <p>Your Referral Link:</p>
+                  <input 
+                    type='text' 
+                    value={referralLink} 
+                    readOnly className='form-control' 
+                  />
+                  <p>Successful Referrals: <strong>{referralCount}</strong></p>
+                  <Button onClick={() => navigator.clipboard.writeText(referralLink)}>Copy Link</Button>
+                </div>
+                
               </Card.Body>
             </Card>
                 <Card>

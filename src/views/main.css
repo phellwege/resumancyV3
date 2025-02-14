@@ -695,7 +695,12 @@ width: 45%;
     display: flex;
     justify-content: space-evenly;
 }
-
+#deleteAcctModal {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-left:10%;
+}
 @media (max-width: 850px) {
     #defaultResumeWrap {
         width: 100%;

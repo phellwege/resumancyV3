@@ -39,6 +39,10 @@ export function UserProvider({ children }) {
     const [contactUsModal, setContactUsModal] = useState(false);
     const handleOpenContactUsModal = () => setContactUsModal(true);
     const handleCloseContactUsModal = () => setContactUsModal(false);
+    // delete acct
+    const [deleteAcctModal, setDeleteAcctModal] = useState(false);
+    const handleOpenDeleteAcctModal = () => setDeleteAcctModal(true);
+    const handleCloseDeleteAcctModal = () => setDeleteAcctModal(false);
     // user avatar selection stuff
     const [selectAvatar, setSelectAvatar] = useState(false);
     const handleOpenSelectAvatar = () => setSelectAvatar(true);
@@ -333,6 +337,11 @@ export function UserProvider({ children }) {
         selectAvatar, setSelectAvatar,
         handleOpenSelectAvatar,
         handleCloseSelectAvatar,
+
+        deleteAcctModal,
+        setDeleteAcctModal,
+        handleOpenDeleteAcctModal,
+        handleCloseDeleteAcctModal,
 
         reviewJobDescModal,
         handleOpenReviewJobDescModal,

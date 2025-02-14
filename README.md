@@ -1,15 +1,6 @@
 ### Repair to working state
-TODO: fix the stripe payment thing so it is a stripe payment portal, this way the client cannot edit their email and it is more secure. Call it using a cloud function. 
- - steps to succeed
-Step	Action	                                                    Outcome
-1	Deploy Firebase Cloud Function for Stripe Portal	Function generates Stripe session URL
-2	Frontend calls the Cloud Function & redirects user	User goes to Stripe to manage their plan
-3	Deploy Firebase Cloud Function for Stripe Webhooks	Stripe notifies Firebase when plan changes
-4	Store updated Stripe status in Firestore	        Keeps user subscription info up-to-date
-5	Firebase Listener updates UI automatically	        React app displays new subscription status
-
-TODO: add manage account section to delete acct, change subscription etc.
-TODO: add a button to delete account which will cancel their subscription and remove their user
+TODO: add reviews
+TODO: 
 
 ### Flow Correction 
 TODO: prevent users from creating a resume if they are over the limit for their tier, then redirect them to upgrade their plan to unlimited with a timer to show how long until the next month rolls around and they can create another 5 on their current plan, or upgrade today.

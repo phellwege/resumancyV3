@@ -371,6 +371,32 @@ export function DataProvider({ children }) {
         }
         setLoading(false);
     };
+    // ... inside DataProvider, after your other functions
+    const deleteUserAccount = async (userId, stripeCustomerId) => {
+        try {
+        // Call your backend endpoint that handles cancellation/deletion
+        const response = await fetch('https://us-central1-resumancy.cloudfunctions.net/deleteUserAccount-deleteUserAccount', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId,
+                stripeCustomerId,
+            }),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to delete account');
+        }
+        localStorage.removeItem("user");
+        setUser(initialUserState);
+        navigate('/');
+        return { success: true };
+        } catch (error) {
+            console.error('Error deleting account:', error);
+            return { error: error.message };
+        }
+    };
+
 
     const value = {
         loading,
@@ -390,7 +416,8 @@ export function DataProvider({ children }) {
         updateSpecificCoverLetter,
         readyTailoredResume,
         readyBaseResume,
-        handleManagePlan
+        handleManagePlan,
+        deleteUserAccount
     };
 
     return (
