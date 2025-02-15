@@ -32,7 +32,36 @@ export default function Home() {
   return (
     <>
     <Header />
-    <div className='pageWrapper'>
+        <div className='pageWrapper'>
+            <div className='heroSection'>
+                <div className='heroContent'>
+                    <h1>Land More Interviews with Tailored Resumes</h1>
+                    <p className="heroSubtitle">AI-powered resume tailoring and cover letters for every job application</p>
+                    <div className='heroStats'>
+                        <div className='statItem'>
+                            <span className='statNumber'>1 min</span>
+                            <span className='statLabel'>Average Creation Time</span>
+                        </div>
+                    </div>
+                    <div className='heroCTA'>
+                        <Button 
+                            variant="primary"
+                            onClick={handleOpenLoginModal}
+                            className='heroButton'
+                        >
+                            Start Free Trial
+                        </Button>
+                        <Button 
+                            variant="outline-light"
+                            as={Link} 
+                            to="/FAQ"
+                            className='heroButton'
+                        >
+                            Learn More
+                        </Button>
+                    </div>
+                </div>
+            </div>
             <div className='secondaryPageWrapper'>
                 <div className='leftDiv'>
                     <Card className='homeLeftCard'>

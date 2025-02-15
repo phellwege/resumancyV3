@@ -96,6 +96,8 @@ export function UserProvider({ children }) {
             createdAt: null,
             companyName: '',
             description: '',
+            matchPercent: '',
+            skillGapAnalysis: '',
         }],
         coverLetter: [{
             id: null,

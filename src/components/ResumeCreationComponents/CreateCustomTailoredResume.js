@@ -10,6 +10,7 @@ import { useUser } from '../../context/UserContext';
 
 import '../../views/main.css';
 import { useData } from '../../context/DataContext';
+import { extractResumeText, calculateHybridMatchPercent } from '../user/SendMatch';
 
 export default function CreateCustomTailoredResume() {
     const {
@@ -22,11 +23,6 @@ export default function CreateCustomTailoredResume() {
         canCreateMore,
         setSuccessMessage,
         setError,
-        subscriptionPlans,
-        displayCorrectPlan,
-        describeBaseResume,
-        describeTailoredResume,
-        daysLeft
     } = useUser();
     const {
         setLoading
@@ -34,7 +30,7 @@ export default function CreateCustomTailoredResume() {
     const {
         addTailoredResume,
         addCoverLetter,
-        handleManagePlan
+        updateUserData 
     } = useData();
 
     const history = useNavigate();
@@ -85,7 +81,21 @@ export default function CreateCustomTailoredResume() {
                     finalizedResume,
                 ],
             }));
-    
+            // Now that the tailored resume is generated, calculate the match percentage.
+            // Here we assume the most recent tailored resume is the last one added in user.resume.
+            // Adjust the index if needed.
+            const latestTailoredResume = user.resume[user.resume.length - 1];
+            const resumeText = extractResumeText(latestTailoredResume);
+            // Use firstResume (the tailored resume entry we just created) for job description.
+            const matchPercent = calculateHybridMatchPercent(resumeText, firstResume.description);
+
+            // Update the tailored resume entry with the match percentage.
+            const updatedTailoredResumes = user.tailoredResume.map(tr => 
+                tr.id === newId ? { ...tr, matchPercent, updatedAt: new Date().toISOString() } : tr
+            );
+            await updateUserData(user.id, { tailoredResume: updatedTailoredResumes });
+
+
             history("/Review");
         } catch (error) {
             console.error("Error during submission:", error);

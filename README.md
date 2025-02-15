@@ -1,7 +1,11 @@
+### feature to add
+TODO: Skill gap analyzer basic analysis of resume vs job description as percentage. detects percent match then creates an analysis of relevant skills and how to up skill and prep for interview - increase retention
+TODO: AI Interviewer - interview preparation - increase retention
+ 
 ### Repair to working state
 
 ### Flow Correction 
-TODO: delineate between trialing and subbed
+TODO: new features added to tailoredResume Review table
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
@@ -16,7 +20,7 @@ TODO: fix bug on modal size when scrolling
 ### CRITICAL BEFORE DEPLOY
 TODO: setup hard limitations for firebase functions
 TODO: limit firebase functions to authorized users only (logged in)
-TODO: email verifications
+TODO: email verifications on sign up
 TODO: obfuscate code
 
 ### Future Updates

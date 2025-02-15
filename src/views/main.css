@@ -721,7 +721,55 @@ width: 45%;
 .userContactCardAvatar {
     margin-bottom: 2%;
 }
+.heroSection {
+    width: 100%;
+    padding: 0 5% 2rem 5%; /* Removed top padding, kept sides and bottom */
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.heroSubtitle {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    margin: 0.5rem 0 1rem 0;
+}
+.heroContent h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+}
 
+.heroStats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 1rem 0;
+}
+
+.statItem {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.statNumber {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #00b4d8; /* Your bright accent color */
+}
+
+.statLabel {
+    color: #e0e0e0;
+    font-size: 0.9rem;
+}
+
+.heroCTA {
+    margin-top: 1rem;
+}
+
+.heroButton {
+    margin: 0 0.5rem;
+}
 @media (max-width: 860px) {
     #defaultResumeWrap {
         width: 100%;

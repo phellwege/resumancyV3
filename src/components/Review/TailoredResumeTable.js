@@ -70,6 +70,7 @@ export default function TailoredResumeTable() {
                 <th>Resume</th>
                 <th>Cover Letter</th>
                 <th>Date</th>
+                <th>Match %</th>
             </tr>
             </thead>
             <tbody>
@@ -101,6 +102,9 @@ export default function TailoredResumeTable() {
                     }).format(new Date(resume.usage.timeStamp))
                     : "NA"
                   }
+                </td>
+                <td>
+                  {resume.matchPercent ? `${resume.matchPercent}%` : "N/A"}
                 </td>
               </tr>
             ))}

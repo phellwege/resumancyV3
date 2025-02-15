@@ -20,6 +20,7 @@ import UserProfile from './views/UserProfile';
 import Subscribe from './views/Subscribe';
 import Account from './views/Account';
 import OverLimit from './views/OverLimit';
+import SuccessPage from './views/SuccessPage';
 
 function App() {
   const [theme, setTheme] = useState({mode: 'light'})
@@ -45,6 +46,7 @@ function App() {
             <Route exact path='/Subscribe' element={<Subscribe />} />
             <Route exact path='/Account' element={<PrivateRoute><Account /></PrivateRoute>} />
             <Route exact path='/OverLimit' element={<PrivateRoute><OverLimit /></PrivateRoute>} />
+            <Route exact path='/Success' element={<SuccessPage />} />
 
             </Routes>
           </React.Fragment>
