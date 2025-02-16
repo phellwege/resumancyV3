@@ -9,20 +9,55 @@ export default function GapAnalysisModal() {
         gapAnalysisModal,
         handleCloseGapAnalysisModal
     } = useUser();
-    const renderTextWithNewLines = (text) => {
-        if (text) {
-            const lines = text.split('\n');
-            return lines.map((line, index) => {
-                const shouldIndent = line.startsWith('-');
-                return (
-                    <p key={index} className={shouldIndent ? 'indented' : ''} style={{ marginBottom: "5px" }}>{line}
-                    </p>
-                );
-            });
+    
+    function parseBoldSegments(line) {
+        const pattern = /\*\*(.*?)\*\*/g; // matches **some text**
+        const result = [];
+        let lastIndex = 0;
+        let match;
+    
+        while ((match = pattern.exec(line)) !== null) {
+        // Push the text before the **...** match
+        if (match.index > lastIndex) {
+            result.push(line.slice(lastIndex, match.index));
         }
-        return null;
+        // Push the <strong> element
+        result.push(<strong key={match.index}>{match[1]}</strong>);
+    
+        // Update the index to continue after the current match
+        lastIndex = pattern.lastIndex;
+        }
+    
+        // If there's leftover text after the last match, push it too
+        if (lastIndex < line.length) {
+        result.push(line.slice(lastIndex));
+        }
+    
+        return result;
+    }
+
+    const renderTextWithNewLines = (text) => {
+        if (!text) return null;
+    
+        const lines = text.split('\n');
+        return lines.map((line, index) => {
+        const shouldIndent = line.startsWith('-');
+        // Convert any **bold** in this line to <strong> elements
+        const parsedLine = parseBoldSegments(line);
+    
+        return (
+            <p
+            key={index}
+            className={shouldIndent ? 'indented' : ''}
+            style={{ marginBottom: '5px' }}
+            >
+            {parsedLine}
+            </p>
+        );
+        });
     };
-  return (
+    
+return (
     <>
         <Modal
             show={gapAnalysisModal}

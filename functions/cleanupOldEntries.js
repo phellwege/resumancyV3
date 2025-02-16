@@ -8,7 +8,7 @@ exports.cleanUpOldEntries = onSchedule("every 24 hours", async (event) => {
     console.log("🕒 Running clean-up function...");
 
     const usersSnapshot = await db.collection("users").get();
-    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // Convert to JS Date
+    const thirtyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000); // Convert to JS Date
 
     const batch = db.batch();
     let batchCounter = 0;

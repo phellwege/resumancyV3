@@ -2,10 +2,9 @@
 TODO: AI Interviewer - interview preparation - increase retention
  
 ### Repair to working state
-TODO: fix success page formatting
 
 ### Flow Correction 
-TODO: new features added to tailoredResume Review table
+TODO: change from 30 days maintained resumes to 90d
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
