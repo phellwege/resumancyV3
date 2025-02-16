@@ -13,7 +13,8 @@ async function generateGapAnalysisWithRetry(selectedTailoredResumeIdData, user, 
                     role: 'system',
                     content: `
                         You are a professional career advisor. 
-                        Analyze the following resume and job description to identify skill gaps and provide concise, actionable recommendations for upskilling.
+                        Please identify the top 3 most impactful skill gaps, providing specific, actionable recommendations and steps for each gap.
+                        Please prioritize the skill gaps by impact, discussing the top 3 first in detail, then briefly mention any additional minor gaps if needed.
                         Include specific suggestions such as online courses or resources where applicable, in order of most impactful for the applicant displayed first.
                         Do not include "###", '**', or any similar decoration in your final response; just use plain text, bullet points, or headings.
                         Please keep your entire response under 800 words, concluding your analysis completely if you approach the limit.

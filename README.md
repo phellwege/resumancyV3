@@ -3,6 +3,7 @@ TODO: AI Interviewer - interview preparation - increase retention
  
 ### Repair to working state
 TODO: fix success page formatting
+TODO: triage tailored resumes (looks like they're getting progressively worse)
 
 ### Flow Correction 
 TODO: new features added to tailoredResume Review table
