@@ -19,7 +19,7 @@ const renderTextWithNewLines = (text) => {
         return lines.map((line, index) => {
             const shouldIndent = line.startsWith('-');
             return (
-                <p key={index} className={shouldIndent ? 'indented' : ''} style={{ marginBottom: "5px" }}>{line}
+                <p key={index} className={shouldIndent ? 'indented' : ''} style={{ marginBottom: "2px" }}>{line}
                 </p>
             );
         });

@@ -11,6 +11,7 @@ import ResumeStyle2 from './resumeStyles/resumeStyle2';
 // import ResumeStyle3 from './resumeStyles/resumeStyle3';
 import ResumeStyle4 from './resumeStyles/resumeStyle4';
 import ResumeStyle5 from './resumeStyles/resumeStyle5';
+import ResumeStyle6 from './resumeStyles/resumeStyle6';
 import { useData } from '../../context/DataContext';
 
 const styleComponents = {
@@ -19,6 +20,7 @@ const styleComponents = {
   // style3: ResumeStyle3,
   style4: ResumeStyle4,
   style5: ResumeStyle5,
+  style6: ResumeStyle6,
 };
 
 export default function ReviewBaseResumeModal() {

@@ -381,6 +381,11 @@ width: 45%;
 #resumeStyle2 h2 {
     color: black;
 }
+#resumeStyle2 h3, #resumeStyle2 h6 {
+    margin: 0.3rem 0;
+    line-height: 1;
+}
+
 #resumeStyle2Header {
     border-bottom: 2px solid black;
 }
@@ -422,6 +427,10 @@ width: 45%;
 }
 #resumeStyle3 h2{
     color: black;
+}
+#resumeStyle3 h3, #resumeStyle3 h6 {
+    margin: 0.3rem 0;
+    line-height: 1;
 }
 #resumeStyle3ExperiencSection h4 {
     text-align: left;
@@ -485,6 +494,10 @@ width: 45%;
     color: black;
     
 }
+#resumeStyle4 h3, #resumeStyle4 h6 {
+    margin: 0.3rem 0;
+    line-height: 1;
+}
 #resumeStyle4Header {
     width: 100%;
     background-color: #7AA1CB;
@@ -525,6 +538,10 @@ width: 45%;
 #resumeStyle5 .reviewDefaultResumeSections {
     border-bottom: none;
 }
+#resumeStyle5 h3, #resumeStyle5 h6 {
+    margin: 0.3rem 0;
+    line-height: 1;
+}
 #resumeStyle5LowerWrap {
     display: flex;
     height: 100%;
@@ -548,6 +565,126 @@ width: 45%;
     height: 100%;
     padding-top: 1%;
 }
+/* Container and Header */
+.resume-container {
+    width: 100%; /* typical letter-sized width if you plan to PDF */
+    margin: 0 auto;
+    font-family: "Helvetica", "Arial", sans-serif;
+    color: #333;
+    background: #fff;
+    padding: .25rem;
+    box-sizing: border-box;
+  }
+  
+  .resume-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.25rem;
+    margin-bottom: .25rem;
+  }
+  
+  .name-and-title {
+    flex: 1;
+  }
+  
+  .resume-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #a3d39c; /* adjust to your preferred shade */
+    margin: 0;
+  }
+  
+  .resume-job-title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #333;
+    margin-top: 0.1rem;
+  }
+  
+  /* Contact info, displayed horizontally */
+  .contact-info {
+    display: flex;
+    justify-content: flex-end;
+    gap: .5rem;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 0.5rem;
+  }
+  .contact-info a {
+    color: #555;
+    text-decoration: none;
+  }
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Body: Two columns */
+  .resume-body {
+    display: flex;
+  }
+  
+  .resume-left-col {
+    width: 25%;
+    padding-right: .5rem;
+    border-right: 1px solid #ccc;
+  }
+  
+  /* Right column: takes the remaining space */
+  .resume-right-col {
+    flex: 1;
+    padding-left: .5rem;
+    box-sizing: border-box;
+  }
+  
+  /* Section spacing */
+  .resume-section {
+    margin-bottom: .25rem;
+  }
+  
+  .section-title {
+    margin: 0 0 0.05rem 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #0097a7; /* example teal color */
+  }
+  
+  
+  /* Projects styling */
+  .project-entry {
+    margin: 0.5rem 0;
+  }
+  .project-title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.8rem;
+  }
+  
+  /* Experience styling */
+  .experience-entry {
+    margin: 0.25rem 0;
+  }
+  .experience-company {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: bold;
+    line-height: .8;
+  }
+  .experience-job-title {
+    margin: 0.05rem 0 0.2rem 0;
+    font-style: italic;
+    font-size: 0.8rem;
+  }
+  
+  /* Adjust paragraphs within sections */
+  .resume-section p {
+    /* margin: 0.2rem 0; */
+    margin: 0;
+    font-size: small;
+  }
+  
 .reviewCoverLetterComponent {
     display: flex;
     flex-direction: column;
@@ -769,6 +906,16 @@ width: 45%;
 
 .heroButton {
     margin: 0 0.5rem;
+}
+
+.tailoredResumeMatch {
+    text-decoration: none;
+    color: #f57784;
+}
+.tailoredResumeMatch:hover {
+    color: whitesmoke;
+    cursor: pointer;
+    text-decoration: underline;
 }
 @media (max-width: 860px) {
     #defaultResumeWrap {

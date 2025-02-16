@@ -35,18 +35,18 @@ export default function ResumeStyle4({isGenPDF}) {
             {capitalizeFirstLetter(user?.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}
             {capitalizeFirstLetter(user?.lastName)}
           </h3>
-          <h5>
+          <h6>
             {user.jobTitle}
-          </h5>
+          </h6>
         </div>
           <div className="reviewStyle4LowerWrap">
             <div className="reviewStyle4LeftDiv">
               <div className="reviewDefaultResumeSections">
-                <h5>Summary:</h5>
+                <h6>Summary:</h6>
                 {renderTextWithNewLines(selectedResume.summary)}
               </div>
               <div className="reviewDefaultResumeSections">
-                <h5>Experience:</h5>
+                <h6>Experience:</h6>
                 {selectedResume.experience.map((exp, index) => (
                     <div key={index} className="experience-entry">
                         <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
@@ -61,7 +61,7 @@ export default function ResumeStyle4({isGenPDF}) {
             </div>
             <div className="reviewStyle4RightDiv">
                 <div className="reviewDefaultResumeSections">
-                    <h5>Contact Info:</h5>
+                    <h6>Contact Info:</h6>
                     <a 
                         href={`mailto:${user.contactInfo.email}`}
                         target="_blank"
@@ -107,13 +107,13 @@ export default function ResumeStyle4({isGenPDF}) {
                 className="reviewDefaultResumeSections"
                 id="lastReviewDefaultResumeSection"
               >
-                <h5>Skills:</h5>
+                <h6>Skills:</h6>
                 <span className="leftOrientedReviewSections">
                   {renderTextWithNewLines(selectedResume.skills)}
                 </span>
               </div>
               <div className="reviewDefaultResumeSections">
-                <h5>Education and Certifications:</h5>
+                <h6>Education and Certifications:</h6>
                 <span className="leftOrientedReviewSections">
                   {renderTextWithNewLines(selectedResume.education)}
                 </span>

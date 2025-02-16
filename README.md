@@ -4,7 +4,6 @@ TODO: AI Interviewer - interview preparation - increase retention
 ### Repair to working state
 
 ### Flow Correction 
-TODO: change from 30 days maintained resumes to 90d
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
@@ -12,6 +11,7 @@ TODO: add address changes to the edit for the resume
 TODO: update FAQ to reflect changes
 
 TODO: make mobile friendly
+TODO: edit resume should take to a new page, because it doesnt fit well in a modal
  
 ### Bug
 TODO: fix bug on modal size when scrolling

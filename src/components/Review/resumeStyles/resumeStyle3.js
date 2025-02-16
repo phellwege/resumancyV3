@@ -33,9 +33,9 @@ const renderTextWithNewLines = (text) => {
           <h3>
             {capitalizeFirstLetter(user?.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}{capitalizeFirstLetter(user?.lastName)}
           </h3>
-          <h5>
+          <h6>
             {user.jobTitle}
-          </h5>
+          </h6>
           <div className='reviewDefaultResumeSections'>
                 <div className='spreadHorizontally'>
                   <div>
@@ -91,13 +91,13 @@ const renderTextWithNewLines = (text) => {
         </div>
           <div >
             <div className="reviewDefaultResumeSections">
-              <h5>Summary:</h5>
+              <h6>Summary:</h6>
               {renderTextWithNewLines(selectedResume.summary)}
             </div>
             <div className='reviewSection3LowerSections'>
             <div className='reviewStyle3RightDiv'>
               <div className="reviewDefaultResumeSections" id='resumeStyle3ExperiencSection'>
-                <h5>Experience:</h5>
+                <h6>Experience:</h6>
                 <span className="leftOrientedReviewSections">
                     {selectedResume.experience.map((exp, index) => (
                         <div key={index} className="experience-entry">
@@ -114,7 +114,7 @@ const renderTextWithNewLines = (text) => {
             </div>
             <div className='reviewStyle3LeftDiv'>
               <div className="reviewDefaultResumeSections">
-                <h5>Education and Certifications:</h5>
+                <h6>Education and Certifications:</h6>
                 <span className="leftOrientedReviewSections">
                   {renderTextWithNewLines(selectedResume.education)}
                 </span>
@@ -123,7 +123,7 @@ const renderTextWithNewLines = (text) => {
                 className="reviewDefaultResumeSections"
                 id="lastReviewDefaultResumeSection"
               >
-                <h5>Skills:</h5>
+                <h6>Skills:</h6>
                 <span className="leftOrientedReviewSections">
                   {renderTextWithNewLines(selectedResume.skills)}
                 </span>

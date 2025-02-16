@@ -72,16 +72,11 @@ export default function CreateCustomTailoredResume() {
   const { addTailoredResume, addCoverLetter } = useData();
   const history = useNavigate();
 
-  // Tooltip text
   const companyNameTooltip = "The name of the company you are applying for.";
-  const prospectiveJobDescTooltip = "Copy/Paste a description of the role you are applying for.";
+  const prospectiveJobDescTooltip = "Paste a job description of the role you are applying for.";
 
-  // --------------------------------------------------
-  // 3) Generate the Tailored Resume (AI call)
-  // --------------------------------------------------
   const generateTailoredResume = async (jobData, currentUser) => {
     try {
-      // 1) AI call for résumé generation
       const response = await axios.post(
         "https://us-central1-resumancy.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
         { user: currentUser, selectedTailoredResumeIdData: jobData },
@@ -90,15 +85,11 @@ export default function CreateCustomTailoredResume() {
 
       const { summary, experienceSection, skillsSection } = response.data;
 
-      // 2) Parse experience & skills
       const parsedExperience = experienceSection?.data
         ? parseExperienceData(experienceSection.data)
         : [];
       const parsedSkills = skillsSection?.data || [];
 
-      // 3) Build the new "tailored" résumé object
-      //    We only construct it here to pass to Firestore
-      //    or do any local analysis, but won't store it in user.resume.
       return {
         ...currentUser.resume[0],
         id: jobData.id,
@@ -117,9 +108,6 @@ export default function CreateCustomTailoredResume() {
     }
   };
 
-  // --------------------------------------------------
-  // 4) Generate Cover Letter (AI call)
-  // --------------------------------------------------
   const generateCoverLetter = async (jobData, currentUser) => {
     try {
       const response = await axios.post(
@@ -134,13 +122,9 @@ export default function CreateCustomTailoredResume() {
     }
   };
 
-  // --------------------------------------------------
-  // 5) Perform Gap Analysis as a separate call
-  // --------------------------------------------------
   const performGapAnalysis = async (finalizedResume, jobData, currentUser) => {
     const resumeText = extractResumeText(finalizedResume);
     try {
-      // Use the correct path you mentioned
       const gapResponse = await axios.post(
         "https://us-central1-resumancy.cloudfunctions.net/generateGapAnalysisWithRetry-generate_gap_analysis",
         {
@@ -162,9 +146,6 @@ export default function CreateCustomTailoredResume() {
     }
   };
 
-  // --------------------------------------------------
-  // 6) Handle Submit
-  // --------------------------------------------------
   const handleSubmit = async () => {
     // Check subscription
     if (!canCreateMore("tailoredResumes")) {
@@ -176,7 +157,6 @@ export default function CreateCustomTailoredResume() {
     setLoading(true);
     setError(null);
 
-    // We'll use the first item in user.tailoredResume[] for new job data
     const firstResume = user.tailoredResume[0];
     if (!firstResume.companyName || !firstResume.description) {
       setLoading(false);
@@ -184,7 +164,6 @@ export default function CreateCustomTailoredResume() {
       return;
     }
 
-    // Build job info
     const newId = generateUUID();
     const timeStamp = new Date().toISOString();
     setSelectedTailoredResumeId(newId);
@@ -197,32 +176,23 @@ export default function CreateCustomTailoredResume() {
     };
 
     try {
-      // 1) Generate the tailored resume
       const tailoredResume = await generateTailoredResume(jobData, user);
 
-      // 2) Generate cover letter
       const coverLetterText = await generateCoverLetter(jobData, user);
 
-      // 3) Perform gap analysis
       const skillGapAnalysis = await performGapAnalysis(tailoredResume, jobData, user);
 
-      // 4) Calculate match percentage
       const resumeText = extractResumeText(tailoredResume);
       const matchPercent = await calculateHybridMatchPercent(resumeText, jobData.description);
 
-      // 5) We do NOT store skillGapAnalysis/matchPercent in user.resume
-      //    Instead, we keep them in the tailoredResume array only.
       const tailoredResumeEntry = {
         ...jobData,
         skillGapAnalysis,
         matchPercent,
       };
 
-      // 6) Add to Firestore/DB so you have a record of the new résumé
-      //    along with these analysis fields
       await addTailoredResume(user.id, tailoredResume, tailoredResumeEntry);
 
-      // 7) Cover letter
       const newCoverLetter = {
         id: newId,
         createdAt: timeStamp,
@@ -230,12 +200,8 @@ export default function CreateCustomTailoredResume() {
       };
       await addCoverLetter(user.id, newCoverLetter);
 
-      // 8) Update local user state
-      //    Remove the line that pushes `tailoredResume` to `user.resume`,
-      //    so we only track it in user.tailoredResume[] (and Firestore).
       setUser((prevUser) => ({
         ...prevUser,
-        // The tailoredResume array includes a new entry with match/gap
         tailoredResume: [
           {
             id: null,
@@ -251,7 +217,6 @@ export default function CreateCustomTailoredResume() {
         coverLetter: [...prevUser.coverLetter, newCoverLetter],
       }));
 
-      // 9) Done - navigate and show success
       setSuccessMessage(
         "✅ Your resume has been successfully tailored for this job. Review the changes to make sure everything looks just right!"
       );
@@ -265,12 +230,6 @@ export default function CreateCustomTailoredResume() {
     }
   };
 
-  // (Optional) Example helper
-  const capitalizeAllLetters = (str) => str?.toUpperCase() || "";
-
-  // --------------------------------------------------
-  // 7) Render
-  // --------------------------------------------------
   return (
     <div className="pageWrapper">
       <h5>Tailor Your Resume To The Job</h5>
