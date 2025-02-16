@@ -14,9 +14,9 @@ async function generateGapAnalysisWithRetry(selectedTailoredResumeIdData, user, 
                     content: `
                         You are a professional career advisor. 
                         Analyze the following resume and job description to identify skill gaps and provide concise, actionable recommendations for upskilling.
-                        Include specific suggestions such as online courses or resources where applicable.
+                        Include specific suggestions such as online courses or resources where applicable, in order of most impactful for the applicant displayed first.
                         Do not include "###", '**', or any similar decoration in your final response; just use plain text, bullet points, or headings.
-                        Please keep your entire response under 1000 words, concluding your analysis completely if you approach the limit.
+                        Please keep your entire response under 800 words, concluding your analysis completely if you approach the limit.
                     `
                 },
                 {

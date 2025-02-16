@@ -1,5 +1,4 @@
 ### feature to add
-TODO: Skill gap analyzer basic analysis of resume vs job description as percentage. detects percent match then creates an analysis of relevant skills and how to up skill and prep for interview - increase retention
 TODO: AI Interviewer - interview preparation - increase retention
  
 ### Repair to working state
