@@ -119,7 +119,7 @@ export function DataProvider({ children }) {
                 const userDocRef = doc(db, 'users', userId);
                 await setDoc(userDocRef, newUserData);
             } else {
-                console.log('User already exists, skipping data addition.');
+                
             }
         } catch (error) {
             console.error('Error adding user data:', error);

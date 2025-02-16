@@ -28,8 +28,11 @@ export default function OverLimit() {
                     <Card>
                         <Card.Body>
                             <div className='cardInnerDiv'>
-                                <h6>Upgrade Your Account to Continue</h6>
-                                <p>You've reached your plan limit. Upgrade now to continue creating resumes, or wait until the next billing cycle.</p>
+                                <h4>Upgrade Your Account to Continue</h4>
+                                <br/>
+                                <p>You've reached your plan limit. 
+                                    <br/>
+                                    Upgrade your subscription now to continue creating resumes, or wait until the next billing cycle.</p>
                                 <hr className="my-3" />
                                 <h6 className="mb-2">Usage</h6>
                                 <p className="mb-1">
