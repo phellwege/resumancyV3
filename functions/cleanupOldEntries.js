@@ -8,7 +8,7 @@ exports.cleanUpOldEntries = onSchedule("every 24 hours", async (event) => {
     console.log("🕒 Running clean-up function...");
 
     const usersSnapshot = await db.collection("users").get();
-    const thirtyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000); // Convert to JS Date
+    const thirtyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
 
     const batch = db.batch();
     let batchCounter = 0;
@@ -17,27 +17,22 @@ exports.cleanUpOldEntries = onSchedule("every 24 hours", async (event) => {
         const userData = userDoc.data();
         const userRef = userDoc.ref;
 
-        // Helper function to safely parse dates
         const isRecent = (dateStr) => {
             if (!dateStr) return false;
-            const date = new Date(dateStr); // Convert Firestore string to Date
+            const date = new Date(dateStr);
             return date > thirtyDaysAgo;
         };
 
-        // Filter out old tailored resumes
         const updatedTailoredResume = userData.tailoredResume
             ? userData.tailoredResume.filter((tr, index) => index === 0 || isRecent(tr.createdAt))
             : [];
 
-        // Filter out old cover letters
         const updatedCoverLetter = userData.coverLetter?.filter(cl => isRecent(cl.createdAt)) || [];
 
-        // Filter out old non-base resumes
         const updatedResume = userData.resume?.filter(resume => 
             resume.usage?.baseResume === true || isRecent(resume.usage?.timeStamp)
         ) || [];
 
-        // Update Firestore only if necessary
         if (
             updatedTailoredResume.length !== userData.tailoredResume?.length || 
             updatedCoverLetter.length !== userData.coverLetter?.length ||
@@ -51,7 +46,6 @@ exports.cleanUpOldEntries = onSchedule("every 24 hours", async (event) => {
 
             batchCounter++;
 
-            // Commit batch if nearing Firestore limit (500 writes per batch)
             if (batchCounter >= 450) {
                 batch.commit();
                 console.log("✅ Batch committed to Firestore.");
