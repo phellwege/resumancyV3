@@ -140,11 +140,9 @@ export function UserProvider({ children }) {
             return false;
         }
 
-          // Safely retrieve usage and limit, defaulting to 0 if not defined
         const usage = user.subscription.usage?.[type] ?? 0;
         const limit = user.subscription.limits?.[type] ?? 0;
 
-          // Allow creation if the limit is Infinity or if the current usage is below the limit
         return limit === Infinity || usage < limit;
     };
     
@@ -304,14 +302,39 @@ export function UserProvider({ children }) {
 
     useEffect(() => {
         if (user.id) {
-            localStorage.setItem("user", JSON.stringify(user));
+            const { id, firstName, lastName, userName, avatarImg, subscription, initialSetupDone } = user;
+            const dataToPersist = {
+                version: "v2", // update this whenever your schema changes
+                id,
+                firstName,
+                lastName,
+                userName,
+                avatarImg,
+                subscription,
+                initialSetupDone,
+            };
+            localStorage.setItem("user", JSON.stringify(dataToPersist));
         }
     }, [user]);
+    
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
-            setUser(JSON.parse(storedUser)); 
-        } 
+            try {
+                const persistedUser = JSON.parse(storedUser);
+                if (persistedUser.version === "v2") {
+                    // Only merge if the version matches your current schema
+                    setUser(prevUser => ({ ...prevUser, ...persistedUser }));
+                } else {
+                    // If version doesn't match, clear the stored data
+                    localStorage.removeItem("user");
+                }
+            } catch (error) {
+                console.error("Error parsing user data from localStorage:", error);
+                // If parsing fails, clear the stored data
+                localStorage.removeItem("user");
+            }
+        }
     }, []);
     const displayCorrectPlan = () => {
         if(user.subscription.plan == 'price_1QrL8vEsYMRYIVaAx4EV21RU'){

@@ -3,6 +3,7 @@ TODO: Skill gap analyzer basic analysis of resume vs job description as percenta
 TODO: AI Interviewer - interview preparation - increase retention
  
 ### Repair to working state
+TODO: fix success page formatting
 
 ### Flow Correction 
 TODO: new features added to tailoredResume Review table

@@ -315,26 +315,25 @@ export function DataProvider({ children }) {
     const [readyTailoredResume, setReadyTailoredResume] = useState([]);
     useEffect(() => {
         if (!user.id) return;
-
+    
         const loadResumes = async () => {
             const userId = user.id;
             const fetchedResumes = await fetchResumes(userId);
-
-            const filteredResumes = fetchedResumes.filter(resume => resume.usage?.baseResume === false);
-
-            const mergedResumes = filteredResumes.map(resume => {
+    
+            const mergedResumes = fetchedResumes.map(resume => {
                 const tailoredData = user.tailoredResume.find(tr => tr.id === resume.id);
                 return {
                     ...resume,
                     companyName: tailoredData?.companyName || "Unknown",
+                    matchPercent: tailoredData?.matchPercent ?? "N/A", // ✅ Ensure matchPercent is included
                 };
             });
-
+    
             setReadyTailoredResume(mergedResumes);
         };
-
+    
         loadResumes();
-    }, [user.id, user.tailoredResume]); 
+    }, [user.id, user.tailoredResume]);
 
     const [readyBaseResume, setReadyBaseResume] = useState([])
     useEffect(() => {
