@@ -33,14 +33,26 @@ export default function Home() {
     <>
     <Header />
         <div className='pageWrapper'>
+            {!user?.id && (
             <div className='heroSection'>
                 <div className='heroContent'>
-                    <h1>Land More Interviews with Tailored Resumes</h1>
-                    <p className="heroSubtitle">AI-powered resume tailoring and cover letters for every job application</p>
+                    <h1>AI-Tailored Resumes That Get You More Interviews</h1>
+                    <p className="heroSubtitle">AI-powered resumes & cover letters customized for every job application in under a minute.</p>
                     <div className='heroStats'>
                         <div className='statItem'>
-                            <span className='statNumber'>1 min</span>
+                            <span className='statNumber'>45 sec</span>
                             <span className='statLabel'>Average Creation Time</span>
+                        </div>
+                    </div>
+                    <div className='heroFeatures'>
+                        <div className='featureItem'>
+                            ✅ AI-Powered Resume Customization
+                        </div>
+                        <div className='featureItem'>
+                            📈 See Your Resume's Job Relevance Score
+                        </div>
+                        <div className='featureItem'>
+                            🔍 Skill Gap Analysis to Boost Your Application
                         </div>
                     </div>
                     <div className='heroCTA'>
@@ -49,7 +61,7 @@ export default function Home() {
                             onClick={handleOpenLoginModal}
                             className='heroButton'
                         >
-                            Start Free Trial
+                            Start Your 7-Day Free Trial
                         </Button>
                         <Button 
                             variant="outline-light"
@@ -62,6 +74,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+            )}
             <div className='secondaryPageWrapper'>
                 <div className='leftDiv'>
                     <Card className='homeLeftCard'>
