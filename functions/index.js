@@ -11,6 +11,7 @@ const function5 = require('./cleanupOldEntries');
 const function6 = require('./createStripeCustomer');
 const function7 = require('./createStripePortalSession');
 const function8 = require('./deleteUserAccount');
+const function9 = require('./generateGapAnalysisWithRetry');
 
 exports.generate_cover_letter = function1;
 exports.handle_stripe_webhook = function2;
@@ -20,3 +21,4 @@ exports.cleanUpOldEntries = function5;
 exports.createStripeCustomer = function6;
 exports.createStripePortalSession = function7;
 exports.deleteUserAccount = function8;
+exports.generateGapAnalysisWithRetry = function9;

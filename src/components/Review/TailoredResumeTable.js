@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import ReviewResumeModal from './ReviewResumeModal';
 import ReviewCoverLetterModal from './ReviewCoverLetterModal'
 import ReviewJobDescModal from './ReviewJobDescModal';
+import GapAnalysisModal from '../GapAnalysisModal';
 
 import { useUser } from '../../context/UserContext';
 import { useData } from '../../context/DataContext';
@@ -17,7 +18,8 @@ export default function TailoredResumeTable() {
     handleOpenReviewJobDescModal,
     setSelectedResumeId,
     setSelectedTailoredResumeId,
-    setSelectedCoverLetterId
+    setSelectedCoverLetterId,
+    handleOpenGapAnalysisModal
   } = useUser();
   const {
     readyTailoredResume
@@ -53,6 +55,7 @@ export default function TailoredResumeTable() {
     <ReviewResumeModal />
     <ReviewCoverLetterModal />
     <ReviewJobDescModal />
+    <GapAnalysisModal />
         <>
         <h5>Tailored Resume(s)</h5>
         {readyTailoredResume.length > 0 && (
@@ -104,7 +107,23 @@ export default function TailoredResumeTable() {
                   }
                 </td>
                 <td>
-                  {resume.matchPercent ? `${resume.matchPercent}%` : "N/A"}
+                {resume.matchPercent ? (
+                  resume.skillGapAnalysis ? (
+                    <a
+                      onClick={() => {
+                        // Open modal to display gap analysis details.
+                        handleOpenGapAnalysisModal(resume.skillGapAnalysis);
+                      }}
+                      style={{ cursor: 'pointer', color: 'lightblue' }}
+                    >
+                      {resume.matchPercent}%
+                    </a>
+                  ) : (
+                    <span>{resume.matchPercent}%</span>
+                  )
+                ) : (
+                  "N/A"
+                )}
                 </td>
               </tr>
             ))}

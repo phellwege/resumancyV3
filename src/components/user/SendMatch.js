@@ -12,7 +12,8 @@ const stopWords = new Set([
   "by", "as", "of", "or", "if", "it", "its", "into", "about", "over", "after",
   "before", "above", "below", "up", "down", "off", "out", "again", "further",
   "once", "youll", "work", "sector", "partner", "across", "role", "francisco", 
-  "washington", "talk"
+  "washington", "talk", "proficiency", "interest", "occasional", "ability", 
+  "hold",
 ]);
 
 // Refined Key Term Extraction using weighted frequency and capitalization bonus
@@ -151,14 +152,6 @@ export function calculateHybridMatchPercent(resumeText, jobDescriptionText) {
     const adjustedScore = Math.min((compositeScore * COMPOSITE_MULTIPLIER) + technicalBonus, 1);
     const finalScore = Math.round(adjustedScore * 100);
 
-    console.log("🔹 Resume Key Terms:", resumeKeyTerms);
-    console.log("🔹 Job Description Key Terms:", jobDescKeyTerms);
-    console.log("🔹 Expanded Resume Terms:", expandedResumeTerms);
-    console.log("🔹 Expanded Job Description Terms:", expandedJobDescTerms);
-    console.log("🔹 Jaccard Score:", jaccardScore);
-    console.log("🔹 Cosine Score:", cosineScore);
-    console.log("🔹 Weighted Score:", weightedScore);
-    console.log("🔥 Final Match Score:", finalScore);
     return finalScore;
 }
 

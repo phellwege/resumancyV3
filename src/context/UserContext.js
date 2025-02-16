@@ -21,6 +21,14 @@ export function UserProvider({ children }) {
     const [setupUserModal, setSetupUserModal] = useState(false);
     const handleOpenSetupUserModal = () => setSetupUserModal(true);
     const handleCloseSetupUserModal = () => setSetupUserModal(false);
+    // gap analysis modal
+    const [gapAnalysisModal, setGapAnalysisModal] = useState(false);
+    const [selectedGapAnalysis, setSelectedGapAnalysis] = useState('');
+    const handleOpenGapAnalysisModal = (gapText) => {
+        setSelectedGapAnalysis(gapText);
+        setGapAnalysisModal(true);
+    };
+    const handleCloseGapAnalysisModal = () => setGapAnalysisModal(false);
     // reviewing resumes
     const [reviewResumeModal, setReviewResumeModal] = useState(false);
     const handleOpenReviewResumeModal = useCallback(() => {
@@ -381,6 +389,12 @@ export function UserProvider({ children }) {
         handleOpenDeleteAcctModal,
         handleCloseDeleteAcctModal,
 
+        gapAnalysisModal,
+        setGapAnalysisModal,
+        handleOpenGapAnalysisModal,
+        handleCloseGapAnalysisModal,
+        selectedGapAnalysis, setSelectedGapAnalysis,
+
         reviewJobDescModal,
         handleOpenReviewJobDescModal,
         handleCloseReviewJobDescModal,
@@ -425,11 +439,12 @@ export function UserProvider({ children }) {
 
         selectedResumeId, setSelectedResumeId, selectedResume,
         selectedTailoredResumeIdData, selectedTailoredResumeId, setSelectedTailoredResumeId,
-        selectedCoverLetterIdData, selectedCoverLetterId, setSelectedCoverLetterId
-
+        selectedCoverLetterIdData, selectedCoverLetterId, setSelectedCoverLetterId,
+        
     }), [
         user, resetUser, loginModal, setupUserModal, selectAvatar,
         reviewResumeModal, reviewCoverLetterModal, contactUsModal, 
+        gapAnalysisModal,
         handleOpenReviewResumeModal, selectedResume, selectedTailoredResumeIdData, selectedCoverLetterIdData,
         canCreateMore, error, includeAddress, 
         initialUserState, reviewJobDescModal, selectedCoverLetterId, selectedResumeId, selectedTailoredResumeId, 

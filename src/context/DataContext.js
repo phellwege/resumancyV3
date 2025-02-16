@@ -325,7 +325,8 @@ export function DataProvider({ children }) {
                 return {
                     ...resume,
                     companyName: tailoredData?.companyName || "Unknown",
-                    matchPercent: tailoredData?.matchPercent ?? "N/A", // ✅ Ensure matchPercent is included
+                    matchPercent: tailoredData?.matchPercent ?? "N/A",
+                    skillGapAnalysis: tailoredData?.skillGapAnalysis || "",
                 };
             });
     
