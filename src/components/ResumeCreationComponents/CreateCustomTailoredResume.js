@@ -176,6 +176,16 @@ export default function CreateCustomTailoredResume() {
     };
 
     try {
+      const rateLimitResponse = await axios.get(
+        'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
+        { headers: { 'Content-Type': 'application/json' } }
+    );
+
+    if (rateLimitResponse.status === 429) {
+        setError("Too many requests. Please wait a moment before trying again.");
+        setLoading(false);
+        return;
+    }
       const tailoredResume = await generateTailoredResume(jobData, user);
 
       const coverLetterText = await generateCoverLetter(jobData, user);

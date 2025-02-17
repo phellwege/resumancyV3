@@ -66,6 +66,17 @@ export default function CreateBaselineResume() {
         setError(null);
     
         try {
+            const rateLimitResponse = await axios.get(
+                'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+    
+            if (rateLimitResponse.status === 429) {
+                setError("Too many requests. Please wait a moment before trying again.");
+                setLoading(false);
+                return;
+            }
+
             const response = await axios.post(
                 'https://us-central1-resumancy.cloudfunctions.net/generate_base_resume-generate_base_resume',
                 { user },
