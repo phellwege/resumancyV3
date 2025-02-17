@@ -1,0 +1,16 @@
+{
+    "name": "resumancy-protected-api",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+      "express": "^4.18.2",
+      "cors": "^2.8.5",
+      "body-parser": "^1.20.2",
+      "firebase-admin": "^11.10.0",
+      "@google-cloud/secret-manager": "^5.6.0"
+    },
+    "scripts": {
+      "start": "node server.js"
+    }
+  }
+  

@@ -41,8 +41,7 @@
     "wordnet": "^2.0.0"
   },
   "scripts": {
-    "start-public": "node src/server-public/server.js",
-    "start-protected": "node src/server-protected/server.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
