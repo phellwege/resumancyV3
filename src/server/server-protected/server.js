@@ -9,7 +9,7 @@ admin.initializeApp();
 
 const app = express();
 
-// ✅ Corrected CORS settings
+// ✅ Define CORS Options
 const corsOptions = {
     origin: ["http://localhost:3000", "https://resumancy.com"],
     methods: ["GET", "POST", "OPTIONS"],
@@ -17,15 +17,16 @@ const corsOptions = {
     credentials: true
 };
 
-// ✅ FIRST: Handle CORS Preflight Requests
+// ✅ 1. Handle CORS Preflight Requests FIRST
 app.options("*", cors(corsOptions));
 
-// ✅ Apply CORS globally
+// ✅ 2. Apply CORS to ALL requests
 app.use(cors(corsOptions));
 
+// ✅ 3. Parse JSON body
 app.use(bodyParser.json());
 
-// Function to fetch secrets from Google Cloud Secret Manager
+// ✅ 4. Function to Fetch Secrets
 async function getSecret(secretName) {
     const client = new SecretManagerServiceClient();
     const [version] = await client.accessSecretVersion({
@@ -34,7 +35,7 @@ async function getSecret(secretName) {
     return version.payload.data.toString();
 }
 
-// ✅ Middleware: Fetch secrets & Require Authentication (AFTER CORS)
+// ✅ 5. Authentication Middleware (AFTER CORS & OPTIONS Handling)
 app.use(async (req, res, next) => {
     if (req.method === "OPTIONS") {
         return res.sendStatus(204); // ✅ Properly respond to preflight requests
@@ -46,13 +47,9 @@ app.use(async (req, res, next) => {
             STRIPE_KEY: await getSecret("STRIPE_KEY"),
         };
 
-        if (req.path === "/") return next(); // Skip authentication for health check
+        if (req.path === "/") return next(); // ✅ Skip authentication for health check
 
-        // ✅ Public Routes (e.g., Stripe Webhook, Rate Limiter)
-        const publicRoutes = ["/limited-function", "/handle-stripe-webhook"];
-        if (publicRoutes.includes(req.path)) return next();
-
-        // ✅ Check Authentication
+        // ✅ Enforce Authentication on ALL Routes (Including `/limited-function`)
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return res.status(401).json({ error: "Unauthorized" });
@@ -72,14 +69,14 @@ app.use(async (req, res, next) => {
     }
 });
 
-// ✅ Ensure `limited-function` route is publicly accessible
+// ✅ 6. Secure `/limited-function` (Authentication Required)
 app.post("/limited-function", (req, res) => {
-    res.json({ message: "Limited function executed successfully." });
+    res.json({ message: "🔐 Secure function executed successfully.", user: req.user });
 });
 
-// ✅ Health check route (Always open)
+// ✅ 7. Health Check Route (Always Open)
 app.get("/", (req, res) => res.send("🔒 Protected API Server is live!"));
 
-// Start server
+// ✅ 8. Start Server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`🔒 Protected API Server running on port ${PORT}`));
