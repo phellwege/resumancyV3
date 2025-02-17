@@ -69,19 +69,20 @@ export default function CreateCustomTailoredResume() {
   } = useUser();
 
   const { setLoading } = useAuth();
-  const { addTailoredResume, addCoverLetter, userToken } = useData();
+  const { addTailoredResume, addCoverLetter, userToken, getUserToken } = useData();
   const history = useNavigate();
   const companyNameTooltip = "The name of the company you are applying for.";
   const prospectiveJobDescTooltip = "Paste a job description of the role you are applying for.";
 
   const generateTailoredResume = async (jobData, currentUser) => {
     try {
+      const token = await getUserToken();
       const response = await axios.post(
         "https://resumancy-protected-api-659014427552.us-central1.run.app/generate-tailored-resume",
         { user: currentUser, selectedTailoredResumeIdData: jobData },
         { headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userToken}` // Required for auth
+          'Authorization': `Bearer ${token}` // Required for auth
         } }
       );
 
@@ -112,12 +113,13 @@ export default function CreateCustomTailoredResume() {
 
   const generateCoverLetter = async (jobData, currentUser) => {
     try {
+      const token = await getUserToken();
       const response = await axios.post(
         "https://resumancy-protected-api-659014427552.us-central1.run.app/generate-cover-letter",
         { user: currentUser, selectedTailoredResumeIdData: jobData },
         {headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userToken}` // Required for auth
+          'Authorization': `Bearer ${token}` // Required for auth
         }}
       );
       return response.data.coverLetterSummary;
@@ -130,6 +132,7 @@ export default function CreateCustomTailoredResume() {
   const performGapAnalysis = async (finalizedResume, jobData, currentUser) => {
     const resumeText = extractResumeText(finalizedResume);
     try {
+      const token = await getUserToken();
       const gapResponse = await axios.post(
         "https://resumancy-protected-api-659014427552.us-central1.run.app/generate-gap-analysis",
         {
@@ -144,7 +147,7 @@ export default function CreateCustomTailoredResume() {
         },
         { headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userToken}`
+          'Authorization': `Bearer ${token}`
         } }
       );
       return gapResponse.data.gapAnalysis;
@@ -184,11 +187,12 @@ export default function CreateCustomTailoredResume() {
     };
 
     try {
+      const token = await getUserToken();
       const rateLimitResponse = await axios.get(
         'https://resumancy-protected-api-659014427552.us-central1.run.app/limited-function',
         { headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userToken}` // Required for auth
+          'Authorization': `Bearer ${token}` // Required for auth
         } }
     );
 

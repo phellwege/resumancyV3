@@ -406,12 +406,11 @@ export function DataProvider({ children }) {
         const auth = getAuth();
         const user = auth.currentUser;
         if (user) {
-            const token = await user.getIdToken();
-            setUserToken(token); // ✅ Store token in state
-            return token;
+            return await user.getIdToken(true); // ✅ Force refresh token
         }
         return null;
     };
+    
     useEffect(() => {
         const auth = getAuth();
         onAuthStateChanged(auth, async (user) => {
@@ -443,7 +442,8 @@ export function DataProvider({ children }) {
         readyBaseResume,
         handleManagePlan,
         deleteUserAccount,
-        userToken
+        userToken,
+        getUserToken
     };
 
     return (
