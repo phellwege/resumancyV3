@@ -16,24 +16,30 @@ async function getSecret(secretName) {
     return version.payload.data.toString();
 }
 
-// Middleware to attach Stripe secrets
-app.use(async (req, res, next) => {
+// Start the server after fetching secrets
+async function startServer() {
     try {
-        req.secrets = {
-            STRIPE_KEY: await getSecret("STRIPE_KEY"),
-            STRIPE_WEBHOOK_SECRET: await getSecret("STRIPE_WEBHOOK_SECRET"),
-        };
-        next();
+        const STRIPE_KEY = await getSecret("STRIPE_KEY");
+        const STRIPE_WEBHOOK_SECRET = await getSecret("STRIPE_WEBHOOK_SECRET");
+
+        app.use((req, res, next) => {
+            req.secrets = { STRIPE_KEY, STRIPE_WEBHOOK_SECRET };
+            next();
+        });
+
+        // Public Route (No Authentication Required)
+        app.post("/handle-stripe-webhook", customerSubscriptionCreated);
+
+        app.get("/", (req, res) => res.send("✅ Public Webhook Server is live!"));
+
+        const PORT = process.env.PORT || 8080;
+        app.listen(PORT, () => console.log(`🔓 Public Webhook Server running on port ${PORT}`));
+
     } catch (error) {
-        console.error("❌ Error retrieving secrets:", error);
-        return res.status(500).json({ error: "Internal Server Error: Unable to fetch secrets" });
+        console.error("❌ Failed to fetch secrets:", error);
+        process.exit(1); // Stop the server if secrets cannot be retrieved
     }
-});
+}
 
-// Public Route (No Authentication Required)
-app.post("/handle-stripe-webhook", customerSubscriptionCreated);
-
-app.get("/", (req, res) => res.send("✅ Public Webhook Server is live!"));
-
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`🔓 Public Webhook Server running on port ${PORT}`));
+// Run the server
+startServer();
