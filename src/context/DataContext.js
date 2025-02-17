@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
 import { useAuth } from './AuthContext';
 import { increment } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { 
+    getAuth,
+    onAuthStateChanged, 
+    getIdToken
+} from "firebase/auth";
 
 import {
     doc,
@@ -409,11 +413,16 @@ export function DataProvider({ children }) {
         return null;
     };
     useEffect(() => {
-        if (currentUser) {
-            getUserToken();
-        }
-    }, [currentUser]);
-
+        const auth = getAuth();
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const token = await getIdToken(user, true);
+                setUserToken(token);
+            } else {
+                setUserToken("");
+            }
+        });
+    }, []);
     const value = {
         loading,
         setLoading,

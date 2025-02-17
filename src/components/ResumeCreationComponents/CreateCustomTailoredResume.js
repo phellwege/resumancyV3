@@ -71,7 +71,6 @@ export default function CreateCustomTailoredResume() {
   const { setLoading } = useAuth();
   const { addTailoredResume, addCoverLetter, userToken } = useData();
   const history = useNavigate();
-
   const companyNameTooltip = "The name of the company you are applying for.";
   const prospectiveJobDescTooltip = "Paste a job description of the role you are applying for.";
 

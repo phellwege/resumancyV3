@@ -9,12 +9,19 @@ admin.initializeApp();
 
 const app = express();
 
-// ✅ Fix: Configure CORS to allow localhost during development
-app.use(cors({
+// ✅ Define CORS options before use
+const corsOptions = {
     origin: ["http://localhost:3000", "https://resumancy.com"],
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+};
+
+// ✅ Apply CORS globally
+app.use(cors(corsOptions));
+
+// ✅ Handle CORS preflight requests properly
+app.options("*", cors(corsOptions));
 
 app.use(bodyParser.json());
 
@@ -22,7 +29,7 @@ app.use(bodyParser.json());
 async function getSecret(secretName) {
     const client = new SecretManagerServiceClient();
     const [version] = await client.accessSecretVersion({
-        name: `projects/YOUR_PROJECT_ID/secrets/${secretName}/versions/latest`,
+        name: `projects/resumancy/secrets/${secretName}/versions/latest`,
     });
     return version.payload.data.toString();
 }
@@ -37,7 +44,7 @@ app.use(async (req, res, next) => {
 
         if (req.path === "/") return next(); // Skip authentication for health check
 
-        // ✅ Fix: Allow public routes (e.g., Stripe Webhook, Rate Limiter)
+        // ✅ Allow public routes (e.g., Stripe Webhook, Rate Limiter)
         const publicRoutes = ["/limited-function", "/handle-stripe-webhook"];
         if (publicRoutes.includes(req.path)) return next();
 
@@ -61,7 +68,7 @@ app.use(async (req, res, next) => {
     }
 });
 
-// ✅ Fix: Ensure `limited-function` route is publicly accessible
+// ✅ Ensure `limited-function` route is publicly accessible
 app.post("/limited-function", (req, res) => {
     res.json({ message: "Limited function executed successfully." });
 });
