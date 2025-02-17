@@ -84,15 +84,23 @@ app.use(async (req, res, next) => {
 
 app.get("/", (req, res) => res.send("🔒 Protected API Server is live!"));
 
-const limitedRoutes = require("./limitedRoutes");
-const tailoredResumeRoutes = require("./tailoredResumeRoutes");
-const coverLetterRoutes = require("./coverLetterRoutes");
-const gapAnalysisRoutes = require("./gapAnalysisRoutes");
+const createStripeCustomer = require("./createStripeCustomer");
+const createStripePortalSession = require("./createStripePortalSession");
+const deleteUserAccount = require("./deleteUserAccount");
+const generateBaseResume = require("./generateBaseResume");
+const coverLetterRoutes = require("./generateCoverLetter");
+const gapAnalysisRoutes = require("./generateGapAnalysisWithRetry");
+const tailoredResumeRoutes = require("./generateTailoredResume");
+const limitedRoutes = require("./limitedFunction");
 
 app.use("/limited-function", limitedRoutes);
 app.use("/generate-tailored-resume", tailoredResumeRoutes);
 app.use("/generate-cover-letter", coverLetterRoutes);
 app.use("/generate-gap-analysis", gapAnalysisRoutes);
+app.use("/create-stripe-customer", createStripeCustomer);
+app.use("/create-stripe-portal-session", createStripePortalSession);
+app.use("/delete-user-account", deleteUserAccount);
+app.use("/generate-base-resume", generateBaseResume);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`🔒 Protected API Server running on port ${PORT}`));

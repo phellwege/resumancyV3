@@ -14,13 +14,13 @@ async function getSecret(secretName) {
     return version.payload.data.toString();
 }
 
-// Create Express app
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+// Create an Express router instead of an app
+const router = express.Router();
+router.use(cors());
+router.use(bodyParser.json());
 
 // Middleware to attach secrets
-app.use(async (req, res, next) => {
+router.use(async (req, res, next) => {
     try {
         req.secrets = {
             GPT_API_KEY: await getSecret("GPT_API_KEY"),
@@ -33,7 +33,7 @@ app.use(async (req, res, next) => {
 });
 
 // Tailored Resume Generation Route
-app.post("/generate-tailored-resume", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const apiKey = req.secrets.GPT_API_KEY;
         const { user, selectedTailoredResumeIdData } = req.body;
@@ -74,6 +74,5 @@ app.post("/generate-tailored-resume", async (req, res) => {
     }
 });
 
-// Start server
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Export the router so it can be mounted in your main server file
+module.exports = router;
