@@ -84,5 +84,15 @@ app.use(async (req, res, next) => {
 
 app.get("/", (req, res) => res.send("🔒 Protected API Server is live!"));
 
+const limitedRoutes = require("./limitedRoutes");
+const tailoredResumeRoutes = require("./tailoredResumeRoutes");
+const coverLetterRoutes = require("./coverLetterRoutes");
+const gapAnalysisRoutes = require("./gapAnalysisRoutes");
+
+app.use("/limited-function", limitedRoutes);
+app.use("/generate-tailored-resume", tailoredResumeRoutes);
+app.use("/generate-cover-letter", coverLetterRoutes);
+app.use("/generate-gap-analysis", gapAnalysisRoutes);
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`🔒 Protected API Server running on port ${PORT}`));
