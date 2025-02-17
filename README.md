@@ -4,22 +4,20 @@ TODO: edit resume should take to a new page, because it doesnt fit well in a mod
 TODO: add address changes to the edit for the resume
  
 ### Repair to working state
-TODO: attempted to use cloud run to vastly reduce latency. now am dealing with a 403 over and over. without knowing how to correct it.
 
 ### Flow Correction 
 
 ### Cleanup
 TODO: add Success/failure Messages where relevant
 TODO: make mobile friendly
- 
+
 ### Bug
 TODO: fix bug on modal size when scrolling
 
 ### CRITICAL BEFORE DEPLOY
-TODO: setup hard limitations for firebase functions
-TODO: limit firebase functions to authorized users only (logged in)
 TODO: email verifications on sign up
 TODO: obfuscate code
+TODO: mockup new resumes and take screenshots of them replacing the ones currently on the home page
 
 ### Future Updates
 1. create custom login / registration - firebaseUI doesn't work with email enumeration

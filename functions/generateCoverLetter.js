@@ -1,7 +1,7 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const OpenAI = require('openai');
+const admin = require('firebase-admin');
 
-// Function to handle cover letter generation with retries
 async function generateCoverLetterWithRetry(selectedTailoredResumeIdData, user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
 
@@ -56,9 +56,21 @@ exports.generate_cover_letter = onRequest(
             return;
         }
 
+        // Authorization check: verify Firebase ID token from the Authorization header
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Unauthorized: Missing or invalid token' });
+        }
+        const idToken = authHeader.split('Bearer ')[1];
+
         try {
+            await admin.auth().verifyIdToken(idToken);
             const apiKey = process.env.GPT_API_KEY;
             const { user, selectedTailoredResumeIdData } = req.body;
+
+            if (!user || !selectedTailoredResumeIdData) {
+                return res.status(400).json({ error: "Missing required parameters." });
+            }
 
             try {
                 const coverLetterSummary = await generateCoverLetterWithRetry(selectedTailoredResumeIdData, user, apiKey);
@@ -67,7 +79,7 @@ exports.generate_cover_letter = onRequest(
                 res.status(500).json({ error: 'Error generating cover letter: ' + error.message });
             }
         } catch (error) {
-            res.status(500).json({ error: 'Error processing request: ' + error.message });
+            res.status(401).json({ error: 'Unauthorized: ' + error.message });
         }
     }
 );

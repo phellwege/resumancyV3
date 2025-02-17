@@ -69,9 +69,10 @@ export default function CreateCustomTailoredResume() {
   } = useUser();
 
   const { setLoading } = useAuth();
-  const { addTailoredResume, addCoverLetter } = useData();
+  const { addTailoredResume, addCoverLetter, userToken } = useData();
   const history = useNavigate();
 
+  const token = userToken;
   const companyNameTooltip = "The name of the company you are applying for.";
   const prospectiveJobDescTooltip = "Paste a job description of the role you are applying for.";
 
@@ -80,7 +81,10 @@ export default function CreateCustomTailoredResume() {
       const response = await axios.post(
         "https://us-central1-resumancy.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
         { user: currentUser, selectedTailoredResumeIdData: jobData },
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }}
       );
 
       const { summary, experienceSection, skillsSection } = response.data;
@@ -113,7 +117,10 @@ export default function CreateCustomTailoredResume() {
       const response = await axios.post(
         "https://us-central1-resumancy.cloudfunctions.net/generate_cover_letter-generate_cover_letter",
         { user: currentUser, selectedTailoredResumeIdData: jobData },
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }}
       );
       return response.data.coverLetterSummary;
     } catch (error) {
@@ -137,7 +144,10 @@ export default function CreateCustomTailoredResume() {
           resumeText,
           missingSkills: [],
         },
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }}
       );
       return gapResponse.data.gapAnalysis;
     } catch (error) {
@@ -178,7 +188,10 @@ export default function CreateCustomTailoredResume() {
     try {
       const rateLimitResponse = await axios.get(
         'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }}
     );
 
     if (rateLimitResponse.status === 429) {

@@ -412,15 +412,11 @@ export function DataProvider({ children }) {
     };
     
     useEffect(() => {
-        const auth = getAuth();
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const token = await getIdToken(user, true);
-                setUserToken(token);
-            } else {
-                setUserToken("");
-            }
-        });
+        async function fetchToken() {
+            const token = await getUserToken();
+            setUserToken(token);
+        }
+        fetchToken();
     }, []);
     const value = {
         loading,

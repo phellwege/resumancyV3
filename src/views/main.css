@@ -567,6 +567,7 @@ width: 45%;
 }
 /* Container and Header */
 .resume-container {
+    height: 11.35in;
     width: 100%; /* typical letter-sized width if you plan to PDF */
     margin: 0 auto;
     font-family: "Helvetica", "Arial", sans-serif;

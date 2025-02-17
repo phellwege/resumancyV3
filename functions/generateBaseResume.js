@@ -1,8 +1,7 @@
-// Import required modules
 const { onRequest } = require("firebase-functions/v2/https");
 const OpenAI = require('openai');
+const admin = require('firebase-admin');
 
-// Function to handle summarization API call with retries
 async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
     const experienceFormatted = user.resume[0].experience.map(item => {
@@ -54,7 +53,6 @@ async function generateExperienceSectionWithRetry(user, apiKey, retryCount = 0) 
         const gptResponse = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
-                // { role: 'system', content: 'Craft a compelling experience section for the resume that highlights the candidate\'s professional achievements and contributions. (Don\'t include a section name or anything like that, just the content in a format typically seen in a professional resume experience section).' },
                 { 
                     role: 'system', 
                     content:  `
@@ -111,17 +109,16 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
                 { 
                     role: 'system', 
                     content: `
-                        Craft a concise skills section for the resume that highlights a broad range of the candidate\'s abilities and competencies. 
+                        Craft a concise skills section for the resume that highlights a broad range of the candidate's abilities and competencies. 
                         Ensure that:
                         - Formatted as a bulleted list 
-                        - (Don\'t return a Section name or anything like that)
+                        - (Don't return a Section name or anything like that)
                         - list a maximum of 6 skills
                     ` 
                 },
                 { 
                     role: 'user', 
-                    content: 
-                    `
+                    content: `
                         Experience: ${experienceFormatted}
                         Education and Certifications: ${user.resume[0].education}
                         Skills: ${user.resume[0].skills}
@@ -145,7 +142,7 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
     }
 }
 
-
+// Function to improve education section with retries
 async function improveEducationSection(user, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
 
@@ -154,20 +151,16 @@ async function improveEducationSection(user, apiKey, retryCount = 0) {
             model: 'gpt-4o-mini',
             messages: [
                 { 
-                    role: 
-                    'system', 
-                    content: 
-                    `
-
-                    I am building a resume and need help improving the Education and Certifications section. Please ensure the response is concise and limited to key details provided. (Don\'t return a Section name or anything like that).
+                    role: 'system', 
+                    content: `
+                    I am building a resume and need help improving the Education and Certifications section. 
+                    Please ensure the response is concise and limited to key details provided. (Don't return a Section name or anything like that).
                     `
                 },
                 { 
-                    role: 
-                    'user', 
-                    content: 
-                    `
-                    "${user.resume[0].education}" 
+                    role: 'user', 
+                    content: `
+                    "${user.resume[0].education}"
                     Please rewrite this section in a professional, concise format suitable for a resume. 
                     Ensure:
                     - Key accomplishments or certifications are highlighted succinctly.
@@ -188,26 +181,37 @@ async function improveEducationSection(user, apiKey, retryCount = 0) {
         if (retryCount < 3) {
             return improveEducationSection(user, apiKey, retryCount + 1);
         } else {
-            throw new Error('Error generating skills section after 3 attempts');
+            throw new Error('Error generating education section after 3 attempts');
         }
     }
 }
 
-
 exports.generate_base_resume = onRequest(
     { cors: true, memory: "512Mi", secrets: ["GPT_API_KEY"] },
     async (req, res) => {
+        // Handle CORS preflight request
         if (req.method === 'OPTIONS') {
             res.status(204).send('');
             return;
         }
 
+        // Authorization check: verify Firebase ID token from Authorization header
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Unauthorized: Missing or invalid token' });
+        }
+        const idToken = authHeader.split('Bearer ')[1];
+
         try {
+            await admin.auth().verifyIdToken(idToken);
+
             const apiKey = process.env.GPT_API_KEY;
             const { user } = req.body;
+            if (!user) {
+                return res.status(400).json({ error: "Missing required parameters." });
+            }
 
             try {
-
                 const [summary, experienceSection, skillsSection, educationSection] = await Promise.all([
                     summarizeResumeWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateExperienceSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
@@ -225,7 +229,7 @@ exports.generate_base_resume = onRequest(
                 res.status(500).json({ error: 'Error processing resume: ' + error.message });
             }
         } catch (error) {
-            res.status(500).json({ error: 'Error generating resume: ' + error.message });
+            res.status(401).json({ error: 'Unauthorized: ' + error.message });
         }
     }
 );

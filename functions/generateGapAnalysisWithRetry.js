@@ -2,7 +2,6 @@ const { onRequest } = require("firebase-functions/v2/https");
 const OpenAI = require('openai');
 const admin = require('firebase-admin');
 
-// Function to handle gap analysis generation with retries
 async function generateGapAnalysisWithRetry(selectedTailoredResumeIdData, user, resumeText, missingSkills, apiKey, retryCount = 0) {
     const openai = new OpenAI({ apiKey });
     try {
@@ -54,9 +53,15 @@ exports.generate_gap_analysis = onRequest(
             res.status(204).send('');
             return;
         }
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Unauthorized: Missing or invalid token' });
+        }
+        const idToken = authHeader.split('Bearer ')[1];
         try {
+            await admin.auth().verifyIdToken(idToken);
             const apiKey = process.env.GPT_API_KEY;
-            // Expect the client to send these parameters in the POST body
+
             const { user, selectedTailoredResumeIdData, resumeText, missingSkills } = req.body;
             if (!user || !selectedTailoredResumeIdData || !resumeText || !missingSkills) {
                 res.status(400).json({ error: "Missing required parameters." });
@@ -88,7 +93,8 @@ exports.generate_gap_analysis = onRequest(
                 res.status(500).json({ error: 'Error generating gap analysis: ' + error.message });
             }
         } catch (error) {
-            res.status(500).json({ error: 'Error processing request: ' + error.message });
+            // Return a 401 error if token verification fails
+            res.status(401).json({ error: 'Unauthorized: ' + error.message });
         }
     }
 );
