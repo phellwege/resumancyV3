@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
 import { useAuth } from './AuthContext';
 import { increment } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 import {
     doc,
@@ -25,6 +26,7 @@ export function useData() {
 export function DataProvider({ children }) {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [userToken, setUserToken] = useState(null)
     const { 
         user, 
         setUser,
@@ -396,7 +398,21 @@ export function DataProvider({ children }) {
             return { error: error.message };
         }
     };
-
+    const getUserToken = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user) {
+            const token = await user.getIdToken();
+            setUserToken(token); // ✅ Store token in state
+            return token;
+        }
+        return null;
+    };
+    useEffect(() => {
+        if (currentUser) {
+            getUserToken();
+        }
+    }, [currentUser]);
 
     const value = {
         loading,
@@ -417,7 +433,8 @@ export function DataProvider({ children }) {
         readyTailoredResume,
         readyBaseResume,
         handleManagePlan,
-        deleteUserAccount
+        deleteUserAccount,
+        userToken
     };
 
     return (

@@ -69,7 +69,7 @@ export default function CreateCustomTailoredResume() {
   } = useUser();
 
   const { setLoading } = useAuth();
-  const { addTailoredResume, addCoverLetter } = useData();
+  const { addTailoredResume, addCoverLetter, userToken } = useData();
   const history = useNavigate();
 
   const companyNameTooltip = "The name of the company you are applying for.";
@@ -187,7 +187,10 @@ export default function CreateCustomTailoredResume() {
     try {
       const rateLimitResponse = await axios.get(
         'https://resumancy-protected-api-659014427552.us-central1.run.app/limited-function',
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}` // Required for auth
+        } }
     );
 
     if (rateLimitResponse.status === 429) {
