@@ -9,7 +9,7 @@ admin.initializeApp();
 
 const app = express();
 
-// ✅ Define CORS options before use
+// ✅ Corrected CORS settings
 const corsOptions = {
     origin: ["http://localhost:3000", "https://resumancy.com"],
     methods: ["GET", "POST", "OPTIONS"],
@@ -17,11 +17,11 @@ const corsOptions = {
     credentials: true
 };
 
+// ✅ FIRST: Handle CORS Preflight Requests
+app.options("*", cors(corsOptions));
+
 // ✅ Apply CORS globally
 app.use(cors(corsOptions));
-
-// ✅ Handle CORS preflight requests properly
-app.options("*", cors(corsOptions));
 
 app.use(bodyParser.json());
 
@@ -34,8 +34,12 @@ async function getSecret(secretName) {
     return version.payload.data.toString();
 }
 
-// Middleware: Fetch secrets & Require Authentication
+// ✅ Middleware: Fetch secrets & Require Authentication (AFTER CORS)
 app.use(async (req, res, next) => {
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(204); // ✅ Properly respond to preflight requests
+    }
+
     try {
         req.secrets = {
             GPT_API_KEY: await getSecret("GPT_API_KEY"),
@@ -44,11 +48,11 @@ app.use(async (req, res, next) => {
 
         if (req.path === "/") return next(); // Skip authentication for health check
 
-        // ✅ Allow public routes (e.g., Stripe Webhook, Rate Limiter)
+        // ✅ Public Routes (e.g., Stripe Webhook, Rate Limiter)
         const publicRoutes = ["/limited-function", "/handle-stripe-webhook"];
         if (publicRoutes.includes(req.path)) return next();
 
-        // Authentication Middleware (Protects all other routes)
+        // ✅ Check Authentication
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return res.status(401).json({ error: "Unauthorized" });
@@ -73,7 +77,7 @@ app.post("/limited-function", (req, res) => {
     res.json({ message: "Limited function executed successfully." });
 });
 
-// Health check route (Always open)
+// ✅ Health check route (Always open)
 app.get("/", (req, res) => res.send("🔒 Protected API Server is live!"));
 
 // Start server

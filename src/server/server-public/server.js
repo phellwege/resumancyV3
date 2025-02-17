@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 async function getSecret(secretName) {
     const client = new SecretManagerServiceClient();
     const [version] = await client.accessSecretVersion({
-        name: `projects/YOUR_PROJECT_ID/secrets/${secretName}/versions/latest`,
+        name: `projects/resumancy/secrets/${secretName}/versions/latest`,
     });
     return version.payload.data.toString();
 }
