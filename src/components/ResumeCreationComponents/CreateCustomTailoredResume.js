@@ -12,23 +12,18 @@ import { useData } from '../../context/DataContext';
 import '../../views/main.css';
 import { extractResumeText, calculateHybridMatchPercent } from '../user/SendMatch';
 
-// --------------------------------------------------
-// 1) Helper to escape newlines only when inside strings
-// --------------------------------------------------
 function escapeNewlinesInStrings(jsonStr) {
   let inString = false;
   let escaped = '';
   for (let i = 0; i < jsonStr.length; i++) {
     const char = jsonStr[i];
     if (char === '"') {
-      // Check if the quote is escaped by counting preceding backslashes.
       let escapeCount = 0;
       let j = i - 1;
       while (j >= 0 && jsonStr[j] === '\\') {
         escapeCount++;
         j--;
       }
-      // If even number of backslashes, the quote is not escaped.
       if (escapeCount % 2 === 0) {
         inString = !inString;
       }
@@ -42,9 +37,6 @@ function escapeNewlinesInStrings(jsonStr) {
   return escaped;
 }
 
-// --------------------------------------------------
-// 2) Fallback JSON parser for the experience section
-// --------------------------------------------------
 function parseExperienceData(data) {
   try {
     return JSON.parse(data);
@@ -192,7 +184,7 @@ export default function CreateCustomTailoredResume() {
         'https://resumancy-protected-api-659014427552.us-central1.run.app/limited-function',
         { headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Required for auth
+          'Authorization': `Bearer ${token}` 
         } }
     );
 
