@@ -82,10 +82,6 @@ app.use(async (req, res, next) => {
     }
 });
 
-app.post("/limited-function", (req, res) => {
-    res.json({ message: "🔐 Secure function executed successfully.", user: req.user });
-});
-
 app.get("/", (req, res) => res.send("🔒 Protected API Server is live!"));
 
 const PORT = process.env.PORT || 8080;
