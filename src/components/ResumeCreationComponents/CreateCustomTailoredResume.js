@@ -12,18 +12,23 @@ import { useData } from '../../context/DataContext';
 import '../../views/main.css';
 import { extractResumeText, calculateHybridMatchPercent } from '../user/SendMatch';
 
+// --------------------------------------------------
+// 1) Helper to escape newlines only when inside strings
+// --------------------------------------------------
 function escapeNewlinesInStrings(jsonStr) {
   let inString = false;
   let escaped = '';
   for (let i = 0; i < jsonStr.length; i++) {
     const char = jsonStr[i];
     if (char === '"') {
+      // Check if the quote is escaped by counting preceding backslashes.
       let escapeCount = 0;
       let j = i - 1;
       while (j >= 0 && jsonStr[j] === '\\') {
         escapeCount++;
         j--;
       }
+      // If even number of backslashes, the quote is not escaped.
       if (escapeCount % 2 === 0) {
         inString = !inString;
       }
@@ -37,6 +42,9 @@ function escapeNewlinesInStrings(jsonStr) {
   return escaped;
 }
 
+// --------------------------------------------------
+// 2) Fallback JSON parser for the experience section
+// --------------------------------------------------
 function parseExperienceData(data) {
   try {
     return JSON.parse(data);
@@ -61,21 +69,18 @@ export default function CreateCustomTailoredResume() {
   } = useUser();
 
   const { setLoading } = useAuth();
-  const { addTailoredResume, addCoverLetter, userToken, getUserToken } = useData();
+  const { addTailoredResume, addCoverLetter } = useData();
   const history = useNavigate();
+
   const companyNameTooltip = "The name of the company you are applying for.";
   const prospectiveJobDescTooltip = "Paste a job description of the role you are applying for.";
 
   const generateTailoredResume = async (jobData, currentUser) => {
     try {
-      const token = await getUserToken();
       const response = await axios.post(
-        "https://resumancy-protected-api-659014427552.us-central1.run.app/generate-tailored-resume",
+        "https://us-central1-resumancy.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
         { user: currentUser, selectedTailoredResumeIdData: jobData },
-        { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Required for auth
-        } }
+        { headers: { 'Content-Type': 'application/json' } }
       );
 
       const { summary, experienceSection, skillsSection } = response.data;
@@ -105,14 +110,10 @@ export default function CreateCustomTailoredResume() {
 
   const generateCoverLetter = async (jobData, currentUser) => {
     try {
-      const token = await getUserToken();
       const response = await axios.post(
-        "https://resumancy-protected-api-659014427552.us-central1.run.app/generate-cover-letter",
+        "https://us-central1-resumancy.cloudfunctions.net/generate_cover_letter-generate_cover_letter",
         { user: currentUser, selectedTailoredResumeIdData: jobData },
-        {headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Required for auth
-        }}
+        { headers: { 'Content-Type': 'application/json' } }
       );
       return response.data.coverLetterSummary;
     } catch (error) {
@@ -124,9 +125,8 @@ export default function CreateCustomTailoredResume() {
   const performGapAnalysis = async (finalizedResume, jobData, currentUser) => {
     const resumeText = extractResumeText(finalizedResume);
     try {
-      const token = await getUserToken();
       const gapResponse = await axios.post(
-        "https://resumancy-protected-api-659014427552.us-central1.run.app/generate-gap-analysis",
+        "https://us-central1-resumancy.cloudfunctions.net/generateGapAnalysisWithRetry-generate_gap_analysis",
         {
           user: currentUser,
           selectedTailoredResumeIdData: {
@@ -137,10 +137,7 @@ export default function CreateCustomTailoredResume() {
           resumeText,
           missingSkills: [],
         },
-        { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        } }
+        { headers: { 'Content-Type': 'application/json' } }
       );
       return gapResponse.data.gapAnalysis;
     } catch (error) {
@@ -179,13 +176,9 @@ export default function CreateCustomTailoredResume() {
     };
 
     try {
-      const token = await getUserToken();
       const rateLimitResponse = await axios.get(
-        'https://resumancy-protected-api-659014427552.us-central1.run.app/limited-function',
-        { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
-        } }
+        'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
+        { headers: { 'Content-Type': 'application/json' } }
     );
 
     if (rateLimitResponse.status === 429) {
