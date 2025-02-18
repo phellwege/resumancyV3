@@ -21,6 +21,7 @@ import Subscribe from './views/Subscribe';
 import Account from './views/Account';
 import OverLimit from './views/OverLimit';
 import SuccessPage from './views/SuccessPage';
+import FinishSignIn from './views/FinishSignIn';
 
 function App() {
   const [theme, setTheme] = useState({mode: 'light'})
@@ -47,6 +48,7 @@ function App() {
             <Route exact path='/Account' element={<PrivateRoute><Account /></PrivateRoute>} />
             <Route exact path='/OverLimit' element={<PrivateRoute><OverLimit /></PrivateRoute>} />
             <Route exact path='/Success' element={<SuccessPage />} />
+            <Route exact path='/FinishSignIn' element={<FinishSignIn />} />
 
             </Routes>
           </React.Fragment>

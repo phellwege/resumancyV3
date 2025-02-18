@@ -1,11 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// import { getPerformance } from "firebase/performance";
-// import "firebase/auth";
-import { getAuth } from 'firebase/auth';
+import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from 'firebase/storage';
-
 
 const firebaseConfig = {
     apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
@@ -16,11 +13,14 @@ const firebaseConfig = {
     messagingSenderId: `${process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID}`,
     appId: `${process.env.REACT_APP_FIREBASE_APPID}`,
     measurementId: "G-YTGPCZP1EQ"
-}
+};
 
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
-// export const perf = getPerformance(app);
-export const storage = getStorage(app)
+export const storage = getStorage(app);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
+// ✅ Ensure persistence is set before any sign-in happens
+setPersistence(auth, browserLocalPersistence)
+    .catch(error => console.error("Error setting persistence:", error));

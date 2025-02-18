@@ -10,10 +10,10 @@ export default function PrivateRoute({ children }) {
     // Optionally wait for a "loaded" flag if available in your user state.
     if (!user?.id) return; // user not loaded yet
 
-    if (!user?.initialSetupDone) {
+    if (user?.id && !user?.initialSetupDone) {
       setError("Please complete your initial setup before proceeding.");
       setRedirectPath("/InitialUserSetup");
-    } else if (user?.initialSetupDone && !user?.subscription.active) {
+    } else if (user?.id && user?.initialSetupDone && !user?.subscription.active) {
       setError("Your subscription is inactive. Please choose a plan to continue.");
       setRedirectPath("/Subscribe");
     } else {

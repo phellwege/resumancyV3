@@ -57,8 +57,6 @@ export function DataProvider({ children }) {
         return unsubscribe;
     };
     
-    
-    
     const updateUserData = async (userId, updatedData) => {
         try {
             const userDocRef = doc(db, 'users', userId);
