@@ -199,14 +199,17 @@ const ResumePDFStyle5 = ({ user, selectedResume }) => {
                     <Text style={styles.leftLink}>{account.name}</Text>
                   </Link>
                 ))}
-              {user.address?.useAddress && (
-                <View>
-                  <Text style={styles.leftSectionContent}>
-                    {user.address.city}, {user.address.state}
-                  </Text>
-                </View>
-              )}
             </View>
+            
+            {/* Address Section - Optional */}
+            {user.address?.useAddress && (
+              <View style={styles.section}>
+                <Text style={styles.leftSectionTitle}>ADDRESS</Text>
+                <Text style={styles.leftSectionContent}>
+                  {user.address.street ? `${user.address.street}, ` : ''}{user.address.city}, {user.address.state}{user.address.zip ? ` ${user.address.zip}` : ''}
+                </Text>
+              </View>
+            )}
             
             <View style={styles.section}>
               <Text style={styles.leftSectionTitle}>SKILLS</Text>

@@ -75,6 +75,16 @@ export default function ResumeStyle6({ isGenPDF }) {
       <section className="resume-body">
         {/* Left column */}
         <div className="resume-left-col">
+          {/* Address Section - Optional */}
+          {user.address?.useAddress && (
+            <div className="resume-section">
+              <h3 className="left-section-title">Address</h3>
+              <p style={{ margin: 0, fontSize: '8pt' }}>
+                {user.address.city}, {user.address.state}
+              </p>
+            </div>
+          )}
+          
           {/* Education Section */}
           {selectedResume?.education && (
             <div className="resume-section">

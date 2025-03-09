@@ -208,7 +208,7 @@ const ResumePDFStyle4 = ({ user, selectedResume }) => {
               <View style={styles.section}>
                 <Text style={styles.rightSectionTitle}>ADDRESS</Text>
                 <Text style={styles.rightSectionContent}>
-                  {user.address.city}, {user.address.state}
+                  {user.address.street ? `${user.address.street}, ` : ''}{user.address.city}, {user.address.state}{user.address.zip ? ` ${user.address.zip}` : ''}
                 </Text>
               </View>
             )}

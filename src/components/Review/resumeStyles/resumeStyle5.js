@@ -74,14 +74,24 @@ export default function ResumeStyle5({isGenPDF}) {
                   Portfolio
                 </a>
               )}
-              {/* Social Media Links */}
-              {user.contactInfo?.socialMedia?.map((account, i) => (
-                <a key={i} href={account.url} target="_blank" rel="noopener noreferrer">
-                  {account.name}
-                </a>
-              ))}
+              {user.contactInfo?.socialMedia && user.contactInfo.socialMedia.length > 0 &&
+                user.contactInfo.socialMedia.map((account, index) => (
+                  <a key={index} href={account.url} target="_blank" rel="noopener noreferrer">
+                    {account.name}
+                  </a>
+                ))}
             </div>
           </div>
+
+          {/* Address Section */}
+          {user.address?.useAddress && (
+            <div className="resume-style5-section">
+              <h3 className="resume-style5-section-title">Address</h3>
+              <p style={{ margin: 0, fontSize: '8pt' }}>
+                {user.address.city}, {user.address.state}
+              </p>
+            </div>
+          )}
 
           {/* Skills Section */}
           <div className="resume-style5-section">
@@ -109,9 +119,16 @@ export default function ResumeStyle5({isGenPDF}) {
             <h3 className="resume-style5-section-title">Experience</h3>
             {selectedResume?.experience?.map((exp, index) => (
               <div key={index} className="resume-style5-experience-item">
-                <p className="resume-style5-company-name">
-                  {exp.expCompanyName} {exp.expTime && `| ${exp.expTime}`}
-                </p>
+                <div className="resume-style5-experience-header">
+                  <p className="resume-style5-company-name">
+                    {exp.expCompanyName}
+                  </p>
+                  {exp.expTime && (
+                    <p className="resume-style5-job-date">
+                      {exp.expTime}
+                    </p>
+                  )}
+                </div>
                 {exp.expJobTitle && (
                   <p className="resume-style5-job-position">
                     {exp.expJobTitle}

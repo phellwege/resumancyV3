@@ -56,35 +56,25 @@ export default function ResumeStyle2({ isGenPDF }) {
                   {user.contactInfo.phone}
                 </a>
               )}
-              {user.contactInfo?.location && (
-                <a href={`https://maps.google.com/?q=${user.contactInfo.location}`} target="_blank" rel="noopener noreferrer">
-                  {user.contactInfo.location}
-                </a>
-              )}
-              {user.contactInfo?.linkedin && (
-                <a href={user.contactInfo.linkedin} target="_blank" rel="noopener noreferrer">
-                  LinkedIn
-                </a>
-              )}
-              {user.contactInfo?.github && (
-                <a href={user.contactInfo.github} target="_blank" rel="noopener noreferrer">
-                  GitHub
-                </a>
-              )}
-              {user.contactInfo?.portfolio && (
-                <a href={user.contactInfo.portfolio} target="_blank" rel="noopener noreferrer">
-                  Portfolio
-                </a>
-              )}
-              {/* Social Media Links */}
-              {user.contactInfo?.socialMedia?.map((account, i) => (
-                <a key={i} href={account.url} target="_blank" rel="noopener noreferrer">
-                  {account.name}
-                </a>
-              ))}
+              {user.contactInfo?.socialMedia && user.contactInfo.socialMedia.length > 0 &&
+                user.contactInfo.socialMedia.map((account, index) => (
+                  <a key={index} href={account.url} target="_blank" rel="noopener noreferrer">
+                    {account.name}
+                  </a>
+                ))}
             </div>
           </div>
-
+          
+          {/* Address Section */}
+          {user.address?.useAddress && (
+            <div className="resume-style2-section">
+              <h3 className="resume-style2-section-title">Address</h3>
+              <p style={{ margin: 0, fontSize: '8pt' }}>
+                {user.address.street && `${user.address.street}, `}{user.address.city}, {user.address.state}{user.address.zip && ` ${user.address.zip}`}
+              </p>
+            </div>
+          )}
+          
           {/* Skills Section */}
           <div className="resume-style2-section">
             <h3 className="resume-style2-section-title">Skills</h3>

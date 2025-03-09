@@ -210,6 +210,16 @@ const ResumePDFStyle6 = ({ user, selectedResume }) => {
         <View style={styles.body}>
           {/* LEFT COLUMN */}
           <View style={styles.leftColumn}>
+            {/* ADDRESS - Optional */}
+            {user.address?.useAddress && (
+              <View style={styles.section}>
+                <Text style={styles.leftSectionTitle}>ADDRESS</Text>
+                <Text style={styles.sectionContent}>
+                  {user.address.street ? `${user.address.street}, ` : ''}{user.address.city}, {user.address.state}{user.address.zip ? ` ${user.address.zip}` : ''}
+                </Text>
+              </View>
+            )}
+            
             {/* EDUCATION */}
             {selectedResume?.education && (
               <View style={styles.section}>

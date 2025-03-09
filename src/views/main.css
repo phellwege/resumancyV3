@@ -817,14 +817,14 @@ width: 45%;
 }
 
 .resume-style5-name-title {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .resume-style5-name {
   font-size: 16pt;
   font-weight: 700;
   margin: 0;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   color: white;
 }
 
@@ -832,7 +832,7 @@ width: 45%;
   font-size: 12pt;
   font-weight: 600;
   margin: 0;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   color: white;
 }
 
@@ -841,17 +841,22 @@ width: 45%;
 }
 
 .resume-style5-section-title {
-  font-size: 12pt;
+  font-size: 10pt;
   font-weight: 700;
-  margin: 0 0 5px 0;
+  margin: 0 0 8px 0;
   text-transform: uppercase;
+  border-bottom: 1px solid #999;
+  padding-bottom: 2px;
 }
 
 .resume-style5-left-column .resume-style5-section-title {
   color: white;
+  border-bottom: 1px solid white;
 }
 
 .resume-style5-right-column .resume-style5-section-title {
+  color: #456990;
+  border-bottom: 1px solid #999;
   color: black;
 }
 
@@ -863,8 +868,9 @@ width: 45%;
 
 .resume-style5-contact-info a {
   color: white;
-  text-decoration: none;
-  margin-bottom: 2px;
+  text-decoration: underline;
+  margin-bottom: 3px;
+  line-height: 1.4;
 }
 
 .resume-style5-contact-info a:hover {
@@ -872,7 +878,13 @@ width: 45%;
 }
 
 .resume-style5-experience-item {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.resume-style5-experience-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
 }
 
 .resume-style5-company-name {
@@ -882,8 +894,15 @@ width: 45%;
 }
 
 .resume-style5-job-position {
+  font-style: italic;
   margin: 0;
+  font-size: 9pt;
+  margin-bottom: 2px;
+}
+
+.resume-style5-job-date {
   font-size: 8pt;
+  text-align: right;
 }
 
 .resume-style5-project-item {
@@ -1646,4 +1665,64 @@ textarea, .mobile-textarea {
 .mobile-resume-footer {
     justify-content: center !important;
     gap: 10px;
+}
+
+/* resume style 6 */
+#resumeStyle6 {
+    background-color: white;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.resume-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.resume-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.resume-name {
+    color: #8BC34A;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.resume-job-title {
+    color: #333;
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.contact-info a {
+    color: #009688;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+.resume-address-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.resume-address-section .section-title {
+    color: #009688;
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
 }
