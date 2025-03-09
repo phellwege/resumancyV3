@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 3,
+    fontFamily: 'Helvetica-Bold',
+    marginBottom: 8,
     color: 'white',
   },
   jobTitle: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',
     borderBottomWidth: 1,
@@ -72,13 +72,20 @@ const styles = StyleSheet.create({
   },
   leftSectionTitle: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',
     borderBottomWidth: 1,
     borderBottomColor: 'white',
     paddingBottom: 2,
     color: 'white',
+  },
+  rightSectionTitle: {
+    fontSize: 10,
+    fontFamily: 'Helvetica-Bold',
+    marginBottom: 5,
+    textTransform: 'uppercase',
+    color: '#456990',
   },
   sectionContent: {
     fontSize: 8,
@@ -113,6 +120,10 @@ const styles = StyleSheet.create({
   experienceTime: {
     fontSize: 8,
     textAlign: 'right',
+  },
+  experienceTitle: {
+    fontSize: 9,
+    fontFamily: 'Helvetica-Bold',
   },
   link: {
     color: '#F45B69',
@@ -151,6 +162,11 @@ const styles = StyleSheet.create({
   rightBulletText: {
     flex: 1,
     fontSize: 8,
+  },
+  projectTitle: {
+    fontSize: 9,
+    fontFamily: 'Helvetica-Bold',
+    marginBottom: 2,
   }
 });
 

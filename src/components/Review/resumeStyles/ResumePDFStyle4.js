@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 2,
+    fontFamily: 'Helvetica-Bold',
+    marginBottom: 8,
     color: 'black',
   },
   jobTitle: {
@@ -71,17 +71,17 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',
-    color: 'black',
+    color: '#7AA1CB',
   },
   rightSectionTitle: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',
-    color: 'black',
+    color: '#7AA1CB',
   },
   sectionContent: {
     fontSize: 8,

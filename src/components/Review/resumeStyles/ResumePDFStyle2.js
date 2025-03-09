@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     marginBottom: 5,
   },
   jobTitle: {
@@ -70,18 +70,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   sectionTitle: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontSize: 12,
+    fontFamily: 'Helvetica-Bold',
+    marginBottom: 10,
     textTransform: 'uppercase',
-    color: 'black',
   },
   leftSectionTitle: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontSize: 12,
+    fontFamily: 'Helvetica-Bold',
+    marginBottom: 10,
     textTransform: 'uppercase',
-    color: 'black',
   },
   sectionContent: {
     fontSize: 8,

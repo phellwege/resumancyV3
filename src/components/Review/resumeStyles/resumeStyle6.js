@@ -4,86 +4,97 @@ import "../../../views/main.css";
 
 export default function ResumeStyle6({ isGenPDF }) {
   const {
-    user,               // e.g., { firstName, lastName, contactInfo, etc. }
-    selectedResume      // e.g., { education, summary, skills, experience, projects }
+    user,
+    stripFormatting,
+    selectedResume
   } = useUser();
+
+  // Format the name
+  const displayName = `${user.firstName?.charAt(0).toUpperCase() + user.firstName?.slice(1)} ${user.lastName?.charAt(0).toUpperCase() + user.lastName?.slice(1)}`;
 
   // Utility: safely render multiline text as separate <p> tags
   const renderMultiline = (text) => {
     if (!text) return null;
     return text.split("\n").map((line, i) => (
-      <p key={i} style={{ margin: 0 }}>
+      <p key={i} style={{ margin: 0, fontSize: '8pt', marginBottom: '2px' }}>
         {line}
       </p>
     ));
   };
 
-  // Example: capitalize first letter of firstName/lastName
-  const displayName = `${user.firstName?.charAt(0).toUpperCase() + user.firstName?.slice(1)} 
-    ${user.lastName?.charAt(0).toUpperCase() + user.lastName?.slice(1)}`;
-
   return (
     <div className="resume-container" id="newResumeTemplate">
-      {/* Resume Header */}
+      {/* Header: Name, Job Title, Contact Info */}
       <header className="resume-header">
         <div className="name-and-title">
           <h1 className="resume-name">{displayName}</h1>
-          {/* Optionally display a job title if you have it */}
           {user.jobTitle && <h2 className="resume-job-title">{user.jobTitle}</h2>}
         </div>
-
+        
         <div className="contact-info">
-          {/* Example contact fields: email, phone, website, etc. */}
-          {user.contactInfo?.email && <a href={`mailto:${user.contactInfo.email}`}>{user.contactInfo.email}</a>}
-          {user.contactInfo?.phone && <a href={`tel:${user.contactInfo.phone}`}>{user.contactInfo.phone}</a>}
-          {/* Social links */}
+          {user.contactInfo?.email && (
+            <a href={`mailto:${user.contactInfo.email}`} target="_blank" rel="noopener noreferrer">
+              {user.contactInfo.email}
+            </a>
+          )}
+          {user.contactInfo?.phone && (
+            <a href={`tel:${stripFormatting(user.contactInfo.phone)}`} target="_blank" rel="noopener noreferrer">
+              {user.contactInfo.phone}
+            </a>
+          )}
+          {user.contactInfo?.location && (
+            <a href={`https://maps.google.com/?q=${user.contactInfo.location}`} target="_blank" rel="noopener noreferrer">
+              {user.contactInfo.location}
+            </a>
+          )}
+          {user.contactInfo?.linkedin && (
+            <a href={user.contactInfo.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          )}
+          {user.contactInfo?.github && (
+            <a href={user.contactInfo.github} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+          )}
+          {user.contactInfo?.portfolio && (
+            <a href={user.contactInfo.portfolio} target="_blank" rel="noopener noreferrer">
+              Portfolio
+            </a>
+          )}
+          {/* Social Media Links */}
           {user.contactInfo?.socialMedia?.map((account, i) => (
-            <span key={i}>
-              <a href={account.url} target="_blank" rel="noopener noreferrer">
-                {account.name}
-              </a>
-            </span>
+            <a key={i} href={account.url} target="_blank" rel="noopener noreferrer">
+              {account.name}
+            </a>
           ))}
         </div>
       </header>
 
       {/* Main body: two columns */}
       <section className="resume-body">
-        {/* LEFT COLUMN */}
+        {/* Left column */}
         <div className="resume-left-col">
-          {/* EDUCATION */}
+          {/* Education Section */}
           {selectedResume?.education && (
             <div className="resume-section">
-              <h3 className="section-title">Education</h3>
+              <h3 className="left-section-title">Education</h3>
               {renderMultiline(selectedResume.education)}
             </div>
           )}
 
-          {/* SKILLS */}
+          {/* Skills Section */}
           {selectedResume?.skills && (
             <div className="resume-section">
-              <h3 className="section-title">Skills</h3>
+              <h3 className="left-section-title">Skills</h3>
               {renderMultiline(selectedResume.skills)}
-            </div>
-          )}
-
-          {/* PROJECTS */}
-          {selectedResume?.projects?.length > 0 && (
-            <div className="resume-section">
-              <h3 className="section-title">Projects</h3>
-              {selectedResume.projects.map((proj, index) => (
-                <div key={index} className="project-entry">
-                  <h4 className="project-title">{proj.title}</h4>
-                  {renderMultiline(proj.description)}
-                </div>
-              ))}
             </div>
           )}
         </div>
 
-        {/* RIGHT COLUMN */}
+        {/* Right column */}
         <div className="resume-right-col">
-          {/* SUMMARY */}
+          {/* Summary Section */}
           {selectedResume?.summary && (
             <div className="resume-section">
               <h3 className="section-title">Summary</h3>
@@ -91,19 +102,34 @@ export default function ResumeStyle6({ isGenPDF }) {
             </div>
           )}
 
-          {/* EMPLOYMENT / EXPERIENCE */}
+          {/* Experience Section */}
           {selectedResume?.experience?.length > 0 && (
             <div className="resume-section">
-              <h3 className="section-title">Employment</h3>
+              <h3 className="section-title">Experience</h3>
               {selectedResume.experience.map((exp, index) => (
-                <div key={index} className="experience-entry">
-                  <h4 className="experience-company">
-                    {exp.expCompanyName} | {exp.expTime}
-                  </h4>
-                  <h5 className="experience-job-title">
-                    {exp.expJobTitle}
-                  </h5>
-                  {renderMultiline(exp.expDesc)}
+                <div key={index} style={{ marginBottom: '8px' }}>
+                  <p style={{ fontWeight: 700, margin: 0, fontSize: '9pt' }}>
+                    {exp.expCompanyName} {exp.expTime && `| ${exp.expTime}`}
+                  </p>
+                  {exp.expJobTitle && (
+                    <p style={{ margin: 0, fontSize: '8pt' }}>
+                      {exp.expJobTitle}
+                    </p>
+                  )}
+                  {exp.expDesc && renderMultiline(exp.expDesc)}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Projects Section */}
+          {selectedResume?.projects?.length > 0 && (
+            <div className="resume-section">
+              <h3 className="section-title">Projects</h3>
+              {selectedResume.projects.map((project, index) => (
+                <div key={index} style={{ marginBottom: '8px' }}>
+                  <p style={{ fontWeight: 700, margin: 0, fontSize: '9pt' }}>{project.title}</p>
+                  {project.description && renderMultiline(project.description)}
                 </div>
               ))}
             </div>

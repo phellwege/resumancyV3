@@ -385,7 +385,6 @@ width: 45%;
     margin: 0.3rem 0;
     line-height: 1;
 }
-
 #resumeStyle2Header {
     border-bottom: 2px solid black;
 }
@@ -413,6 +412,118 @@ width: 45%;
 }
 .spacing {
     margin-bottom: 5px;
+}
+
+/* Resume Style 2 specific styles */
+.resume-style2-container {
+  height: 11.35in;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: #333;
+  background: #fff;
+  padding: 30px;
+  box-sizing: border-box;
+  font-size: 8pt;
+  line-height: 1.2;
+}
+
+.resume-style2-header {
+  text-align: center;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.resume-style2-name {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.resume-style2-job-title {
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.resume-style2-header-line {
+  border-bottom: 1px solid black;
+  margin-top: 5px;
+}
+
+.resume-style2-content {
+  display: flex;
+  margin-top: 10px;
+}
+
+.resume-style2-left-column {
+  width: 25%;
+  padding-right: 15px;
+  background-color: #e0e0e0;
+  padding: 15px;
+}
+
+.resume-style2-right-column {
+  width: 75%;
+  padding-left: 15px;
+}
+
+.resume-style2-section {
+  margin-bottom: 10px;
+}
+
+.resume-style2-section-title {
+  font-size: 12pt;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+  color: black;
+}
+
+.resume-style2-contact-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 8pt;
+}
+
+.resume-style2-contact-info a {
+  color: #0000EE; /* Standard hyperlink blue */
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+
+.resume-style2-contact-info a:hover {
+  text-decoration: underline;
+}
+
+.resume-style2-experience-item {
+  margin-bottom: 8px;
+}
+
+.resume-style2-company-name {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+}
+
+.resume-style2-job-position {
+  margin: 0;
+  font-size: 8pt;
+}
+
+.resume-style2-project-item {
+  margin-bottom: 8px;
+}
+
+.resume-style2-project-title {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+  margin-bottom: 2px;
 }
 
 /* resume style 3 */
@@ -520,6 +631,112 @@ width: 45%;
     padding-top: 1%;
 }
 
+/* Resume Style 4 specific styles */
+.resume-style4-container {
+  height: 11.35in;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: #333;
+  background: #fff;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 8pt;
+  line-height: 1.2;
+}
+
+.resume-style4-header {
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #7AA1CB;
+  padding: 15px;
+}
+
+.resume-style4-name {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 8px;
+  color: black;
+}
+
+.resume-style4-job-title {
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.resume-style4-content {
+  display: flex;
+  margin-top: 10px;
+}
+
+.resume-style4-left-column {
+  width: 70%;
+  padding-right: 10px;
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.resume-style4-right-column {
+  width: 30%;
+  background-color: #e0e0e0;
+  height: 100%;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+.resume-style4-section {
+  margin-bottom: 15px;
+}
+
+.resume-style4-section-title {
+  font-size: 10pt;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+  color: #7AA1CB;
+}
+
+.resume-style4-experience-item {
+  margin-bottom: 8px;
+}
+
+.resume-style4-experience-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.resume-style4-company-name {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+}
+
+.resume-style4-job-position {
+  font-style: italic;
+  margin: 0;
+  font-size: 9pt;
+}
+
+.resume-style4-job-date {
+  font-size: 8pt;
+  text-align: right;
+}
+
+.resume-style4-indented {
+  margin-left: 10px;
+}
+
+.resume-style4-right-column a {
+  color: #0000FF;
+  text-decoration: underline;
+}
+
 /* resume style 5 */
 #resumeStyle5 {
     background-color: white;
@@ -565,127 +782,225 @@ width: 45%;
     height: 100%;
     padding-top: 1%;
 }
+
+/* Resume Style 5 specific styles */
+.resume-style5-container {
+  height: 11.35in;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: #333;
+  background: #fff;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 8pt;
+  line-height: 1.2;
+}
+
+.resume-style5-content {
+  display: flex;
+  height: 100%;
+}
+
+.resume-style5-left-column {
+  width: 30%;
+  padding: 15px;
+  background-color: #456990;
+  color: white;
+  height: 100%;
+}
+
+.resume-style5-right-column {
+  width: 70%;
+  padding: 15px;
+  height: 100%;
+}
+
+.resume-style5-name-title {
+  margin-bottom: 15px;
+}
+
+.resume-style5-name {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.resume-style5-job-title {
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.resume-style5-section {
+  margin-bottom: 15px;
+}
+
+.resume-style5-section-title {
+  font-size: 12pt;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+}
+
+.resume-style5-left-column .resume-style5-section-title {
+  color: white;
+}
+
+.resume-style5-right-column .resume-style5-section-title {
+  color: black;
+}
+
+.resume-style5-contact-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 8pt;
+}
+
+.resume-style5-contact-info a {
+  color: white;
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+
+.resume-style5-contact-info a:hover {
+  text-decoration: underline;
+}
+
+.resume-style5-experience-item {
+  margin-bottom: 8px;
+}
+
+.resume-style5-company-name {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+}
+
+.resume-style5-job-position {
+  margin: 0;
+  font-size: 8pt;
+}
+
+.resume-style5-project-item {
+  margin-bottom: 8px;
+}
+
+.resume-style5-project-title {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+  margin-bottom: 2px;
+}
+
 /* Container and Header */
 .resume-container {
     height: 11.35in;
-    width: 100%; /* typical letter-sized width if you plan to PDF */
+    width: 100%;
     margin: 0 auto;
     font-family: "Helvetica", "Arial", sans-serif;
     color: #333;
     background: #fff;
-    padding: .25rem;
+    padding: 30px;
     box-sizing: border-box;
-  }
-  
-  .resume-header {
+}
+
+.resume-header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 0.25rem;
-    margin-bottom: .25rem;
-  }
-  
-  .name-and-title {
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.name-and-title {
     flex: 1;
-  }
-  
-  .resume-name {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #a3d39c; /* adjust to your preferred shade */
+}
+
+.resume-name {
+    font-size: 20pt;
+    font-weight: 700;
+    color: #8BC34A; /* Match the PDF color */
     margin: 0;
-  }
-  
-  .resume-job-title {
-    font-size: 1.1rem;
-    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.resume-job-title {
+    font-size: 12pt;
+    font-weight: semi-bold;
     color: #333;
-    margin-top: 0.1rem;
-  }
-  
-  /* Contact info, displayed horizontally */
-  .contact-info {
+    margin-top: 0;
+    margin-bottom: 5px;
+    /* font-style: italic; */
+}
+
+/* Contact info, displayed horizontally */
+.contact-info {
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
-    gap: .5rem;
-    font-size: 0.9rem;
-    color: #555;
-    margin-top: 0.5rem;
-  }
-  .contact-info a {
-    color: #555;
+    align-items: center;
+    gap: 15px;
+    font-size: 8pt;
+    margin-top: 5px;
+}
+
+.contact-info a {
+    color: #333;
     text-decoration: none;
-  }
-  .contact-info a:hover {
+    white-space: nowrap;
+}
+
+.contact-info a:hover {
     text-decoration: underline;
-  }
-  
-  /* Body: Two columns */
-  .resume-body {
+}
+
+/* Body: Two columns */
+.resume-body {
     display: flex;
-  }
-  
-  .resume-left-col {
-    width: 25%;
-    padding-right: .5rem;
+    margin-top: 10px;
+}
+
+.resume-left-col {
+    width: 30%;
+    padding-right: 15px;
     border-right: 1px solid #ccc;
-  }
-  
-  /* Right column: takes the remaining space */
-  .resume-right-col {
-    flex: 1;
-    padding-left: .5rem;
+}
+
+/* Right column: takes the remaining space */
+.resume-right-col {
+    width: 70%;
+    padding-left: 15px;
     box-sizing: border-box;
-  }
-  
-  /* Section spacing */
-  .resume-section {
-    margin-bottom: .25rem;
-  }
-  
-  .section-title {
-    margin: 0 0 0.05rem 0;
-    font-size: 1rem;
-    font-weight: bold;
+}
+
+/* Section spacing */
+.resume-section {
+    margin-bottom: 10px;
+}
+
+.section-title {
+    margin: 0 0 5px 0;
+    font-size: 10pt;
+    font-weight: 700;
     text-transform: uppercase;
-    color: #0097a7; /* example teal color */
-  }
-  
-  
-  /* Projects styling */
-  .project-entry {
-    margin: 0.5rem 0;
-  }
-  .project-title {
-    margin: 0;
-    font-weight: bold;
-    font-size: 0.8rem;
-  }
-  
-  /* Experience styling */
-  .experience-entry {
-    margin: 0.25rem 0;
-  }
-  .experience-company {
-    margin: 0;
-    font-size: 0.85rem;
-    font-weight: bold;
-    line-height: .8;
-  }
-  .experience-job-title {
-    margin: 0.05rem 0 0.2rem 0;
-    font-style: italic;
-    font-size: 0.8rem;
-  }
-  
-  /* Adjust paragraphs within sections */
-  .resume-section p {
-    /* margin: 0.2rem 0; */
-    margin: 0;
-    font-size: small;
-  }
-  
+    color: #009688;
+}
+
+.left-section-title {
+    margin: 0 0 5px 0;
+    font-size: 10pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #009688;
+}
+
 .reviewCoverLetterComponent {
     display: flex;
     flex-direction: column;

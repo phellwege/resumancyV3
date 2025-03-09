@@ -10,109 +10,134 @@ export default function ResumeStyle2({ isGenPDF }) {
   } = useUser();
 
   const capitalizeFirstLetter = (text) => {
+    if (!text) return '';
     return text.charAt(0).toUpperCase() + text.slice(1);
-};
+  };
 
-const renderTextWithNewLines = (text) => {
-    if (text) {
-        const lines = text.split('\n');
-        return lines.map((line, index) => {
-            const shouldIndent = line.startsWith('-');
-            return (
-                <p key={index} className={shouldIndent ? 'indented' : ''} style={{ marginBottom: "2px" }}>{line}
-                </p>
-            );
-        });
-    }
-    return null;
-};
+  const renderTextWithNewLines = (text) => {
+    if (!text) return null;
+    const lines = text.split('\n');
+    return lines.map((line, index) => {
+      const shouldIndent = line.startsWith('-');
+      return (
+        <p key={index} className={shouldIndent ? 'indented' : ''} style={{ margin: 0, fontSize: '8pt', marginBottom: '2px' }}>
+          {line}
+        </p>
+      );
+    });
+  };
 
   return (
-    <>
-    <div className='reviewHeight'>
-        <div className='cardInnerDiv' id='resumeStyle2'>
-        <div id='resumeStyle2Header'>
-            <h3>
-            {capitalizeFirstLetter(user?.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}{capitalizeFirstLetter(user?.lastName)}
-            </h3>
-            <h6>{user.jobTitle}</h6>
-        </div>
-        <div className='resumeStyleLowerWrap'>
-            <div className='resumeStyleLeftBlock'>
-            <div className='reviewDefaultResumeSections'>
-                <h6>Contact Info:</h6>
-                <a 
-                    href={`mailto:${user.contactInfo.email}`}
-                    target="_blank"
-                >
-                    {renderTextWithNewLines(user.contactInfo.email)}
+    <div className="resume-style2-container">
+      {/* Header with name and job title */}
+      <div className="resume-style2-header">
+        <h1 className="resume-style2-name">
+          {capitalizeFirstLetter(user?.firstName)}{" "}{capitalizeFirstLetter(user?.lastName)}
+        </h1>
+        {user.jobTitle && <h2 className="resume-style2-job-title">{user.jobTitle}</h2>}
+        <div className="resume-style2-header-line"></div>
+      </div>
+
+      {/* Main content with two columns */}
+      <div className="resume-style2-content">
+        {/* Left column */}
+        <div className="resume-style2-left-column">
+          {/* Contact Info Section */}
+          <div className="resume-style2-section">
+            <h3 className="resume-style2-section-title">Contact Info</h3>
+            <div className="resume-style2-contact-info">
+              {user.contactInfo?.email && (
+                <a href={`mailto:${user.contactInfo.email}`} target="_blank" rel="noopener noreferrer">
+                  {user.contactInfo.email}
                 </a>
-                <a
-                    href={`tel:${stripFormatting(user.contactInfo.phone)}`}
-                >
-                    {renderTextWithNewLines(user.contactInfo.phone)}
+              )}
+              {user.contactInfo?.phone && (
+                <a href={`tel:${stripFormatting(user.contactInfo.phone)}`} target="_blank" rel="noopener noreferrer">
+                  {user.contactInfo.phone}
                 </a>
-                {user.contactInfo.socialMedia.length > 0 && (
-                    <div className='socialMediaLinks'>
-                        {user.contactInfo.socialMedia.map((account, index) => (
-                            <div key={index}>
-                                <a 
-                                    href={account.url} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                >
-                                    {account.name}
-                                </a>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                <br/>
-                {user.address?.useAddress && (
-                    <div className="reviewAddress">
-                        <h6 className="mb-0">Address:</h6>
-                        <p className="mb-1">
-                            {user.address.street && `${user.address.street} `}
-                            {user.address.appt && user.address.appt}
-                            <br />
-                            {user.address.city && `${user.address.city}`}
-                            {user.address.state && `, ${user.address.state}`}
-                            {user.address.zip && ` ${user.address.zip}`}
-                        </p>
-                    </div>
-                )}
+              )}
+              {user.contactInfo?.location && (
+                <a href={`https://maps.google.com/?q=${user.contactInfo.location}`} target="_blank" rel="noopener noreferrer">
+                  {user.contactInfo.location}
+                </a>
+              )}
+              {user.contactInfo?.linkedin && (
+                <a href={user.contactInfo.linkedin} target="_blank" rel="noopener noreferrer">
+                  LinkedIn
+                </a>
+              )}
+              {user.contactInfo?.github && (
+                <a href={user.contactInfo.github} target="_blank" rel="noopener noreferrer">
+                  GitHub
+                </a>
+              )}
+              {user.contactInfo?.portfolio && (
+                <a href={user.contactInfo.portfolio} target="_blank" rel="noopener noreferrer">
+                  Portfolio
+                </a>
+              )}
+              {/* Social Media Links */}
+              {user.contactInfo?.socialMedia?.map((account, i) => (
+                <a key={i} href={account.url} target="_blank" rel="noopener noreferrer">
+                  {account.name}
+                </a>
+              ))}
             </div>
-            <div className='reviewDefaultResumeSections' id='lastReviewDefaultResumeSection'>
-                <h6>Skills:</h6>
-                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(selectedResume?.skills)}</span>
-                <div className='reviewDefaultResumeSections' id='resumeStyle2Education'>
-                <h6>Education and Certifications:</h6>
-                <span className='leftOrientedReviewSections'>{renderTextWithNewLines(selectedResume?.education)}</span>
-            </div>
-            </div>
-            </div>
-            <div className='resumeStyleRightBlock'>
-                <div className='reviewDefaultResumeSections'>
-                <h6>Summary:</h6>
-                {renderTextWithNewLines(selectedResume?.summary)}
-            </div>
-            <div className='reviewDefaultResumeSections'>
-                <h6>Experience:</h6>
-                {selectedResume?.experience.map((exp, index) => (
-                    <div key={index} className="experience-entry">
-                        <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
-                        <div className='reviewResumeJobTitleAndTime'>
-                            <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expJobTitle)}</h6>
-                            <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expTime)}</h6>
-                        </div>
-                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expDesc)}</span>
-                    </div>
-                ))}
-            </div>
-            </div>
+          </div>
+
+          {/* Skills Section */}
+          <div className="resume-style2-section">
+            <h3 className="resume-style2-section-title">Skills</h3>
+            {renderTextWithNewLines(selectedResume?.skills)}
+          </div>
+
+          {/* Education Section */}
+          <div className="resume-style2-section">
+            <h3 className="resume-style2-section-title">Education</h3>
+            {renderTextWithNewLines(selectedResume?.education)}
+          </div>
         </div>
+
+        {/* Right column */}
+        <div className="resume-style2-right-column">
+          {/* Summary Section */}
+          <div className="resume-style2-section">
+            <h3 className="resume-style2-section-title">Summary</h3>
+            {renderTextWithNewLines(selectedResume?.summary)}
+          </div>
+
+          {/* Experience Section */}
+          <div className="resume-style2-section">
+            <h3 className="resume-style2-section-title">Experience</h3>
+            {selectedResume?.experience?.map((exp, index) => (
+              <div key={index} className="resume-style2-experience-item">
+                <p className="resume-style2-company-name">
+                  {exp.expCompanyName} {exp.expTime && `| ${exp.expTime}`}
+                </p>
+                {exp.expJobTitle && (
+                  <p className="resume-style2-job-position">
+                    {exp.expJobTitle}
+                  </p>
+                )}
+                {exp.expDesc && renderTextWithNewLines(exp.expDesc)}
+              </div>
+            ))}
+          </div>
+
+          {/* Projects Section */}
+          {selectedResume?.projects?.length > 0 && (
+            <div className="resume-style2-section">
+              <h3 className="resume-style2-section-title">Projects</h3>
+              {selectedResume.projects.map((project, index) => (
+                <div key={index} className="resume-style2-project-item">
+                  <p className="resume-style2-project-title">{project.title}</p>
+                  {project.description && renderTextWithNewLines(project.description)}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+      </div>
     </div>
-    </>
-  )
+  );
 }

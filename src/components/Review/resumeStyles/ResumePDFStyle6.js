@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   headerContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   nameAndTitle: {
     width: '50%',
@@ -33,16 +33,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     flexWrap: 'wrap',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   name: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontFamily: 'Helvetica-Bold',
     color: '#8BC34A', 
-    marginBottom: 4,
+    marginBottom: 12,
   },
   jobTitle: {
     fontSize: 12,
-    marginBottom: 5,
+    marginBottom: 8,
     color: '#333',
     fontStyle: 'italic',
   },
@@ -52,11 +54,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   contactLink: {
-    color: '#2196F3', 
+    color: '#333', 
     textDecoration: 'underline',
     fontSize: 8,
     marginBottom: 2,
     marginLeft: 10,
+    alignSelf: 'center',
   },
   body: {
     flexDirection: 'row',
@@ -65,6 +68,8 @@ const styles = StyleSheet.create({
   leftColumn: {
     width: '30%',
     paddingRight: 15,
+    borderRightWidth: 1,
+    borderRightColor: '#ccc',
   },
   rightColumn: {
     width: '70%',
@@ -75,17 +80,17 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',
     color: '#009688', 
   },
   leftSectionTitle: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',
-    color: '#00BCD4', 
+    color: '#009688', 
   },
   sectionContent: {
     fontSize: 8,
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
   },
   experienceCompany: {
     fontSize: 9,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     color: '#333',
   },
   experienceHeader: {
@@ -121,12 +126,12 @@ const styles = StyleSheet.create({
   },
   projectTitle: {
     fontSize: 9,
-    fontWeight: 'bold',
+    fontFamily: 'Helvetica-Bold',
     marginBottom: 2,
     color: '#333',
   },
   link: {
-    color: '#2196F3', 
+    color: '#333', 
     textDecoration: 'underline',
     fontSize: 8,
   },
