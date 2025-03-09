@@ -57,7 +57,7 @@ export default function EmailVerification() {
             
             setVerificationResult({
                 success: true,
-                message: "Email verified successfully! You can now access all features of the application."
+                message: "Email verified successfully!"
             });
             
             setSuccessMessage("Email verified successfully!");

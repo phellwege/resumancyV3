@@ -271,11 +271,12 @@ export default function CreateCustomTailoredResume() {
               </h4>
               <textarea
                 rows="1"
+                cols="75"
                 value={user.tailoredResume[0]?.companyName || ""}
                 onChange={(e) =>
                   handleTailoredResumeChange(
                     0,
-                    'companyName',
+                    "companyName",
                     sanitizeUserInput(e.target.value)
                   )
                 }
@@ -297,11 +298,12 @@ export default function CreateCustomTailoredResume() {
               </h4>
               <textarea
                 rows="10"
+                cols="75"
                 value={user.tailoredResume[0]?.description || ""}
                 onChange={(e) =>
                   handleTailoredResumeChange(
                     0,
-                    'description',
+                    "description",
                     sanitizeUserInput(e.target.value)
                   )
                 }

@@ -230,9 +230,8 @@ export default function CreateBaselineResume() {
                                                 className="mb-2"
                                                 />
                                             </Form.Group>
-                                            <Form.Control 
-                                                as='textarea'
-                                                rows={3}
+                                            <textarea
+                                                rows='5'
                                                 placeholder='Description'
                                                 value={exp.expDesc}
                                                 onChange={(e) => handleExperienceChange(index, 'expDesc', sanitizeUserInput(e.target.value))}
@@ -264,10 +263,8 @@ export default function CreateBaselineResume() {
                                         </div>
                                         <sub>({user.resume[0].education.length} / 500)</sub>
                                     </Form.Label>
-                                    <Form.Control 
-                                    as='textarea' 
-                                    rows={3} 
-                                    placeholder='Education'
+                                    <textarea
+                                    rows='5'
                                     value={user.resume[0].education}
                                     onChange={(e) => handleResumeChange('education', sanitizeUserInput(e.target.value))}
                                     maxLength='500'
@@ -294,10 +291,8 @@ export default function CreateBaselineResume() {
                                         </div>
                                         <sub>({user.resume[0].skills.length} / 1000)</sub>
                                     </Form.Label>
-                                    <Form.Control 
-                                    as='textarea' 
-                                    rows={2} 
-                                    placeholder='Skills'
+                                    <textarea
+                                    rows='5'
                                     value={user.resume[0].skills}
                                     onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
                                     maxLength='1000'
@@ -324,10 +319,8 @@ export default function CreateBaselineResume() {
                                         </div>
                                         <sub>({user.resume[0].additional.length} / 1000)</sub>
                                     </Form.Label>
-                                    <Form.Control 
-                                    as='textarea' 
-                                    rows={3} 
-                                    placeholder='Additional Information' 
+                                    <textarea
+                                    rows='5'
                                     value={user.resume[0].additional}
                                     onChange={(e) => handleResumeChange('additional', sanitizeUserInput(e.target.value))}
                                     maxLength='1000'

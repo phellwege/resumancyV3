@@ -9,7 +9,6 @@ TODO: add address changes to the edit for the resume
 
 ### Cleanup
 TODO: fix style for generated pdf stuff
-TODO: fix email verification style and wording
 TODO: add Success/failure Messages where relevant
 
 ### Bug
