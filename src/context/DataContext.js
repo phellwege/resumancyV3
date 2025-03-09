@@ -332,7 +332,8 @@ export function DataProvider({ children }) {
                     matchPercent: tailoredData?.matchPercent ?? "N/A",
                     skillGapAnalysis: tailoredData?.skillGapAnalysis || "",
                 };
-            });
+            })
+            .filter(resume => !resume.usage?.baseResume);
     
             setReadyTailoredResume(mergedResumes);
         };
@@ -437,7 +438,7 @@ export function DataProvider({ children }) {
         handleManagePlan,
         deleteUserAccount,
         userToken,
-        getUserToken
+        getUserToken,
     };
 
     return (

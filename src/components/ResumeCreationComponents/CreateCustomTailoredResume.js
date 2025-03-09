@@ -271,7 +271,6 @@ export default function CreateCustomTailoredResume() {
               </h4>
               <textarea
                 rows="1"
-                cols="75"
                 value={user.tailoredResume[0]?.companyName || ""}
                 onChange={(e) =>
                   handleTailoredResumeChange(
@@ -281,7 +280,7 @@ export default function CreateCustomTailoredResume() {
                   )
                 }
                 placeholder="Enter the prospective company name here..."
-                className="mobile-textarea"
+                className="mobile-textarea form-control"
               />
               <br />
 
@@ -298,7 +297,6 @@ export default function CreateCustomTailoredResume() {
               </h4>
               <textarea
                 rows="10"
-                cols="75"
                 value={user.tailoredResume[0]?.description || ""}
                 onChange={(e) =>
                   handleTailoredResumeChange(
@@ -308,7 +306,7 @@ export default function CreateCustomTailoredResume() {
                   )
                 }
                 placeholder="Enter the prospective job description here..."
-                className="mobile-textarea"
+                className="mobile-textarea form-control"
               />
 
               <br />
@@ -318,7 +316,11 @@ export default function CreateCustomTailoredResume() {
             </Card.Body>
           </Card>
 
-          <Button aria-label="submit button" onClick={handleSubmit}>
+          <Button 
+            aria-label="submit button" 
+            onClick={handleSubmit}
+            className="mt-3 btn-lg"
+          >
             Submit
           </Button>
         </div>

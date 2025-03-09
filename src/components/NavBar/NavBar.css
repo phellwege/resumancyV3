@@ -62,3 +62,9 @@
     #menu_toggle {
         padding: 10px 120px;
     }
+    @media (max-width: 860px) {
+        .navBar #openCloseButton {
+            left: 5px;
+            top: 15px;
+        }
+    }

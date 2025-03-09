@@ -82,82 +82,94 @@ export default function TailoredResumeTable() {
             <thead>
             <tr>
                 <th>
-                  Company Name
-                  <OverlayTrigger 
-                      overlay={
-                      <Tooltip id="tooltip">
-                          {companyNameDesc}
-                      </Tooltip>
-                      }>
-                      <span className="question-icon">
-                          <BsQuestionCircle />
-                      </span>
-                  </OverlayTrigger>
+                  <div className="th-content">
+                    Company Name
+                    <OverlayTrigger 
+                        overlay={
+                        <Tooltip id="tooltip">
+                            {companyNameDesc}
+                        </Tooltip>
+                        }>
+                        <span className="question-icon d-none d-md-inline">
+                            <BsQuestionCircle />
+                        </span>
+                    </OverlayTrigger>
+                  </div>
                 </th>
                 <th>
-                  Job Description
-                  <OverlayTrigger 
-                      overlay={
-                      <Tooltip id="tooltip">
-                          {jobDescDesc}
-                      </Tooltip>
-                      }>
-                      <span className="question-icon">
-                          <BsQuestionCircle />
-                      </span>
-                  </OverlayTrigger>
+                  <div className="th-content">
+                    Job Description
+                    <OverlayTrigger 
+                        overlay={
+                        <Tooltip id="tooltip">
+                            {jobDescDesc}
+                        </Tooltip>
+                        }>
+                        <span className="question-icon d-none d-md-inline">
+                            <BsQuestionCircle />
+                        </span>
+                    </OverlayTrigger>
+                  </div>
                 </th>
                 <th>
-                  Resume
-                  <OverlayTrigger 
-                      overlay={
-                      <Tooltip id="tooltip">
-                          {resumeDesc}
-                      </Tooltip>
-                      }>
-                      <span className="question-icon">
-                          <BsQuestionCircle />
-                      </span>
-                  </OverlayTrigger>
+                  <div className="th-content">
+                    Resume
+                    <OverlayTrigger 
+                        overlay={
+                        <Tooltip id="tooltip">
+                            {resumeDesc}
+                        </Tooltip>
+                        }>
+                        <span className="question-icon d-none d-md-inline">
+                            <BsQuestionCircle />
+                        </span>
+                    </OverlayTrigger>
+                  </div>
                 </th>
                 <th>
-                  Cover Letter
-                  <OverlayTrigger 
-                      overlay={
-                      <Tooltip id="tooltip">
-                          {coverLetterDesc}
-                      </Tooltip>
-                      }>
-                      <span className="question-icon">
-                          <BsQuestionCircle />
-                      </span>
-                  </OverlayTrigger>
+                  <div className="th-content">
+                    Cover Letter
+                    <OverlayTrigger 
+                        overlay={
+                        <Tooltip id="tooltip">
+                            {coverLetterDesc}
+                        </Tooltip>
+                        }>
+                        <span className="question-icon d-none d-md-inline">
+                            <BsQuestionCircle />
+                        </span>
+                    </OverlayTrigger>
+                  </div>
                 </th>
                 <th>
-                  Date
-                  <OverlayTrigger 
-                      overlay={
-                      <Tooltip id="tooltip">
-                          {dateDesc}
-                      </Tooltip>
-                      }>
-                      <span className="question-icon">
-                          <BsQuestionCircle />
-                      </span>
-                  </OverlayTrigger>
+                  <div className="th-content">
+                    Date
+                    <OverlayTrigger 
+                        overlay={
+                        <Tooltip id="tooltip">
+                            {dateDesc}
+                        </Tooltip>
+                        }>
+                        <span className="question-icon d-none d-md-inline">
+                            <BsQuestionCircle />
+                        </span>
+                    </OverlayTrigger>
+                  </div>
                 </th>
                 <th>
-                  Match %
-                  <OverlayTrigger 
-                      overlay={
-                      <Tooltip id="tooltip">
-                          {matchDesc}
-                      </Tooltip>
-                      }>
-                      <span className="question-icon">
-                          <BsQuestionCircle />
-                      </span>
-                  </OverlayTrigger>
+                  <div className="th-content">
+                    Match %
+                    <OverlayTrigger 
+                        overlay={
+                        <Tooltip id="tooltip">
+                            {matchDesc}
+                        </Tooltip>
+                        }>
+                        <span className="question-icon d-none d-md-inline">
+                            <BsQuestionCircle />
+                        </span>
+                    </OverlayTrigger>
+                  </div>
                 </th>
             </tr>
             </thead>

@@ -8,14 +8,13 @@ TODO: add address changes to the edit for the resume
 ### Flow Correction 
 
 ### Cleanup
+TODO: fix style for generated pdf stuff
+TODO: fix email verification style and wording
 TODO: add Success/failure Messages where relevant
-TODO: make mobile friendly
 
 ### Bug
-TODO: fix bug on modal size when scrolling
 
 ### CRITICAL BEFORE DEPLOY
-TODO: email verifications on sign up
 TODO: obfuscate code
 TODO: mockup new resumes and take screenshots of them replacing the ones currently on the home page
 

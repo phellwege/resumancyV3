@@ -15,12 +15,6 @@ export default function FinishSignIn() {
   useEffect(() => {
     const completeSignIn = async () => {
       try {
-        if (!isSignInWithEmailLink(auth, email, window.location.href)) {
-          setError('Invalid sign-in link.');
-          setLoading(false);
-          return;
-        }
-
         let email = window.localStorage.getItem('emailForSignIn');
         if (!email) {
           email = window.prompt('Please provide your email for confirmation');
@@ -30,43 +24,20 @@ export default function FinishSignIn() {
           setLoading(false);
           return;
         }
-
-        // ✅ Wait for the sign-in to complete
+  
+        if (!isSignInWithEmailLink(auth, window.location.href)) {
+          setError('Invalid sign-in link.');
+          setLoading(false);
+          return;
+        }
+  
         const userCredential = await signInWithEmailLink(auth, email, window.location.href);
         console.log("User Credential:", userCredential);
-        window.localStorage.removeItem('emailForSignIn');
+        const user = userCredential.user;
+        // window.localStorage.removeItem('emailForSignIn');
+        setUser(user);
+        navigate('/InitialUserSetup')
 
-        // ✅ Wait for Firebase Auth state to update before continuing
-        const waitForAuthState = new Promise((resolve) => {
-          const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-              console.log("Auth state updated: User is signed in", user);
-              unsubscribe();
-              resolve(user);
-            }
-          });
-        });
-
-        const user = await waitForAuthState;
-
-        // ✅ Check if the user exists in Firestore
-        const userExists = await checkUserExists(user.uid);
-        if (!userExists) {
-          const newUserData = {
-            id: user.uid,
-            contactInfo: { email: user.email },
-            createdAt: new Date(),
-          };
-          await addUserData(user.uid, newUserData);
-          setUser(newUserData);
-          setSuccessMessage('Registration successful! Redirecting to setup...');
-          // navigate('/InitialUserSetup');
-        } else {
-          const existingData = await fetchUserData(user.uid);
-          setUser(existingData);
-          setSuccessMessage('Welcome back!');
-          // navigate('/');
-        }
       } catch (error) {
         console.error('Error finishing sign-in:', error);
         setError('There was a problem completing sign-in. Please try again.');
@@ -74,9 +45,10 @@ export default function FinishSignIn() {
         setLoading(false);
       }
     };
-
+  
     completeSignIn();
   }, [auth, checkUserExists, addUserData, fetchUserData, setUser, setSuccessMessage, setError]);
+  
 
   return <>HUH</>;
 }
