@@ -8,7 +8,6 @@ TODO: add address changes to the edit for the resume
 ### Flow Correction 
 
 ### Cleanup
-TODO: fix style for generated pdf stuff
 TODO: add Success/failure Messages where relevant
 
 ### Bug

@@ -718,7 +718,6 @@ width: 45%;
 }
 
 .resume-style4-job-position {
-  font-style: italic;
   margin: 0;
   font-size: 9pt;
 }
@@ -734,7 +733,7 @@ width: 45%;
 
 .resume-style4-right-column a {
   color: #0000FF;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* resume style 5 */
@@ -868,7 +867,7 @@ width: 45%;
 
 .resume-style5-contact-info a {
   color: white;
-  text-decoration: underline;
+  text-decoration: none;
   margin-bottom: 3px;
   line-height: 1.4;
 }
@@ -939,6 +938,9 @@ width: 45%;
 }
 
 .name-and-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     flex: 1;
 }
 
@@ -1704,11 +1706,6 @@ textarea, .mobile-textarea {
     flex-wrap: wrap;
     gap: 15px;
     margin-top: 10px;
-}
-
-.contact-info a {
-    color: #009688;
-    text-decoration: none;
 }
 
 .contact-info a:hover {
