@@ -26,6 +26,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [emailVerified, setEmailVerified] = useState(false);
     const { setUser, initialUserState } = useUser();
+    const [successMessage, setSuccessMessage] = useState(null);
 
     useEffect(() => {
         if (!firebaseUiInstance) {
@@ -56,7 +57,8 @@ export function AuthProvider({ children }) {
                         const newToken = await user.getIdToken(true);
                         localStorage.setItem('authToken', newToken);
                     } catch (error) {
-                        console.error('Error refreshing token:', error);
+                        // Clear token if user is signed out
+                        localStorage.removeItem('authToken');
                     }
                 }, TOKEN_REFRESH_INTERVAL);
                 
@@ -86,7 +88,8 @@ export function AuthProvider({ children }) {
                 }
             })
             .catch((error) => {
-                console.error('Sign out error: ', error);
+                // Clear token if user is signed out
+                localStorage.removeItem('authToken');
             });
     }
     
@@ -97,46 +100,38 @@ export function AuthProvider({ children }) {
         
         if (userToVerify && !userToVerify.emailVerified) {
             try {
-                console.log("Attempting to send verification email to:", userToVerify.email);
-                
-                // Configure actionCodeSettings for the verification email
                 const actionCodeSettings = {
-                    // URL you want to redirect back to after email verification
                     url: `${window.location.origin}/verify-email?email=${userToVerify.email}`,
-                    // This must be true for email verification
                     handleCodeInApp: true,
                 };
                 
                 await sendEmailVerification(userToVerify, actionCodeSettings);
-                console.log("Verification email sent successfully");
+                
                 return { success: true, message: "Verification email sent successfully! Please check your inbox and spam folder." };
             } catch (error) {
-                console.error("Error sending verification email:", error);
-                return { success: false, message: error.message };
+                return { success: false, message: "Error sending verification email" };
             }
         }
-        return { success: false, message: "No user is logged in or email is already verified." };
+        return { success: false, message: "User is already verified" };
     }
 
     // Verify email with action code (from email link)
-    async function verifyEmail(actionCode) {
+    const verifyEmail = async (actionCode) => {
+        setLoading(true);
         try {
-            console.log("AuthContext: Verifying email with action code:", actionCode);
             await applyActionCode(auth, actionCode);
             
+            // Refresh the user to get updated email verification status
             if (currentUser) {
-                // Force refresh the user to update emailVerified status
-                console.log("AuthContext: Refreshing user to update verified status");
                 await currentUser.reload();
                 const updatedVerificationStatus = currentUser.emailVerified;
-                console.log("AuthContext: Updated email verified status:", updatedVerificationStatus);
                 setEmailVerified(updatedVerificationStatus);
-                return { success: true, message: "Email verified successfully!" };
             }
-            return { success: true, message: "Email verified. Please sign in again." };
+            setLoading(false);
+            return { success: true, message: "Email verified successfully!" };
         } catch (error) {
-            console.error("Error verifying email:", error);
-            return { success: false, message: error.message };
+            setLoading(false);
+            return { success: false, message: "Error verifying email" };
         }
     }
     
@@ -149,6 +144,8 @@ export function AuthProvider({ children }) {
         setEmailVerified,
         sendVerificationEmail,
         verifyEmail,
+        successMessage,
+        setSuccessMessage,
         sendEmailVerification,
         firebaseUiInstance,
     };

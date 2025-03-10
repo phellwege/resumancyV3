@@ -32,7 +32,6 @@ export default function FinishSignIn() {
         }
   
         const userCredential = await signInWithEmailLink(auth, email, window.location.href);
-        console.log("User Credential:", userCredential);
         const user = userCredential.user;
         // window.localStorage.removeItem('emailForSignIn');
         setUser(user);

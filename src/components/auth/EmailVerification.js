@@ -24,8 +24,6 @@ export default function EmailVerification() {
         const oobCode = queryParams.get('oobCode');
         const email = queryParams.get('email');
         
-        console.log("Verification params:", { mode, oobCode, email, search: location.search });
-
         // Check if we have the verification code
         if (oobCode) {
             handleVerification(oobCode);
@@ -41,17 +39,13 @@ export default function EmailVerification() {
     const handleVerification = async (oobCode) => {
         setVerifying(true);
         try {
-            console.log("Attempting to verify email with code:", oobCode);
-            
             // Try direct verification with Firebase
             await applyActionCode(auth, oobCode);
-            console.log("Email verified directly with Firebase");
             
             // If user is logged in, refresh their status
             if (currentUser) {
                 await currentUser.reload();
                 const isVerified = currentUser.emailVerified;
-                console.log("User email verified status:", isVerified);
                 setEmailVerified(isVerified);
             }
             

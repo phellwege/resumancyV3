@@ -103,7 +103,6 @@ export default function LoginAndRegistration() {
                 if (!isGoogleSignIn && !authUser.emailVerified) {
                     try {
                         // Add a delay to ensure Firebase has fully registered the user
-                        console.log("Brief delay before sending verification email...");
                         await new Promise(resolve => setTimeout(resolve, 500));
                         
                         // Force reload the user to ensure we have the latest auth state
@@ -118,7 +117,6 @@ export default function LoginAndRegistration() {
                         
                         // Send the verification email directly using the Firebase SDK
                         await sendEmailVerification(authUser, actionCodeSettings);
-                        console.log("Initial verification email sent directly to:", authUser.email);
                         
                         setVerificationSent(true);
                         setShowVerificationAlert(true);
@@ -164,7 +162,6 @@ export default function LoginAndRegistration() {
         setLoading(true);
         try {
             // Add a delay to ensure Firebase has fully registered the user
-            console.log("Brief delay before resending verification email...");
             await new Promise(resolve => setTimeout(resolve, 500));
             
             const result = await sendVerificationEmail();
