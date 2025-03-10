@@ -276,12 +276,12 @@ export default function CreateCustomTailoredResume() {
                 onChange={(e) =>
                   handleTailoredResumeChange(
                     0,
-                    'companyName',
+                    "companyName",
                     sanitizeUserInput(e.target.value)
                   )
                 }
                 placeholder="Enter the prospective company name here..."
-                className="mobile-textarea"
+                className="mobile-textarea form-control"
               />
               <br />
 
@@ -303,12 +303,12 @@ export default function CreateCustomTailoredResume() {
                 onChange={(e) =>
                   handleTailoredResumeChange(
                     0,
-                    'description',
+                    "description",
                     sanitizeUserInput(e.target.value)
                   )
                 }
                 placeholder="Enter the prospective job description here..."
-                className="mobile-textarea"
+                className="mobile-textarea form-control"
               />
 
               <br />
@@ -318,7 +318,11 @@ export default function CreateCustomTailoredResume() {
             </Card.Body>
           </Card>
 
-          <Button aria-label="submit button" onClick={handleSubmit}>
+          <Button 
+            aria-label="submit button" 
+            onClick={handleSubmit}
+            className="mt-3 btn-lg"
+          >
             Submit
           </Button>
         </div>

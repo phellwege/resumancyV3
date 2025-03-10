@@ -27,7 +27,7 @@ export default function Home() {
             history('/Create');
         }
     };
-
+    let email = window.localStorage.getItem('emailForSignIn');
 
   return (
     <>

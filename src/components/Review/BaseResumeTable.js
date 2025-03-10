@@ -31,30 +31,34 @@ export default function BaseResumeTable() {
         <thead>
             <tr>
             <th>
-                Resume
-                <OverlayTrigger 
-                    overlay={
-                    <Tooltip id="tooltip">
-                        {resumeDesc}
-                    </Tooltip>
-                    }>
-                    <span className="question-icon">
-                        <BsQuestionCircle />
-                    </span>
-                </OverlayTrigger>
+                <div className="th-content">
+                    Resume
+                    <OverlayTrigger 
+                        overlay={
+                        <Tooltip id="tooltip">
+                            {resumeDesc}
+                        </Tooltip>
+                        }>
+                        <span className="question-icon d-none d-md-inline">
+                            <BsQuestionCircle />
+                        </span>
+                    </OverlayTrigger>
+                </div>
             </th>
             <th>
-                Date
-                <OverlayTrigger 
-                    overlay={
-                    <Tooltip id="tooltip">
-                        {dateDesc}
-                    </Tooltip>
-                    }>
-                    <span className="question-icon">
-                        <BsQuestionCircle />
-                    </span>
-                </OverlayTrigger>
+                <div className="th-content">
+                    Date
+                    <OverlayTrigger 
+                        overlay={
+                        <Tooltip id="tooltip">
+                            {dateDesc}
+                        </Tooltip>
+                        }>
+                        <span className="question-icon d-none d-md-inline">
+                            <BsQuestionCircle />
+                        </span>
+                    </OverlayTrigger>
+                </div>
             </th>
             </tr>
         </thead>

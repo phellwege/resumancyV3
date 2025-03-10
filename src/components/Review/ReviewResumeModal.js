@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { usePDF } from 'react-to-pdf';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import '../../views/main.css';
 import { useUser } from '../../context/UserContext';
 import EditResume from './editResume';
 import ToggleStyle from './resumeStyles/ToggleStyle';
+import Alert from 'react-bootstrap/Alert';
 // import DefaultResumeStyle from './resumeStyles/defaultResumeStyle';
 import ResumeStyle2 from './resumeStyles/resumeStyle2';
 // import ResumeStyle3 from './resumeStyles/resumeStyle3';
 import ResumeStyle4 from './resumeStyles/resumeStyle4';
 import ResumeStyle5 from './resumeStyles/resumeStyle5';
 import ResumeStyle6 from './resumeStyles/resumeStyle6';
+import ResumePDFStyle2 from './resumeStyles/ResumePDFStyle2';
+import ResumePDFStyle4 from './resumeStyles/ResumePDFStyle4';
+import ResumePDFStyle5 from './resumeStyles/ResumePDFStyle5';
+import ResumePDFStyle6 from './resumeStyles/ResumePDFStyle6';
 import { useData } from '../../context/DataContext';
+import { BsPhoneLandscape } from 'react-icons/bs';
 
 const styleComponents = {
   // style1: DefaultResumeStyle,
@@ -21,6 +27,15 @@ const styleComponents = {
   style4: ResumeStyle4,
   style5: ResumeStyle5,
   style6: ResumeStyle6,
+};
+
+const pdfStyleComponents = {
+  // style1: null, // No PDF component for style1 yet
+  style2: ResumePDFStyle2,
+  // style3: null, // No PDF component for style3 yet
+  style4: ResumePDFStyle4,
+  style5: ResumePDFStyle5,
+  style6: ResumePDFStyle6,
 };
 
 export default function ReviewBaseResumeModal() {
@@ -36,15 +51,39 @@ export default function ReviewBaseResumeModal() {
 
   const [edit, setEdit] = useState(false);
   const [selectedStyle, setSelectedStyle] = useState('style2');
+  const [isMobile, setIsMobile] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(false);
+  const [modalSize, setModalSize] = useState('lg');
+  const [showOrientationAlert, setShowOrientationAlert] = useState(false);
 
-  const { toPDF, targetRef } = usePDF({
-    filename: `${user.firstName}_${user.lastName}_Resume.pdf`,
-    options: { format: [8.5, 11] },
-  });
+  // Check if the screen is mobile size and orientation
+  useEffect(() => {
+    const checkIfMobile = () => {
+      const mobileWidth = window.innerWidth < 768;
+      const portrait = window.innerHeight > window.innerWidth;
+      
+      setIsMobile(mobileWidth);
+      setIsPortrait(portrait);
+      setModalSize(mobileWidth ? 'fullscreen' : 'lg');
+      
+      // Show orientation alert only on mobile in portrait mode
+      setShowOrientationAlert(mobileWidth && portrait);
+    };
+    
+    // Initial check
+    checkIfMobile();
+    
+    // Add event listeners for window resize and orientation change
+    window.addEventListener('resize', checkIfMobile);
+    window.addEventListener('orientationchange', checkIfMobile);
+    
+    // Clean up event listeners
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+      window.removeEventListener('orientationchange', checkIfMobile);
+    };
+  }, []);
 
-  const handleToPDF = async () => {
-    await toPDF();
-  };
   const updateResumeInFirebase = async () => {
     await updateSpecificResume(user.id, {
       id: selectedResume.id,
@@ -61,6 +100,32 @@ export default function ReviewBaseResumeModal() {
   })};
 
   const SelectedResumeComponent = styleComponents[selectedStyle];
+  const SelectedPDFComponent = pdfStyleComponents[selectedStyle];
+
+  // Function to render PDF download link only when user and selectedResume are available
+  const renderPDFDownloadLink = () => {
+    if (!edit && SelectedPDFComponent && user && selectedResume) {
+      return (
+        <PDFDownloadLink
+          document={<SelectedPDFComponent user={user} selectedResume={selectedResume} />}
+          fileName={`${user.firstName}_${user.lastName}_Resume.pdf`}
+          style={{
+            textDecoration: 'none',
+          }}
+        >
+          {({ loading, error }) => (
+            <Button 
+              aria-label="download pdf button" 
+              disabled={loading}
+            >
+              {loading ? 'Generating PDF...' : 'Download'}
+            </Button>
+          )}
+        </PDFDownloadLink>
+      );
+    }
+    return null;
+  };
 
   return (
     <>
@@ -70,29 +135,41 @@ export default function ReviewBaseResumeModal() {
           handleCloseReviewResumeModal();
           setEdit(false);
         }}
-        size="lg"
+        size={modalSize}
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        backdrop={true}
+        scrollable={true}
+        dialogClassName={isMobile ? "mobile-resume-modal" : ""}
       >
         <Modal.Header closeButton closeVariant="white">
-          <div className="reviewButton">
+          <div className={`reviewButton ${isMobile ? 'mobile-review-header' : ''}`}>
             <Modal.Title>Review Resume</Modal.Title>
-            <div className='reviewResumeStyleToggleButtonGroup'>
+            <div className={`reviewResumeStyleToggleButtonGroup ${isMobile ? 'mobile-toggle-group' : ''}`}>
                 <ToggleStyle selectedStyle={selectedStyle} onStyleChange={setSelectedStyle} />
-                <Button aria-label="download pdf button" onClick={handleToPDF}>
-                Download
-                </Button>
+                {renderPDFDownloadLink()}
             </div>
           </div>
         </Modal.Header>
-        <Modal.Body ref={targetRef} className="reviewSize">
+        <Modal.Body className={`reviewSize ${isMobile ? 'mobile-review-body' : ''}`}>
+          {showOrientationAlert && (
+            <Alert variant="info" className="orientation-alert" onClose={() => setShowOrientationAlert(false)} dismissible>
+              <div className="orientation-alert-content">
+                <BsPhoneLandscape size={24} />
+                <span>For a better viewing experience, rotate your device to landscape mode</span>
+              </div>
+            </Alert>
+          )}
+          
           {!edit ? (
-            <SelectedResumeComponent/>
+            <div className={isMobile ? "mobile-resume-container" : ""}>
+              <SelectedResumeComponent/>
+            </div>
           ) : (
             <EditResume/>
           )}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className={isMobile ? "mobile-resume-footer" : ""}>
           {
             edit ? (
               <Button variant="success" onClick={() => {

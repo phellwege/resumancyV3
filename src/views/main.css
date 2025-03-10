@@ -365,9 +365,9 @@ width: 45%;
     justify-content: space-between;
 }
 .reviewSize {
-    height:11.35in;
-    overflow: hidden;
-    overflow-y: hidden;
+    overflow-y: auto;
+    max-height: 70vh;
+    padding: 1rem;
 }
 
 #resumeStyle2 {
@@ -385,7 +385,6 @@ width: 45%;
     margin: 0.3rem 0;
     line-height: 1;
 }
-
 #resumeStyle2Header {
     border-bottom: 2px solid black;
 }
@@ -413,6 +412,118 @@ width: 45%;
 }
 .spacing {
     margin-bottom: 5px;
+}
+
+/* Resume Style 2 specific styles */
+.resume-style2-container {
+  height: 11.35in;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: #333;
+  background: #fff;
+  padding: 30px;
+  box-sizing: border-box;
+  font-size: 8pt;
+  line-height: 1.2;
+}
+
+.resume-style2-header {
+  text-align: center;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.resume-style2-name {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.resume-style2-job-title {
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.resume-style2-header-line {
+  border-bottom: 1px solid black;
+  margin-top: 5px;
+}
+
+.resume-style2-content {
+  display: flex;
+  margin-top: 10px;
+}
+
+.resume-style2-left-column {
+  width: 25%;
+  padding-right: 15px;
+  background-color: #e0e0e0;
+  padding: 15px;
+}
+
+.resume-style2-right-column {
+  width: 75%;
+  padding-left: 15px;
+}
+
+.resume-style2-section {
+  margin-bottom: 10px;
+}
+
+.resume-style2-section-title {
+  font-size: 12pt;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+  color: black;
+}
+
+.resume-style2-contact-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 8pt;
+}
+
+.resume-style2-contact-info a {
+  color: #0000EE; /* Standard hyperlink blue */
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+
+.resume-style2-contact-info a:hover {
+  text-decoration: underline;
+}
+
+.resume-style2-experience-item {
+  margin-bottom: 8px;
+}
+
+.resume-style2-company-name {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+}
+
+.resume-style2-job-position {
+  margin: 0;
+  font-size: 8pt;
+}
+
+.resume-style2-project-item {
+  margin-bottom: 8px;
+}
+
+.resume-style2-project-title {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+  margin-bottom: 2px;
 }
 
 /* resume style 3 */
@@ -520,6 +631,111 @@ width: 45%;
     padding-top: 1%;
 }
 
+/* Resume Style 4 specific styles */
+.resume-style4-container {
+  height: 11.35in;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: #333;
+  background: #fff;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 8pt;
+  line-height: 1.2;
+}
+
+.resume-style4-header {
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #7AA1CB;
+  padding: 15px;
+}
+
+.resume-style4-name {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 8px;
+  color: black;
+}
+
+.resume-style4-job-title {
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.resume-style4-content {
+  display: flex;
+  margin-top: 10px;
+}
+
+.resume-style4-left-column {
+  width: 70%;
+  padding-right: 10px;
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.resume-style4-right-column {
+  width: 30%;
+  background-color: #e0e0e0;
+  height: 100%;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+.resume-style4-section {
+  margin-bottom: 15px;
+}
+
+.resume-style4-section-title {
+  font-size: 10pt;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+  color: #7AA1CB;
+}
+
+.resume-style4-experience-item {
+  margin-bottom: 8px;
+}
+
+.resume-style4-experience-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.resume-style4-company-name {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+}
+
+.resume-style4-job-position {
+  margin: 0;
+  font-size: 9pt;
+}
+
+.resume-style4-job-date {
+  font-size: 8pt;
+  text-align: right;
+}
+
+.resume-style4-indented {
+  margin-left: 10px;
+}
+
+.resume-style4-right-column a {
+  color: #0000FF;
+  text-decoration: none;
+}
+
 /* resume style 5 */
 #resumeStyle5 {
     background-color: white;
@@ -565,127 +781,247 @@ width: 45%;
     height: 100%;
     padding-top: 1%;
 }
+
+/* Resume Style 5 specific styles */
+.resume-style5-container {
+  height: 11.35in;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: #333;
+  background: #fff;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 8pt;
+  line-height: 1.2;
+}
+
+.resume-style5-content {
+  display: flex;
+  height: 100%;
+}
+
+.resume-style5-left-column {
+  width: 30%;
+  padding: 15px;
+  background-color: #456990;
+  color: white;
+  height: 100%;
+}
+
+.resume-style5-right-column {
+  width: 70%;
+  padding: 15px;
+  height: 100%;
+}
+
+.resume-style5-name-title {
+  margin-bottom: 20px;
+}
+
+.resume-style5-name {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.resume-style5-job-title {
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.resume-style5-section {
+  margin-bottom: 15px;
+}
+
+.resume-style5-section-title {
+  font-size: 10pt;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  border-bottom: 1px solid #999;
+  padding-bottom: 2px;
+}
+
+.resume-style5-left-column .resume-style5-section-title {
+  color: white;
+  border-bottom: 1px solid white;
+}
+
+.resume-style5-right-column .resume-style5-section-title {
+  color: #456990;
+  border-bottom: 1px solid #999;
+  color: black;
+}
+
+.resume-style5-contact-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 8pt;
+}
+
+.resume-style5-contact-info a {
+  color: white;
+  text-decoration: none;
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+
+.resume-style5-contact-info a:hover {
+  text-decoration: underline;
+}
+
+.resume-style5-experience-item {
+  margin-bottom: 10px;
+}
+
+.resume-style5-experience-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.resume-style5-company-name {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+}
+
+.resume-style5-job-position {
+  font-style: italic;
+  margin: 0;
+  font-size: 9pt;
+  margin-bottom: 2px;
+}
+
+.resume-style5-job-date {
+  font-size: 8pt;
+  text-align: right;
+}
+
+.resume-style5-project-item {
+  margin-bottom: 8px;
+}
+
+.resume-style5-project-title {
+  font-weight: 700;
+  margin: 0;
+  font-size: 9pt;
+  margin-bottom: 2px;
+}
+
 /* Container and Header */
 .resume-container {
     height: 11.35in;
-    width: 100%; /* typical letter-sized width if you plan to PDF */
+    width: 100%;
     margin: 0 auto;
     font-family: "Helvetica", "Arial", sans-serif;
     color: #333;
     background: #fff;
-    padding: .25rem;
+    padding: 30px;
     box-sizing: border-box;
-  }
-  
-  .resume-header {
+}
+
+.resume-header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 0.25rem;
-    margin-bottom: .25rem;
-  }
-  
-  .name-and-title {
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.name-and-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     flex: 1;
-  }
-  
-  .resume-name {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #a3d39c; /* adjust to your preferred shade */
+}
+
+.resume-name {
+    font-size: 20pt;
+    font-weight: 700;
+    color: #8BC34A; /* Match the PDF color */
     margin: 0;
-  }
-  
-  .resume-job-title {
-    font-size: 1.1rem;
-    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.resume-job-title {
+    font-size: 12pt;
+    font-weight: semi-bold;
     color: #333;
-    margin-top: 0.1rem;
-  }
-  
-  /* Contact info, displayed horizontally */
-  .contact-info {
+    margin-top: 0;
+    margin-bottom: 5px;
+    /* font-style: italic; */
+}
+
+/* Contact info, displayed horizontally */
+.contact-info {
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
-    gap: .5rem;
-    font-size: 0.9rem;
-    color: #555;
-    margin-top: 0.5rem;
-  }
-  .contact-info a {
-    color: #555;
+    align-items: center;
+    gap: 15px;
+    font-size: 8pt;
+    margin-top: 5px;
+}
+
+.contact-info a {
+    color: #333;
     text-decoration: none;
-  }
-  .contact-info a:hover {
+    white-space: nowrap;
+}
+
+.contact-info a:hover {
     text-decoration: underline;
-  }
-  
-  /* Body: Two columns */
-  .resume-body {
+}
+
+/* Body: Two columns */
+.resume-body {
     display: flex;
-  }
-  
-  .resume-left-col {
-    width: 25%;
-    padding-right: .5rem;
+    margin-top: 10px;
+}
+
+.resume-left-col {
+    width: 30%;
+    padding-right: 15px;
     border-right: 1px solid #ccc;
-  }
-  
-  /* Right column: takes the remaining space */
-  .resume-right-col {
-    flex: 1;
-    padding-left: .5rem;
+}
+
+/* Right column: takes the remaining space */
+.resume-right-col {
+    width: 70%;
+    padding-left: 15px;
     box-sizing: border-box;
-  }
-  
-  /* Section spacing */
-  .resume-section {
-    margin-bottom: .25rem;
-  }
-  
-  .section-title {
-    margin: 0 0 0.05rem 0;
-    font-size: 1rem;
-    font-weight: bold;
+}
+
+/* Section spacing */
+.resume-section {
+    margin-bottom: 10px;
+}
+
+.section-title {
+    margin: 0 0 5px 0;
+    font-size: 10pt;
+    font-weight: 700;
     text-transform: uppercase;
-    color: #0097a7; /* example teal color */
-  }
-  
-  
-  /* Projects styling */
-  .project-entry {
-    margin: 0.5rem 0;
-  }
-  .project-title {
-    margin: 0;
-    font-weight: bold;
-    font-size: 0.8rem;
-  }
-  
-  /* Experience styling */
-  .experience-entry {
-    margin: 0.25rem 0;
-  }
-  .experience-company {
-    margin: 0;
-    font-size: 0.85rem;
-    font-weight: bold;
-    line-height: .8;
-  }
-  .experience-job-title {
-    margin: 0.05rem 0 0.2rem 0;
-    font-style: italic;
-    font-size: 0.8rem;
-  }
-  
-  /* Adjust paragraphs within sections */
-  .resume-section p {
-    /* margin: 0.2rem 0; */
-    margin: 0;
-    font-size: small;
-  }
-  
+    color: #009688;
+}
+
+.left-section-title {
+    margin: 0 0 5px 0;
+    font-size: 10pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #009688;
+}
+
 .reviewCoverLetterComponent {
     display: flex;
     flex-direction: column;
@@ -918,6 +1254,103 @@ width: 45%;
     cursor: pointer;
     text-decoration: underline;
 }
+
+/* Media queries for responsive design */
+@media (max-width: 767px) {
+    .reviewButton {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .reviewResumeStyleToggleButtonGroup {
+        width: 100% !important;
+        margin-top: 10px;
+    }
+    
+    .modal-dialog.modal-fullscreen {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+/* Orientation Alert Styles */
+.orientation-alert {
+    margin-bottom: 15px;
+    border-left: 4px solid #0dcaf0;
+}
+
+.orientation-alert-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.orientation-alert-content svg {
+    animation: rotate 2s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(90deg); }
+    75% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.mobile-pagination {
+    margin: 15px 0;
+}
+
+.mobile-pagination .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+@media (max-width: 767px) {
+    .centeredReviewButtonDiv {
+        width: 80% !important;
+        margin-left: 10% !important;
+    }
+    
+    .pageWrapper {
+        padding-top: 20% !important;
+    }
+    
+    .question-icon {
+        margin-left: 2px;
+    }
+}
+
+/* Table header content container */
+.th-content {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.th-content .question-icon {
+    flex-shrink: 0;
+    margin-left: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Mobile-specific styles for table headers */
+@media (max-width: 767px) {
+    .th-content {
+        font-size: 0.85rem;
+        justify-content: center;
+    }
+    
+    .th-content .question-icon {
+        font-size: 0.75rem;
+        margin-left: 2px;
+    }
+}
+
 @media (max-width: 860px) {
     #defaultResumeWrap {
         width: 100%;
@@ -979,4 +1412,314 @@ width: 45%;
         width: 80%;
         margin-left: 10%;
     }
+    .heroContent {
+        margin-top: 15%;
+    }
+    button.heroButton.btn.btn-primary {
+        margin: 7.5px;
+    }
+}
+
+/* Mobile Resume Modal Styles */
+.mobile-resume-modal {
+    margin: 0;
+    width: 100vw !important;
+    max-width: 100vw !important;
+}
+
+.mobile-resume-modal .modal-content {
+    border-radius: 0;
+    min-height: 100vh;
+}
+
+.mobile-review-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-toggle-group {
+    width: 100% !important;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center !important;
+}
+
+.mobile-review-body {
+    padding: 0.5rem !important;
+    max-height: 75vh !important;
+}
+
+.mobile-resume-container {
+    transform: scale(0.8);
+    transform-origin: top center;
+    width: 125%;
+    margin-left: -12.5%;
+}
+
+.mobile-resume-footer {
+    justify-content: center !important;
+    gap: 10px;
+}
+
+/* Mobile styles for UserProfile */
+@media (max-width: 767px) {
+    .userInfoCardInnerWrap {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .setupAvatarDiv {
+        width: 70%;
+        margin-left: 15%;
+    }
+    
+    .userContactCardAvatar img {
+        width: 60%;
+    }
+    
+    .leftShifted {
+        text-align: center;
+    }
+    
+    .socialMediaLinkColor {
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    .cardInnerDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Mobile styles for UserProfile */
+@media (max-width: 767px) {
+    .userInfoCardInnerWrap {
+        flex-direction: column;
+    }
+    
+    .userInfoCardInnerWrap > div {
+        width: 100% !important;
+    }
+    
+    .userInfoCardInnerWrap > div:first-child {
+        margin-bottom: 20px;
+    }
+    
+    .userInfoCardInnerWrap form {
+        width: 100% !important;
+    }
+    
+    .userInfoCardInnerWrap .form-group {
+        width: 100% !important;
+    }
+    
+    .userInfoCardInnerWrap .socialMediaLinks {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Fix for textarea overflow */
+textarea, .mobile-textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden;
+}
+
+/* Mobile-specific styles for Tailor and Create views */
+.mobile-view-container {
+    padding: 0 15px;
+    margin-top: 20px;
+}
+
+/* Portrait mode (default) */
+@media (max-width: 767px) {
+    .mobile-view-container {
+        padding: 0 10px;
+        margin-top: 10px;
+    }
+    
+    /* Adjust padding for better mobile experience */
+    .pageWrapper {
+        padding-top: 75px !important;
+    }
+    
+    /* Make cards take full width on mobile */
+    #jobDescriptionCardInnerDiv,
+    #scratchCardInnerDiv {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 0 5px;
+    }
+    
+    /* Improve form elements on mobile */
+    .mobile-textarea, textarea {
+        font-size: 16px !important; /* Prevents iOS zoom on focus */
+        padding: 8px !important;
+    }
+    
+    /* Improve form layout on mobile */
+    .experience-entry .form-group {
+        flex-direction: column !important;
+    }
+    
+    /* Ensure buttons are properly sized on mobile */
+    .btn-lg {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+    
+    /* Improve touch targets */
+    .question-icon {
+        padding: 5px;
+    }
+    
+    /* Improve experience entry layout */
+    .experience-entry {
+        padding: 10px !important;
+        margin-bottom: 15px !important;
+    }
+}
+
+/* Landscape mode - better utilize card space */
+@media (max-width: 915px) and (orientation: landscape) {
+    .pageWrapper {
+        padding-top: 15px !important;
+    }
+    
+    /* Maximize card width in landscape */
+    #jobDescriptionCardInnerDiv,
+    #scratchCardInnerDiv {
+        width: 95% !important;
+        margin: 0 auto !important;
+        max-width: none !important;
+    }
+    
+    /* Maximize horizontal space */
+    .card {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    
+    .card-body {
+        padding: 0.75rem !important;
+    }
+    
+    /* Make form elements use available width */
+    .form-control, textarea {
+        width: 100% !important;
+    }
+    
+    /* Adjust form layout for landscape orientation */
+    .experience-entry .form-group {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+    }
+    
+    /* Ensure inputs take proper width */
+    .form-group .form-control {
+        width: 100% !important;
+    }
+}
+
+/* Mobile Resume Modal Styles */
+.mobile-resume-modal {
+    margin: 0;
+    width: 100vw !important;
+    max-width: 100vw !important;
+}
+
+.mobile-resume-modal .modal-content {
+    border-radius: 0;
+    min-height: 100vh;
+}
+
+.mobile-review-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-toggle-group {
+    width: 100% !important;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center !important;
+}
+
+.mobile-review-body {
+    padding: 0.5rem !important;
+    max-height: 75vh !important;
+}
+
+.mobile-resume-container {
+    transform: scale(0.8);
+    transform-origin: top center;
+    width: 125%;
+    margin-left: -12.5%;
+}
+
+.mobile-resume-footer {
+    justify-content: center !important;
+    gap: 10px;
+}
+
+/* resume style 6 */
+#resumeStyle6 {
+    background-color: white;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.resume-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.resume-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.resume-name {
+    color: #8BC34A;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.resume-job-title {
+    color: #333;
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+.resume-address-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.resume-address-section .section-title {
+    color: #009688;
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
 }

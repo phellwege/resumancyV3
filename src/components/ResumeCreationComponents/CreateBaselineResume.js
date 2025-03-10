@@ -34,13 +34,14 @@ export default function CreateBaselineResume() {
         setLoading
     } = useAuth();
     const {
-        saveBaselineResume
+        saveBaselineResume,
+        userToken
     } = useData();
     const userExperience = "Detail your relevant job history (Required):";
     const userEducation = "List your education and certifications (Required):";
     const userSkills = "Specify your relevant skills (Required):";
     const userAdditional = "Include any additional relevant information (Optional):";
-    
+    const token = userToken;
     const addNewResume = (newResume) => {
         setUser((prevState) => ({
             ...prevState,
@@ -68,7 +69,10 @@ export default function CreateBaselineResume() {
         try {
             const rateLimitResponse = await axios.get(
                 'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
-                { headers: { 'Content-Type': 'application/json' } }
+                { headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }}
             );
     
             if (rateLimitResponse.status === 429) {
@@ -80,7 +84,10 @@ export default function CreateBaselineResume() {
             const response = await axios.post(
                 'https://us-central1-resumancy.cloudfunctions.net/generate_base_resume-generate_base_resume',
                 { user },
-                { headers: { 'Content-Type': 'application/json' } }
+                { headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }}
             );
     
             const { summary, experienceSection, skillsSection, educationSection } = response.data;
@@ -223,13 +230,12 @@ export default function CreateBaselineResume() {
                                                 className="mb-2"
                                                 />
                                             </Form.Group>
-                                            <Form.Control 
-                                                as='textarea'
-                                                rows={3}
+                                            <textarea
+                                                rows='5'
                                                 placeholder='Description'
                                                 value={exp.expDesc}
                                                 onChange={(e) => handleExperienceChange(index, 'expDesc', sanitizeUserInput(e.target.value))}
-                                                className="mb-3"
+                                                className="mb-3 form-control"
                                             />
                                             <div className='createResumePlusAndMinus'>
                                                 <FaMinusSquare onClick={() => removeExperienceEntry(index)} size={25} className='creationButton' id='CreateResumeMinusButton'/>
@@ -257,14 +263,12 @@ export default function CreateBaselineResume() {
                                         </div>
                                         <sub>({user.resume[0].education.length} / 500)</sub>
                                     </Form.Label>
-                                    <Form.Control 
-                                    as='textarea' 
-                                    rows={3} 
-                                    placeholder='Education'
+                                    <textarea
+                                    rows='5'
                                     value={user.resume[0].education}
                                     onChange={(e) => handleResumeChange('education', sanitizeUserInput(e.target.value))}
                                     maxLength='500'
-                                    className="mobile-textarea"
+                                    className="mobile-textarea form-control"
                                     />
                                     <Form.Text className='text-muted'>
                                         Education and Certifications
@@ -287,14 +291,12 @@ export default function CreateBaselineResume() {
                                         </div>
                                         <sub>({user.resume[0].skills.length} / 1000)</sub>
                                     </Form.Label>
-                                    <Form.Control 
-                                    as='textarea' 
-                                    rows={2} 
-                                    placeholder='Skills'
+                                    <textarea
+                                    rows='5'
                                     value={user.resume[0].skills}
                                     onChange={(e) => handleResumeChange('skills', sanitizeUserInput(e.target.value))}
                                     maxLength='1000'
-                                    className="mobile-textarea"
+                                    className="mobile-textarea form-control"
                                     />
                                     <Form.Text className='text-muted'>
                                         Skills relevant to Employment
@@ -317,14 +319,12 @@ export default function CreateBaselineResume() {
                                         </div>
                                         <sub>({user.resume[0].additional.length} / 1000)</sub>
                                     </Form.Label>
-                                    <Form.Control 
-                                    as='textarea' 
-                                    rows={3} 
-                                    placeholder='Additional Information' 
+                                    <textarea
+                                    rows='5'
                                     value={user.resume[0].additional}
                                     onChange={(e) => handleResumeChange('additional', sanitizeUserInput(e.target.value))}
                                     maxLength='1000'
-                                    className="mobile-textarea"
+                                    className="mobile-textarea form-control"
                                     />
                                     <Form.Text className='text-muted'>
                                         Any additional information you think may be beneficial

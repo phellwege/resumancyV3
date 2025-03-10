@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
@@ -22,6 +21,7 @@ import Account from './views/Account';
 import OverLimit from './views/OverLimit';
 import SuccessPage from './views/SuccessPage';
 import FinishSignIn from './views/FinishSignIn';
+import EmailVerification from './components/auth/EmailVerification';
 
 function App() {
   const [theme, setTheme] = useState({mode: 'light'})
@@ -49,6 +49,7 @@ function App() {
             <Route exact path='/OverLimit' element={<PrivateRoute><OverLimit /></PrivateRoute>} />
             <Route exact path='/Success' element={<SuccessPage />} />
             <Route exact path='/FinishSignIn' element={<FinishSignIn />} />
+            <Route exact path='/verify-email' element={<EmailVerification />} />
 
             </Routes>
           </React.Fragment>

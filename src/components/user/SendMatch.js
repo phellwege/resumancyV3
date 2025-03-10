@@ -86,12 +86,12 @@ const weightedSimilarity = (resumeWords, jdWords) => {
 // Calculate match percentage using the refined methods and adjustable weights
 export function calculateHybridMatchPercent(resumeText, jobDescriptionText) {
     // Adjustable weight constants
-    const WEIGHT_JACCARD = 0.2;
-    const WEIGHT_COSINE = 0.2;
-    const WEIGHT_WEIGHTED = 0.45;
-    const WEIGHT_KEYTERM = 0.2;
-    const TECHNICAL_BONUS = 0.1;
-    const COMPOSITE_MULTIPLIER = 3;
+    const WEIGHT_JACCARD = 0.15;
+    const WEIGHT_COSINE = 0.15;
+    const WEIGHT_WEIGHTED = 0.4;
+    const WEIGHT_KEYTERM = 0.3;
+    const TECHNICAL_BONUS = 0.05;
+    const COMPOSITE_MULTIPLIER = 1.5;
 
     const resumeTokens = tokenizeText(resumeText);
     const jdTokens = tokenizeText(jobDescriptionText);
@@ -100,8 +100,8 @@ export function calculateHybridMatchPercent(resumeText, jobDescriptionText) {
     const resumeKeyTerms = extractKeyTerms(resumeText, 30);
     const jobDescKeyTerms = extractKeyTerms(jobDescriptionText, 30);
 
-    // Step 2: Expand keywords (threshold can be tuned)
-    const threshold = 0.65; 
+    // Step 2: Expand keywords with a higher threshold for stricter matching
+    const threshold = 0.75; 
     const expandedResumeTerms = expandKeywordsWithSimilarity(resumeKeyTerms, resumeTokens, threshold);
     const expandedJobDescTerms = expandKeywordsWithSimilarity(jobDescKeyTerms, jdTokens, threshold);
 
@@ -141,15 +141,21 @@ export function calculateHybridMatchPercent(resumeText, jobDescriptionText) {
 
     // Weighted Keyword Similarity Boost
     const weightedScore = weightedSimilarity(expandedResumeTerms, expandedJobDescTerms);
+    
+    // Only apply technical bonus if there's a significant number of matches
+    const technicalMatchThreshold = Math.min(5, Math.floor(lowerExpandedJobDescTerms.length * 0.1));
     const technicalMatches = lowerExpandedResumeTerms.filter(word => lowerExpandedJobDescTerms.includes(word)).length;
-    const technicalBonus = technicalMatches > 0 ? TECHNICAL_BONUS : 0;
+    const technicalBonus = technicalMatches > technicalMatchThreshold ? TECHNICAL_BONUS : 0;
 
     // Composite score combining the different metrics
     const compositeScore = (jaccardScore * WEIGHT_JACCARD) +
                            (cosineScore * WEIGHT_COSINE) +
                            (weightedScore * WEIGHT_WEIGHTED) +
                            (keyTermWeight * WEIGHT_KEYTERM);
+    
+    // Apply a more conservative multiplier
     const adjustedScore = Math.min((compositeScore * COMPOSITE_MULTIPLIER) + technicalBonus, 1);
+    
     const finalScore = Math.round(adjustedScore * 100);
 
     return finalScore;

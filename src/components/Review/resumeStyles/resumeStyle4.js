@@ -3,125 +3,120 @@ import { useUser } from "../../../context/UserContext";
 import "../../../views/main.css";
 
 export default function ResumeStyle4({isGenPDF}) {
-    const { 
-        stripFormatting, 
-        user,
-        selectedResume
-    } = useUser();
+  const { 
+    stripFormatting, 
+    user,
+    selectedResume
+  } = useUser();
 
-    const capitalizeFirstLetter = (text) => {
-        return text.charAt(0).toUpperCase() + text.slice(1);
-    };
-    
-    const renderTextWithNewLines = (text) => {
-        if (text) {
-            const lines = text.split('\n');
-            return lines.map((line, index) => {
-                const shouldIndent = line.startsWith('-');
-                return (
-                    <p key={index} className={shouldIndent ? 'indented' : ''} style={{ marginBottom: "5px" }}>{line}
-                    </p>
-                );
-            });
-        }
-        return null;
-    };
+  const capitalizeFirstLetter = (text) => {
+    if (!text) return '';
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+  
+  const renderTextWithNewLines = (text) => {
+    if (!text) return null;
+    const lines = text.split('\n');
+    return lines.map((line, index) => {
+      const shouldIndent = line.startsWith('-') || line.startsWith('•');
+      return (
+        <p key={index} className={shouldIndent ? 'resume-style4-indented' : ''} style={{ margin: 0, fontSize: '8pt', marginBottom: '2px' }}>
+          {line}
+        </p>
+      );
+    });
+  };
 
   return (
-    <>
-      <div className="cardInnerDiv" id="resumeStyle4">
-        <div id='resumeStyle4Header'>
-          <h3>
-            {capitalizeFirstLetter(user?.firstName)}{" "}{isGenPDF && <span>&nbsp;</span>}
-            {capitalizeFirstLetter(user?.lastName)}
-          </h3>
-          <h6>
-            {user.jobTitle}
-          </h6>
-        </div>
-          <div className="reviewStyle4LowerWrap">
-            <div className="reviewStyle4LeftDiv">
-              <div className="reviewDefaultResumeSections">
-                <h6>Summary:</h6>
-                {renderTextWithNewLines(selectedResume.summary)}
-              </div>
-              <div className="reviewDefaultResumeSections">
-                <h6>Experience:</h6>
-                {selectedResume.experience.map((exp, index) => (
-                    <div key={index} className="experience-entry">
-                        <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(exp.expCompanyName)}</h6>
-                        <div className='reviewResumeJobTitleAndTime'>
-                            <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expJobTitle)}</h6>
-                            <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expTime)}</h6>
-                        </div>
-                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(exp.expDesc)}</span>
-                    </div>
-                ))}
-              </div>
+    <div className="resume-style4-container">
+      {/* Header with name and job title */}
+      <header className="resume-style4-header">
+        <h1 className="resume-style4-name">
+          {capitalizeFirstLetter(user?.firstName)}{" "}
+          {capitalizeFirstLetter(user?.lastName)}
+        </h1>
+        {user.jobTitle && <h2 className="resume-style4-job-title">{user.jobTitle}</h2>}
+      </header>
+
+      <div className="resume-style4-content">
+        {/* Left Column - 70% */}
+        <div className="resume-style4-left-column">
+          {/* Summary Section */}
+          {selectedResume?.summary && (
+            <div className="resume-style4-section">
+              <h3 className="resume-style4-section-title">Summary</h3>
+              <div>{renderTextWithNewLines(selectedResume.summary)}</div>
             </div>
-            <div className="reviewStyle4RightDiv">
-                <div className="reviewDefaultResumeSections">
-                    <h6>Contact Info:</h6>
-                    <a 
-                        href={`mailto:${user.contactInfo.email}`}
-                        target="_blank"
-                    >
-                        {renderTextWithNewLines(user.contactInfo.email)}
-                    </a>
-                    <a
-                        href={`tel:${stripFormatting(user.contactInfo.phone)}`}
-                    >
-                        {renderTextWithNewLines(user.contactInfo.phone)}
-                    </a>
-                    {user.contactInfo.socialMedia.length > 0 && (
-                        <div className='socialMediaLinks'>
-                            {user.contactInfo.socialMedia.map((account, index) => (
-                                <div key={index}>
-                                    <a 
-                                        href={account.url} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                    >
-                                        {account.name}
-                                    </a>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    <br/>
-                    {user.address?.useAddress && (
-                        <div className="reviewAddress">
-                            <h6 className="mb-0">Address:</h6>
-                            <p className="mb-1">
-                                {user.address.street && `${user.address.street} `}
-                                {user.address.appt && user.address.appt}
-                                <br />
-                                {user.address.city && `${user.address.city}`}
-                                {user.address.state && `, ${user.address.state}`}
-                                {user.address.zip && ` ${user.address.zip}`}
-                            </p>
-                        </div>
-                    )}
+          )}
+
+          {/* Experience Section */}
+          {selectedResume?.experience && selectedResume.experience.length > 0 && (
+            <div className="resume-style4-section">
+              <h3 className="resume-style4-section-title">Experience</h3>
+              {selectedResume.experience.map((exp, index) => (
+                <div key={index} className="resume-style4-experience-item">
+                  <div className="resume-style4-experience-header">
+                    <h4 className="resume-style4-company-name">{exp.expCompanyName}</h4>
+                    <span className="resume-style4-job-date">{exp.expTime}</span>
+                  </div>
+                  <p className="resume-style4-job-position">{exp.expJobTitle}</p>
+                  <div>{renderTextWithNewLines(exp.expDesc)}</div>
                 </div>
-              <div
-                className="reviewDefaultResumeSections"
-                id="lastReviewDefaultResumeSection"
-              >
-                <h6>Skills:</h6>
-                <span className="leftOrientedReviewSections">
-                  {renderTextWithNewLines(selectedResume.skills)}
-                </span>
-              </div>
-              <div className="reviewDefaultResumeSections">
-                <h6>Education and Certifications:</h6>
-                <span className="leftOrientedReviewSections">
-                  {renderTextWithNewLines(selectedResume.education)}
-                </span>
-              </div>
+              ))}
             </div>
+          )}
+        </div>
+
+        {/* Right Column - 30% with gray background */}
+        <div className="resume-style4-right-column">
+          {/* Contact Info Section */}
+          <div className="resume-style4-section">
+            <h3 className="resume-style4-section-title">Contact Info</h3>
+            {user.contactInfo?.email && (
+              <a href={`mailto:${user.contactInfo.email}`} style={{ display: 'block', marginBottom: '2px' }}>
+                {user.contactInfo.email}
+              </a>
+            )}
+            {user.contactInfo?.phone && (
+              <a href={`tel:${stripFormatting(user.contactInfo.phone)}`} style={{ display: 'block', marginBottom: '2px' }}>
+                {user.contactInfo.phone}
+              </a>
+            )}
+            {user.contactInfo?.socialMedia && user.contactInfo.socialMedia.length > 0 &&
+              user.contactInfo.socialMedia.map((account, index) => (
+                <a key={index} href={account.url} target="_blank" rel="noopener noreferrer" style={{ display: 'block', marginBottom: '2px' }}>
+                  {account.name}
+                </a>
+              ))}
           </div>
           
+          {/* Address Section if available */}
+          {user.address?.useAddress && (
+            <div className="resume-style4-section">
+              <h3 className="resume-style4-section-title">Address</h3>
+              <p style={{ margin: 0, fontSize: '8pt' }}>
+                {user.address.city}, {user.address.state}
+              </p>
+            </div>
+          )}
+          
+          {/* Skills Section */}
+          {selectedResume?.skills && (
+            <div className="resume-style4-section">
+              <h3 className="resume-style4-section-title">Skills</h3>
+              <div>{renderTextWithNewLines(selectedResume.skills)}</div>
+            </div>
+          )}
+
+          {/* Education Section */}
+          {selectedResume?.education && (
+            <div className="resume-style4-section">
+              <h3 className="resume-style4-section-title">Education</h3>
+              <div>{renderTextWithNewLines(selectedResume.education)}</div>
+            </div>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }

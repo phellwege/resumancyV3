@@ -1,35 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import BaseResumeTable from '../components/Review/BaseResumeTable';
 import TailoredResumeTable from '../components/Review/TailoredResumeTable';
-import { Button, Card, OverlayTrigger, Tooltip} from "react-bootstrap";
-import { BsQuestionCircle } from "react-icons/bs";
+import { Button, Alert } from "react-bootstrap";
+import { MdScreenRotation } from "react-icons/md";
 
 import '../views/main.css';
-import { useUser } from '../context/UserContext';
-import { useData } from '../context/DataContext';
 
 export default function Review() {
     const history = useNavigate();
+    const [isPortrait, setIsPortrait] = useState(false);
 
-    const {
-      user,
-      subscriptionPlans,
-      displayCorrectPlan,
-      describeBaseResume,
-      describeTailoredResume,
-      daysLeft
-    } = useUser();
-    const {
-      handleManagePlan
-    } = useData();
+    // Check if the device is in portrait mode
+    useEffect(() => {
+        const checkOrientation = () => {
+            setIsPortrait(window.innerHeight > window.innerWidth);
+        };
+
+        // Check on initial load
+        checkOrientation();
+
+        // Add event listener for orientation changes
+        window.addEventListener('resize', checkOrientation);
+
+        // Clean up
+        return () => {
+            window.removeEventListener('resize', checkOrientation);
+        };
+    }, []);
+
   return (
     <>
     <Header />
     <div className='pageWrapper'>
+      {isPortrait && (
+        <Alert className="orientation-alert" variant="info">
+          <div className="orientation-alert-content">
+            <MdScreenRotation size={24} />
+            <div>For a better viewing experience, please rotate your device to landscape mode.</div>
+          </div>
+        </Alert>
+      )}
       <h1>Review</h1>
       <div>
         <BaseResumeTable />
