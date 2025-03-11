@@ -220,12 +220,6 @@ export default function FAQ() {
             </div>
           </div>
         </section>
-        
-        <section className="faq-cta">
-          <h2>Ready to create your AI-powered resume?</h2>
-          <p>Start your 7-day free trial today and see how Resumancy can help you land more interviews.</p>
-          <a href="/" className="btn btn-primary">Get Started Now</a>
-        </section>
       </main>
       <Footer />
     </>
