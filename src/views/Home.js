@@ -1,5 +1,6 @@
 import React, { memo, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet'; 
 
 import { Button, Card} from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
@@ -58,10 +59,15 @@ export default function Home() {
 
   return (
     <>
+    <Helmet>
+      <title>Resumancy - AI-Powered Resume Builder | Create Custom Resumes in 45 Seconds</title>
+      <meta name="description" content="Create tailored resumes and cover letters for every job application in under a minute with our AI-powered platform. Get more interviews with custom resumes." />
+      <link rel="canonical" href="https://resumancy.com" />
+    </Helmet>
     <Header />
-        <div className='pageWrapper'>
+        <main className='pageWrapper'>
             {!user?.id && (
-            <div className='heroSection'>
+            <section className='heroSection' aria-label="Main introduction to Resumancy">
                 <div className='heroContent'>
                     <h1>AI-Tailored Resumes That Get You More Interviews</h1>
                     <p className="heroSubtitle">AI-powered resumes & cover letters customized for every job application in under a minute.</p>
@@ -73,13 +79,13 @@ export default function Home() {
                     </div>
                     <div className='heroFeatures'>
                         <div className='featureItem'>
-                            ✅ AI-Powered Resume Customization
+                            AI-Powered Resume Customization
                         </div>
                         <div className='featureItem'>
-                            📈 See Your Resume's Job Relevance Score
+                            See Your Resume's Job Relevance Score
                         </div>
                         <div className='featureItem'>
-                            🔍 Skill Gap Analysis to Boost Your Application
+                            Skill Gap Analysis to Boost Your Application
                         </div>
                     </div>
                     <div className='heroCTA'>
@@ -101,90 +107,94 @@ export default function Home() {
                         </Button>
                     </div>
                 </div>
-            </div>
+            </section>
             )}
             <div className='secondaryPageWrapper'>
-                <div className='leftDiv'>
+                <section className='leftDiv'>
                     <Card className='homeLeftCard'>
                         <Card.Body>
                             <div className='cardInnerDiv'>
-                                <h4>Sample Resumes</h4>
+                                <h2>Sample Resumes</h2>
                                 <div className='homeLeftCardImageDiv'>
                                     <ResumeStyles />
                                 </div>
                             </div>
                         </Card.Body>
                     </Card>
-                </div>
-                <div className='rightDiv'>
-                    <Card>
-                        <Card.Body>
-                            <div className='cardInnerDiv'>
-                                <div>
-                                    <h5>What We Do</h5>
-                                    <WhatWeDoText />
-                                    <p>
-                                        <Link className='faqSpan' to='/FAQ' aria-label="View comprehensive FAQ about resume creation and customization">
-                                        Frequently Asked Questions
-                                        </Link>
-                                    </p>
+                </section>
+                <section className='rightDiv'>
+                    <article>
+                        <Card>
+                            <Card.Body>
+                                <div className='cardInnerDiv'>
+                                    <div>
+                                        <h2>What We Do</h2>
+                                        <WhatWeDoText />
+                                        <p>
+                                            <Link className='faqSpan' to='/FAQ' aria-label="View comprehensive FAQ about resume creation and customization">
+                                            Frequently Asked Questions
+                                            </Link>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </Card.Body>
-                    </Card>
+                            </Card.Body>
+                        </Card>
+                    </article>
                     <CurrentPlans/>
-                    <Card>
-                        <Card.Body>
-                            <div className='cardInnerDiv'>
-                                <h5>How To Use</h5>
-                                    <p>Create a Baseline Resume and custom-tailor it for every application. This proven approach significantly increases your chances of landing more interviews.</p>
-                                <div className='alignLeft'>
-                                    <div>
-                                        <p>
-                                            <span className='HomeSectionTitle'>Part 1</span>
-                                            <br/>
-                                            <span className='HomeSectionSubScript'>Create a Base Resume.</span>
-                                            <br/>
-                                            <span className='homeNum'>Step 1. </span> Create a Base Resume by clicking <b>Create Resume</b>. 
-                                            <br/>
-                                            <span className='homeNum'>Step 2. </span> Verify everything looks good (make edits if needed).
-                                        </p>
+                    <article>
+                        <Card>
+                            <Card.Body>
+                                <div className='cardInnerDiv'>
+                                    <h2>How To Use</h2>
+                                        <p>Create a Baseline Resume and custom-tailor it for every application. This proven approach significantly increases your chances of landing more interviews.</p>
+                                    <div className='alignLeft'>
+                                        <div>
+                                            <p>
+                                                <span className='HomeSectionTitle'>Part 1</span>
+                                                <br/>
+                                                <span className='HomeSectionSubScript'>Create a Base Resume.</span>
+                                                <br/>
+                                                <span className='homeNum'>Step 1. </span> Create a Base Resume by clicking <b>Create Resume</b>. 
+                                                <br/>
+                                                <span className='homeNum'>Step 2. </span> Verify everything looks good (make edits if needed).
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                <span className='HomeSectionTitle'>Part 2</span>
+                                                <br/>
+                                                <span className='HomeSectionSubScript'>Create Custom Resumes for each application.</span>
+                                                <br/>
+                                                <span className='homeNum'>Step 3. </span> Click on <b>Tailor Resume</b>, then provide prospective job details.
+                                                <br/>
+                                                <span className='homeNum'> Step 4. </span> Enjoy your custom tailored resume(s).
+                                            </p>
+                                        </div>
+                                        
                                     </div>
-                                    <div>
-                                        <p>
-                                            <span className='HomeSectionTitle'>Part 2</span>
-                                            <br/>
-                                            <span className='HomeSectionSubScript'>Create Custom Resumes for each application.</span>
-                                            <br/>
-                                            <span className='homeNum'>Step 3. </span> Click on <b>Tailor Resume</b>, then provide prospective job details.
-                                            <br/>
-                                            <span className='homeNum'> Step 4. </span> Enjoy your custom tailored resume(s).
-                                        </p>
-                                    </div>
-                                    
+                                    {user.subscription.usage.baseResume === 0 ? (
+                                            <Button
+                                            onClick={handleCreateClick}
+                                            aria-label='create button'
+                                            >
+                                                Create Resume
+                                            </Button>
+                                    ):(
+                                        <Link to='/Tailor'>
+                                            <Button
+                                            aria-label='create button'
+                                            >
+                                                Tailor Resume
+                                            </Button>
+                                        </Link>
+                                    )}
                                 </div>
-                                {user.subscription.usage.baseResume === 0 ? (
-                                        <Button
-                                        onClick={handleCreateClick}
-                                        aria-label='create button'
-                                        >
-                                            Create Resume
-                                        </Button>
-                                ):(
-                                    <Link to='/Tailor'>
-                                        <Button
-                                        aria-label='create button'
-                                        >
-                                            Tailor Resume
-                                        </Button>
-                                    </Link>
-                                )}
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </div>
+                            </Card.Body>
+                        </Card>
+                    </article>
+                </section>
             </div>
-        </div>
+        </main>
     <Footer />
     </>
   )

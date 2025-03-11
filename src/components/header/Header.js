@@ -114,7 +114,11 @@ return (
             {user.id ? (
                 <div className='avatarWindow'>
                     {/* {AlertMessage()} */}
-                    <img src={user.avatarImg} alt='userAvatar' id='userAvatar' onClick={handleClickImg}/>
+                    {user.avatarImg ? (
+                        <img src={user.avatarImg} alt='userAvatar' id='userAvatar' onClick={handleClickImg}/>
+                    ) : (
+                        <CgProfile size={65} onClick={handleClickImg} />
+                    )}
                     {user.userName && (
                         <>
                             <Link to='/UserProfile'>{user.userName}</Link>

@@ -344,8 +344,13 @@ export function UserProvider({ children }) {
             try {
                 const persistedUser = JSON.parse(storedUser);
                 if (persistedUser.version === "v2") {
+                    // Ensure avatar image is properly loaded
+                    const userWithAvatar = { ...persistedUser };
+                    if (!userWithAvatar.avatarImg && userAvatars.length > 0) {
+                        userWithAvatar.avatarImg = userAvatars[0];
+                    }
                     // Only merge if the version matches your current schema
-                    setUser(prevUser => ({ ...prevUser, ...persistedUser }));
+                    setUser(prevUser => ({ ...prevUser, ...userWithAvatar }));
                 } else {
                     // If version doesn't match, clear the stored data
                     localStorage.removeItem("user");

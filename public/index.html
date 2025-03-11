@@ -3,12 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Resumancy specializes in creating custom resumes and cover letters tailored to your unique skills and the job you desire."
+      content="Resumancy - AI-powered resume builder that creates tailored resumes and cover letters in under a minute. Get more interviews with custom resumes optimized for each job application."
     />
+    <meta name="keywords" content="resume builder, AI resume, job application, cover letter generator, custom resume, resume templates, career tools, job search" />
+    <meta name="author" content="Resumancy" />
+    <meta property="og:title" content="Resumancy - AI-Tailored Resumes That Get You More Interviews" />
+    <meta property="og:description" content="Create custom resumes and cover letters tailored to specific job descriptions in under a minute with our AI-powered platform." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://resumancy.com" />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -24,7 +32,27 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Resumancy</title>
+    <title>Resumancy - AI-Powered Resume Builder | Create Custom Resumes in 45 Seconds</title>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="%PUBLIC_URL%/fonts/main-font.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <!-- Structured data for rich results -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Resumancy",
+        "applicationCategory": "BusinessApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "AI-powered resume builder that creates tailored resumes and cover letters in under a minute.",
+        "operatingSystem": "Web"
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
