@@ -5,7 +5,7 @@ import { Alert, Button } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
-import Logo from '../static/logo_monochrome.png';
+import Logo from '../static/logo_monochrome.webp';
 import UserSetupModal from './user/UserSetupModal';
 import '../views/main.css';
 import firebase from 'firebase/compat/app';

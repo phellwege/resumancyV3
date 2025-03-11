@@ -127,6 +127,10 @@ width: 45%;
 .leftShiftedText {
     text-align: left;
     margin-left: 1%;
+    will-change: contents;
+    contain: content;
+    font-display: swap;
+    text-rendering: optimizeSpeed;
 }
 .centerDiv {
     width: 20%;

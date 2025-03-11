@@ -60,7 +60,7 @@ export function UserProvider({ children }) {
         'WitchProfile', 'WitchProfile2', 'WitchProfile3', 'WitchProfile4', 'WitchProfile5', 
         'WizardProfile1','WizardProfile2','WizardProfile3','WizardProfile4','WizardProfile5'
     ];
-    const userAvatars = userAvatarKeys.map(key => require(`../static/ProfilePics/${key}.png`));
+    const userAvatars = userAvatarKeys.map(key => require(`../static/ProfilePics/${key}.webp`));
     // user object
     const initialUserState = {
         id: null,

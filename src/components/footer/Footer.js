@@ -1,5 +1,5 @@
 import React from 'react'
-import Linkedin from '../../static/socialIcons/linkedin-3-32.png'
+import Linkedin from '../../static/socialIcons/linkedin-3-32.webp'
 import { Link } from 'react-router-dom';
 import './footer.css'
 import { useUser } from '../../context/UserContext';
@@ -50,7 +50,7 @@ export default function Footer() {
                 </div>
             </div>
             <span className='subscript'>
-            © {(new Date().getFullYear())} Resumancy. All rights reserved.
+            {(new Date().getFullYear())} Resumancy. All rights reserved.
             </span>
         </div>
     </>

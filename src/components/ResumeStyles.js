@@ -3,10 +3,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css/bundle";
 import { Pagination, Autoplay } from "swiper/modules";
 
-import defaultResumeStyle from '../static/resumeStyleImgs/Style1.png';
-import resumeStyle2 from '../static/resumeStyleImgs/Style2.png';
-import resumeStyle3 from '../static/resumeStyleImgs/Style3.png';
-import resumeStyle4 from '../static/resumeStyleImgs/Style4.png';
+import defaultResumeStyle from '../static/resumeStyleImgs/Style1.webp';
+import resumeStyle2 from '../static/resumeStyleImgs/Style2.webp';
+import resumeStyle3 from '../static/resumeStyleImgs/Style3.webp';
+import resumeStyle4 from '../static/resumeStyleImgs/Style4.webp';
 
 export default function ResumeStyles() {
   return (

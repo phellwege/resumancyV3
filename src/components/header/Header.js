@@ -11,7 +11,7 @@ import { useAuth } from '../../context/AuthContext';
 import { CgProfile } from "react-icons/cg";
 import { FiAlertCircle } from "react-icons/fi";
 import { FaHome } from "react-icons/fa";
-import logo from '../../static/logo_monochrome.png';
+import logo from '../../static/logo_monochrome.webp';
 
 import "./header.css";
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import './loadingPage.css'
-import Loading1 from '../../static/spinner2.png'
+import Loading1 from '../../static/spinner2.webp'
 import { useSpring, animated } from 'react-spring';
 
 export default (props) => {

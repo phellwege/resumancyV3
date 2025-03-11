@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Button, Card} from 'react-bootstrap';
@@ -10,6 +10,17 @@ import CurrentPlans from '../components/user/CurrentPlans';
 import './main.css';
 import ResumeStyles from '../components/ResumeStyles';
 
+// Memoize the text content component to prevent unnecessary re-renders
+const WhatWeDoText = memo(() => (
+  <p className='leftShiftedText'>
+    We use AI to transform your job search. 
+    <br/> 
+    Create a base resume quickly, then easily tailor it for specific jobs by simply entering the company name and job description. Our AI even generates a personalized cover letter for you!
+    <br/>
+    Say goodbye to generic applications and stand out with resumes and cover letters tailored to each job. Let Resumancy be your secret weapon for landing your dream job. 
+  </p>
+));
+
 export default function Home() {
     const {
         user,
@@ -18,6 +29,22 @@ export default function Home() {
     } = useUser();
 
     const history = useNavigate();
+
+    // Preload critical content
+    useEffect(() => {
+        // Add preload hint for the main content
+        const preloadLink = document.createElement('link');
+        preloadLink.rel = 'preload';
+        preloadLink.as = 'fetch';
+        preloadLink.href = window.location.href;
+        document.head.appendChild(preloadLink);
+        
+        return () => {
+            if (document.head.contains(preloadLink)) {
+                document.head.removeChild(preloadLink);
+            }
+        };
+    }, []);
 
     const handleCreateClick = () => {
         if (!user?.id) {
@@ -94,13 +121,7 @@ export default function Home() {
                             <div className='cardInnerDiv'>
                                 <div>
                                     <h5>What We Do</h5>
-                                    <p className='leftShiftedText'>
-                                    We use AI to transform your job search. 
-                                    <br/> 
-                                    Create a base resume quickly, then easily tailor it for specific jobs by simply entering the company name and job description. Our AI even generates a personalized cover letter for you!
-                                    <br/>
-                                    Say goodbye to generic applications and stand out with resumes and cover letters tailored to each job. Let Resumancy be your secret weapon for landing your dream job. 
-                                    </p>
+                                    <WhatWeDoText />
                                     <p>
                                         <Link className='faqSpan' to='/FAQ'>
                                         Have questions? Visit our FAQ to learn more
