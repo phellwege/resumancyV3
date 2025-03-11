@@ -1,6 +1,19 @@
 import React, {useContext, useEffect, useMemo, useState, useCallback } from 'react';
 import DOMPurify from 'dompurify';
 import { v4 as uuidv4 } from 'uuid';
+
+// Import all profile pictures statically to ensure they work in production
+import WitchProfile from '../static/ProfilePics/WitchProfile.webp';
+import WitchProfile2 from '../static/ProfilePics/WitchProfile2.webp';
+import WitchProfile3 from '../static/ProfilePics/WitchProfile3.webp';
+import WitchProfile4 from '../static/ProfilePics/WitchProfile4.webp';
+import WitchProfile5 from '../static/ProfilePics/WitchProfile5.webp';
+import WizardProfile1 from '../static/ProfilePics/WizardProfile1.webp';
+import WizardProfile2 from '../static/ProfilePics/WizardProfile2.webp';
+import WizardProfile3 from '../static/ProfilePics/WizardProfile3.webp';
+import WizardProfile4 from '../static/ProfilePics/WizardProfile4.webp';
+import WizardProfile5 from '../static/ProfilePics/WizardProfile5.webp';
+
 const UserContext = React.createContext()
 
 export function useUser(){
@@ -56,11 +69,11 @@ export function UserProvider({ children }) {
     const handleOpenSelectAvatar = () => setSelectAvatar(true);
     const handleCloseSelectAvatar = () => setSelectAvatar(false);
 
-    const userAvatarKeys = [
-        'WitchProfile', 'WitchProfile2', 'WitchProfile3', 'WitchProfile4', 'WitchProfile5', 
-        'WizardProfile1','WizardProfile2','WizardProfile3','WizardProfile4','WizardProfile5'
+    // Define avatar images with static imports
+    const userAvatars = [
+        WitchProfile, WitchProfile2, WitchProfile3, WitchProfile4, WitchProfile5,
+        WizardProfile1, WizardProfile2, WizardProfile3, WizardProfile4, WizardProfile5
     ];
-    const userAvatars = userAvatarKeys.map(key => require(`../static/ProfilePics/${key}.webp`));
     // user object
     const initialUserState = {
         id: null,
