@@ -32,8 +32,8 @@ export default function Footer() {
                 <div className='footerRightDiv'>
                 <ul>
                     <li>
-                        <Link to='/FAQ'>
-                            FAQ
+                        <Link to='/FAQ' aria-label="View Frequently Asked Questions about resume creation and customization">
+                            Frequently Asked Questions
                         </Link>
                     </li>
                     <li>

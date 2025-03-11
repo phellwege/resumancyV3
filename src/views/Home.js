@@ -73,13 +73,13 @@ export default function Home() {
                     </div>
                     <div className='heroFeatures'>
                         <div className='featureItem'>
-                            ✅ AI-Powered Resume Customization
+                            AI-Powered Resume Customization
                         </div>
                         <div className='featureItem'>
-                            📈 See Your Resume's Job Relevance Score
+                            See Your Resume's Job Relevance Score
                         </div>
                         <div className='featureItem'>
-                            🔍 Skill Gap Analysis to Boost Your Application
+                            Skill Gap Analysis to Boost Your Application
                         </div>
                     </div>
                     <div className='heroCTA'>
@@ -95,8 +95,9 @@ export default function Home() {
                             as={Link} 
                             to="/FAQ"
                             className='heroButton'
+                            aria-label="View Frequently Asked Questions about Resumancy"
                         >
-                            Learn More
+                            View FAQ
                         </Button>
                     </div>
                 </div>
@@ -123,8 +124,8 @@ export default function Home() {
                                     <h5>What We Do</h5>
                                     <WhatWeDoText />
                                     <p>
-                                        <Link className='faqSpan' to='/FAQ'>
-                                        Have questions? Visit our FAQ to learn more
+                                        <Link className='faqSpan' to='/FAQ' aria-label="View comprehensive FAQ about resume creation and customization">
+                                        Frequently Asked Questions
                                         </Link>
                                     </p>
                                 </div>
@@ -181,21 +182,6 @@ export default function Home() {
                             </div>
                         </Card.Body>
                     </Card>
-                    {/* <Card>
-                        <Card.Body>
-                            <div className='cardInnerDiv'>
-                                <div className='homeCardInnerDiv'>
-                                    <h4>Current Tier: {defaultSubscription.name}</h4>
-                                    {currentSubscriptionSection()}
-                                </div>
-                                <br/>
-                                <div className='homeCardInnerDiv'>
-                                    {showSection()}
-                                    {showButton()}
-                                </div>
-                            </div>
-                        </Card.Body>
-                    </Card> */}
                 </div>
             </div>
         </div>
