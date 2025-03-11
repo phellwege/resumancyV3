@@ -73,13 +73,13 @@ export default function Home() {
                     </div>
                     <div className='heroFeatures'>
                         <div className='featureItem'>
-                            AI-Powered Resume Customization
+                            ✅ AI-Powered Resume Customization
                         </div>
                         <div className='featureItem'>
-                            See Your Resume's Job Relevance Score
+                            📈 See Your Resume's Job Relevance Score
                         </div>
                         <div className='featureItem'>
-                            Skill Gap Analysis to Boost Your Application
+                            🔍 Skill Gap Analysis to Boost Your Application
                         </div>
                     </div>
                     <div className='heroCTA'>
