@@ -297,6 +297,19 @@ width: 45%;
 .FaqWrapper {
     width: 65%;
 }
+.FaqWrapper h2 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    font-weight: 600;
+}
+
+.FaqWrapper .faq-intro {
+    margin-bottom: 2rem;
+}
+
+.FaqWrapper div[itemType="https://schema.org/Question"] {
+    margin-bottom: 1.5rem;
+}
 /* default resume styling */
 
 #defaultResumeWrap {
