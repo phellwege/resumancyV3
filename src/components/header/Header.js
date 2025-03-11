@@ -117,17 +117,17 @@ return (
                     {user.avatarImg ? (
                         <img src={user.avatarImg} alt='userAvatar' id='userAvatar' onClick={handleClickImg}/>
                     ) : (
-                        <CgProfile size={65} onClick={handleClickImg} />
+                        <CgProfile size={65} onClick={handleClickImg} aria-hidden="true" />
                     )}
                     {user.userName && (
                         <>
-                            <Link to='/UserProfile'>{user.userName}</Link>
+                            <Link to='/UserProfile' aria-label={`View ${user.userName}'s profile`}>{user.userName}</Link>
                         </>
                     )}
                     <Link to='' onClick={async () => {
                         await logout();
                         history('/');
-                    }}>
+                    }} aria-label="Log out of your account">
                         Logout
                     </Link>
                 </div>
@@ -137,10 +137,11 @@ return (
                     <div className='avatarWindow'>
                         <div className='modalAvatarImg'>
                             <>
-                            <Link to='' onClick={handleOpenLoginModal}>
-                                <CgProfile size={65} />
+                            <Link to='' onClick={handleOpenLoginModal} aria-label="Open login modal">
+                                <CgProfile size={65} aria-hidden="true" />
+                                <span className="sr-only">Profile Login</span>
                             </Link>
-                            <Link to='' onClick={handleOpenLoginModal}>Login / Register</Link>
+                            <Link to='' onClick={handleOpenLoginModal} aria-label="Login or register for an account">Login / Register</Link>
                             </>
                         </div>
                     </div>
