@@ -140,6 +140,15 @@ export function UserProvider({ children }) {
                 tailoredResumes: 0,
             },
         },
+        referrals: {
+            referralCode: '',
+            referredBy: '',
+            referredUsers: [],
+            pendingReferrals: [],
+            paidReferrals: [],
+            rewardsEarned: [],
+            availableRewards: []
+        },
         initialSetupDone: false,
         coupon: '',
         stripeCustomerId: null

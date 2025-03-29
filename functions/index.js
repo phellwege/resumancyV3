@@ -13,6 +13,8 @@ const function7 = require('./createStripePortalSession');
 const function8 = require('./deleteUserAccount');
 const function9 = require('./generateGapAnalysisWithRetry');
 const function10 = require('./limitedFunction');
+const createStripeCoupon = require('./createStripeCoupon').createStripeCoupon;
+const createStripeCouponHttp = require('./createStripeCouponHttp').createStripeCouponHttp;
 
 exports.generate_cover_letter = function1;
 exports.handle_stripe_webhook = function2;
@@ -24,3 +26,5 @@ exports.createStripePortalSession = function7;
 exports.deleteUserAccount = function8;
 exports.generateGapAnalysisWithRetry = function9;
 exports.limitedFunction = function10;
+exports.createStripeCoupon = createStripeCoupon;
+exports.createStripeCouponHttp = createStripeCouponHttp;

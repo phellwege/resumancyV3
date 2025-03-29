@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { Alert, Button } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
@@ -12,6 +12,7 @@ import firebase from 'firebase/compat/app';
 
 export default function LoginAndRegistration() {
     const navigate = useNavigate();
+    const location = useLocation();
     const {
         initialUserState,
         loginModal,
@@ -23,9 +24,35 @@ export default function LoginAndRegistration() {
     const { setLoading, currentUser, emailVerified, sendVerificationEmail, sendEmailVerification } = useAuth();
     const [verificationSent, setVerificationSent] = useState(false);
     const [showVerificationAlert, setShowVerificationAlert] = useState(false);
+    const [referralCode, setReferralCode] = useState('');
 
-    const { firebaseUiInstance } = useAuth();
-    const { updateUserData, addUserData, checkUserExists, fetchUserData } = useData();
+    const { 
+        firebaseUiInstance 
+    } = useAuth();
+    const { 
+        updateUserData, 
+        addUserData, 
+        checkUserExists, 
+        fetchUserData,
+        initializeUserReferral 
+    } = useData();
+
+    // Extract referral code from URL if present
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const ref = queryParams.get('ref');
+        if (ref) {
+            setReferralCode(ref);
+            // Store in session storage in case the page refreshes
+            sessionStorage.setItem('referralCode', ref);
+        } else {
+            // Check if we have a stored referral code
+            const storedRef = sessionStorage.getItem('referralCode');
+            if (storedRef) {
+                setReferralCode(storedRef);
+            }
+        }
+    }, [location]);
 
     const capitalizeEachWord = (text) => {
         return text
@@ -98,6 +125,16 @@ export default function LoginAndRegistration() {
                 // Add user to database
                 await addUserData(authUser.uid, newUserData);
                 setUser(newUserData);
+                
+                // Initialize referral system and link to referrer if code exists
+                if (referralCode) {
+                    await initializeUserReferral(authUser.uid, referralCode);
+                    // Clear the stored referral code
+                    sessionStorage.removeItem('referralCode');
+                } else {
+                    // Initialize with just a referral code for this user
+                    await initializeUserReferral(authUser.uid);
+                }
 
                 // Send verification email for new users with email/password sign-in
                 if (!isGoogleSignIn && !authUser.emailVerified) {

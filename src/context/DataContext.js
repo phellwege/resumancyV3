@@ -21,6 +21,14 @@ import {
     onSnapshot
 } from 'firebase/firestore';
 
+import { 
+    initializeUserReferral,
+    checkAndApplyReferralReward,
+    applyPremiumReward,
+    getReferralStats,
+    updateReferralOnSubscription
+} from '../server/ReferralService';
+
 const DataContext = React.createContext();
 
 export function useData() {
@@ -439,6 +447,11 @@ export function DataProvider({ children }) {
         deleteUserAccount,
         userToken,
         getUserToken,
+        initializeUserReferral,
+        checkAndApplyReferralReward,
+        applyPremiumReward,
+        getReferralStats,
+        updateReferralOnSubscription
     };
 
     return (
