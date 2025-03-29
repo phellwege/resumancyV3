@@ -69,8 +69,9 @@ export default function Home() {
             {!user?.id && (
             <section className='heroSection' aria-label="Main introduction to Resumancy">
                 <div className='heroContent'>
-                    <h1>AI-Tailored Resumes That Get You More Interviews</h1>
-                    <p className="heroSubtitle">AI-powered resumes & cover letters customized for every job application in under a minute.</p>
+                    <h1>Tailor Your Resume to Any Job in Seconds — Not Just Format It</h1>
+                    <p className="heroSubtitle">Resumancy reads your resume and the job description, then rewrites your content to match
+                        <br/>with job relevance scoring, skill gap insights, and interview-boosting recommendations.</p>
                     <div className='heroStats'>
                         <div className='statItem'>
                             <span className='statNumber'>45 sec</span>
