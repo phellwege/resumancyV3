@@ -5,7 +5,7 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color:rgba(0,0,0,.85);
+    background-color: rgba(0, 0, 0, 0.85);
     color: whitesmoke;
     position: fixed;
     z-index: 9999;
@@ -15,4 +15,22 @@
 }
 .loadingImgDiv img{
     width: 100%;
+}
+
+/* Add a fade-in animation for smoother appearance */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.loadingPageWrapper {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Add responsive styling for mobile devices */
+@media (max-width: 768px) {
+    .loadingImgDiv {
+        width: 20%;
+        min-width: 60px;
+    }
 }

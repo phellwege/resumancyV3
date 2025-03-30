@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import * as firebaseui from 'firebaseui';
 import { useUser } from './UserContext';
+import { useLocation } from 'react-router-dom';
 
 const AuthContext = React.createContext();
 
@@ -22,7 +23,11 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-    const [loading, setLoading] = useState(true);
+    const location = useLocation();
+    const isHomePage = location.pathname === "/" || location.pathname === "";
+    
+    // Initialize loading to false for home page, true for other pages
+    const [loading, setLoading] = useState(!isHomePage);
     const [currentUser, setCurrentUser] = useState(null);
     const [emailVerified, setEmailVerified] = useState(false);
     const { setUser, initialUserState } = useUser();
