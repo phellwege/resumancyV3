@@ -107,11 +107,6 @@ const ReviewCarousel = () => {
         disableOnInteraction: false,
       }}
       navigation={true}
-      breakpoints={{
-        768: {
-          slidesPerView: 2,
-        },
-      }}
     >
       {reviewsData.map((review) => (
         <SwiperSlide key={review.id}>
