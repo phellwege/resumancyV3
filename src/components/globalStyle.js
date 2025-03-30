@@ -27,6 +27,36 @@ h2 {
     color: ${props => 
         props.theme.mode === 'dark' ? '#E4FDE1' : 'black' };
 }
+/* Hero section styling for day/night mode */
+.heroContent h1 {
+    color: ${props => 
+        props.theme.mode === 'dark' ? 'white' : '#222222'};
+}
+.heroSubtitle {
+    color: ${props => 
+        props.theme.mode === 'dark' ? '#e0e0e0' : '#444444'};
+}
+.statLabel {
+    color: ${props => 
+        props.theme.mode === 'dark' ? '#e0e0e0' : '#444444'};
+}
+.featureItem {
+    color: ${props => 
+        props.theme.mode === 'dark' ? '#e0e0e0' : '#444444'};
+}
+
+/* Button styling for day/night mode */
+.btn-outline-light {
+    display: ${props => 
+        props.theme.mode === 'dark' ? 'inline-block' : 'none'};
+}
+
+/* This class will be added dynamically to handle the button variant switch */
+.btn-outline-secondary {
+    display: ${props => 
+        props.theme.mode === 'dark' ? 'none' : 'inline-block'};
+}
+
 .modal-header {
     background-color: ${props => 
         props.theme.mode === 'dark' ? '#114B5F' : '#456990' };
@@ -151,6 +181,5 @@ ul li a {
     --swiper-theme-color: ${props =>
         props.theme.mode === 'dark' ? '#1ABC9C' : 'royalblue'};
 }
-};
-`
+`;
 export default GlobalStyle;

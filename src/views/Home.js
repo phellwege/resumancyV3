@@ -106,6 +106,15 @@ export default function Home() {
                         >
                             View FAQ
                         </Button>
+                        <Button 
+                            variant="outline-secondary"
+                            as={Link} 
+                            to="/FAQ"
+                            className='heroButton'
+                            aria-label="View Frequently Asked Questions about Resumancy"
+                        >
+                            View FAQ
+                        </Button>
                     </div>
                 </div>
             </section>

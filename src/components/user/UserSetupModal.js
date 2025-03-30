@@ -41,7 +41,7 @@ export default function UserSetupModal() {
                 formattedPhoneNumber += ` ${inputPhoneNumber.substring(3, 6)}`;
             }
             if (inputPhoneNumber.length >= 7) {
-                formattedPhoneNumber += ` -${inputPhoneNumber.substring(6, 10)}`;
+                formattedPhoneNumber += ` - ${inputPhoneNumber.substring(6, 10)}`;
             }
         }
         return sanitizeUserInput(formattedPhoneNumber);
