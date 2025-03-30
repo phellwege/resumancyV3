@@ -112,14 +112,14 @@ export default function Home() {
             )}
             <div className='secondaryPageWrapper'>
                 <section className='leftDiv'>
-                    {/* <Card className='homeLeftCard'>
+                    <Card className='homeLeftCard'>
                         <Card.Body>
                             <div className='cardInnerDiv'>
                                 <h2>Reviews</h2>
                                 <ReviewCarousel />
                             </div>
                         </Card.Body>
-                    </Card> */}
+                    </Card>
                     <Card className='homeLeftCard'>
                         <Card.Body>
                             <div className='cardInnerDiv'>
@@ -136,8 +136,6 @@ export default function Home() {
                         <Card>
                             <Card.Body>
                                 <div className='cardInnerDiv'>
-                                    <h2>Reviews</h2>
-                                    <ReviewCarousel />
                                     <div>
                                         <h2>What We Do</h2>
                                         <WhatWeDoText />

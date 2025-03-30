@@ -72,15 +72,6 @@ const ReviewText = styled.p`
   line-height: 1.5;
 `;
 
-const NewBadge = styled.span`
-  background-color: #333;
-  color: white;
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-left: 8px;
-`;
-
 const ReviewCarousel = () => {
   // Function to render stars based on rating
   const renderStars = (rating) => {
