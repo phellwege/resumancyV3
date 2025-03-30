@@ -10,7 +10,7 @@ import CurrentPlans from '../components/user/CurrentPlans';
 
 import './main.css';
 import ResumeStyles from '../components/ResumeStyles';
-
+import ReviewCarousel from '../components/ReviewCarousel';
 // Memoize the text content component to prevent unnecessary re-renders
 const WhatWeDoText = memo(() => (
   <p className='leftShiftedText'>
@@ -112,6 +112,14 @@ export default function Home() {
             )}
             <div className='secondaryPageWrapper'>
                 <section className='leftDiv'>
+                    {/* <Card className='homeLeftCard'>
+                        <Card.Body>
+                            <div className='cardInnerDiv'>
+                                <h2>Reviews</h2>
+                                <ReviewCarousel />
+                            </div>
+                        </Card.Body>
+                    </Card> */}
                     <Card className='homeLeftCard'>
                         <Card.Body>
                             <div className='cardInnerDiv'>
@@ -128,6 +136,8 @@ export default function Home() {
                         <Card>
                             <Card.Body>
                                 <div className='cardInnerDiv'>
+                                    <h2>Reviews</h2>
+                                    <ReviewCarousel />
                                     <div>
                                         <h2>What We Do</h2>
                                         <WhatWeDoText />
