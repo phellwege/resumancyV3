@@ -23,9 +23,9 @@ export default function CurrentPlans() {
             <div className="cardInnerDiv p-3">
             {!user?.id ? (
                 <>
-                <h5 className="mb-3">
+                <h4 className="mb-3">
                     Get Started for Free <br /> Plans from $5/month
-                </h5>
+                </h4>
                 <p className="alignLeft">
                     Get started for just $5/month with our Basic plan—includes 1 base resume and 5 custom-tailored resumes and cover letters. Need more? Go Premium for $15/month and enjoy unlimited tailored resumes and cover letters. Try it free for 7 days—cancel anytime, or continue with Basic at $5/month after your trial ends.
                 </p>

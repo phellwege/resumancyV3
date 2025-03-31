@@ -116,6 +116,13 @@ export default function Home() {
                             View FAQ
                         </Button>
                     </div>
+                    <br/>
+                    <div className='featureItem'>
+                        No charge today. Cancel anytime before your trial ends.
+                    </div>
+                    <div className='featureItem'>
+                        🔒 Secured by Stripe · We never store your card info.
+                    </div>
                 </div>
             </section>
             )}
@@ -141,6 +148,7 @@ export default function Home() {
                     </Card>
                 </section>
                 <section className='rightDiv'>
+                <CurrentPlans/>
                     <article>
                         <Card>
                             <Card.Body>
@@ -158,7 +166,6 @@ export default function Home() {
                             </Card.Body>
                         </Card>
                     </article>
-                    <CurrentPlans/>
                     <article>
                         <Card>
                             <Card.Body>
@@ -210,6 +217,32 @@ export default function Home() {
                             </Card.Body>
                         </Card>
                     </article>
+                    {!user?.id && (
+                        <article>
+                            <Card>
+                                <Card.Body>
+                                    <div className='cardInnerDiv'>
+                                        <h3 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>🎯 Ready to Build a Job-Winning Resume?</h3>
+                                        <p style={{ textAlign: 'center', fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>
+                                            Start your <strong>7-day free trial</strong> today. Only <strong>$5/month</strong> after — cancel anytime.
+                                        </p>
+                                        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+                                            <Button
+                                            variant="primary"
+                                            onClick={handleOpenLoginModal}
+                                            style={{ padding: '0.6rem 1.5rem', fontWeight: 'bold' }}
+                                            >
+                                            Start My Free Trial → Build My Resume
+                                            </Button>
+                                        </div>
+                                        <p style={{ textAlign: 'center', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+                                            🔒 Secured by Stripe · No charges until your trial ends
+                                        </p>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </article>
+                    )}
                 </section>
             </div>
         </main>
