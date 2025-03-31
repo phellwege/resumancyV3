@@ -4,7 +4,7 @@ import { Button, Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
 import { BsQuestionCircle } from "react-icons/bs";
-
+import PlatformComparison from '../PlatformComparison';
 export default function CurrentPlans() {
   const {
     user,
@@ -79,6 +79,9 @@ export default function CurrentPlans() {
                     )}
                 </div>
                 </>
+            )}
+            {!user.id && (
+                <PlatformComparison />
             )}
             </div>
         </Card.Body>

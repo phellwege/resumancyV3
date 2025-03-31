@@ -1,12 +1,13 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet'; 
 
-import { Button, Card} from 'react-bootstrap';
+import { Button, Card, Alert } from 'react-bootstrap';
 import { useUser } from '../context/UserContext';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import CurrentPlans from '../components/user/CurrentPlans';
+import { MdScreenRotation } from "react-icons/md";
 
 import './main.css';
 import ResumeStyles from '../components/ResumeStyles';
@@ -30,6 +31,27 @@ export default function Home() {
     } = useUser();
 
     const history = useNavigate();
+    const [isPortrait, setIsPortrait] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Check if the device is in portrait mode and is mobile
+    useEffect(() => {
+        const checkOrientation = () => {
+            setIsPortrait(window.innerHeight > window.innerWidth);
+            setIsMobile(window.innerWidth <= 767);
+        };
+
+        // Check on initial load
+        checkOrientation();
+
+        // Add event listener for orientation changes
+        window.addEventListener('resize', checkOrientation);
+
+        // Clean up
+        return () => {
+            window.removeEventListener('resize', checkOrientation);
+        };
+    }, []);
 
     // Preload critical content
     useEffect(() => {
@@ -66,6 +88,15 @@ export default function Home() {
     </Helmet>
     <Header />
         <main className='pageWrapper'>
+            {(isMobile && isPortrait) && (
+                <Alert className="orientation-alert" variant="info">
+                    <div className="orientation-alert-content" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <MdScreenRotation size={24} />
+                        <div>For a better viewing experience, please rotate your device to landscape mode.</div>
+                    </div>
+                </Alert>
+            )}
+            
             {!user?.id && (
             <section className='heroSection' aria-label="Main introduction to Resumancy">
                 <div className='heroContent'>
@@ -146,6 +177,32 @@ export default function Home() {
                             </div>
                         </Card.Body>
                     </Card>
+                    {!user?.id && (
+                        <article>
+                            <Card>
+                                <Card.Body>
+                                    <div className='cardInnerDiv'>
+                                        <h3 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>🎯 Ready to Build a Job-Winning Resume?</h3>
+                                        <p style={{ textAlign: 'center', fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>
+                                            Start your <strong>7-day free trial</strong> today. Only <strong>$5/month</strong> after — cancel anytime.
+                                        </p>
+                                        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+                                            <Button
+                                            variant="primary"
+                                            onClick={handleOpenLoginModal}
+                                            style={{ padding: '0.6rem 1.5rem', fontWeight: 'bold' }}
+                                            >
+                                            Start My Free Trial → Build My Resume
+                                            </Button>
+                                        </div>
+                                        <p style={{ textAlign: 'center', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+                                            🔒 Secured by Stripe · No charges until your trial ends
+                                        </p>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </article>
+                    )}
                 </section>
                 <section className='rightDiv'>
                 <CurrentPlans/>
@@ -217,32 +274,6 @@ export default function Home() {
                             </Card.Body>
                         </Card>
                     </article>
-                    {!user?.id && (
-                        <article>
-                            <Card>
-                                <Card.Body>
-                                    <div className='cardInnerDiv'>
-                                        <h3 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>🎯 Ready to Build a Job-Winning Resume?</h3>
-                                        <p style={{ textAlign: 'center', fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>
-                                            Start your <strong>7-day free trial</strong> today. Only <strong>$5/month</strong> after — cancel anytime.
-                                        </p>
-                                        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-                                            <Button
-                                            variant="primary"
-                                            onClick={handleOpenLoginModal}
-                                            style={{ padding: '0.6rem 1.5rem', fontWeight: 'bold' }}
-                                            >
-                                            Start My Free Trial → Build My Resume
-                                            </Button>
-                                        </div>
-                                        <p style={{ textAlign: 'center', fontSize: '0.85rem', marginTop: '0.5rem' }}>
-                                            🔒 Secured by Stripe · No charges until your trial ends
-                                        </p>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </article>
-                    )}
                 </section>
             </div>
         </main>
