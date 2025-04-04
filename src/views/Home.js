@@ -8,7 +8,7 @@ import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import CurrentPlans from '../components/user/CurrentPlans';
 import { MdScreenRotation } from "react-icons/md";
-
+import CookieConsent from '../components/user/CookieConsent';
 import './main.css';
 import ResumeStyles from '../components/ResumeStyles';
 import ReviewCarousel from '../components/ReviewCarousel';
@@ -86,6 +86,7 @@ export default function Home() {
       <meta name="description" content="Create tailored resumes and cover letters for every job application in under a minute with our AI-powered platform. Get more interviews with custom resumes." />
       <link rel="canonical" href="https://resumancy.com" />
     </Helmet>
+    <CookieConsent />
     <Header />
         <main className='pageWrapper'>
             {(isMobile && isPortrait) && (
