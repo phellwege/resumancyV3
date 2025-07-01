@@ -103,6 +103,14 @@ export function UserProvider({ children }) {
                 expTime: '',
                 expDesc: ''
             }],
+            customSections: [{
+                sectionName: 'Projects',
+                entries: [{
+                    title: '',
+                    timeframe: '',
+                    description: ''
+                }]
+            }],
             education: '',
             skills: '',
             additional: '',
@@ -306,6 +314,146 @@ export function UserProvider({ children }) {
             return { ...prevState, resume: updatedResume };
         });
     };
+    const handleCustomSectionNameChange = (sectionIndex, value) => {
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            const updatedCustomSections = [...updatedResume[0].customSections];
+            updatedCustomSections[sectionIndex] = {
+                ...updatedCustomSections[sectionIndex],
+                sectionName: sanitizeUserInput(value)
+            };
+            updatedResume[0] = {
+                ...updatedResume[0],
+                customSections: updatedCustomSections
+            };
+            return { ...prevState, resume: updatedResume };
+        });
+    };
+
+    const handleCustomSectionEntryChange = (sectionIndex, entryIndex, key, value) => {
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            const updatedCustomSections = [...updatedResume[0].customSections];
+            const updatedEntries = [...updatedCustomSections[sectionIndex].entries];
+            
+            updatedEntries[entryIndex] = {
+                ...updatedEntries[entryIndex],
+                [key]: sanitizeUserInput(value)
+            };
+            
+            updatedCustomSections[sectionIndex] = {
+                ...updatedCustomSections[sectionIndex],
+                entries: updatedEntries
+            };
+            
+            updatedResume[0] = {
+                ...updatedResume[0],
+                customSections: updatedCustomSections
+            };
+            
+            return { ...prevState, resume: updatedResume };
+        });
+    };
+    
+    const addCustomSection = () => {
+        setUser((prevState) => ({
+            ...prevState,
+            resume: prevState.resume.map((resume, index) =>
+                index === 0
+                    ? {
+                        ...resume,
+                        customSections: [
+                            ...(resume.customSections || []), 
+                            {
+                                sectionName: 'New Section',
+                                entries: [{
+                                    title: '',
+                                    timeframe: '',
+                                    description: ''
+                                }]
+                            }
+                        ],
+                    }
+                    : resume
+            ),
+        }));
+    };
+    
+    const removeCustomSection = (sectionIndex) => {
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            updatedResume[0].customSections = updatedResume[0].customSections.filter((_, i) => i !== sectionIndex);
+            return { ...prevState, resume: updatedResume };
+        });
+    };
+    
+    const addCustomSectionEntry = (sectionIndex) => {
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            const updatedCustomSections = [...updatedResume[0].customSections];
+            
+            updatedCustomSections[sectionIndex] = {
+                ...updatedCustomSections[sectionIndex],
+                entries: [
+                    ...updatedCustomSections[sectionIndex].entries,
+                    {
+                        title: '',
+                        timeframe: '',
+                        description: ''
+                    }
+                ]
+            };
+            
+            updatedResume[0] = {
+                ...updatedResume[0],
+                customSections: updatedCustomSections
+            };
+            
+            return { ...prevState, resume: updatedResume };
+        });
+    };
+    
+    const removeCustomSectionEntry = (sectionIndex, entryIndex) => {
+        setUser((prevState) => {
+            const updatedResume = [...prevState.resume];
+            const updatedCustomSections = [...updatedResume[0].customSections];
+            
+            updatedCustomSections[sectionIndex] = {
+                ...updatedCustomSections[sectionIndex],
+                entries: updatedCustomSections[sectionIndex].entries.filter((_, i) => i !== entryIndex)
+            };
+            
+            updatedResume[0] = {
+                ...updatedResume[0],
+                customSections: updatedCustomSections
+            };
+            
+            return { ...prevState, resume: updatedResume };
+        });
+    };
+    
+    // Legacy function names for backward compatibility
+    const handleProjectChange = (index, key, value) => {
+        // Map the old project keys to new custom section entry keys
+        const keyMap = {
+            projectTitle: 'title',
+            projectTime: 'timeframe',
+            projectSummary: 'description'
+        };
+        
+        // Use the first custom section (index 0) as the default Projects section
+        handleCustomSectionEntryChange(0, index, keyMap[key] || key, value);
+    };
+    
+    const addProjectEntry = () => {
+        // Add an entry to the first custom section (index 0)
+        addCustomSectionEntry(0);
+    };
+    
+    const removeProjectEntry = (index) => {
+        // Remove an entry from the first custom section (index 0)
+        removeCustomSectionEntry(0, index);
+    };
     const handleTailoredResumeChange = (index, key, value) => {
         setUser((prevState) => {
             const updatedTailoredResume = [...prevState.tailoredResume];
@@ -442,6 +590,18 @@ export function UserProvider({ children }) {
         handleExperienceChange,
         addExperienceEntry,
         removeExperienceEntry,
+        // Custom Sections (New API)
+        handleCustomSectionNameChange,
+        handleCustomSectionEntryChange,
+        addCustomSection,
+        removeCustomSection,
+        addCustomSectionEntry,
+        removeCustomSectionEntry,
+        
+        // Projects (Legacy API - for backward compatibility)
+        handleProjectChange,
+        addProjectEntry,
+        removeProjectEntry,
         handleTailoredResumeChange,
         handleAddressChange,
         handleContactChange,

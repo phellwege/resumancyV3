@@ -277,6 +277,66 @@ const ResumePDFStyle5 = ({ user, selectedResume }) => {
                   </View>
                 ))}
             </View>
+
+            {/* Custom Sections */}
+            {selectedResume?.customSections && selectedResume.customSections.map((section, sectionIndex) => (
+              section.entries && section.entries.length > 0 && (
+                <View key={`section-${sectionIndex}`} style={styles.section}>
+                  <Text style={styles.sectionTitle}>{section.sectionName.toUpperCase()}</Text>
+                  {section.entries.map((entry, entryIndex) => (
+                    <View key={`entry-${sectionIndex}-${entryIndex}`} style={{marginBottom: 5}}>
+                      <Text style={{...styles.rightSectionContent, fontWeight: 'bold'}}>
+                        {entry.title} {entry.timeframe && `| ${entry.timeframe}`}
+                      </Text>
+                      {entry.subtitle && (
+                        <Text style={{...styles.rightSectionContent, fontStyle: 'italic', marginBottom: 3}}>
+                          {entry.subtitle}
+                        </Text>
+                      )}
+                      {entry.description && entry.description.split('\n').map((line, i) => {
+                        if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
+                          return (
+                            <View key={`desc-${entryIndex}-${i}`} style={styles.rightBulletItem}>
+                              <Text style={styles.rightBullet}>{line.trim().charAt(0)}</Text>
+                              <Text style={styles.rightBulletText}>{line.trim().substring(1)}</Text>
+                            </View>
+                          );
+                        }
+                        return <Text key={`desc-${entryIndex}-${i}`} style={styles.sectionContent}>{line}</Text>;
+                      })}
+                    </View>
+                  ))}
+                </View>
+              )
+            ))}
+
+            {/* Legacy Projects Section Support */}
+            {!selectedResume?.customSections && selectedResume?.projects && selectedResume.projects.length > 0 && (
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>PROJECTS</Text>
+                {selectedResume.projects.map((project, index) => (
+                  <View key={index} style={styles.experienceEntry}>
+                    <View style={styles.experienceHeader}>
+                      <Text style={styles.experienceCompany}>{project.projectTitle}</Text>
+                      {project.projectTime && <Text style={styles.experienceTime}>{project.projectTime}</Text>}
+                    </View>
+                    <View style={styles.indent}>
+                      {project.projectSummary && project.projectSummary.split('\n').map((line, i) => {
+                        if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
+                          return (
+                            <View key={`proj-${index}-${i}`} style={styles.rightBulletItem}>
+                              <Text style={styles.rightBullet}>{line.trim().charAt(0)}</Text>
+                              <Text style={styles.rightBulletText}>{line.trim().substring(1)}</Text>
+                            </View>
+                          );
+                        }
+                        return <Text key={`proj-${index}-${i}`} style={styles.sectionContent}>{line}</Text>;
+                      })}
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
           </View>
         </View>
       </Page>

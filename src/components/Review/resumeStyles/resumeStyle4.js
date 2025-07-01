@@ -65,6 +65,41 @@ export default function ResumeStyle4({isGenPDF}) {
               ))}
             </div>
           )}
+
+          {/* Custom Sections */}
+          {selectedResume?.customSections && selectedResume.customSections.map((section, sectionIndex) => (
+            section.entries && section.entries.length > 0 && (
+              <div key={`section-${sectionIndex}`} className="resume-style4-section">
+                <h3 className="resume-style4-section-title">{section.sectionName}</h3>
+                {section.entries.map((entry, entryIndex) => (
+                  <div key={`entry-${sectionIndex}-${entryIndex}`} className="resume-style4-experience-item">
+                    <div className="resume-style4-experience-header">
+                      <h4 className="resume-style4-company-name">{entry.title}</h4>
+                      {entry.timeframe && <span className="resume-style4-job-date">{entry.timeframe}</span>}
+                    </div>
+                    {entry.subtitle && <p className="resume-style4-job-position">{entry.subtitle}</p>}
+                    <div>{renderTextWithNewLines(entry.description)}</div>
+                  </div>
+                ))}
+              </div>
+            )
+          ))}
+
+          {/* Legacy Projects Section Support */}
+          {!selectedResume?.customSections && selectedResume?.projects && selectedResume.projects.length > 0 && (
+            <div className="resume-style4-section">
+              <h3 className="resume-style4-section-title">Projects</h3>
+              {selectedResume.projects.map((project, index) => (
+                <div key={index} className="resume-style4-experience-item">
+                  <div className="resume-style4-experience-header">
+                    <h4 className="resume-style4-company-name">{project.projectTitle}</h4>
+                    {project.projectTime && <span className="resume-style4-job-date">{project.projectTime}</span>}
+                  </div>
+                  <div>{renderTextWithNewLines(project.projectSummary)}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Right Column - 30% with gray background */}

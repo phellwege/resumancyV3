@@ -114,14 +114,38 @@ export default function ResumeStyle2({ isGenPDF }) {
             ))}
           </div>
 
-          {/* Projects Section */}
-          {selectedResume?.projects?.length > 0 && (
+          {/* Custom Sections */}
+          {selectedResume?.customSections?.map((section, sectionIndex) => (
+            section.entries && section.entries.length > 0 && (
+              <div key={`section-${sectionIndex}`} className="resume-style2-section">
+                <h3 className="resume-style2-section-title">{section.sectionName}</h3>
+                {section.entries.map((entry, entryIndex) => (
+                  <div key={`entry-${sectionIndex}-${entryIndex}`} className="resume-style2-experience-item">
+                    <p className="resume-style2-company-name">
+                      {entry.title} {entry.timeframe && `| ${entry.timeframe}`}
+                    </p>
+                    {entry.subtitle && (
+                      <p className="resume-style2-job-position">
+                        {entry.subtitle}
+                      </p>
+                    )}
+                    {entry.description && renderTextWithNewLines(entry.description)}
+                  </div>
+                ))}
+              </div>
+            )
+          ))}
+          
+          {/* Legacy Projects Section Support */}
+          {!selectedResume?.customSections && selectedResume?.projects?.length > 0 && (
             <div className="resume-style2-section">
               <h3 className="resume-style2-section-title">Projects</h3>
               {selectedResume.projects.map((project, index) => (
                 <div key={index} className="resume-style2-project-item">
-                  <p className="resume-style2-project-title">{project.title}</p>
-                  {project.description && renderTextWithNewLines(project.description)}
+                  <p className="resume-style2-project-title">
+                    {project.projectTitle} {project.projectTime && `| ${project.projectTime}`}
+                  </p>
+                  {project.projectSummary && renderTextWithNewLines(project.projectSummary)}
                 </div>
               ))}
             </div>

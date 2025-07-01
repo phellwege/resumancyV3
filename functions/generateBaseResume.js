@@ -7,6 +7,21 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
     const experienceFormatted = user.resume[0].experience.map(item => {
         return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
     }).join("\n");
+    
+    // Format custom sections if they exist
+    const customSectionsFormatted = user.resume[0].customSections && user.resume[0].customSections.length > 0 ?
+        user.resume[0].customSections.map(section => {
+            const entriesText = section.entries.map(entry => {
+                return `Title: ${entry.title}${entry.subtitle ? `, Subtitle: ${entry.subtitle}` : ''}${entry.timeframe ? `, Time: ${entry.timeframe}` : ''}, Description: ${entry.description || 'N/A'}`;
+            }).join("\n");
+            return `Section: ${section.sectionName}\n${entriesText}`;
+        }).join("\n\n") : '';
+    
+    // Legacy projects section fallback
+    const projectsFormatted = !customSectionsFormatted && user.resume[0].projects && user.resume[0].projects.length > 0 ?
+        user.resume[0].projects.map(project => {
+            return `Project: ${project.projectTitle}${project.projectTime ? `, Time: ${project.projectTime}` : ''}, Summary: ${project.projectSummary || 'N/A'}`;
+        }).join("\n") : '';
 
     try {
         const gptResponse = await openai.chat.completions.create({
@@ -22,6 +37,8 @@ async function summarizeResumeWithRetry(user, apiKey, retryCount = 0) {
                     Experience: ${experienceFormatted}
                     Education and Certifications: ${user.resume[0].education}
                     Skills: ${user.resume[0].skills}
+                    ${customSectionsFormatted ? `Custom Sections: ${customSectionsFormatted}` : ''}
+                    ${projectsFormatted ? `Projects: ${projectsFormatted}` : ''}
                 ` 
                 },
             ],
@@ -101,6 +118,21 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
     const experienceFormatted = user.resume[0].experience.map(item => {
         return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
     }).join("\n");
+    
+    // Format custom sections if they exist
+    const customSectionsFormatted = user.resume[0].customSections && user.resume[0].customSections.length > 0 ?
+        user.resume[0].customSections.map(section => {
+            const entriesText = section.entries.map(entry => {
+                return `Title: ${entry.title}${entry.subtitle ? `, Subtitle: ${entry.subtitle}` : ''}${entry.timeframe ? `, Time: ${entry.timeframe}` : ''}, Description: ${entry.description || 'N/A'}`;
+            }).join("\n");
+            return `Section: ${section.sectionName}\n${entriesText}`;
+        }).join("\n\n") : '';
+    
+    // Legacy projects section fallback
+    const projectsFormatted = !customSectionsFormatted && user.resume[0].projects && user.resume[0].projects.length > 0 ?
+        user.resume[0].projects.map(project => {
+            return `Project: ${project.projectTitle}${project.projectTime ? `, Time: ${project.projectTime}` : ''}, Summary: ${project.projectSummary || 'N/A'}`;
+        }).join("\n") : '';
 
     try {
         const gptResponse = await openai.chat.completions.create({
@@ -122,6 +154,8 @@ async function generateSkillsSectionWithRetry(user, apiKey, retryCount = 0) {
                         Experience: ${experienceFormatted}
                         Education and Certifications: ${user.resume[0].education}
                         Skills: ${user.resume[0].skills}
+                        ${customSectionsFormatted ? `Custom Sections: ${customSectionsFormatted}` : ''}
+                        ${projectsFormatted ? `Projects: ${projectsFormatted}` : ''}
                     ` 
                 },
             ],
@@ -186,6 +220,64 @@ async function improveEducationSection(user, apiKey, retryCount = 0) {
     }
 }
 
+async function improveCustomSection(user, apiKey, retryCount = 0) {
+    const openai = new OpenAI({ apiKey });
+
+    const customSectionsFormatted = user.resume[0].customSections && user.resume[0].customSections.length > 0 ?
+        user.resume[0].customSections.map(section => {
+            const entriesText = section.entries.map(entry => {
+                return `Title: ${entry.title}${entry.subtitle ? `, Subtitle: ${entry.subtitle}` : ''}${entry.timeframe ? `, Time: ${entry.timeframe}` : ''}, Description: ${entry.description || 'N/A'}`;
+            }).join("\n");
+            return `Section: ${section.sectionName}\n${entriesText}`;
+        }).join("\n\n") : '';
+
+    // If no custom sections exist, return empty
+    if (!customSectionsFormatted) {
+        return '';
+    }
+
+
+    try {
+        const gptResponse = await openai.chat.completions.create({
+            model: 'gpt-4o-mini',
+            messages: [
+                { 
+                    role: 'system', 
+                    content: `
+                    I am building a resume and need help improving custom sections.
+                    Please ensure the response is concise and limited to key details provided.
+                    Format each section professionally and maintain the original structure.
+                    `
+                },
+                { 
+                    role: 'user', 
+                    content: `
+                    ${customSectionsFormatted}
+                    Please rewrite this section in a professional, concise format suitable for a resume. 
+                    Ensure:
+                    - Key accomplishments are highlighted succinctly.
+                    - Keep the response brief and professional.
+                    - Maintain the section names and structure.
+                    ` 
+                },
+            ],
+            temperature: 0.4,
+            max_tokens: 500,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+        });
+
+        return gptResponse.choices[0].message.content;
+    } catch (error) {
+        if (retryCount < 3) {
+            return improveCustomSection(user, apiKey, retryCount + 1);
+        } else {
+            throw new Error('Error generating custom section after 3 attempts');
+        }
+    }
+}
+
 exports.generate_base_resume = onRequest(
     { cors: true, memory: "512Mi", secrets: ["GPT_API_KEY"] },
     async (req, res) => {
@@ -217,13 +309,15 @@ exports.generate_base_resume = onRequest(
                     generateExperienceSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateSkillsSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     improveEducationSection(user, apiKey).catch(e => `Error: ${e.message}`),
+                    improveCustomSection(user, apiKey).catch(e => `Error: ${e.message}`),
                 ]);
 
                 res.status(200).json({
                     summary: { type: "base", data: summary },
                     experienceSection: { type: "base", data: experienceSection },
                     skillsSection: { type: "base", data: skillsSection },
-                    educationSection: { type: "base", data: educationSection }
+                    educationSection: { type: "base", data: educationSection },
+                    customSection: { type: "base", data: customSection }
                 });
             } catch (error) {
                 res.status(500).json({ error: 'Error processing resume: ' + error.message });

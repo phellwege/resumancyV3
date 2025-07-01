@@ -97,6 +97,10 @@ export default function ReviewBaseResumeModal() {
       experience: selectedResume.experience,
       education: selectedResume.education,
       skills: selectedResume.skills,
+      // Include custom sections if they exist
+      customSections: selectedResume.customSections || [],
+      // For backward compatibility
+      projects: selectedResume.projects || [],
   })};
 
   const SelectedResumeComponent = styleComponents[selectedStyle];

@@ -15,8 +15,8 @@ import { useData } from '../../context/DataContext';
 
 export default function CreateBaselineResume() {
     const history = useNavigate();
-    const {
-        user, 
+    const { 
+        user,
         setUser,
         handleResumeChange,
         sanitizeUserInput,
@@ -29,6 +29,19 @@ export default function CreateBaselineResume() {
         canCreateMore,
         setSuccessMessage,
         setError,
+        handleContactChange,
+        handleAddressChange,
+        handleUserChange,
+        handleProjectChange,
+        addProjectEntry,
+        removeProjectEntry,
+        handleCustomSectionNameChange,
+        handleCustomSectionEntryChange,
+        addCustomSection,
+        removeCustomSection,
+        addCustomSectionEntry,
+        removeCustomSectionEntry,
+        resetContextForLogout
     } = useUser();
     const {
         setLoading
@@ -246,6 +259,75 @@ export default function CreateBaselineResume() {
                                         Work Experience, this should include: Dates of Employment, Employer, Job Title, and a brief description of your role.
                                     </Form.Text>
                                 </Form.Group>
+                                {(user.resume[0].customSections || []).map((section, sectionIndex) => (
+                                    <Form.Group key={`section-${sectionIndex}`}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <Form.Control
+                                                type='text'
+                                                placeholder='Section Name'
+                                                value={section.sectionName}
+                                                onChange={(e) => handleCustomSectionNameChange(sectionIndex, sanitizeUserInput(e.target.value))}
+                                                className="mb-2 section-name-input"
+                                                style={{width: '50%', fontWeight: 'bold'}}
+                                            />
+                                            <div>
+                                                <OverlayTrigger 
+                                                    overlay={
+                                                    <Tooltip id={`tooltip-${sectionIndex}`}>
+                                                        Add custom sections to showcase projects, publications, volunteer work, or anything else.
+                                                    </Tooltip>
+                                                    }>
+                                                    <span className="question-icon">
+                                                        <BsQuestionCircle />
+                                                    </span>
+                                                </OverlayTrigger>
+                                                <FaMinusSquare onClick={() => removeCustomSection(sectionIndex)} size={25} className='creationButton ml-2' id='RemoveSectionButton'/>
+                                            </div>
+                                        </div>
+                                        <div className='createResumePlusAndMinus'>
+                                            <FaPlusSquare onClick={() => addCustomSectionEntry(sectionIndex)} size={25} className='creationButton' id='AddEntryButton'/>
+                                        </div>
+                                        {(section.entries || []).map((entry, entryIndex) => (
+                                            <div key={`entry-${sectionIndex}-${entryIndex}`} className="custom-section-entry" style={{border: '1px solid lightblue', padding: '5px', margin: '5px', borderRadius: '.5REM'}}>
+                                                <Form.Control 
+                                                    type='text'
+                                                    placeholder='Title'
+                                                    value={entry.title}
+                                                    onChange={(e) => handleCustomSectionEntryChange(sectionIndex, entryIndex, 'title', sanitizeUserInput(e.target.value))}
+                                                    className="mb-2"
+                                                />
+                                                <Form.Control 
+                                                    type='text'
+                                                    placeholder='Time Frame (e.g., Jan 2020 - Dec 2022)'
+                                                    value={entry.timeframe}
+                                                    onChange={(e) => handleCustomSectionEntryChange(sectionIndex, entryIndex, 'timeframe', sanitizeUserInput(e.target.value))}
+                                                    className="mb-2"
+                                                />
+                                                <textarea
+                                                    rows='5'
+                                                    placeholder='Description'
+                                                    value={entry.description}
+                                                    onChange={(e) => handleCustomSectionEntryChange(sectionIndex, entryIndex, 'description', sanitizeUserInput(e.target.value))}
+                                                    className="mb-3 form-control"
+                                                />
+                                                <div className='createResumePlusAndMinus'>
+                                                    <FaMinusSquare onClick={() => removeCustomSectionEntry(sectionIndex, entryIndex)} size={25} className='creationButton' id='RemoveEntryButton'/>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        <Form.Text className='text-muted'>
+                                            Add entries for {section.sectionName.toLowerCase()} with titles, timeframes, and descriptions.
+                                        </Form.Text>
+                                    </Form.Group>
+                                ))}
+                                <Button
+                                    variant="outline-secondary"
+                                    size="sm"
+                                    onClick={addCustomSection}
+                                    className="mb-4 mt-2"
+                                >
+                                    + Add New Section
+                                </Button>
                                 <Form.Group>
                                     <Form.Label className="d-flex justify-content-between align-items-center">
                                         <div className='text-centered'>

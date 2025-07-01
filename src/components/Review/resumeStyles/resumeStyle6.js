@@ -132,14 +132,37 @@ export default function ResumeStyle6({ isGenPDF }) {
             </div>
           )}
 
-          {/* Projects Section */}
-          {selectedResume?.projects?.length > 0 && (
+          {/* Custom Sections */}
+          {selectedResume?.customSections && selectedResume.customSections.map((section, sectionIndex) => (
+            section.entries && section.entries.length > 0 && (
+              <div key={`section-${sectionIndex}`} className="resume-section">
+                <h3 className="section-title">{section.sectionName}</h3>
+                {section.entries.map((entry, entryIndex) => (
+                  <div key={`entry-${sectionIndex}-${entryIndex}`} style={{ marginBottom: '8px' }}>
+                    <p style={{ fontWeight: 700, margin: 0, fontSize: '9pt' }}>
+                      {entry.title} {entry.timeframe && `| ${entry.timeframe}`}
+                    </p>
+                    {entry.subtitle && (
+                      <p style={{ margin: 0, fontSize: '8pt' }}>
+                        {entry.subtitle}
+                      </p>
+                    )}
+                    {entry.description && renderMultiline(entry.description)}
+                  </div>
+                ))}
+              </div>
+            )
+          ))}
+
+          {/* Legacy Projects Section Support */}
+          {!selectedResume?.customSections && selectedResume?.projects?.length > 0 && (
             <div className="resume-section">
               <h3 className="section-title">Projects</h3>
               {selectedResume.projects.map((project, index) => (
                 <div key={index} style={{ marginBottom: '8px' }}>
-                  <p style={{ fontWeight: 700, margin: 0, fontSize: '9pt' }}>{project.title}</p>
-                  {project.description && renderMultiline(project.description)}
+                  <p style={{ fontWeight: 700, margin: 0, fontSize: '9pt' }}>{project.projectTitle}</p>
+                  {project.projectTime && `| ${project.projectTime}`}
+                  {project.projectSummary && renderMultiline(project.projectSummary)}
                 </div>
               ))}
             </div>

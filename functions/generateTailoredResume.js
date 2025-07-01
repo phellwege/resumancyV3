@@ -8,6 +8,21 @@ async function summarizeResumeWithRetry(selectedTailoredResumeIdData, user, apiK
   const experienceFormatted = user.resume[0].experience.map(item => {
     return `Job Title: ${item.expJobTitle}, Company: ${item.expCompanyName}, Time: ${item.expTime}, Description: ${item.expDesc}`;
   }).join("\n");
+  
+  // Format custom sections if they exist
+  const customSectionsFormatted = user.resume[0].customSections && user.resume[0].customSections.length > 0 ?
+    user.resume[0].customSections.map(section => {
+      const entriesText = section.entries.map(entry => {
+        return `Title: ${entry.title}${entry.subtitle ? `, Subtitle: ${entry.subtitle}` : ''}${entry.timeframe ? `, Time: ${entry.timeframe}` : ''}, Description: ${entry.description || 'N/A'}`;
+      }).join("\n");
+      return `Section: ${section.sectionName}\n${entriesText}`;
+    }).join("\n\n") : '';
+  
+  // Legacy projects section fallback
+  const projectsFormatted = !customSectionsFormatted && user.resume[0].projects && user.resume[0].projects.length > 0 ?
+    user.resume[0].projects.map(project => {
+      return `Project: ${project.projectTitle}${project.projectTime ? `, Time: ${project.projectTime}` : ''}, Summary: ${project.projectSummary || 'N/A'}`;
+    }).join("\n") : '';
 
   try {
     const gptResponse = await openai.chat.completions.create({
@@ -31,6 +46,8 @@ async function summarizeResumeWithRetry(selectedTailoredResumeIdData, user, apiK
               Experience: ${experienceFormatted}
               Education and Certifications: ${user.resume[0].education}
               Skills: ${user.resume[0].skills}
+              ${customSectionsFormatted ? `\nAdditional Resume Sections: ${customSectionsFormatted}` : ''}
+              ${projectsFormatted ? `\nProjects: ${projectsFormatted}` : ''}
           `
         },
       ],

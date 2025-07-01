@@ -139,14 +139,48 @@ export default function ResumeStyle5({isGenPDF}) {
             ))}
           </div>
 
-          {/* Projects Section */}
-          {selectedResume?.projects?.length > 0 && (
+          {/* Custom Sections */}
+          {selectedResume?.customSections && selectedResume.customSections.map((section, sectionIndex) => (
+            section.entries && section.entries.length > 0 && (
+              <div key={`section-${sectionIndex}`} className="resume-style5-section">
+                <h3 className="resume-style5-section-title">{section.sectionName}</h3>
+                {section.entries.map((entry, entryIndex) => (
+                  <div key={`entry-${sectionIndex}-${entryIndex}`} className="resume-style5-experience-item">
+                    <div className="resume-style5-experience-header">
+                      <p className="resume-style5-company-name">
+                        {entry.title}
+                      </p>
+                      {entry.timeframe && (
+                        <p className="resume-style5-job-date">
+                          {entry.timeframe}
+                        </p>
+                      )}
+                    </div>
+                    {entry.subtitle && (
+                      <p className="resume-style5-job-position">
+                        {entry.subtitle}
+                      </p>
+                    )}
+                    {entry.description && renderTextWithNewLines(entry.description)}
+                  </div>
+                ))}
+              </div>
+            )
+          ))}
+
+          {/* Legacy Projects Section Support */}
+          {!selectedResume?.customSections && selectedResume?.projects?.length > 0 && (
             <div className="resume-style5-section">
               <h3 className="resume-style5-section-title">Projects</h3>
               {selectedResume.projects.map((project, index) => (
                 <div key={index} className="resume-style5-project-item">
-                  <p className="resume-style5-project-title">{project.title}</p>
-                  {project.description && renderTextWithNewLines(project.description)}
+                  <p className="resume-style5-project-title">{project.projectTitle}</p>
+                  {project.projectTime && (
+                    <p className="resume-style5-job-date">
+                      {project.projectTime}
+                    </p>
+                  )}
+                  {project.projectSummary && renderTextWithNewLines(project.projectSummary)}
                 </div>
               ))}
             </div>

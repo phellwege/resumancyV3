@@ -128,6 +128,41 @@ const renderTextWithNewLines = (text) => {
                   {renderTextWithNewLines(selectedResume.skills)}
                 </span>
               </div>
+              {/* Custom Sections */}
+              {selectedResume?.customSections && selectedResume.customSections.map((section, sectionIndex) => (
+                section.entries && section.entries.length > 0 && (
+                  <div key={`section-${sectionIndex}`} className="reviewDefaultResumeSections">
+                    <h6>{section.sectionName}:</h6>
+                    <span className="leftOrientedReviewSections">
+                      {section.entries.map((entry, entryIndex) => (
+                        <div key={`entry-${sectionIndex}-${entryIndex}`} className="experience-entry">
+                          <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(entry.title)}</h6>
+                          <div className='reviewResumeJobTitleAndTime'>
+                            {entry.subtitle && <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(entry.subtitle)}</h6>}
+                            {entry.timeframe && <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(entry.timeframe)}</h6>}
+                          </div>
+                          <span className='leftOrientedReviewSections'>{renderTextWithNewLines(entry.description)}</span>
+                        </div>
+                      ))}
+                    </span>
+                  </div>
+                )
+              ))}
+              {/* Legacy Projects Section Support */}
+              {!selectedResume?.customSections && selectedResume?.projects && selectedResume.projects.length > 0 && (
+                <div className="reviewDefaultResumeSections">
+                  <h6>Projects:</h6>
+                  <span className="leftOrientedReviewSections">
+                    {selectedResume.projects.map((project, index) => (
+                      <div key={index} className="experience-entry">
+                        <h6 className='leftOrientedReviewSections spacing'>{renderTextWithNewLines(project.projectTitle)}</h6>
+                        {project.projectTime && <h6 className='leftOrientedReviewSections'>{renderTextWithNewLines(project.projectTime)}</h6>}
+                        <span className='leftOrientedReviewSections'>{renderTextWithNewLines(project.projectSummary)}</span>
+                      </div>
+                    ))}
+                  </span>
+                </div>
+              )}
             </div>
             </div>
           </div>

@@ -277,8 +277,27 @@ const ResumePDFStyle6 = ({ user, selectedResume }) => {
               </View>
             )}
             
-            {/* PROJECTS */}
-            {selectedResume?.projects?.length > 0 && (
+            {/* Custom Sections */}
+            {selectedResume?.customSections && selectedResume.customSections.map((section, sectionIndex) => (
+              section.entries && section.entries.length > 0 && (
+                <View key={`section-${sectionIndex}`} style={styles.section}>
+                  <Text style={styles.sectionTitle}>{section.sectionName.toUpperCase()}</Text>
+                  {section.entries.map((entry, entryIndex) => (
+                    <View key={`entry-${sectionIndex}-${entryIndex}`} style={styles.projectEntry}>
+                      <View style={styles.experienceHeader}>
+                        <Text style={styles.experienceCompany}>{entry.title}</Text>
+                        {entry.timeframe && <Text style={styles.experienceTime}>{entry.timeframe}</Text>}
+                      </View>
+                      {entry.subtitle && <Text style={{...styles.experienceJobTitle, marginBottom: 3}}>{entry.subtitle}</Text>}
+                      {entry.description && renderMultiline(entry.description, styles.sectionContent)}
+                    </View>
+                  ))}
+                </View>
+              )
+            ))}
+            
+            {/* Legacy Projects Section Support */}
+            {!selectedResume?.customSections && selectedResume?.projects?.length > 0 && (
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>PROJECTS</Text>
                 {selectedResume.projects.map((proj, index) => (

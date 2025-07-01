@@ -184,6 +184,53 @@ const ResumePDFStyle4 = ({ user, selectedResume }) => {
                   </View>
                 ))}
             </View>
+            
+            {/* Custom Sections */}
+            {selectedResume?.customSections && selectedResume.customSections.map((section, sectionIndex) => (
+              section.entries && section.entries.length > 0 && (
+                <View key={`section-${sectionIndex}`} style={styles.section}>
+                  <Text style={styles.sectionTitle}>{section.sectionName.toUpperCase()}</Text>
+                  {section.entries.map((entry, entryIndex) => (
+                    <View key={`entry-${sectionIndex}-${entryIndex}`} style={styles.experienceEntry}>
+                      <View style={styles.experienceHeader}>
+                        <Text style={styles.experienceCompany}>{entry.title}</Text>
+                        {entry.timeframe && <Text style={styles.experienceTime}>{entry.timeframe}</Text>}
+                      </View>
+                      {entry.subtitle && <Text style={{...styles.experienceJobTitle, marginBottom: 3}}>{entry.subtitle}</Text>}
+                      {entry.description && renderTextWithNewLines(entry.description, styles.sectionContent, styles.indent)}
+                    </View>
+                  ))}
+                </View>
+              )
+            ))}
+            
+            {/* Legacy Projects Section Support */}
+            {!selectedResume?.customSections && selectedResume?.projects && selectedResume.projects.length > 0 && (
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>PROJECTS</Text>
+                {selectedResume.projects.map((project, index) => (
+                  <View key={index} style={styles.experienceEntry}>
+                    <View style={styles.experienceHeader}>
+                      <Text style={styles.experienceCompany}>{project.projectTitle}</Text>
+                      {project.projectTime && <Text style={styles.experienceTime}>{project.projectTime}</Text>}
+                    </View>
+                    <View style={styles.indent}>
+                      {project.projectSummary && project.projectSummary.split('\n').map((line, i) => {
+                        if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
+                          return (
+                            <View key={`proj-${index}-${i}`} style={styles.bulletItem}>
+                              <Text style={styles.bullet}>{line.trim().charAt(0)}</Text>
+                              <Text style={styles.bulletText}>{line.trim().substring(1)}</Text>
+                            </View>
+                          );
+                        }
+                        return <Text key={`proj-${index}-${i}`} style={styles.sectionContent}>{line}</Text>;
+                      })}
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
           </View>
 
           {/* Right Block: Contact Info, Skills, Education */}
@@ -228,6 +275,8 @@ const ResumePDFStyle4 = ({ user, selectedResume }) => {
               })}
             </View>
             
+
+
             <View style={styles.section}>
               <Text style={styles.rightSectionTitle}>EDUCATION</Text>
               {selectedResume?.education && selectedResume.education.split('\n').map((line, i) => {
