@@ -38,7 +38,11 @@ exports.handle_stripe_webhook = onRequest(
 async function handleSubscriptionUpdate(subscription) {
     try {
         const customerId = subscription.customer;
-        const planId = subscription.items.data[0].plan.id;
+        const planId = subscription.items?.data?.[0]?.plan?.id;
+        if (!planId) {
+            console.error("❌ No plan ID found in subscription event");
+            return;
+        }
         const status = subscription.status;
         const billingCycleStart = subscription.current_period_start * 1000;
         const dateActivated = subscription.start_date * 1000;
@@ -64,7 +68,7 @@ async function handleSubscriptionUpdate(subscription) {
         const userData = userDoc.data();
 
         // Determine if a new billing cycle has begun
-        const isNewCycle = userData.subscription.billingCycleStart !== billingCycleStart;
+        const isNewCycle = userData.subscription?.billingCycleStart !== billingCycleStart;
 
         // Build the update payload
         const updatedData = {

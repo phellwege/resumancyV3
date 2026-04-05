@@ -75,6 +75,7 @@ function Header(props) {
             timeouts.push(timeout);
         }
         return () => {
+            timeouts.forEach(t => clearTimeout(t));
         };
     }, [successMessage, error]);
     

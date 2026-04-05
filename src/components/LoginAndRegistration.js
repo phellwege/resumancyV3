@@ -111,9 +111,10 @@ export default function LoginAndRegistration() {
                 };
 
                 // Create Stripe customer
+                const idToken = await authUser.getIdToken();
                 const response = await fetch("https://us-central1-resumancy.cloudfunctions.net/createStripeCustomer-createStripeCustomer", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${idToken}` },
                     body: JSON.stringify({ email: authUser.email, firebaseUID: authUser.uid }),
                 });
 

@@ -46,8 +46,7 @@ export default function FinishSignIn() {
     };
   
     completeSignIn();
-  }, [auth, checkUserExists, addUserData, fetchUserData, setUser, setSuccessMessage, setError]);
-  
+  }, [auth, setUser, setError, setLoading, navigate]);
 
-  return <>HUH</>;
+  return null;
 }

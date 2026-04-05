@@ -1,5 +1,6 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const stripe = require("stripe");
+const admin = require("firebase-admin");
 
 /**
  * Creates a single-use Stripe coupon for a referral code
@@ -8,6 +9,21 @@ const stripe = require("stripe");
 exports.createStripeCouponHttp = onRequest(
     { cors: true, secrets: ["STRIPE_COUPONKEY"] },
     async (req, res) => {
+        if (req.method === "OPTIONS") {
+            return res.status(204).send("");
+        }
+
+        // Verify Firebase auth token
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Unauthorized: Missing or invalid token' });
+        }
+        try {
+            await admin.auth().verifyIdToken(authHeader.split('Bearer ')[1]);
+        } catch (error) {
+            return res.status(401).json({ error: 'Unauthorized: ' + error.message });
+        }
+
         try {
             console.log("🔍 Received request to create Stripe coupon:", req.body);
 

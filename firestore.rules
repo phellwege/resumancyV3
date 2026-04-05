@@ -3,7 +3,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{uid} {
-      allow read: if request.auth.uid == uid;
+      allow read, write: if request.auth.uid == uid;
       match /checkout_sessions/{id} {
         allow read, write: if request.auth.uid == uid;
       }
@@ -25,8 +25,9 @@ service cloud.firestore {
         allow read: if true;
       }
     }
+    // Default deny - only explicitly matched paths above are accessible
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }

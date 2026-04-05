@@ -183,7 +183,7 @@ export function DataProvider({ children }) {
                     ...prevUser.subscription,
                     usage: {
                         ...prevUser.subscription.usage,
-                        tailoredResumes:  prevUser.subscription.usage.tailoredResumes + 1 + 1,
+                        tailoredResumes:  prevUser.subscription.usage.tailoredResumes + 1,
                     }
                 }
             }));
@@ -363,14 +363,15 @@ export function DataProvider({ children }) {
         };
 
         loadResumes();
-    }, [user.id, user.resume[0]]); 
+    }, [user.id, user.resume?.length]);
 
     const handleManagePlan = async () => {
         setLoading(true);
         try {
+        const token = await getUserToken();
         const response = await fetch('https://us-central1-resumancy.cloudfunctions.net/createStripePortalSession-createStripePortalSession', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ customerId: user.stripeCustomerId }),
         });
         if (!response.ok) {
@@ -388,9 +389,10 @@ export function DataProvider({ children }) {
     const deleteUserAccount = async (userId, stripeCustomerId) => {
         try {
         // Call your backend endpoint that handles cancellation/deletion
+        const token = await getUserToken();
         const response = await fetch('https://us-central1-resumancy.cloudfunctions.net/deleteUserAccount-deleteUserAccount', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
                 userId,
                 stripeCustomerId,
@@ -420,8 +422,12 @@ export function DataProvider({ children }) {
     
     useEffect(() => {
         async function fetchToken() {
-            const token = await getUserToken();
-            setUserToken(token);
+            try {
+                const token = await getUserToken();
+                setUserToken(token);
+            } catch (error) {
+                console.error("Error fetching user token:", error);
+            }
         }
         fetchToken();
     }, []);

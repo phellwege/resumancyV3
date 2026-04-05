@@ -304,7 +304,7 @@ exports.generate_base_resume = onRequest(
             }
 
             try {
-                const [summary, experienceSection, skillsSection, educationSection] = await Promise.all([
+                const [summary, experienceSection, skillsSection, educationSection, customSection] = await Promise.all([
                     summarizeResumeWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateExperienceSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),
                     generateSkillsSectionWithRetry(user, apiKey).catch(e => `Error: ${e.message}`),

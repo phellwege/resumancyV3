@@ -11,6 +11,22 @@ exports.deleteUserAccount = onRequest(
       return res.status(204).send("");
     }
 
+    // Verify Firebase auth token
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Unauthorized: Missing or invalid token' });
+    }
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(authHeader.split('Bearer ')[1]);
+      // Ensure the requesting user matches the account being deleted
+      const { userId, stripeCustomerId } = req.body;
+      if (decodedToken.uid !== userId) {
+        return res.status(403).json({ error: 'Forbidden: You can only delete your own account' });
+      }
+    } catch (error) {
+      return res.status(401).json({ error: 'Unauthorized: ' + error.message });
+    }
+
     try {
       const stripeInstance = stripe(process.env.STRIPE_KEY);
       const { userId, stripeCustomerId } = req.body;

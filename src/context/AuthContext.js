@@ -48,15 +48,22 @@ export function AuthProvider({ children }) {
         });
 
         // Listen for ID token changes
+        let refreshTokenTimer = null;
         const unsubscribeTokenChanges = onIdTokenChanged(auth, async (user) => {
+            // Clear any existing refresh timer
+            if (refreshTokenTimer) {
+                clearTimeout(refreshTokenTimer);
+                refreshTokenTimer = null;
+            }
+
             if (user) {
                 // Get the token when it changes
                 const token = await user.getIdToken();
                 // You can store the token in localStorage if needed
                 localStorage.setItem('authToken', token);
-                
+
                 // Set up a timer to refresh the token before it expires
-                const refreshTokenTimer = setTimeout(async () => {
+                refreshTokenTimer = setTimeout(async () => {
                     try {
                         // Force token refresh
                         const newToken = await user.getIdToken(true);
@@ -66,8 +73,6 @@ export function AuthProvider({ children }) {
                         localStorage.removeItem('authToken');
                     }
                 }, TOKEN_REFRESH_INTERVAL);
-                
-                return () => clearTimeout(refreshTokenTimer);
             } else {
                 // Clear token if user is signed out
                 localStorage.removeItem('authToken');
@@ -77,6 +82,9 @@ export function AuthProvider({ children }) {
         return () => {
             unsubscribeAuthState();
             unsubscribeTokenChanges();
+            if (refreshTokenTimer) {
+                clearTimeout(refreshTokenTimer);
+            }
         };
     }, []);
 

@@ -1,5 +1,6 @@
 import { db } from './firebaseConfig';
 import { doc, getDoc, updateDoc, collection, query, where, getDocs, arrayUnion } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -124,10 +125,15 @@ export const initializeUserReferral = async (userId) => {
  */
 export const createStripeCoupon = async (referralCode, userId) => {
   try {
+    // Get auth token for the request
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    const idToken = currentUser ? await currentUser.getIdToken() : null;
+
     // Call the Firebase Cloud Function to create the coupon in Stripe
     const response = await fetch('https://us-central1-resumancy.cloudfunctions.net/createStripeCouponHttp', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
       body: JSON.stringify({ referralCode, userId })
     });
 
