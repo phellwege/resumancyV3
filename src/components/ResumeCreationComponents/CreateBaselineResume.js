@@ -48,13 +48,12 @@ export default function CreateBaselineResume() {
     } = useAuth();
     const {
         saveBaselineResume,
-        userToken
+        getUserToken
     } = useData();
     const userExperience = "Detail your relevant job history (Required):";
     const userEducation = "List your education and certifications (Required):";
     const userSkills = "Specify your relevant skills (Required):";
     const userAdditional = "Include any additional relevant information (Optional):";
-    const token = userToken;
     const addNewResume = (newResume) => {
         setUser((prevState) => ({
             ...prevState,
@@ -80,9 +79,16 @@ export default function CreateBaselineResume() {
         setError(null);
     
         try {
+            const token = await getUserToken();
+            if (!token) {
+                setError("You must be logged in to create a resume.");
+                setLoading(false);
+                return;
+            }
+
             const rateLimitResponse = await axios.get(
                 'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
-                { headers: { 
+                { headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }}

@@ -69,14 +69,12 @@ export default function CreateCustomTailoredResume() {
   } = useUser();
 
   const { setLoading } = useAuth();
-  const { addTailoredResume, addCoverLetter, userToken } = useData();
+  const { addTailoredResume, addCoverLetter, getUserToken } = useData();
   const history = useNavigate();
-
-  const token = userToken;
   const companyNameTooltip = "The name of the company you are applying for.";
   const prospectiveJobDescTooltip = "Paste a job description of the role you are applying for.";
 
-  const generateTailoredResume = async (jobData, currentUser) => {
+  const generateTailoredResume = async (jobData, currentUser, token) => {
     try {
       const response = await axios.post(
         "https://us-central1-resumancy.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
@@ -112,7 +110,7 @@ export default function CreateCustomTailoredResume() {
     }
   };
 
-  const generateCoverLetter = async (jobData, currentUser) => {
+  const generateCoverLetter = async (jobData, currentUser, token) => {
     try {
       const response = await axios.post(
         "https://us-central1-resumancy.cloudfunctions.net/generate_cover_letter-generate_cover_letter",
@@ -129,7 +127,7 @@ export default function CreateCustomTailoredResume() {
     }
   };
 
-  const performGapAnalysis = async (finalizedResume, jobData, currentUser) => {
+  const performGapAnalysis = async (finalizedResume, jobData, currentUser, token) => {
     const resumeText = extractResumeText(finalizedResume);
     try {
       const gapResponse = await axios.post(
@@ -186,6 +184,13 @@ export default function CreateCustomTailoredResume() {
     };
 
     try {
+      const token = await getUserToken();
+      if (!token) {
+        setError("You must be logged in to create a tailored resume.");
+        setLoading(false);
+        return;
+      }
+
       const rateLimitResponse = await axios.get(
         'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
         { headers: {
@@ -199,11 +204,11 @@ export default function CreateCustomTailoredResume() {
         setLoading(false);
         return;
     }
-      const tailoredResume = await generateTailoredResume(jobData, user);
+      const tailoredResume = await generateTailoredResume(jobData, user, token);
 
-      const coverLetterText = await generateCoverLetter(jobData, user);
+      const coverLetterText = await generateCoverLetter(jobData, user, token);
 
-      const skillGapAnalysis = await performGapAnalysis(tailoredResume, jobData, user);
+      const skillGapAnalysis = await performGapAnalysis(tailoredResume, jobData, user, token);
 
       const resumeText = extractResumeText(tailoredResume);
       const matchPercent = await calculateHybridMatchPercent(resumeText, jobData.description);
