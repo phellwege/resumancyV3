@@ -113,6 +113,12 @@ width: 45%;
     align-items: center;
     width: 100%;
 }
+/* Side-by-side columns start at the top (they differ in height). Phones stack, so leave those alone. */
+@media (min-width: 861px) {
+    .secondaryPageWrapper {
+        align-items: flex-start;
+    }
+}
 .leftDiv {
     width: 40%;
     display: flex;
