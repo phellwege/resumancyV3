@@ -127,23 +127,7 @@ return (
                         {hasApiKey ? `Settings (${model})` : 'Add API key'}
                     </Link>
                 </div>
-            ) : (
-                <>
-                {(user.initialSetupDone || pathname === '/') && (
-                    <div className='avatarWindow'>
-                        <div className='modalAvatarImg'>
-                            <>
-                            <Link to='' onClick={(e) => { e.preventDefault(); handleOpenLoginModal(); }} aria-label="Get started">
-                                <CgProfile size={65} aria-hidden="true" />
-                                <span className="sr-only">Get started</span>
-                            </Link>
-                            <Link to='' onClick={(e) => { e.preventDefault(); handleOpenLoginModal(); }} aria-label="Add your OpenAI key to get started">Get started</Link>
-                            </>
-                        </div>
-                    </div>
-                )}
-                </>
-            )}
+            ) : null /* New visitors start from the Get started button on the home page card. */}
         </div>
     </div>
     {user.initialSetupDone && (
