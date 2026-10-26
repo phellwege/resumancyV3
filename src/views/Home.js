@@ -103,52 +103,6 @@ export default function Home() {
                             <span className='statLabel'>Average Creation Time</span>
                         </div>
                     </div>
-                    <div className='heroFeatures'>
-                        <div className='featureItem'>
-                            AI-Powered Resume Customization
-                        </div>
-                        <div className='featureItem'>
-                            See Your Resume's Job Relevance Score
-                        </div>
-                        <div className='featureItem'>
-                            Skill Gap Analysis to Boost Your Application
-                        </div>
-                    </div>
-                    <div className='heroCTA'>
-                        <Button 
-                            variant="primary"
-                            onClick={handleOpenLoginModal}
-                            className='heroButton'
-                        >
-                            Get Started (bring your own key)
-                        </Button>
-                        <Button 
-                            variant="outline-light"
-                            as={Link} 
-                            to="/FAQ"
-                            className='heroButton'
-                            aria-label="View Frequently Asked Questions about Resumancy"
-                        >
-                            View FAQ
-                        </Button>
-                        {/* Light-theme twin: globalStyle hides outline-light in light mode. */}
-                        <Button 
-                            variant="outline-secondary"
-                            as={Link} 
-                            to="/FAQ"
-                            className='heroButton'
-                            aria-label="View Frequently Asked Questions about Resumancy"
-                        >
-                            View FAQ
-                        </Button>
-                    </div>
-                    <br/>
-                    <div className='featureItem'>
-                        Free demo. No account, no server: runs in your browser with your own OpenAI API key.
-                    </div>
-                    <div className='featureItem'>
-                        🔒 Your key and resumes stay in your browser. Requests go only to api.openai.com.
-                    </div>
                 </div>
             </section>
             )}
