@@ -38,7 +38,7 @@ export default function FAQ() {
                   "name": "Is there a fee for using your service?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "We offer a free 7-day trial of the Basic Plan. Our Basic Plan is $5/month and includes one base résumé and up to five tailored résumés or cover letters per month. Our Premium Plan is $15/month and provides unlimited tailored résumés and cover letters."
+                    "text": "Resumancy is a free demo. You bring your own OpenAI API key, so the only cost is your own OpenAI usage, typically a few cents per tailored résumé with a small model."
                   }
                 }
               ]
@@ -114,7 +114,7 @@ export default function FAQ() {
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                 <div itemProp="text">
                   <p>
-                    We offer a free 7-day trial of the Basic Plan. Our Basic Plan is <strong>$5/month</strong> and includes one base résumé and up to five tailored résumés or cover letters per month. Our Premium Plan is <strong>$15/month</strong> and provides unlimited tailored résumés and cover letters.
+                    Resumancy is a free demo. You bring your own OpenAI API key, so the only cost is your own OpenAI usage, typically a few cents per tailored résumé with a small model.
                   </p>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function FAQ() {
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                 <div itemProp="text">
                   <p>
-                  We take data security very seriously. We transmit your résumé data to our AI provider (OpenAI) strictly for the purpose of generating résumés, cover letters, and skill gap analyses. We do not sell your data or share it with other third parties. Where possible, we configure our AI provider not to store or train on your information. Your personal details and résumé content remain private, and we implement best practices to safeguard your data.
+                  This version has no server or database. Your profile and résumés are saved only in your own browser. When you generate content, your browser sends your résumé details and the job description directly to OpenAI using your own API key; nothing passes through us. Your key is kept in memory, or in your browser's storage only if you choose to remember it. OpenAI's own API data policies apply to what you send them.
                   </p>
                 </div>
               </div>
@@ -169,7 +169,7 @@ export default function FAQ() {
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                 <div itemProp="text">
                   <p>
-                    Yes! You can generate a cover letter customized to the same job description. Each plan includes cover letter generation: up to five per month on the Basic Plan and unlimited on the Premium Plan.
+                    Yes! Every tailored résumé comes with a cover letter customized to the same job description.
                   </p>
                 </div>
               </div>
@@ -187,11 +187,11 @@ export default function FAQ() {
             </div>
 
             <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-              <h2 itemProp="name" id="customer-support">Is there customer support available if I encounter any issues?</h2>
+              <h2 itemProp="name" id="customer-support">Is there support if I run into issues?</h2>
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                 <div itemProp="text">
                   <p>
-                    We provide customer support for any technical issues or questions you may have. Please allow up to 48 hours for a response. You can reach our support team at <a href='mailto:Support@Resumancy.com'>Support@Resumancy.com</a>
+                    This is an unsupported portfolio demo. Most problems come from the API key or model: open Settings, use Test key, and try a different model if yours is not available to your account.
                   </p>
                 </div>
               </div>
@@ -202,22 +202,12 @@ export default function FAQ() {
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                 <div itemProp="text">
                   <p>
-                  Simply sign up, input your basic information, enter your existing résumé details (this will be enhanced and used as a baseline), and then paste in the job description you're targeting. Our AI will guide you through building and tailoring your résumé step by step.
+                  Click Get started, paste your OpenAI API key and pick a model, input your basic information, enter your existing résumé details (this will be enhanced and used as a baseline), and then paste in the job description you're targeting. Our AI will guide you through building and tailoring your résumé step by step.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-              <h2 itemProp="name" id="subscription-change">How do I change my subscription?</h2>
-              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                <div itemProp="text">
-                  <p>
-                    To change or cancel your subscription, open the menu and go to "Profile," or click on your avatar. Select "Manage Account" and choose the plan or cancellation option that fits your needs.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
       </main>

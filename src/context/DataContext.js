@@ -1,468 +1,133 @@
-import React, { useContext, useEffect, useState } from 'react';
+// Local-only data layer. Everything lives in React state and is mirrored to
+// this browser's localStorage by UserContext. Nothing is sent to a server.
+import React, { useContext, useMemo, useState } from 'react';
 import LoadingPage from '../components/loadingPage/LoadingPage';
-import {db} from '../server/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
-import { useAuth } from './AuthContext';
-import { increment } from "firebase/firestore";
-import { 
-    getAuth,
-    onAuthStateChanged, 
-    getIdToken
-} from "firebase/auth";
-
-import {
-    doc,
-    getDoc,
-    setDoc,
-    updateDoc,
-    arrayUnion,
-    serverTimestamp,
-    onSnapshot
-} from 'firebase/firestore';
-
-import { 
-    initializeUserReferral,
-    checkAndApplyReferralReward,
-    applyPremiumReward,
-    getReferralStats,
-    updateReferralOnSubscription
-} from '../server/ReferralService';
+import { clearAll } from '../lib/storage';
 
 const DataContext = React.createContext();
 
 export function useData() {
-  return useContext(DataContext);
+    return useContext(DataContext);
 }
+
+const mergeUser = (prev, updated) => ({
+    ...prev,
+    ...updated,
+    contactInfo: { ...prev.contactInfo, ...updated.contactInfo },
+    address: { ...prev.address, ...updated.address },
+    subscription: {
+        ...prev.subscription,
+        ...updated.subscription,
+        usage: { ...prev.subscription?.usage, ...updated.subscription?.usage },
+        limits: { ...prev.subscription?.limits, ...updated.subscription?.limits },
+    },
+});
 
 export function DataProvider({ children }) {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [userToken, setUserToken] = useState(null)
-    const { 
-        user, 
-        setUser,
-        setSuccessMessage,
-        setError,
-        initialUserState
-    } = useUser();
-    const {currentUser} = useAuth();
+    const { user, setUser, setSuccessMessage, initialUserState } = useUser();
 
-    const fetchUserData = (userId) => {
-        if (!userId) return null;
-    
-        const userDocRef = doc(db, 'users', userId);
-    
-        const unsubscribe = onSnapshot(userDocRef, (docSnap) => {
-            if (docSnap.exists()) {
-                const userData = docSnap.data();
-                setUser(userData);
-            } else {
-                console.warn(`User ${userId} not found.`);
-            }
-        });
-    
-        return unsubscribe;
+    const updateUserData = async (_userId, updatedData) => {
+        setUser((prev) => mergeUser(prev, updatedData));
     };
-    
-    const updateUserData = async (userId, updatedData) => {
-        try {
-            const userDocRef = doc(db, 'users', userId);
-    
-            const userDocSnap = await getDoc(userDocRef);
-            if (!userDocSnap.exists()) {
-                console.error('User document does not exist');
-                return;
-            }
-    
-            const currentUserData = userDocSnap.data();
+    const saveUserData = updateUserData;
+    const saveBaselineResume = async (_userId, fields) => {
+        setUser((prev) => ({ ...prev, ...fields }));
+        return { status: 200 };
+    };
 
-            const mergedData = {
-                ...currentUserData,
-                ...updatedData,
-                contactInfo: {
-                    ...currentUserData.contactInfo,
-                    ...updatedData.contactInfo,
+    const addTailoredResume = async (_userId, newResume, newTailoredEntry) => {
+        setUser((prev) => ({
+            ...prev,
+            resume: [...prev.resume, newResume],
+            tailoredResume: [
+                ...prev.tailoredResume.filter((tr) => tr.id !== newTailoredEntry.id),
+                newTailoredEntry,
+            ],
+            subscription: {
+                ...prev.subscription,
+                usage: {
+                    ...prev.subscription.usage,
+                    tailoredResumes: (prev.subscription.usage.tailoredResumes || 0) + 1,
                 },
-                address: {
-                    ...currentUserData.address,
-                    ...updatedData.address,
-                },
-                resume: updatedData.resume ? [...currentUserData.resume, ...updatedData.resume] : currentUserData.resume,
-                tailoredResume: updatedData.tailoredResume ? [...currentUserData.tailoredResume, ...updatedData.tailoredResume] : currentUserData.tailoredResume,
-                coverLetter: updatedData.coverLetter ? [...currentUserData.coverLetter, ...updatedData.coverLetter] : currentUserData.coverLetter,
-                subscription: {
-                    ...currentUserData.subscription,
-                    ...updatedData.subscription,
-                    usage: {
-                        ...currentUserData.subscription.usage,
-                        ...updatedData.subscription?.usage,
-                    },
-                    limits: {
-                        ...currentUserData.subscription.limits,
-                        ...updatedData.subscription?.limits,
-                    },
-                },
-            };
-    
-            await updateDoc(userDocRef, mergedData);
-    
-            setUser((prevUser) => ({
-                ...prevUser,
-                ...mergedData,
-            }));
-    
-        } catch (error) {
-            console.error('Error updating user data:', error);
-        }
-    };
-    
-
-    const checkUserExists = async (userId) => {
-        const userDocRef = doc(db, 'users', userId);
-        const userDocSnap = await getDoc(userDocRef);
-        return userDocSnap.exists();
-    };
-    const addUserData = async (userId, newUserData) => {
-        try {
-            const userExists = await checkUserExists(userId);
-
-            if (!userExists) {
-                const userDocRef = doc(db, 'users', userId);
-                await setDoc(userDocRef, newUserData);
-            } else {
-                
-            }
-        } catch (error) {
-            console.error('Error adding user data:', error);
-        }
-    };
-    const saveUserData = async (userId, updatedData) => {
-        try {
-            const userDocRef = doc(db, 'users', userId);
-            const userDocSnap = await getDoc(userDocRef);
-            
-            if (userDocSnap.exists()) {
-                await updateDoc(userDocRef, updatedData);
-                setUser((prevUser) => ({
-                    ...prevUser,
-                    ...updatedData,
-                }));
-            } else {
-                await setDoc(userDocRef, {
-                    ...updatedData,
-                    createdAt: serverTimestamp(),
-                });
-                setUser((prevUser) => ({
-                    ...prevUser,
-                    ...updatedData,
-                }));
-            }
-        } catch (error) {
-            console.error('Error saving user data:', error);
-        }
-    };
-    const addTailoredResume = async (userId, newResume, newTailoredEntry) => {
-        try {
-            const userDocRef = doc(db, "users", userId);
-    
-            await updateDoc(userDocRef, {
-                resume: arrayUnion(newResume),
-                tailoredResume: arrayUnion(newTailoredEntry),
-                "subscription.usage.tailoredResumes": increment(1),
-            });
-    
-            setUser((prevUser) => ({
-                ...prevUser,
-                resume: [...prevUser.resume, newResume],
-                tailoredResume: [
-                    ...prevUser.tailoredResume.filter(tr => tr.id !== newTailoredEntry.id),
-                    newTailoredEntry,
-                ],
-                subscription: {
-                    ...prevUser.subscription,
-                    usage: {
-                        ...prevUser.subscription.usage,
-                        tailoredResumes:  prevUser.subscription.usage.tailoredResumes + 1,
-                    }
-                }
-            }));
-    
-        } catch (error) {
-            console.error("Error adding tailored resume:", error);
-        }
-    };
-    
-    const addCoverLetter = async (userId, newCoverLetter) => {
-        try {
-            const userDocRef = doc(db, 'users', userId);
-            await updateDoc(userDocRef, {
-                coverLetter: arrayUnion(newCoverLetter),
-            });
-            setUser((prevUser) => ({
-                ...prevUser,
-                coverLetter: [...prevUser.coverLetter, newCoverLetter],
-            }));
-            } catch (error) {
-            console.error('Error adding cover letter:', error);
-        }
-    };
-    const saveBaselineResume = async (userId, fieldsToUpdate) => {
-        try {
-            const userDocRef = doc(db, 'users', userId);
-            await updateDoc(userDocRef, fieldsToUpdate);
-            return { status: 200 };
-        } catch (error) {
-            console.error('Error saving baseline resume:', error);
-            return { status: 500, message: error.message };
-        }
-    };
-    
-    const fetchResumes = async (userId) => {
-        try {
-            const userDocRef = doc(db, 'users', userId);
-            const userDocSnap = await getDoc(userDocRef);
-    
-            if (userDocSnap.exists()) {
-                const userData = userDocSnap.data();
-                return userData.resume || [];
-            } else {
-                return [];
-            }
-        } catch (error) {
-            console.error('❌ Error fetching resumes:', error);
-            return [];
-        }
-    };
-    const fetchCoverLetters = async (userId) => {
-        try {
-            const userDocRef = doc(db, "users", userId);
-            const userDocSnap = await getDoc(userDocRef);
-    
-            if (userDocSnap.exists()) {
-                const userData = userDocSnap.data();
-                return userData.coverLetter || [];
-            } else {
-                return [];
-            }
-        } catch (error) {
-            console.error("❌ Error fetching cover letters:", error);
-            return [];
-        }
-    };
-    const updateSpecificResume = async (userId, updatedResume) => {
-        try {
-            const userDocRef = doc(db, "users", userId);
-            const userDocSnap = await getDoc(userDocRef);
-    
-            if (!userDocSnap.exists()) {
-                console.error("User document not found.");
-                return;
-            }
-    
-            const userData = userDocSnap.data();
-            const updatedResumes = userData.resume.map(resume =>
-                resume.id === updatedResume.id ? { ...resume, ...updatedResume } : resume
-            );
-    
-            await updateDoc(userDocRef, { resume: updatedResumes });
-    
-            setSuccessMessage("✅ Resume successfully updated!");
-        } catch (error) {
-            console.error("❌ Error updating resume:", error);
-        }
+            },
+        }));
     };
 
-    const updateSpecificCoverLetter = async (userId, updatedCoverLetter) => {
-        try {
-            const userDocRef = doc(db, "users", userId);
-    
-            const userSnapshot = await getDoc(userDocRef);
-            if (!userSnapshot.exists()) throw new Error("User not found");
-    
-            const userData = userSnapshot.data();
-    
-            const updatedCoverLetters = userData.coverLetter.map(cl =>
-                cl.id === updatedCoverLetter.id ? updatedCoverLetter : cl
-            );
-    
-            await updateDoc(userDocRef, { coverLetter: updatedCoverLetters });
-    
-            setSuccessMessage("✅ Cover letter updated successfully in Firestore");
-        } catch (error) {
-            console.error("❌ Error updating cover letter:", error);
-        }
+    const addCoverLetter = async (_userId, newCoverLetter) => {
+        setUser((prev) => ({ ...prev, coverLetter: [...prev.coverLetter, newCoverLetter] }));
     };
 
-    // Upload file to Firebase Storage (e.g., avatar or resume)
-    // const uploadFile = async (file, folderPath) => {
-    //     const storageRef = ref(storage, `${folderPath}/${file.name}`);
-    //     try {
-    //         await uploadBytes(storageRef, file);
-    //         const downloadURL = await getDownloadURL(storageRef);
-    //         return downloadURL;
-    //     } catch (error) {
-    //         console.error('Error uploading file:', error);
-    //         return null;
-    //     }
-    // };
-    
-    useEffect(() => {
-        if (loading || !currentUser || !user?.id) return;
-    
-        let unsubscribe;
-        try {
-            unsubscribe = fetchUserData(user.id);
-        } catch (error) {
-            console.error("❌ Error in Firestore listener: ", error);
-        }
-    
-        return () => {
-            if (unsubscribe) {
-                unsubscribe();
-            }
-        };
-    }, [loading, currentUser, user?.id]);
-
-    const [readyTailoredResume, setReadyTailoredResume] = useState([]);
-    useEffect(() => {
-        if (!user.id) return;
-    
-        const loadResumes = async () => {
-            const userId = user.id;
-            const fetchedResumes = await fetchResumes(userId);
-    
-            const mergedResumes = fetchedResumes.map(resume => {
-                const tailoredData = user.tailoredResume.find(tr => tr.id === resume.id);
-                return {
-                    ...resume,
-                    companyName: tailoredData?.companyName || "Unknown",
-                    matchPercent: tailoredData?.matchPercent ?? "N/A",
-                    skillGapAnalysis: tailoredData?.skillGapAnalysis || "",
-                };
-            })
-            .filter(resume => !resume.usage?.baseResume);
-    
-            setReadyTailoredResume(mergedResumes);
-        };
-    
-        loadResumes();
-    }, [user.id, user.tailoredResume]);
-
-    const [readyBaseResume, setReadyBaseResume] = useState([])
-    useEffect(() => {
-        if (!user?.id) return;
-
-        const loadResumes = async () => {
-            const userId = user.id;
-            const fetchedResumes = await fetchResumes(userId);
-
-            const filteredResumes = fetchedResumes.filter(resume => resume.usage?.baseResume === true);
-
-            setReadyBaseResume(filteredResumes);
-        };
-
-        loadResumes();
-    }, [user.id, user.resume?.length]);
-
-    const handleManagePlan = async () => {
-        setLoading(true);
-        try {
-        const token = await getUserToken();
-        const response = await fetch('https://us-central1-resumancy.cloudfunctions.net/createStripePortalSession-createStripePortalSession', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify({ customerId: user.stripeCustomerId }),
-        });
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Failed to create Stripe portal session: ${errorData.error}`);
-        }
-        const data = await response.json();
-        window.location.href = data.url;
-        } catch (error) {
-            console.error('Error redirecting to Stripe portal:', error);
-        }
-        setLoading(false);
+    const updateSpecificResume = async (_userId, updatedResume) => {
+        setUser((prev) => ({
+            ...prev,
+            resume: prev.resume.map((r) => (r.id === updatedResume.id ? { ...r, ...updatedResume } : r)),
+        }));
+        setSuccessMessage('✅ Resume saved in this browser.');
     };
-    // ... inside DataProvider, after your other functions
-    const deleteUserAccount = async (userId, stripeCustomerId) => {
-        try {
-        // Call your backend endpoint that handles cancellation/deletion
-        const token = await getUserToken();
-        const response = await fetch('https://us-central1-resumancy.cloudfunctions.net/deleteUserAccount-deleteUserAccount', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify({
-                userId,
-                stripeCustomerId,
-            }),
-        });
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to delete account');
-        }
-        localStorage.removeItem("user");
+
+    const updateSpecificCoverLetter = async (_userId, updated) => {
+        setUser((prev) => ({
+            ...prev,
+            coverLetter: prev.coverLetter.map((cl) => (cl.id === updated.id ? updated : cl)),
+        }));
+        setSuccessMessage('✅ Cover letter saved in this browser.');
+    };
+
+    const fetchResumes = async () => user.resume || [];
+    const fetchCoverLetters = async () => user.coverLetter || [];
+
+    const readyBaseResume = useMemo(
+        () => (user.resume || []).filter((r) => r.id && r.usage?.baseResume === true),
+        [user.resume]
+    );
+
+    const readyTailoredResume = useMemo(
+        () =>
+            (user.resume || [])
+                .filter((r) => r.id && !r.usage?.baseResume)
+                .map((resume) => {
+                    const t = user.tailoredResume.find((tr) => tr.id === resume.id);
+                    return {
+                        ...resume,
+                        companyName: t?.companyName || 'Unknown',
+                        matchPercent: t?.matchPercent ?? 'N/A',
+                        skillGapAnalysis: t?.skillGapAnalysis || '',
+                    };
+                }),
+        [user.resume, user.tailoredResume]
+    );
+
+    const deleteUserAccount = async () => {
+        clearAll();
         setUser(initialUserState);
         navigate('/');
         return { success: true };
-        } catch (error) {
-            console.error('Error deleting account:', error);
-            return { error: error.message };
-        }
     };
-    const getUserToken = async () => {
-        const auth = getAuth();
-        const user = auth.currentUser;
-        if (user) {
-            return await user.getIdToken(true); // ✅ Force refresh token
-        }
-        return null;
-    };
-    
-    useEffect(() => {
-        async function fetchToken() {
-            try {
-                const token = await getUserToken();
-                setUserToken(token);
-            } catch (error) {
-                console.error("Error fetching user token:", error);
-            }
-        }
-        fetchToken();
-    }, []);
+
     const value = {
         loading,
         setLoading,
-        fetchUserData,
         updateUserData,
-        // uploadFile,
-        addTailoredResume,
-        addCoverLetter,
-        addUserData,
-        checkUserExists,
         saveUserData,
         saveBaselineResume,
+        addTailoredResume,
+        addCoverLetter,
         fetchResumes,
         fetchCoverLetters,
         updateSpecificResume,
         updateSpecificCoverLetter,
         readyTailoredResume,
         readyBaseResume,
-        handleManagePlan,
         deleteUserAccount,
-        userToken,
-        getUserToken,
-        initializeUserReferral,
-        checkAndApplyReferralReward,
-        applyPremiumReward,
-        getReferralStats,
-        updateReferralOnSubscription
     };
 
     return (
         <DataContext.Provider value={value}>
-        {loading ? <LoadingPage /> : children}
+            {loading ? <LoadingPage /> : children}
         </DataContext.Provider>
     );
 }

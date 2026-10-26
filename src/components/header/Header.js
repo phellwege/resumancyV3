@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Alert, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import LoginAndRegistration from '../LoginAndRegistration';
+import ApiKeySettings from '../ApiKeySettings';
 import NavBar from '../NavBar/NavBar';
 
 import { useUser } from '../../context/UserContext';
@@ -17,6 +17,7 @@ import "./header.css";
 
 function Header(props) {
     const history = useNavigate();
+    const { pathname } = useLocation();
     const {
         user, 
         handleOpenLoginModal,
@@ -25,9 +26,7 @@ function Header(props) {
         error,
         setError,
     } = useUser()
-    const {
-        logout
-    } = useAuth();
+    const { hasApiKey, model } = useAuth();
     const handleClickImg = () => {
         history('/UserProfile')
     }
@@ -54,8 +53,7 @@ function Header(props) {
         )
     }
     const ifNotfrontPage = () => {
-        if(window.location.pathname !== '/' 
-        ){
+        if(pathname !== '/'){
             return (
                 <Link to='/' className='backButton'>
                     <FaHome className='backButton'/>
@@ -82,7 +80,7 @@ function Header(props) {
 return (
     <>
     <NavBar />
-    <LoginAndRegistration />
+    <ApiKeySettings />
     <div className="head_wrap">
         <div className='headerLeft'>
 
@@ -125,24 +123,21 @@ return (
                             <Link to='/UserProfile' aria-label={`View ${user.userName}'s profile`}>{user.userName}</Link>
                         </>
                     )}
-                    <Link to='' onClick={async () => {
-                        await logout();
-                        history('/');
-                    }} aria-label="Log out of your account">
-                        Logout
+                    <Link to='' onClick={(e) => { e.preventDefault(); handleOpenLoginModal(); }} aria-label="Open OpenAI key and model settings">
+                        {hasApiKey ? `Settings (${model})` : 'Add API key'}
                     </Link>
                 </div>
             ) : (
                 <>
-                {user.initialSetupDone || window.location.pathname == '/' &&(
+                {(user.initialSetupDone || pathname === '/') && (
                     <div className='avatarWindow'>
                         <div className='modalAvatarImg'>
                             <>
-                            <Link to='' onClick={handleOpenLoginModal} aria-label="Open login modal">
+                            <Link to='' onClick={(e) => { e.preventDefault(); handleOpenLoginModal(); }} aria-label="Get started">
                                 <CgProfile size={65} aria-hidden="true" />
-                                <span className="sr-only">Profile Login</span>
+                                <span className="sr-only">Get started</span>
                             </Link>
-                            <Link to='' onClick={handleOpenLoginModal} aria-label="Login or register for an account">Login / Register</Link>
+                            <Link to='' onClick={(e) => { e.preventDefault(); handleOpenLoginModal(); }} aria-label="Add your OpenAI key to get started">Get started</Link>
                             </>
                         </div>
                     </div>

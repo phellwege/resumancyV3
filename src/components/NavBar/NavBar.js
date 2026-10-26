@@ -13,8 +13,8 @@ import { CgProfile } from "react-icons/cg";
 
 import "./NavBar.css";
 import { useUser } from '../../context/UserContext';
-import { useData } from '../../context/DataContext';
 import { useAuth } from '../../context/AuthContext';
+import { KEYS, readJSON, writeJSON } from '../../lib/storage';
 
 const NavBar = () => {
     const history = useNavigate();
@@ -23,12 +23,7 @@ const NavBar = () => {
     const {
         user
     } = useUser();
-    const {
-        readyBaseResume
-    } = useData();
-    const {
-        logout
-    } = useAuth();
+    const { logout } = useAuth();
     const handleClick =() => {
         setToggled((s)=>!s);
         setTheme(theme.mode === 'dark' ? {mode: 'light'}: {mode:'dark'})
@@ -41,18 +36,18 @@ const NavBar = () => {
         setNavbarOpen(false)
     }
     useEffect(() => {
-        const data = window.localStorage.getItem('UnleashedCVWizardThemeKey')
-        if(data != null) setTheme(JSON.parse(data))
+        const data = readJSON(KEYS.theme)
+        if(data != null) setTheme(data)
     }, [])
 
     useEffect(() => {
-        window.localStorage.setItem('UnleashedCVWizardThemeKey', JSON.stringify(theme)) 
+        writeJSON(KEYS.theme, theme)
     }, [theme])
     let menuRef = useRef();
 
     useEffect(() => {
         let handler = (event) => {
-            if(user.initialSetupDone && !menuRef.current.contains(event.target)){
+            if(menuRef.current && !menuRef.current.contains(event.target)){
                 setNavbarOpen(false);
             }
         }
@@ -128,17 +123,18 @@ const NavBar = () => {
                                     <li>
                                         <Link to='/Account' onClick={() => closeMenu()}>
                                             <MdManageAccounts className='navIcons'/> 
-                                            Account
+                                            Data & Settings
                                         </Link>
                                     </li>
                                 </>
                             )}
                             {user?.id && (
                                 <Button variant='danger' onClick={async () => {
+                                    if (!window.confirm('Delete your profile, resumes and saved key from this browser?')) return;
                                     await logout();
                                     history('/');
                                 }}>
-                                    Logout
+                                    Delete my data
                                 </Button>
                             )}
                             <li>

@@ -1,34 +1,28 @@
-# ResumancyV4
+# Resumancy (static BYOK edition)
 
 ## Project Overview
-A React-based resume building SaaS application hosted on Firebase. Users create base resumes, tailor them to job descriptions, get gap analyses, and generate cover letters. Monetized via Stripe subscriptions.
+Static React (CRA) resume builder, hosted on GitHub Pages as a portfolio demo. Users create a base resume, tailor it to job descriptions, and get a cover letter, match % and gap analysis. No backend: visitors bring their own OpenAI API key and pick the model; all data lives in their browser's localStorage.
+
+The live hosted version (Firebase Auth/Firestore/Functions + Stripe) lives on `main`. This branch (`static-byok`) removed all of that. Do not add a backend, analytics or anything that stores visitor data server side.
 
 ## Tech Stack
-- **Frontend**: React 18, React Router v6, React Bootstrap, styled-components
-- **Backend**: Firebase Cloud Functions (Node.js 22), Firestore, Firebase Auth (email link sign-in)
-- **AI**: OpenAI GPT-4o-mini for resume generation, tailoring, gap analysis, cover letters
-- **Payments**: Stripe (subscriptions, billing portal, coupons)
-- **Hosting**: Firebase Hosting
-- **PDF**: @react-pdf/renderer for resume PDF generation
+- React 18, React Router v6 (HashRouter), React Bootstrap, styled-components
+- OpenAI Chat Completions called directly from the browser with the visitor's key (`src/lib/openai.js`)
+- @react-pdf/renderer for PDF export
 
-## Project Structure
-- `src/` - React frontend
-  - `views/` - Page-level components (Home, Create, Tailor, Account, etc.)
-  - `components/` - Reusable UI components
-  - `context/` - React contexts (AuthContext, DataContext, UserContext)
-  - `config/` - Configuration files
-- `functions/` - Firebase Cloud Functions (resume generation, Stripe integration, cleanup)
-- `firestore.rules` - Firestore security rules
-- `storage.rules` - Firebase Storage rules
+## Key files
+- `src/lib/openai.js` - fetch client, model list, retries, reasoning-model params
+- `src/lib/resumeAI.js` - prompts (ported from the old Cloud Functions)
+- `src/lib/storage.js` - try/catch localStorage wrappers and the list of keys
+- `src/context/AuthContext.js` - API key + model state (keeps the old `useAuth()` shape)
+- `src/context/DataContext.js` - local data store (keeps the old `useData()` function names)
+- `src/components/ApiKeySettings.js` - settings modal, opened via `handleOpenLoginModal()` from UserContext
 
-## Key Commands
-- `npm start` - Start dev server
-- `npm run build` - Production build
-- `firebase deploy` - Deploy to Firebase
-- `firebase deploy --only functions` - Deploy only cloud functions
+## Gotchas
+- `globalStyle.js` hides `.btn-outline-light` in light mode and `.btn-outline-secondary` in dark mode. Pairs of these buttons are deliberate theme twins; new buttons should use other variants.
+- OpenAI's 401 for a bad key on chat completions has no CORS headers, so the browser sees a network error. `openai.js` maps that to an "invalid key or offline" message.
 
-## Known Issues
-- Firestore rules have an open wildcard rule (`allow read, write: if true`) that overrides all other rules
-- `generateBaseResume.js` has a Promise.all destructuring mismatch (5 promises, 4 variables, `customSection` undefined)
-- `DataContext.js:186` increments tailored resume usage by 2 instead of 1
-- Several cloud functions (deleteUserAccount, createStripePortalSession, createStripeCoupon) lack auth verification
+## Commands
+- `npm start` - dev server on :3000
+- `npm run build` - static build in `build/`
+- Deploy: push to `main`/`static-byok` with `.github/workflows/deploy-pages.yml` (Pages source = GitHub Actions)

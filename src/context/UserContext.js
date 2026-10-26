@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useMemo, useState, useCallback } from 'react';
 import DOMPurify from 'dompurify';
 import { v4 as uuidv4 } from 'uuid';
+import { KEYS, readJSON, writeJSON } from '../lib/storage';
 
 // Import all profile pictures statically to ensure they work in production
 import WitchProfile from '../static/ProfilePics/WitchProfile.webp';
@@ -133,8 +134,9 @@ export function UserProvider({ children }) {
             createdAt: null,
             response: ''
         }],
+        // No plans in the static build. Usage counters still drive the nav.
         subscription: {
-            active: false,
+            active: true,
             plan: null,
             dateActivated: null,
             billingCycleStart: null,
@@ -158,30 +160,25 @@ export function UserProvider({ children }) {
             availableRewards: []
         },
         initialSetupDone: false,
-        coupon: '',
-        stripeCustomerId: null
     };
-    const [user, setUser] = useState(initialUserState)
+    // Restore the profile saved in this browser, if any.
+    const [user, setUser] = useState(() => {
+        const saved = readJSON(KEYS.user);
+        if (!saved || saved.version !== 3 || !saved.data?.id) return initialUserState;
+        const data = { ...initialUserState, ...saved.data };
+        if (!userAvatars.includes(data.avatarImg)) data.avatarImg = userAvatars[0];
+        return data;
+    })
     const resetUser = () => setUser(initialUserState);
     
     const [includeAddress, setIncludeAddress] = useState(false);
 
-    const subscriptionPlans = {
-        price_1QrL8vEsYMRYIVaAx4EV21RU: { baseResume: 1, tailoredResumes: 5 },
-        price_1QrL8vEsYMRYIVaAnoVKXDwS: { baseResume: 1, tailoredResumes: 5 },
-        price_1QrL8rEsYMRYIVaAR2eJ9Vta: { baseResume: 1, tailoredResumes: Infinity },
-        price_1QrL8rEsYMRYIVaABNH1JBGo: { baseResume: 1, tailoredResumes: Infinity },
-    };
+    // Bring-your-own-key: no plan limits.
+    const canCreateMore = () => true;
 
-    const canCreateMore = (type) => {
-        if (!user.subscription.active) {
-            return false;
-        }
-
-        const usage = user.subscription.usage?.[type] ?? 0;
-        const limit = user.subscription.limits?.[type] ?? 0;
-
-        return limit === Infinity || usage < limit;
+    // Start a local profile (stands in for the old sign-up).
+    const startProfile = () => {
+        setUser((prev) => (prev.id ? prev : { ...prev, id: uuidv4() }));
     };
     
     const selectedResume = user.resume.find((resume) => resume.id === selectedResumeId);
@@ -478,68 +475,15 @@ export function UserProvider({ children }) {
         return phoneNumber.replace(/\D/g, '');
     };
 
+    // Mirror the whole profile to this browser only.
     useEffect(() => {
-        if (user.id) {
-            const { id, firstName, lastName, userName, avatarImg, subscription, initialSetupDone } = user;
-            const dataToPersist = {
-                version: "v2", // update this whenever your schema changes
-                id,
-                firstName,
-                lastName,
-                userName,
-                avatarImg,
-                subscription,
-                initialSetupDone,
-            };
-            localStorage.setItem("user", JSON.stringify(dataToPersist));
-        }
+        if (user.id) writeJSON(KEYS.user, { version: 3, data: user });
     }, [user]);
-    
-    useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            try {
-                const persistedUser = JSON.parse(storedUser);
-                if (persistedUser.version === "v2") {
-                    // Ensure avatar image is properly loaded
-                    const userWithAvatar = { ...persistedUser };
-                    if (!userWithAvatar.avatarImg && userAvatars.length > 0) {
-                        userWithAvatar.avatarImg = userAvatars[0];
-                    }
-                    // Only merge if the version matches your current schema
-                    setUser(prevUser => ({ ...prevUser, ...userWithAvatar }));
-                } else {
-                    // If version doesn't match, clear the stored data
-                    localStorage.removeItem("user");
-                }
-            } catch (error) {
-                console.error("Error parsing user data from localStorage:", error);
-                // If parsing fails, clear the stored data
-                localStorage.removeItem("user");
-            }
-        }
-    }, []);
-    const displayCorrectPlan = () => {
-        if(user.subscription.plan == 'price_1QrL8vEsYMRYIVaAx4EV21RU'){
-            return <span style={{color: "#66FF00"}}>BASIC</span>
-        } else if (user.subscription.plan === 'price_1QrL8vEsYMRYIVaAnoVKXDwS') {
-            return <span style={{color: "#66FF00"}}>BASIC ANNUAL</span>
-        } else if (user.subscription.plan === 'price_1QrL8rEsYMRYIVaAR2eJ9Vta'){
-            return <span style={{color: "gold"}}>PREMIUM</span>
-        } else if (user.subscription.plan === 'price_1QrL8rEsYMRYIVaABNH1JBGo'){
-            return <span style={{color: "gold"}}>PREMIUM ANNUAL</span>
-        }
-    }
 
-    const currentPeriodEndDate = new Date(user.subscription.currentPeriodEndDate);
-    const now = new Date();
-    const diffTime = currentPeriodEndDate - now;
-    const daysLeft = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const describeBaseResume = "A Base Resume is the starting point for Resumancy. You provide your resume details, and we enhance and customize it to present your experience in the best light.";
-    const describeTailoredResume = "A Tailored Resume is built from your Base Resume and optimized for a specific job. Simply paste the job description and company name, and we’ll adjust your resume to highlight the most relevant skills and experience, boosting your chances of landing the role.";
+    const describeBaseResume = "A Base Resume is the starting point for Resumancy. You provide your resume details, and the AI enhances and customizes it to present your experience in the best light.";
+    const describeTailoredResume = "A Tailored Resume is built from your Base Resume and optimized for a specific job. Simply paste the job description and company name, and the AI adjusts your resume to highlight the most relevant skills and experience, boosting your chances of landing the role.";
     
     const value = useMemo(() =>({
-        daysLeft,
         describeBaseResume,
         describeTailoredResume,
         generateUUID,
@@ -610,6 +554,7 @@ export function UserProvider({ children }) {
         removeSocialMediaEntry,
         handleUserChange,
         canCreateMore,
+        startProfile,
 
         includeAddress,
         setIncludeAddress,
@@ -620,9 +565,7 @@ export function UserProvider({ children }) {
         setSuccessMessage,
         error,
         setError,
-        subscriptionPlans,
         resetUser,
-        displayCorrectPlan,
 
         selectedResumeId, setSelectedResumeId, selectedResume,
         selectedTailoredResumeIdData, selectedTailoredResumeId, setSelectedTailoredResumeId,
@@ -635,7 +578,7 @@ export function UserProvider({ children }) {
         handleOpenReviewResumeModal, selectedResume, selectedTailoredResumeIdData, selectedCoverLetterIdData,
         canCreateMore, error, includeAddress, 
         initialUserState, reviewJobDescModal, selectedCoverLetterId, selectedResumeId, selectedTailoredResumeId, 
-        subscriptionPlans, successMessage, userAvatars
+        successMessage, userAvatars
     ]);
 
     return (

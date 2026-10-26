@@ -96,7 +96,7 @@ const rows = [
   ['AI-generated cover letters', '✅', '❌', '❌', '❌'],
   ['Editable templates', '✅', '✅', '✅', '✅'],
   ['PDF export', '✅', '✅', '✅', '✅'],
-  ['Pricing', 'Free 7-day Trial Then $5/month', 'Free', 'Free', 'Free'],
+  ['Pricing', 'Free (your own OpenAI key)', 'Free', 'Free', 'Free'],
   ['Improves application success', '✅', '⚠️', '❌', '❌'],
   ['No editing/prompting skills required', '✅', '❌', '❌', '⚠️'],
 ];

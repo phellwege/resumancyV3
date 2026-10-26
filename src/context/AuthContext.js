@@ -1,171 +1,73 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { auth } from '../server/firebaseConfig';
+// No accounts in the static build. This context now holds the visitor's
+// OpenAI key and model choice, and keeps the old useAuth() shape so existing
+// components (setLoading, logout, currentUser) keep working.
+import React, { useContext, useMemo, useState } from 'react';
 import LoadingPage from '../components/loadingPage/LoadingPage';
-import { 
-    onAuthStateChanged, 
-    onIdTokenChanged, 
-    sendEmailVerification,
-    applyActionCode
-} from 'firebase/auth';
-import * as firebaseui from 'firebaseui';
 import { useUser } from './UserContext';
-import { useLocation } from 'react-router-dom';
+import { KEYS, readString, writeString, remove, clearAll } from '../lib/storage';
+import { DEFAULT_MODEL } from '../lib/openai';
 
 const AuthContext = React.createContext();
 
-let firebaseUiInstance;
-
-// Token refresh interval in milliseconds (15 minutes)
-const TOKEN_REFRESH_INTERVAL = 15 * 60 * 1000;
-
 export function useAuth() {
-  return useContext(AuthContext);
+    return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }) {
-    const location = useLocation();
-    const isHomePage = location.pathname === "/" || location.pathname === "";
-    
-    // Initialize loading to false for home page, true for other pages
-    const [loading, setLoading] = useState(!isHomePage);
-    const [currentUser, setCurrentUser] = useState(null);
-    const [emailVerified, setEmailVerified] = useState(false);
-    const { setUser, initialUserState } = useUser();
-    const [successMessage, setSuccessMessage] = useState(null);
+    const { user, setUser, initialUserState } = useUser();
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if (!firebaseUiInstance) {
-        firebaseUiInstance = new firebaseui.auth.AuthUI(auth);
-        }
+    const storedKey = readString(KEYS.apiKey, '');
+    const [apiKey, setApiKeyState] = useState(storedKey);
+    const [rememberKey, setRememberKeyState] = useState(Boolean(storedKey));
+    const [model, setModelState] = useState(readString(KEYS.model, DEFAULT_MODEL) || DEFAULT_MODEL);
 
-        // Listen for auth state changes
-        const unsubscribeAuthState = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
-            if (user) {
-                setEmailVerified(user.emailVerified);
-            }
-            setLoading(false);
-        });
+    const saveSettings = ({ apiKey: nextKey, model: nextModel, remember }) => {
+        const key = (nextKey || '').trim();
+        setApiKeyState(key);
+        setRememberKeyState(remember);
+        if (remember && key) writeString(KEYS.apiKey, key);
+        else remove(KEYS.apiKey);
+        const m = (nextModel || DEFAULT_MODEL).trim();
+        setModelState(m);
+        writeString(KEYS.model, m);
+    };
 
-        // Listen for ID token changes
-        let refreshTokenTimer = null;
-        const unsubscribeTokenChanges = onIdTokenChanged(auth, async (user) => {
-            // Clear any existing refresh timer
-            if (refreshTokenTimer) {
-                clearTimeout(refreshTokenTimer);
-                refreshTokenTimer = null;
-            }
+    const forgetKey = () => {
+        setApiKeyState('');
+        setRememberKeyState(false);
+        remove(KEYS.apiKey);
+    };
 
-            if (user) {
-                // Get the token when it changes
-                const token = await user.getIdToken();
-                // You can store the token in localStorage if needed
-                localStorage.setItem('authToken', token);
+    // "Log out" now means: wipe everything this browser stored.
+    const logout = async () => {
+        clearAll();
+        setApiKeyState('');
+        setRememberKeyState(false);
+        setModelState(DEFAULT_MODEL);
+        setUser(initialUserState);
+    };
 
-                // Set up a timer to refresh the token before it expires
-                refreshTokenTimer = setTimeout(async () => {
-                    try {
-                        // Force token refresh
-                        const newToken = await user.getIdToken(true);
-                        localStorage.setItem('authToken', newToken);
-                    } catch (error) {
-                        // Clear token if user is signed out
-                        localStorage.removeItem('authToken');
-                    }
-                }, TOKEN_REFRESH_INTERVAL);
-            } else {
-                // Clear token if user is signed out
-                localStorage.removeItem('authToken');
-            }
-        });
-
-        return () => {
-            unsubscribeAuthState();
-            unsubscribeTokenChanges();
-            if (refreshTokenTimer) {
-                clearTimeout(refreshTokenTimer);
-            }
-        };
-    }, []);
-
-     function logout() {
-        return auth.signOut(auth)
-            .then(() => {
-                setCurrentUser(null);
-                setEmailVerified(false);
-                localStorage.removeItem("user");
-                localStorage.removeItem("authToken");
-                setUser(initialUserState);
-                if (firebaseUiInstance) {
-                    firebaseUiInstance.reset();
-                }
-            })
-            .catch((error) => {
-                // Clear token if user is signed out
-                localStorage.removeItem('authToken');
-            });
-    }
-    
-    // Send email verification to the current user
-    async function sendVerificationEmail(user = null) {
-        // Use the provided user or fall back to currentUser
-        const userToVerify = user || currentUser;
-        
-        if (userToVerify && !userToVerify.emailVerified) {
-            try {
-                const actionCodeSettings = {
-                    url: `${window.location.origin}/verify-email?email=${userToVerify.email}`,
-                    handleCodeInApp: true,
-                };
-                
-                await sendEmailVerification(userToVerify, actionCodeSettings);
-                
-                return { success: true, message: "Verification email sent successfully! Please check your inbox and spam folder." };
-            } catch (error) {
-                return { success: false, message: "Error sending verification email" };
-            }
-        }
-        return { success: false, message: "User is already verified" };
-    }
-
-    // Verify email with action code (from email link)
-    const verifyEmail = async (actionCode) => {
-        setLoading(true);
-        try {
-            await applyActionCode(auth, actionCode);
-            
-            // Refresh the user to get updated email verification status
-            if (currentUser) {
-                await currentUser.reload();
-                const updatedVerificationStatus = currentUser.emailVerified;
-                setEmailVerified(updatedVerificationStatus);
-            }
-            setLoading(false);
-            return { success: true, message: "Email verified successfully!" };
-        } catch (error) {
-            setLoading(false);
-            return { success: false, message: "Error verifying email" };
-        }
-    }
-    
-    const value = {
-        currentUser,
-        logout,
+    const value = useMemo(() => ({
+        // settings
+        apiKey,
+        model,
+        rememberKey,
+        hasApiKey: Boolean(apiKey),
+        saveSettings,
+        forgetKey,
+        // legacy shape
+        currentUser: user?.id ? { uid: user.id } : null,
+        emailVerified: true,
         loading,
         setLoading,
-        emailVerified,
-        setEmailVerified,
-        sendVerificationEmail,
-        verifyEmail,
-        successMessage,
-        setSuccessMessage,
-        sendEmailVerification,
-        firebaseUiInstance,
-    };
+        logout,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }), [apiKey, model, rememberKey, loading, user?.id]);
 
     return (
         <AuthContext.Provider value={value}>
-        {loading ? <LoadingPage /> : children}
+            {loading ? <LoadingPage /> : children}
         </AuthContext.Provider>
     );
 }

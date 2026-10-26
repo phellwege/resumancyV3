@@ -1,36 +1,41 @@
-### feature to add
-TODO: AI Interviewer - interview preparation - increase retention
-TODO: edit resume should take to a new page, because it doesnt fit well in a modal
-TODO: add address changes to the edit for the resume
- 
-### Repair to working state
+# Resumancy
 
-### Flow Correction 
+AI resume builder: write a base resume once, then tailor it to any job description in seconds, with a matching cover letter, a job-relevance score and a skill-gap analysis.
 
-### Cleanup
-TODO: add Success/failure Messages where relevant
+This is the static, bring-your-own-key edition. It runs entirely in the browser:
 
-### Bug
+- **No backend.** No accounts, no database, no analytics, no cookies.
+- **Your own OpenAI key.** Paste it in Settings and pick a model. Requests go straight from your browser to `api.openai.com`. The key stays in memory, or in this browser's localStorage only if you tick "Remember".
+- **Your data stays local.** Profile, resumes and cover letters live in localStorage. Export, import or delete them from Data & Settings.
 
-### CRITICAL BEFORE DEPLOY
-TODO: obfuscate code
-TODO: mockup new resumes and take screenshots of them replacing the ones currently on the home page
+## Run it locally
 
-### Future Updates
-1. create custom login / registration - firebaseUI doesn't work with email enumeration
-2. add google reviews to website put them on home page
-3. Notification for user. Store unread alerts for the user and have a notification icon that appears. (add ads and such to this que so they can be viewed by the user)
-4. additional resume styles
-5. custom sections
-6. add a delete button to the tailored resume table row level -> this must not impact the number of resumes made, and some sort of placeholder will need assigned to that array such as "deleted by user"
+```bash
+npm ci
+npm start
+```
 
-### enhancement
- ---- nothing at this time ----
+Opens on http://localhost:3000. To check the production build:
 
-    <!-- premium icon used to delineate between premium features and free features -->
-    import { MdOutlineWorkspacePremium } from "react-icons/md";
-    <MdOutlineWorkspacePremium />
+```bash
+npm run build
+```
 
-<!-- TODO: work on business features
-TODO: ensure multi user access
-    - Charge organizations $500-$1,000/month for multi-user access. -->
+then serve the `build/` folder with any static file server.
+
+## Deploy
+
+`.github/workflows/deploy-pages.yml` builds and publishes to GitHub Pages on pushes to `main` or `static-byok`. In the repo settings, set Pages > Source to "GitHub Actions". The app uses hash routing (`/#/Review`) and relative asset paths (`"homepage": "."`), so it works at a project URL (`user.github.io/repo/`) or on a custom domain with no extra config.
+
+## How it works
+
+| Piece | File |
+| --- | --- |
+| OpenAI calls (fetch, retries, friendly errors, reasoning-model handling) | `src/lib/openai.js` |
+| Prompts for base resume, tailoring, cover letter, gap analysis | `src/lib/resumeAI.js` |
+| Key and model settings modal | `src/components/ApiKeySettings.js` |
+| Local persistence (safe localStorage wrappers) | `src/lib/storage.js`, `src/context/UserContext.js` |
+| Match % scoring (local keyword + similarity heuristic, no AI call) | `src/components/user/SendMatch.js` |
+| PDF export | `@react-pdf/renderer`, `src/components/Review/resumeStyles/` |
+
+The original hosted version used Firebase Auth, Firestore, Cloud Functions and Stripe subscriptions. Those were removed for this edition; the prompts were ported unchanged from the old Cloud Functions.

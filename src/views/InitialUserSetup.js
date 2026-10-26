@@ -23,7 +23,8 @@ export default function InitialUserSetup() {
         addSocialMediaEntry,
         removeSocialMediaEntry,
         handleSocialMediaChange,
-        setError
+        setError,
+        startProfile,
     } = useUser();
     const {
         saveUserData
@@ -63,8 +64,9 @@ export default function InitialUserSetup() {
                 initialSetupDone: true
             };
     
+            if (!user.id) startProfile();
             await saveUserData(user.id, updatedUserData);
-            history('/Subscribe')
+            history('/Create')
     
         } else {
             setError('Please complete all required fields.');

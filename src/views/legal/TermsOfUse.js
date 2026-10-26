@@ -11,7 +11,7 @@ export default function TermsOfUse() {
     <h3>Terms of Service</h3>
         <div className='FaqWrapper'>
             <h5>Introduction</h5>
-            <p>Last Updated: 03/23/2024</p>
+            <p>Last Updated: 10/26/2026</p>
             <p>
                 Please read these Terms of Use ("Terms") carefully before using Resumancy ("Services") operated by CrimsonScan LLC ("us," "we," or "our").
                 <br/>
@@ -29,8 +29,8 @@ export default function TermsOfUse() {
                     <p>We grant you a limited, non-exclusive, non-transferable, and revocable license to use the Service for personal and non-commercial purposes only.</p>
                 </li>
                 <li>
-                    <h6>Account</h6>
-                    <p>To access certain features of the Service, you may be required to create an account. You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.</p>
+                    <h6>Your OpenAI API key</h6>
+                    <p>The Service has no accounts. To generate content you supply your own OpenAI API key. Requests are sent from your browser directly to OpenAI under your key, you are responsible for its use and any charges OpenAI bills to you, and your use of OpenAI is subject to OpenAI's own terms.</p>
                 </li>
             </ul>
             <br/>
@@ -64,7 +64,7 @@ export default function TermsOfUse() {
             <p>We may terminate or suspend your access to the Service, without prior notice or liability, for any reason, including without limitation if you breach these Terms.</p>
             <br/>
             <h6>Disclaimer</h6>
-            <p>The Service is provided on an "as-is" and "as-available" basis. We make no warranties, either express or implied, regarding the accuracy, reliability, or availability of the Service.</p>
+            <p>The Service is an unsupported demo provided on an "as-is" and "as-available" basis. AI-generated content can be inaccurate; review everything before you use it. We make no warranties, either express or implied, regarding the accuracy, reliability, or availability of the Service.</p>
             <br/>
             <h6>Limitation of Liability</h6>
             <p>To the fullest extent permitted by applicable law, Resumancy shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a) your use or inability to use the Service; (b) any unauthorized access to or use of our servers and/or any personal information stored therein; (c) any interruption or cessation of the Service; (d) any bugs, viruses, trojan horses, or the like that may be transmitted to or through the Service by any third party.</p>
@@ -76,7 +76,7 @@ export default function TermsOfUse() {
             <p>We reserve the right to modify these Terms at any time. You are responsible for regularly reviewing these Terms. Continued use of the Service after any such changes shall constitute your consent to such changes.</p>
             <br/>
             <h6>Contact Us</h6>
-            <p>If you have any questions about these Terms, please contact us at <a href='mailto:Support@Resumancy.com'>Support@Resumancy.com</a>.</p>
+            <p>If you have any questions about these Terms, open an issue on the project's <a href='https://github.com/phellwege/resumancyV3' target='_blank' rel='noopener noreferrer'>GitHub repository</a>.</p>
         </div>
     </div>
     <Footer />

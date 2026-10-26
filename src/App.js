@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, HashRouter, Navigate } from 'react-router-dom';
 
-import PrivateRoute from '../src/components/privateRoute';
+import PrivateRoute from './components/privateRoute';
 import {ThemeProvider} from 'styled-components';
 import { UserProvider } from './context/UserContext';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
-import Home from '../src/views/Home'
+import Home from './views/Home'
 
 import FAQ from './views/legal/FAQ';
 import TermsOfUse from './views/legal/TermsOfUse';
@@ -16,18 +16,14 @@ import Tailor from './views/Tailor';
 import Review from './views/Review';
 import InitialUserSetup from './views/InitialUserSetup';
 import UserProfile from './views/UserProfile';
-import Subscribe from './views/Subscribe';
 import Account from './views/Account';
-import OverLimit from './views/OverLimit';
-import SuccessPage from './views/SuccessPage';
-import FinishSignIn from './views/FinishSignIn';
-import EmailVerification from './components/auth/EmailVerification';
 
 function App() {
-  const [theme, setTheme] = useState({mode: 'light'})
+  const [theme] = useState({mode: 'light'})
 
   return (
-    <BrowserRouter>
+    // HashRouter: GitHub Pages serves static files only, so deep links use #/route.
+    <HashRouter>
       <ThemeProvider theme={theme}>
         <UserProvider >
         <AuthProvider>
@@ -44,12 +40,8 @@ function App() {
             <Route exact path='/Review' element={<PrivateRoute><Review /></PrivateRoute>} />
             <Route exact path='/UserProfile' element={<PrivateRoute><UserProfile /></PrivateRoute>} />
             <Route exact path='/InitialUserSetup' element={<InitialUserSetup />} />
-            <Route exact path='/Subscribe' element={<Subscribe />} />
             <Route exact path='/Account' element={<PrivateRoute><Account /></PrivateRoute>} />
-            <Route exact path='/OverLimit' element={<PrivateRoute><OverLimit /></PrivateRoute>} />
-            <Route exact path='/Success' element={<SuccessPage />} />
-            <Route exact path='/FinishSignIn' element={<FinishSignIn />} />
-            <Route exact path='/verify-email' element={<EmailVerification />} />
+            <Route path='*' element={<Navigate to='/' replace />} />
 
             </Routes>
           </React.Fragment>
@@ -57,7 +49,7 @@ function App() {
         </AuthProvider>
         </UserProvider>
       </ThemeProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

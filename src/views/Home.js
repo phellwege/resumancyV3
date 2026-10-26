@@ -8,7 +8,6 @@ import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import CurrentPlans from '../components/user/CurrentPlans';
 import { MdScreenRotation } from "react-icons/md";
-import CookieConsent from '../components/user/CookieConsent';
 import './main.css';
 import ResumeStyles from '../components/ResumeStyles';
 import ReviewCarousel from '../components/ReviewCarousel';
@@ -27,7 +26,6 @@ export default function Home() {
     const {
         user,
         handleOpenLoginModal,
-        setError
     } = useUser();
 
     const history = useNavigate();
@@ -71,22 +69,18 @@ export default function Home() {
 
     const handleCreateClick = () => {
         if (!user?.id) {
-            setError("You must be signed in to create a resume");
             handleOpenLoginModal();
         } else {
             history('/Create');
         }
     };
-    let email = window.localStorage.getItem('emailForSignIn');
 
   return (
     <>
     <Helmet>
       <title>Resumancy - AI-Powered Resume Builder | Create Custom Resumes in 45 Seconds</title>
       <meta name="description" content="Create tailored resumes and cover letters for every job application in under a minute with our AI-powered platform. Get more interviews with custom resumes." />
-      <link rel="canonical" href="https://resumancy.com" />
     </Helmet>
-    <CookieConsent />
     <Header />
         <main className='pageWrapper'>
             {(isMobile && isPortrait) && (
@@ -101,7 +95,7 @@ export default function Home() {
             {!user?.id && (
             <section className='heroSection' aria-label="Main introduction to Resumancy">
                 <div className='heroContent'>
-                    <h1>Tailor Your Resume to Any Job in Seconds — Not Just Format It</h1>
+                    <h1>Tailor Your Resume to Any Job in Seconds, Not Just Format It</h1>
                     <p className="heroSubtitle">Resumancy reads your resume and the job description, then rewrites your content to match
                         <br/>with job relevance scoring, skill gap insights, and interview-boosting recommendations.</p>
                     <div className='heroStats'>
@@ -127,7 +121,7 @@ export default function Home() {
                             onClick={handleOpenLoginModal}
                             className='heroButton'
                         >
-                            Start Your 7-Day Free Trial
+                            Get Started (bring your own key)
                         </Button>
                         <Button 
                             variant="outline-light"
@@ -138,6 +132,7 @@ export default function Home() {
                         >
                             View FAQ
                         </Button>
+                        {/* Light-theme twin: globalStyle hides outline-light in light mode. */}
                         <Button 
                             variant="outline-secondary"
                             as={Link} 
@@ -150,10 +145,10 @@ export default function Home() {
                     </div>
                     <br/>
                     <div className='featureItem'>
-                        No charge today. Cancel anytime before your trial ends.
+                        Free demo. No account, no server: runs in your browser with your own OpenAI API key.
                     </div>
                     <div className='featureItem'>
-                        🔒 Secured by Stripe · We never store your card info.
+                        🔒 Your key and resumes stay in your browser. Requests go only to api.openai.com.
                     </div>
                 </div>
             </section>
@@ -185,7 +180,7 @@ export default function Home() {
                                     <div className='cardInnerDiv'>
                                         <h3 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>🎯 Ready to Build a Job-Winning Resume?</h3>
                                         <p style={{ textAlign: 'center', fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>
-                                            Start your <strong>7-day free trial</strong> today. Only <strong>$5/month</strong> after — cancel anytime.
+                                            Paste your own OpenAI API key, pick a model, and build your first resume in under a minute.
                                         </p>
                                         <div style={{ textAlign: 'center', marginTop: '1rem' }}>
                                             <Button
@@ -193,11 +188,11 @@ export default function Home() {
                                             onClick={handleOpenLoginModal}
                                             style={{ padding: '0.6rem 1.5rem', fontWeight: 'bold' }}
                                             >
-                                            Start My Free Trial → Build My Resume
+                                            Get Started → Build My Resume
                                             </Button>
                                         </div>
                                         <p style={{ textAlign: 'center', fontSize: '0.85rem', marginTop: '0.5rem' }}>
-                                            🔒 Secured by Stripe · No charges until your trial ends
+                                            🔒 No account needed · Nothing leaves your browser except calls to OpenAI
                                         </p>
                                     </div>
                                 </Card.Body>

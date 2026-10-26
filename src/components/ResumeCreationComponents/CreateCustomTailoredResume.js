@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 import { BsQuestionCircle } from "react-icons/bs";
@@ -11,49 +10,7 @@ import { useData } from '../../context/DataContext';
 
 import '../../views/main.css';
 import { extractResumeText, calculateHybridMatchPercent } from '../user/SendMatch';
-
-// --------------------------------------------------
-// 1) Helper to escape newlines only when inside strings
-// --------------------------------------------------
-function escapeNewlinesInStrings(jsonStr) {
-  let inString = false;
-  let escaped = '';
-  for (let i = 0; i < jsonStr.length; i++) {
-    const char = jsonStr[i];
-    if (char === '"') {
-      // Check if the quote is escaped by counting preceding backslashes.
-      let escapeCount = 0;
-      let j = i - 1;
-      while (j >= 0 && jsonStr[j] === '\\') {
-        escapeCount++;
-        j--;
-      }
-      // If even number of backslashes, the quote is not escaped.
-      if (escapeCount % 2 === 0) {
-        inString = !inString;
-      }
-      escaped += char;
-    } else if (inString && (char === '\n' || char === '\r')) {
-      escaped += '\\n';
-    } else {
-      escaped += char;
-    }
-  }
-  return escaped;
-}
-
-// --------------------------------------------------
-// 2) Fallback JSON parser for the experience section
-// --------------------------------------------------
-function parseExperienceData(data) {
-  try {
-    return JSON.parse(data);
-  } catch (e) {
-    console.warn("Initial JSON.parse failed; attempting to escape newlines inside strings.", e);
-    const sanitized = escapeNewlinesInStrings(data);
-    return JSON.parse(sanitized);
-  }
-}
+import { generateTailoredResume as aiTailor, generateCoverLetter as aiCoverLetter, generateGapAnalysis as aiGap, parseExperience } from '../../lib/resumeAI';
 
 export default function CreateCustomTailoredResume() {
   const {
@@ -63,102 +20,43 @@ export default function CreateCustomTailoredResume() {
     sanitizeUserInput,
     generateUUID,
     setSelectedTailoredResumeId,
-    canCreateMore,
     setSuccessMessage,
     setError,
+    handleOpenLoginModal,
   } = useUser();
 
-  const { setLoading } = useAuth();
-  const { addTailoredResume, addCoverLetter, getUserToken } = useData();
+  const { setLoading, apiKey, model } = useAuth();
+  const { addTailoredResume, addCoverLetter } = useData();
+  const ai = { apiKey, model };
   const history = useNavigate();
   const companyNameTooltip = "The name of the company you are applying for.";
   const prospectiveJobDescTooltip = "Paste a job description of the role you are applying for.";
 
-  const generateTailoredResume = async (jobData, currentUser, token) => {
-    try {
-      const response = await axios.post(
-        "https://us-central1-resumancy.cloudfunctions.net/generate_tailored_resume-generate_tailored_resume",
-        { user: currentUser, selectedTailoredResumeIdData: jobData },
-        { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }}
-      );
-
-      const { summary, experienceSection, skillsSection } = response.data;
-
-      const parsedExperience = experienceSection?.data
-        ? parseExperienceData(experienceSection.data)
-        : [];
-      const parsedSkills = skillsSection?.data || [];
-
-      return {
-        ...currentUser.resume[0],
-        id: jobData.id,
-        summary: summary?.data || currentUser.resume[0].summary,
-        experience: parsedExperience,
-        skills: parsedSkills,
-        usage: {
-          ...currentUser.resume[0].usage,
-          timeStamp: jobData.createdAt,
-          baseResume: false,
-        },
-      };
-    } catch (error) {
-      console.error("Error generating tailored resume:", error);
-      throw new Error("Failed to generate tailored resume.");
-    }
+  const generateTailoredResume = async (jobData, currentUser) => {
+    const { summary, experience, skills } = await aiTailor(currentUser, jobData, ai);
+    return {
+      ...currentUser.resume[0],
+      id: jobData.id,
+      summary: summary || currentUser.resume[0].summary,
+      experience: parseExperience(experience, currentUser.resume[0].experience),
+      skills: skills || currentUser.resume[0].skills,
+      usage: {
+        ...currentUser.resume[0].usage,
+        timeStamp: jobData.createdAt,
+        baseResume: false,
+      },
+    };
   };
 
-  const generateCoverLetter = async (jobData, currentUser, token) => {
-    try {
-      const response = await axios.post(
-        "https://us-central1-resumancy.cloudfunctions.net/generate_cover_letter-generate_cover_letter",
-        { user: currentUser, selectedTailoredResumeIdData: jobData },
-        { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }}
-      );
-      return response.data.coverLetterSummary;
-    } catch (error) {
-      console.error("Error generating cover letter:", error);
-      throw new Error("Failed to generate cover letter.");
-    }
-  };
+  const generateCoverLetter = (jobData, currentUser) => aiCoverLetter(currentUser, jobData, ai);
 
-  const performGapAnalysis = async (finalizedResume, jobData, currentUser, token) => {
-    const resumeText = extractResumeText(finalizedResume);
-    try {
-      const gapResponse = await axios.post(
-        "https://us-central1-resumancy.cloudfunctions.net/generateGapAnalysisWithRetry-generate_gap_analysis",
-        {
-          user: currentUser,
-          selectedTailoredResumeIdData: {
-            id: finalizedResume.id,
-            description: jobData.description,
-            companyName: jobData.companyName,
-          },
-          resumeText,
-          missingSkills: [],
-        },
-        { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }}
-      );
-      return gapResponse.data.gapAnalysis;
-    } catch (error) {
-      console.error("Error performing gap analysis:", error);
-      throw new Error("Failed to perform gap analysis.");
-    }
-  };
+  const performGapAnalysis = (finalizedResume, jobData, currentUser) =>
+    aiGap(currentUser, jobData, extractResumeText(finalizedResume), [], ai);
 
   const handleSubmit = async () => {
-    // Check subscription
-    if (!canCreateMore("tailoredResumes")) {
-      history('/OverLimit');
-      setError("You have reached the maximum number of tailored resumes for your subscription.");
+    if (!apiKey) {
+      setError("Add your OpenAI API key first.");
+      handleOpenLoginModal();
       return;
     }
 
@@ -184,31 +82,12 @@ export default function CreateCustomTailoredResume() {
     };
 
     try {
-      const token = await getUserToken();
-      if (!token) {
-        setError("You must be logged in to create a tailored resume.");
-        setLoading(false);
-        return;
-      }
-
-      const rateLimitResponse = await axios.get(
-        'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
-        { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }}
-    );
-
-    if (rateLimitResponse.status === 429) {
-        setError("Too many requests. Please wait a moment before trying again.");
-        setLoading(false);
-        return;
-    }
-      const tailoredResume = await generateTailoredResume(jobData, user, token);
-
-      const coverLetterText = await generateCoverLetter(jobData, user, token);
-
-      const skillGapAnalysis = await performGapAnalysis(tailoredResume, jobData, user, token);
+      // Cover letter and gap analysis only need the tailored resume, so run them together.
+      const tailoredResume = await generateTailoredResume(jobData, user);
+      const [coverLetterText, skillGapAnalysis] = await Promise.all([
+        generateCoverLetter(jobData, user),
+        performGapAnalysis(tailoredResume, jobData, user),
+      ]);
 
       const resumeText = extractResumeText(tailoredResume);
       const matchPercent = await calculateHybridMatchPercent(resumeText, jobData.description);
@@ -228,6 +107,7 @@ export default function CreateCustomTailoredResume() {
       };
       await addCoverLetter(user.id, newCoverLetter);
 
+      // Clear the job form (slot 0); the entries were stored above.
       setUser((prevUser) => ({
         ...prevUser,
         tailoredResume: [
@@ -240,9 +120,7 @@ export default function CreateCustomTailoredResume() {
             skillGapAnalysis: '',
           },
           ...prevUser.tailoredResume.filter((tr) => tr.id !== null),
-          tailoredResumeEntry,
         ],
-        coverLetter: [...prevUser.coverLetter, newCoverLetter],
       }));
 
       setSuccessMessage(

@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import AddressForm from '../user/AddressForm';
@@ -12,6 +11,7 @@ import '../../views/main.css';
 import { useUser } from '../../context/UserContext';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
+import { generateBaseResume, parseExperience } from '../../lib/resumeAI';
 
 export default function CreateBaselineResume() {
     const history = useNavigate();
@@ -26,7 +26,6 @@ export default function CreateBaselineResume() {
         generateUUID,
         includeAddress,
         setIncludeAddress,
-        canCreateMore,
         setSuccessMessage,
         setError,
         handleContactChange,
@@ -41,14 +40,15 @@ export default function CreateBaselineResume() {
         removeCustomSection,
         addCustomSectionEntry,
         removeCustomSectionEntry,
-        resetContextForLogout
+        handleOpenLoginModal,
     } = useUser();
     const {
-        setLoading
+        setLoading,
+        apiKey,
+        model,
     } = useAuth();
     const {
         saveBaselineResume,
-        getUserToken
     } = useData();
     const userExperience = "Detail your relevant job history (Required):";
     const userEducation = "List your education and certifications (Required):";
@@ -62,61 +62,27 @@ export default function CreateBaselineResume() {
     };
 
     const handleSubmit = async () => {
-        if (!canCreateMore("baseResume")){
-            history('/OverLimit');
-            setError("You have reached the maximum number of base resumes for your subscription.");
-            return;
-        }
         const timeStamp = new Date().toISOString();
-        const { experience, education, skills } = user.resume[0];
+        const { education, skills } = user.resume[0];
     
         if (!education.trim() || !skills.trim()) {
             setError('Experience, Education, and Skills are required fields.');
             return;
         }
+        if (!apiKey) {
+            setError('Add your OpenAI API key first.');
+            handleOpenLoginModal();
+            return;
+        }
     
         setLoading(true);
         setError(null);
+        let created = false;
     
         try {
-            const token = await getUserToken();
-            if (!token) {
-                setError("You must be logged in to create a resume.");
-                setLoading(false);
-                return;
-            }
-
-            const rateLimitResponse = await axios.get(
-                'https://us-central1-resumancy.cloudfunctions.net/limitedFunction-limitedFunction',
-                { headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }}
-            );
-    
-            if (rateLimitResponse.status === 429) {
-                setError("Too many requests. Please wait a moment before trying again.");
-                setLoading(false);
-                return;
-            }
-
-            const response = await axios.post(
-                'https://us-central1-resumancy.cloudfunctions.net/generate_base_resume-generate_base_resume',
-                { user },
-                { headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }}
-            );
-    
-            const { summary, experienceSection, skillsSection, educationSection } = response.data;
-    
-            let parsedExperience = [];
-            try {
-                parsedExperience = JSON.parse(experienceSection.data);
-            } catch (parseError) {
-                console.error('Error parsing experience section:', parseError);
-            }
+            const result = await generateBaseResume(user, { apiKey, model });
+            // Keep what the user typed if the model's JSON cannot be read.
+            const parsedExperience = parseExperience(result.experience, user.resume[0].experience);
     
             const updatedUser = {
                 ...user,
@@ -128,10 +94,10 @@ export default function CreateBaselineResume() {
                     {
                         ...user.resume[0],
                         id: generateUUID(),
-                        summary: summary.data,
+                        summary: result.summary,
                         experience: parsedExperience,
-                        skills: skillsSection.data,
-                        education: educationSection.data,
+                        skills: result.skills,
+                        education: result.education,
                         usage: {
                             ...user.resume[0].usage,
                             timeStamp,
@@ -150,18 +116,18 @@ export default function CreateBaselineResume() {
             };
 
             await saveBaselineResume(updatedUser.id, {
+                address: updatedUser.address,
                 resume: updatedUser.resume,
                 subscription: updatedUser.subscription,
             });
-            addNewResume(updatedUser);
-    
+            created = true;
             history('/Review');
         } catch (error) {
             console.error('Error generating resume:', error);
-            setError('Failed to generate resume. Please try again.');
+            setError(error?.message || 'Failed to generate resume. Please try again.');
         } finally {
             setLoading(false);
-            setSuccessMessage('Base Resume Successfully Created')
+            if (created) setSuccessMessage('Base Resume Successfully Created');
         }
     };
     
