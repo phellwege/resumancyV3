@@ -35,6 +35,9 @@ Get started, paste a key, pick `gpt-4o-mini`, fill the profile, create a base re
 
 ## 2. Enable Pages
 
+**Done 2026-10-26: live at https://phellwege.github.io/resumancyV3/.** Pages source = GitHub Actions; `static-byok` added to the `github-pages` environment's allowed deployment branches (GitHub allows only `main` by default). The workflow lives only on `static-byok`, so the Actions tab shows no "Run workflow" button; redeploy by pushing to `static-byok` or re-running a run.
+
+
 Repo Settings > Pages > Build and deployment > Source: **GitHub Actions**. The workflow `.github/workflows/deploy-pages.yml` runs on push to `main` or `static-byok` (or Actions tab > Deploy to GitHub Pages > Run workflow). Site appears at `https://phellwege.github.io/<repo>/`.
 
 ## 3. Optional: point resumancy.com at it (open decision in DECISIONS.md)
