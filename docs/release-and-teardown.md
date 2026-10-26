@@ -13,7 +13,9 @@ npm start
 
 Get started, paste a key, pick `gpt-4o-mini`, fill the profile, create a base resume, tailor one job, open the PDF. This is the one path not yet run for real (browser to OpenAI with a valid key).
 
-## 1. Decide where it is published (open decision in DECISIONS.md)
+## 1. Where it is published
+
+**Decided 2026-10-26 (Peter): Option B.** `static-byok` pushed to origin 2026-10-26; flip the repo to public in GitHub settings (Settings > General > Danger Zone > Change visibility).
 
 `phellwege/resumancyV3` is private. GitHub Pages on a private repo needs a paid plan, and a private repo is not viewable as a portfolio piece.
 
