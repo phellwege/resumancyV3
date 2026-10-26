@@ -10,7 +10,6 @@ import CurrentPlans from '../components/user/CurrentPlans';
 import { MdScreenRotation } from "react-icons/md";
 import './main.css';
 import ResumeStyles from '../components/ResumeStyles';
-import ReviewCarousel from '../components/ReviewCarousel';
 // Memoize the text content component to prevent unnecessary re-renders
 const WhatWeDoText = memo(() => (
   <p className='leftShiftedText'>
@@ -158,14 +157,6 @@ export default function Home() {
                     <Card className='homeLeftCard'>
                         <Card.Body>
                             <div className='cardInnerDiv'>
-                                <h2>Reviews</h2>
-                                <ReviewCarousel />
-                            </div>
-                        </Card.Body>
-                    </Card>
-                    <Card className='homeLeftCard'>
-                        <Card.Body>
-                            <div className='cardInnerDiv'>
                                 <h2>Sample Resumes</h2>
                                 <div className='homeLeftCardImageDiv'>
                                     <ResumeStyles />
@@ -173,32 +164,6 @@ export default function Home() {
                             </div>
                         </Card.Body>
                     </Card>
-                    {!user?.id && (
-                        <article>
-                            <Card>
-                                <Card.Body>
-                                    <div className='cardInnerDiv'>
-                                        <h3 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>🎯 Ready to Build a Job-Winning Resume?</h3>
-                                        <p style={{ textAlign: 'center', fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>
-                                            Paste your own OpenAI API key, pick a model, and build your first resume in under a minute.
-                                        </p>
-                                        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-                                            <Button
-                                            variant="primary"
-                                            onClick={handleOpenLoginModal}
-                                            style={{ padding: '0.6rem 1.5rem', fontWeight: 'bold' }}
-                                            >
-                                            Get Started → Build My Resume
-                                            </Button>
-                                        </div>
-                                        <p style={{ textAlign: 'center', fontSize: '0.85rem', marginTop: '0.5rem' }}>
-                                            🔒 No account needed · Nothing leaves your browser except calls to OpenAI
-                                        </p>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </article>
-                    )}
                 </section>
                 <section className='rightDiv'>
                 <CurrentPlans/>
