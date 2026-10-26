@@ -113,6 +113,15 @@ width: 45%;
     align-items: center;
     width: 100%;
 }
+/* Shown only when the left column is hidden (phones). */
+.mobileOnly {
+    display: none;
+}
+@media (max-width: 860px) {
+    .mobileOnly {
+        display: block;
+    }
+}
 /* Side-by-side columns start at the top (they differ in height). Phones stack, so leave those alone. */
 @media (min-width: 861px) {
     .secondaryPageWrapper {

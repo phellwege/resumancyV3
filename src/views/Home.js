@@ -21,6 +21,26 @@ const WhatWeDoText = memo(() => (
   </p>
 ));
 
+const WhatWeDoCard = () => (
+    <article className='mb-4'>
+        <Card>
+            <Card.Body>
+                <div className='cardInnerDiv'>
+                    <div>
+                        <h2>What We Do</h2>
+                        <WhatWeDoText />
+                        <p>
+                            <Link className='faqSpan' to='/FAQ' aria-label="View comprehensive FAQ about resume creation and customization">
+                            Frequently Asked Questions
+                            </Link>
+                        </p>
+                    </div>
+                </div>
+            </Card.Body>
+        </Card>
+    </article>
+);
+
 export default function Home() {
     const {
         user,
@@ -108,6 +128,7 @@ export default function Home() {
             )}
             <div className='secondaryPageWrapper'>
                 <section className='leftDiv'>
+                    <WhatWeDoCard />
                     <Card className='homeLeftCard'>
                         <Card.Body>
                             <div className='cardInnerDiv'>
@@ -121,23 +142,10 @@ export default function Home() {
                 </section>
                 <section className='rightDiv'>
                 <CurrentPlans/>
-                    <article>
-                        <Card>
-                            <Card.Body>
-                                <div className='cardInnerDiv'>
-                                    <div>
-                                        <h2>What We Do</h2>
-                                        <WhatWeDoText />
-                                        <p>
-                                            <Link className='faqSpan' to='/FAQ' aria-label="View comprehensive FAQ about resume creation and customization">
-                                            Frequently Asked Questions
-                                            </Link>
-                                        </p>
-                                    </div>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    </article>
+                    {/* Phones hide the left column, so What We Do also shows here on small screens. */}
+                    <div className='mobileOnly'>
+                        <WhatWeDoCard />
+                    </div>
                     <article>
                         <Card>
                             <Card.Body>
