@@ -50,6 +50,7 @@ export default function CreateBaselineResume() {
     const {
         saveBaselineResume,
     } = useData();
+    const hasBase = Boolean(user.resume[0]?.id);
     const userExperience = "Detail your relevant job history (Required):";
     const userEducation = "List your education and certifications (Required):";
     const userSkills = "Specify your relevant skills (Required):";
@@ -105,6 +106,8 @@ export default function CreateBaselineResume() {
                             useAddress: includeAddress,
                         },
                     },
+                    // Rebuilding the base keeps the tailored resumes made from it.
+                    ...user.resume.slice(1),
                 ],
                 subscription: {
                     ...user.subscription,
@@ -127,7 +130,7 @@ export default function CreateBaselineResume() {
             setError(error?.message || 'Failed to generate resume. Please try again.');
         } finally {
             setLoading(false);
-            if (created) setSuccessMessage('Base Resume Successfully Created');
+            if (created) setSuccessMessage(hasBase ? 'Base Resume Rebuilt' : 'Base Resume Successfully Created');
         }
     };
     
@@ -138,7 +141,7 @@ export default function CreateBaselineResume() {
                 <Card>
                     <Card.Body>
                         <div className='ScratchInnerDiv'>
-                            <h3>Create Base Resume</h3>
+                            <h3>{hasBase ? 'Rebuild Base Resume' : 'Create Base Resume'}</h3>
                             <p  className="required-note">Fields marked with <span className="required-indicator">*</span> are required.</p>
                             <Form>
                                 <div>

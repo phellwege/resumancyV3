@@ -104,8 +104,14 @@ const NavBar = () => {
                                         </li>
                                         <li>
                                             <Link to='/Review' onClick={() => closeMenu()}>
-                                                <MdPreview className='navIcons'/> 
+                                                <MdPreview className='navIcons'/>
                                                 Review
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to='/Create' onClick={() => closeMenu()}>
+                                                <MdOutlinePostAdd className='navIcons'/>
+                                                Rebuild Base Resume
                                             </Link>
                                         </li>
                                     </>
