@@ -9,8 +9,7 @@ export default function FAQ() {
     <>
       <Helmet>
         <title>Frequently Asked Questions | Resumancy - AI Resume Builder</title>
-        <meta name="description" content="Get answers to common questions about Resumancy's AI resume builder, cover letter generator, skill gap analysis, pricing plans, and more." />
-        <link rel="canonical" href="https://resumancy.com/FAQ" />
+        <meta name="description" content="Get answers to common questions about Resumancy's AI resume builder, cover letter generator, skill gap analysis, bring-your-own-key setup, and more." />
         <script type="application/ld+json">
           {`
             {
@@ -51,7 +50,7 @@ export default function FAQ() {
         <h1>Frequently Asked Questions</h1>
         <section className='FaqWrapper'>
           <div className="faq-intro">
-            <p>Find answers to the most common questions about our AI-powered resume builder and cover letter generator. If you don't see your question answered here, please contact us at <a href='mailto:Support@Resumancy.com'>Support@Resumancy.com</a>.</p>
+            <p>Find answers to the most common questions about our AI-powered resume builder and cover letter generator. This is an open-source portfolio demo; the code is on <a href='https://github.com/phellwege/resumancyV3' target='_blank' rel='noopener noreferrer'>GitHub</a>.</p>
           </div>
           <div itemScope itemType="https://schema.org/FAQPage">
             <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
@@ -198,11 +197,22 @@ export default function FAQ() {
             </div>
 
             <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+              <h2 itemProp="name" id="data-loss">Can I lose my résumés?</h2>
+              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <div itemProp="text">
+                  <p>
+                    Yes, if your browser's site data is cleared or you switch devices or browsers, because everything is saved only in this browser. Use Export on the Data &amp; Settings page to keep a backup file, and Import to bring it back.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
               <h2 itemProp="name" id="getting-started">How do I get started with your AI résumé builder?</h2>
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                 <div itemProp="text">
                   <p>
-                  Click Get started, paste your OpenAI API key and pick a model, input your basic information, enter your existing résumé details (this will be enhanced and used as a baseline), and then paste in the job description you're targeting. Our AI will guide you through building and tailoring your résumé step by step.
+                  On the home page, paste your OpenAI API key into the card on the right, pick a model and click Save and start. Then input your basic information, enter your existing résumé details (this will be enhanced and used as a baseline), and then paste in the job description you're targeting. Our AI will guide you through building and tailoring your résumé step by step.
                   </p>
                 </div>
               </div>
