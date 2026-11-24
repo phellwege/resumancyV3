@@ -19,9 +19,11 @@ test('sends key only to api.openai.com with sampling params for classic models',
 
 test('reasoning models get no temperature or token cap', async () => {
   global.fetch = jest.fn(() => ok('x'));
-  await chat({ apiKey: 'k', model: 'gpt-5-mini', messages: [] });
+  await chat({ apiKey: 'k', model: 'gpt-6.1-terra', messages: [] });
   expect(Object.keys(JSON.parse(global.fetch.mock.calls[0][1].body)).sort()).toEqual(['messages', 'model']);
   expect(isReasoningModel('o4-mini')).toBe(true);
+  expect(isReasoningModel('gpt-6-luna')).toBe(true);
+  expect(isReasoningModel('gpt-6.1-sol')).toBe(true);
   expect(isReasoningModel('gpt-4.1')).toBe(false);
 });
 

@@ -8,9 +8,9 @@ export const MODEL_OPTIONS = [
     { id: 'gpt-4.1-mini', label: 'gpt-4.1-mini' },
     { id: 'gpt-4o', label: 'gpt-4o' },
     { id: 'gpt-4.1', label: 'gpt-4.1' },
-    { id: 'gpt-5-mini', label: 'gpt-5-mini (reasoning, slower)' },
-    { id: 'gpt-5', label: 'gpt-5 (reasoning, slowest)' },
-    { id: 'o4-mini', label: 'o4-mini (reasoning)' },
+    { id: 'gpt-6-luna', label: 'gpt-6-luna (reasoning, cheap)' },
+    { id: 'gpt-6.1-terra', label: 'gpt-6.1-terra (reasoning, slower)' },
+    { id: 'gpt-6.1-sol', label: 'gpt-6.1-sol (reasoning, slowest)' },
 ];
 
 export const DEFAULT_MODEL = 'gpt-4o-mini';
@@ -18,7 +18,7 @@ export const DEFAULT_MODEL = 'gpt-4o-mini';
 // Reasoning models reject temperature/top_p and spend part of the token
 // budget on hidden reasoning, so they get no sampling params and no cap.
 export function isReasoningModel(model) {
-    return /^(o\d|gpt-5)/i.test(model || '');
+    return /^(o\d|gpt-[5-9])/i.test(model || '');
 }
 
 export class OpenAIError extends Error {
